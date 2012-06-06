@@ -6,6 +6,7 @@ package Snake
   import starling.core.Starling;
   import starling.display.MovieClip;
   import starling.textures.Texture;
+  import starling.textures.TextureSmoothing;
 	
 	/**
      * ...
@@ -29,19 +30,23 @@ package Snake
       var framesLeft:Vector.<Texture> = new Vector.<Texture>;
       framesLeft.push(AssetRegistry.SnakeAtlas.getTexture("snake_head_2"), AssetRegistry.SnakeAtlas.getTexture("snake_head_3"));
       _headLeft = new MovieClip(framesLeft, 2);
+      _headLeft.smoothing = TextureSmoothing.NONE;
       
       var framesRight:Vector.<Texture> = new Vector.<Texture>;
       framesRight.push(AssetRegistry.SnakeAtlas.getTexture("snake_head_0"), AssetRegistry.SnakeAtlas.getTexture("snake_head_1"));
       _headRight = new MovieClip(framesRight, 2);  
+      _headRight.smoothing = TextureSmoothing.NONE;
       
       var framesDown:Vector.<Texture> = new Vector.<Texture>;
       framesDown.push(AssetRegistry.SnakeAtlas.getTexture("snake_head_6"), AssetRegistry.SnakeAtlas.getTexture("snake_head_7"));
       _headDown = new MovieClip(framesDown, 2);
+      _headDown.smoothing = TextureSmoothing.NONE;
  
       var framesUp:Vector.<Texture> = new Vector.<Texture>;
       framesUp.push(AssetRegistry.SnakeAtlas.getTexture("snake_head_4"), AssetRegistry.SnakeAtlas.getTexture("snake_head_5"));
       _headUp = new MovieClip(framesUp, 2);
-      }    
+      _headUp.smoothing = TextureSmoothing.NONE;
+    }    
     
     override public function set facing(value:int):void
     {

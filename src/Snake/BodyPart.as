@@ -4,6 +4,7 @@ package Snake
   import flash.geom.Point;
   import starling.display.Image;
   import engine.AssetRegistry;
+  import starling.textures.TextureSmoothing;
 	
 	/**
      * ...
@@ -30,7 +31,22 @@ package Snake
             _imageLeft = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_body_1"));
             _imageDown = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_body_0"));
             break;
+        case AssetRegistry.EGGA:
+            _imageLeft = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_body_3"));
+            _imageDown = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_body_2"));
+            break;
+        case AssetRegistry.EGGB:
+            _imageLeft = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_body_7"));
+            _imageDown = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_body_6"));
+            break;
+        case AssetRegistry.EGGC:
+            _imageLeft = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_body_5"));
+            _imageDown = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_body_4"));
+            break;                                     
       }
+      
+      _imageLeft.smoothing = TextureSmoothing.NONE;
+      _imageDown.smoothing = TextureSmoothing.NONE;
     }    
     
     override public function set facing(value:int):void

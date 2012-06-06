@@ -19,7 +19,6 @@ package Snake
     
     private var _head:TileSprite;
     private var _speed:Number;
-    private var _headTween:Tween;
     private var _body:Vector.<Snake.BodyPart>
         
     public function Snake(speed:Number) 
@@ -32,18 +31,27 @@ package Snake
             
       _body = new Vector.<BodyPart>;
       
-      for (var i:int = 0; i < 4; i++) {
-        var bodyPart:BodyPart = new BodyPart(_head.tileX - (i + 1), _head.tileY, _speed);
+      for (var i:int = 0; i < 30; i++) {
+        var bodyPart:BodyPart = new BodyPart(_head.tileX - (i + 1), _head.tileY, _speed, Math.floor(Math.random() * 4));
         _body.push(bodyPart);
         addChild(bodyPart);
       }
     }
     
     public function move():void {
-      _head.advance();
-      for each(var bodyPart:Snake.BodyPart in _body) {
-        bodyPart.advance();
+      for (var i:int = _body.length - 1; i >= 0; i-- ) {
+        if (i == 0) {
+          _body[i].tileX = _head.tileX;
+          _body[i].tileY = _head.tileY;
+          _body[i].prevFacing = _head.prevFacing;
+        } else {
+          _body[i].tileX = _body[i - 1].tileX;
+          _body[i].tileY = _body[i - 1].tileY;
+          _body[i].prevFacing = _body[i - 1].facing;
+        }
+        _body[i].animateMove();
       }
+      _head.advance();
     }
     
     public function moveRight():void {
@@ -79,6 +87,11 @@ package Snake
             break;
       }
     }    
+    
+    public function get head():TileSprite 
+    {
+        return _head;
+    }
         
   }
 

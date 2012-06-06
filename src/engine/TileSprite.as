@@ -1,5 +1,6 @@
 package engine 
 {
+    import com.gskinner.motion.GTween;
     import flash.geom.Point;
     import starling.animation.Tween;
     import starling.display.Image;
@@ -21,6 +22,7 @@ package engine
     private var _prevFacing:int;
     private var _speed:Number;
     protected var _image:Image;
+    protected var _tween:GTween;
   
     public function TileSprite(tileX:int = 0, tileY:int = 0, image:Image = null, speed:Number = 0.3) 
     {
@@ -36,14 +38,12 @@ package engine
       if(_image != null) {
         addChild(_image);
       }
-      
       facing = AssetRegistry.RIGHT;     
       _prevFacing = facing;
 
     }
     
     public function advance():void {
-      var tween:Tween = new Tween(this, _speed);
       switch(_prevFacing) {
         case AssetRegistry.UP:
             tileY -= 1;
@@ -58,23 +58,30 @@ package engine
             tileX -= 1;
             break;
       }
+      animateMove();
+      _prevFacing = _facing;
+    }
+    
+    public function animateMove():void {
+      if(_tween == null) {
+        _tween = new GTween(this, _speed);
+      }
       
       switch(_facing) {
          case AssetRegistry.UP:
-            tween.animate("y", y - AssetRegistry.TILESIZE);
+            _tween.setValue("y", y - AssetRegistry.TILESIZE);
             break;
         case AssetRegistry.DOWN:
-            tween.animate("y", y + AssetRegistry.TILESIZE);
+            _tween.setValue("y", y + AssetRegistry.TILESIZE);
             break;
         case AssetRegistry.RIGHT:
-            tween.animate("x", x + AssetRegistry.TILESIZE);
+            _tween.setValue("x", x + AssetRegistry.TILESIZE);
             break;
         case AssetRegistry.LEFT:
-            tween.animate("x", x - AssetRegistry.TILESIZE);
+            _tween.setValue("x", x - AssetRegistry.TILESIZE);
             break;       
-      }
-      _prevFacing = _facing;
-      Starling.juggler.add(tween);
+      }  
+      
     }
     
     public function get tileX():int 
@@ -119,6 +126,17 @@ package engine
         _frameOffset = value;
         tileX = tileX;
         tileY = tileY;
+    }
+    
+    public function get prevFacing():int 
+    {
+        return _prevFacing;
+    }
+    
+    public function set prevFacing(value:int):void 
+    {
+        _prevFacing = value;
+        facing = value;
     }
     
   }
