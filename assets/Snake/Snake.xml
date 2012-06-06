@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:8516ed8682d9c7aff060d57354083add$ -->
+<TextureAtlas imagePath="Snake.png">
+    <SubTexture name="snake_body_0" x="2" y="2" width="30" height="45"/>
+    <SubTexture name="snake_body_1" x="34" y="2" width="30" height="45"/>
+    <SubTexture name="snake_body_2" x="66" y="2" width="30" height="45"/>
+    <SubTexture name="snake_body_3" x="98" y="2" width="30" height="45"/>
+    <SubTexture name="snake_body_4" x="130" y="2" width="30" height="45"/>
+    <SubTexture name="snake_body_5" x="162" y="2" width="30" height="45"/>
+    <SubTexture name="snake_body_6" x="194" y="2" width="30" height="45"/>
+    <SubTexture name="snake_body_7" x="226" y="2" width="30" height="45"/>
+    <SubTexture name="snake_head_0" x="258" y="2" width="45" height="75"/>
+    <SubTexture name="snake_head_1" x="305" y="2" width="45" height="75"/>
+    <SubTexture name="snake_head_10" x="352" y="2" width="45" height="75"/>
+    <SubTexture name="snake_head_11" x="399" y="2" width="45" height="75"/>
+    <SubTexture name="snake_head_12" x="446" y="2" width="45" height="75"/>
+    <SubTexture name="snake_head_13" x="2" y="79" width="45" height="75"/>
+    <SubTexture name="snake_head_14" x="49" y="79" width="45" height="75"/>
+    <SubTexture name="snake_head_15" x="96" y="79" width="45" height="75"/>
+    <SubTexture name="snake_head_16" x="143" y="79" width="45" height="75"/>
+    <SubTexture name="snake_head_17" x="190" y="79" width="45" height="75"/>
+    <SubTexture name="snake_head_18" x="237" y="79" width="45" height="75"/>
+    <SubTexture name="snake_head_19" x="284" y="79" width="45" height="75"/>
+    <SubTexture name="snake_head_2" x="331" y="79" width="45" height="75"/>
+    <SubTexture name="snake_head_20" x="378" y="79" width="45" height="75"/>
+    <SubTexture name="snake_head_21" x="425" y="79" width="45" height="75"/>
+    <SubTexture name="snake_head_22" x="2" y="156" width="45" height="75"/>
+    <SubTexture name="snake_head_23" x="49" y="156" width="45" height="75"/>
+    <SubTexture name="snake_head_24" x="96" y="156" width="45" height="75"/>
+    <SubTexture name="snake_head_25" x="143" y="156" width="45" height="75"/>
+    <SubTexture name="snake_head_26" x="190" y="156" width="45" height="75"/>
+    <SubTexture name="snake_head_27" x="237" y="156" width="45" height="75"/>
+    <SubTexture name="snake_head_28" x="284" y="156" width="45" height="75"/>
+    <SubTexture name="snake_head_29" x="331" y="156" width="45" height="75"/>
+    <SubTexture name="snake_head_3" x="378" y="156" width="45" height="75"/>
+    <SubTexture name="snake_head_30" x="425" y="156" width="45" height="75"/>
+    <SubTexture name="snake_head_31" x="2" y="233" width="45" height="75"/>
+    <SubTexture name="snake_head_4" x="49" y="233" width="45" height="75"/>
+    <SubTexture name="snake_head_5" x="96" y="233" width="45" height="75"/>
+    <SubTexture name="snake_head_6" x="143" y="233" width="45" height="75"/>
+    <SubTexture name="snake_head_7" x="190" y="233" width="45" height="75"/>
+    <SubTexture name="snake_head_8" x="237" y="233" width="45" height="75"/>
+    <SubTexture name="snake_head_9" x="284" y="233" width="45" height="75"/>
+    <SubTexture name="snake_tail_0" x="331" y="233" width="45" height="45"/>
+    <SubTexture name="snake_tail_1" x="378" y="233" width="45" height="45"/>
+    <SubTexture name="snake_tail_2" x="425" y="233" width="45" height="45"/>
+    <SubTexture name="snake_tail_3" x="2" y="310" width="45" height="45"/>
+</TextureAtlas>
