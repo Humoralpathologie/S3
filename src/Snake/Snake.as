@@ -14,12 +14,14 @@ package Snake
      * ...
      * @author 
      */
+  
   public class Snake extends Sprite 
   {
     
-    private var _head:TileSprite;
+    private var _head:Head;
     private var _speed:Number;
     private var _body:Vector.<Snake.BodyPart>
+    private var _newPart:Snake.BodyPart = null;
         
     public function Snake(speed:Number) 
     {
@@ -31,23 +33,34 @@ package Snake
             
       _body = new Vector.<BodyPart>;
       
-      for (var i:int = 0; i < 30; i++) {
+      for (var i:int = 0; i < 4; i++) {
         var bodyPart:BodyPart = new BodyPart(_head.tileX - (i + 1), _head.tileY, _speed, Math.floor(Math.random() * 4));
         _body.push(bodyPart);
         addChild(bodyPart);
       }
     }
     
+    public function eat(eggType:int):void {
+      _newPart = new BodyPart( -1, -1, _speed, eggType);
+    }
+    
     public function move():void {
+      
+      if (_newPart != null) {
+        _body.push(_newPart);
+        addChild(_newPart);
+        _newPart = null;
+      }
+      
       for (var i:int = _body.length - 1; i >= 0; i-- ) {
         if (i == 0) {
           _body[i].tileX = _head.tileX;
           _body[i].tileY = _head.tileY;
-          _body[i].prevFacing = _head.prevFacing;
+          _body[i].facing = _head.prevFacing;
         } else {
           _body[i].tileX = _body[i - 1].tileX;
           _body[i].tileY = _body[i - 1].tileY;
-          _body[i].prevFacing = _body[i - 1].facing;
+          _body[i].facing = _body[i - 1].facing;
         }
         _body[i].animateMove();
       }
@@ -88,7 +101,7 @@ package Snake
       }
     }    
     
-    public function get head():TileSprite 
+    public function get head():Snake.Head 
     {
         return _head;
     }
