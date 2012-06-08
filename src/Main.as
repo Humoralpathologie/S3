@@ -2,15 +2,18 @@ package
 {
   import engine.AssetRegistry;
 	import flash.desktop.NativeApplication;
+  import flash.display.Bitmap;
 	import flash.events.Event;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+  import flash.geom.Rectangle;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
-  import Level.Arcade;
+  import Level.LevelState;
   import starling.core.Starling;
   import fr.kouma.starling.utils.Stats;
+  import Level.*;
 	
 	/**
 	 * ...
@@ -32,10 +35,31 @@ package
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
-			// entry point
+			// entry point  
+     
+      starling = new Starling(ArcadeState, stage, new Rectangle(0,0,960,640));
+      
+      var loadingSprite:Sprite = new Sprite()
+      var loadingBMP:Bitmap = new AssetRegistry.LoadingPNG();
+      loadingSprite.addChild(loadingBMP);
+      
+      addChild(loadingSprite);
+      
+      starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE, function(e:Event):void 
+      {
+        // Starling is ready! We remove the startup image and start the game.
+        removeChild(loadingSprite);
+        starling.start();
+      });      
+      
+            // When the game becomes inactive, we pause Starling; otherwise, the enter frame event
+            // would report a very long 'passedTime' when the app is reactivated. 
             
-      starling = new Starling(Arcade, stage);
-      starling.start();
+            NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, 
+                function (e:Event):void { starling.start(); });
+            
+            NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, 
+                function (e:Event):void { starling.stop(); });      
 		}
 		
 		private function deactivate(e:Event):void 

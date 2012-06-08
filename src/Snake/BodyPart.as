@@ -5,6 +5,7 @@ package Snake
   import starling.display.Image;
   import engine.AssetRegistry;
   import starling.textures.TextureSmoothing;
+  import flash.utils.*;
 	
 	/**
      * ...
@@ -16,6 +17,7 @@ package Snake
     private var _imageLeft:Image;
     private var _imageDown:Image;
     private var _type:int;
+    private var _removing:Boolean = false;
     
     public function BodyPart(tileX:int, tileY:int, speed:Number, type:int = AssetRegistry.EGGZERO) 
     {
@@ -49,6 +51,32 @@ package Snake
       _imageDown.smoothing = TextureSmoothing.NONE;
     }    
     
+    public function flicker(n:Number = 2, tps:int = 5):void {
+      var times:int = tps * n;
+      var ms:Number = n * 1000 / times;
+      var count:int = 0;
+      _imageDown.visible = false;
+      _imageLeft.visible = false;
+      
+      var func:Function = function ():void {
+        if (count < times) {
+          count++;
+          if (_imageDown.visible) {
+            _imageDown.visible = false;
+            _imageLeft.visible = false;
+          } else {
+            _imageDown.visible = true;
+            _imageLeft.visible = true;
+          }
+          setTimeout(func, ms);
+        } else {
+          _imageDown.visible = true;
+          _imageLeft.visible = true;          
+        }
+      }
+      func();
+    }
+    
     override public function set facing(value:int):void
     {
       super.facing = value;
@@ -69,6 +97,21 @@ package Snake
       
       addChild(_image);
     }        
+    
+    public function get type():int 
+    {
+        return _type;
+    }
+    
+    public function get removing():Boolean 
+    {
+        return _removing;
+    }
+    
+    public function set removing(value:Boolean):void 
+    {
+        _removing = value;
+    }
   }
 
 }

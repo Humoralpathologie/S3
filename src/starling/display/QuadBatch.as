@@ -192,7 +192,6 @@ package starling.display
         public function renderCustom(mvpMatrix:Matrix, parentAlpha:Number=1.0,
                                      blendMode:String=null):void
         {
-            trace("Drawing Batch");
 
             if (mNumQuads == 0) return;
             if (mSyncRequired) syncBuffers();
@@ -265,7 +264,6 @@ package starling.display
                                 smoothing:String=null, modelViewMatrix:Matrix=null, 
                                 blendMode:String=null):void
         {
-            trace("Adding Quad to Batch");
             
             if (modelViewMatrix == null)
                 modelViewMatrix = quad.transformationMatrix;

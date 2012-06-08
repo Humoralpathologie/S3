@@ -19,7 +19,7 @@ package Eggs
     }
     
     public function spawnRandomEgg():void {
-      var egg:Egg = new Egg(Math.floor(Math.random() * 60), Math.floor(Math.random() * 60), Math.floor(Math.random() * 7));
+      var egg:Egg = new Egg(Math.floor(Math.random() * (640 / 15)), Math.floor(Math.random() * (480 / 15)), Math.floor(Math.random() * 7));
       _eggPool.push(egg);
       addChild(egg);
     }

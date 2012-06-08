@@ -47,7 +47,6 @@ package UI
       for (var i:int = 0; i < 20; i++) {
         radarEgg = new RadarEgg();
         radarEgg.visible = false;
-        addChild(radarEgg);
         _radarEggPool.push(radarEgg);
       }
     }
@@ -63,10 +62,10 @@ package UI
       }
       if (rEgg == null) {
         rEgg = new RadarEgg();
-        addChild(rEgg);
         _radarEggPool.push(rEgg);
       }
-      
+      addChild(rEgg);
+  
       return rEgg;
     }
     
@@ -74,6 +73,7 @@ package UI
       
       for (var k:int = 0; k < _radarEggPool.length; k++) {
         _radarEggPool[k].visible = false;
+        removeChild(_radarEggPool[k]);
       }
       
       var rEgg:RadarEgg;

@@ -27,7 +27,7 @@ package Snake
     {
       _speed = speed;   
       
-      _head = new Head(5, 0, _speed);
+      _head = new Head(5, 5, _speed);
       
       addChild(_head);
             
@@ -104,6 +104,11 @@ package Snake
     public function get head():Snake.Head 
     {
         return _head;
+    }
+    
+    public function get body():Vector.<Snake.BodyPart> 
+    {
+        return _body;
     }
         
   }

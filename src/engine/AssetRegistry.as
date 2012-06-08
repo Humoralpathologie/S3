@@ -18,12 +18,21 @@ package engine
       [Embed(source = "../../assets/Levels/arcade.png")] private static const ArcadeBackgroundPNG:Class;
       [Embed(source = "../../assets/Font/8bit.fnt", mimeType = "application/octet-stream")] static private const FontXML:Class;
       [Embed(source = "../../assets/Font/8bit_0.png")] static private const FontPNG:Class;
+      [Embed(source = "../../assets/Loading/loading.png")] static public const LoadingPNG:Class;
+      [Embed(source = "../../assets/Levels/arcadeOverlay.png")] static public const ArcadeOverlayPNG:Class;
+      [Embed(source = "../../assets/Levels/level01bg.png")] static public const Level1BackgroundPNG:Class;
+      
+      [Embed(source="../../assets/Levels/arcadeoverlaytexture.xml", mimeType="application/octet-stream")] static private const ArcadeOverlayAtlasXML:Class
+      [Embed(source = "../../assets/Levels/arcadeoverlaytexture.png")] static private const ArcadeOverlayAtlasPNG:Class;
       
       public static var SnakeAtlas:TextureAtlas;
+      public static var ArcadeOverlayAtlas:TextureAtlas;
       public static var UIOverlayTexture:Texture;
       public static var DrugParticleConfig:XML;
       public static var DrugParticleTexture:Texture;
       public static var ArcadeBackground:Texture;
+      public static var ArcadeOverlay:Texture;
+      public static var Level1Background:Texture;
       
       public static const TILESIZE:int = 15;
 
@@ -39,15 +48,22 @@ package engine
       public static const EGGROTTEN:int = 4;
       public static const EGGSHUFFLE:int = 5;
       public static const EGGGOLDEN:int = 6;
+      
+      public static var HQ:Boolean = true;
     
       public static function init():void 
       {
         
         UIOverlayTexture = Texture.fromBitmap(new UIOverlayPNG);
         ArcadeBackground = Texture.fromBitmap(new ArcadeBackgroundPNG);
+        ArcadeOverlay = Texture.fromBitmap(new ArcadeOverlayPNG);
+        
+        Level1Background = Texture.fromBitmap(new Level1BackgroundPNG);
         
         var texture:Texture = Texture.fromBitmap(new SnakeTexturePNG);
         SnakeAtlas = new TextureAtlas(texture, XML(new SnakeAtlasXML));
+        
+        ArcadeOverlayAtlas = new TextureAtlas(Texture.fromBitmap(new ArcadeOverlayAtlasPNG), XML(new ArcadeOverlayAtlasXML));
         
         DrugParticleConfig = XML(new DrugsParticleXML);
         DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);
