@@ -1,6 +1,7 @@
 package engine 
 {
     import com.gskinner.motion.GTween;
+    import starling.animation.Tween;
     import flash.geom.Point;
     import starling.animation.Tween;
     import starling.display.Image;
@@ -23,6 +24,7 @@ package engine
     private var _speed:Number;
     protected var _image:Image;
     protected var _tween:GTween;
+    protected var _starlingTween:Tween;
   
     public function TileSprite(tileX:int = 0, tileY:int = 0, image:Image = null, speed:Number = 0.3) 
     {
@@ -63,24 +65,32 @@ package engine
     }
     
     public function animateMove():void {
-      if(_tween == null) {
-        _tween = new GTween(this, _speed);
+      if(_starlingTween == null) {
+        _starlingTween = new Tween(this, _speed);
+      } else {
+        Starling.juggler.remove(_starlingTween);
+        _starlingTween.reset(this, _speed);
       }
       
       switch(_facing) {
          case AssetRegistry.UP:
-            _tween.setValue("y", y - AssetRegistry.TILESIZE);
+            //_tween.setValue("y", y - AssetRegistry.TILESIZE);
+            _starlingTween.animate("y", y - AssetRegistry.TILESIZE);
             break;
         case AssetRegistry.DOWN:
-            _tween.setValue("y", y + AssetRegistry.TILESIZE);
+            //_tween.setValue("y", y + AssetRegistry.TILESIZE);
+            _starlingTween.animate("y", y + AssetRegistry.TILESIZE);
             break;
         case AssetRegistry.RIGHT:
-            _tween.setValue("x", x + AssetRegistry.TILESIZE);
+            //_tween.setValue("x", x + AssetRegistry.TILESIZE);
+            _starlingTween.animate("x", x + AssetRegistry.TILESIZE);
             break;
         case AssetRegistry.LEFT:
-            _tween.setValue("x", x - AssetRegistry.TILESIZE);
+            //_tween.setValue("x", x - AssetRegistry.TILESIZE);
+            _starlingTween.animate("x", x - AssetRegistry.TILESIZE);
             break;       
-      }  
+      } 
+      Starling.juggler.add(_starlingTween);
       
     }
     

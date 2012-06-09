@@ -29,7 +29,8 @@ package Level
   import starling.utils.HAlign;
   import Combo.*;
   import flash.utils.*;
-  import com.greensock.easing.Expo;
+  import flash.events.GestureEvent;
+  import flash.events.TransformGestureEvent;
   
 	
 	/**
@@ -56,8 +57,12 @@ package Level
       private var _currentCombos:Array;
       private var _combos:int = 0;
       private var _score:int = 0;
-      private var _zoom:int = 3;
+      private var _zoom:int = 2.5;
       private var _following:Snake.Head;
+      private var _possibleSwipe:Boolean = false;
+      private var _swipeY:int;
+      private var _swipeMenu:Quad;
+      private var _paused:Boolean = false;
         
       public function LevelState() 
       {
@@ -107,6 +112,11 @@ package Level
         _text.color = Color.WHITE;
         _text.hAlign = HAlign.LEFT;
         addChild(_text);
+        
+        _swipeMenu = new Quad(Starling.current.viewPort.width, 100, 0x000000);
+        _swipeMenu.alpha = 0.3;
+        _swipeMenu.y = Starling.current.viewPort.height;
+        addChild(_swipeMenu);
                 
         // For debugging. 
         Starling.current.showStats = true;
@@ -225,22 +235,23 @@ package Level
       
       private function onEnterFrame(event:EnterFrameEvent):void
       {
-        updateCamera();
         
         var bodyArray:Array;
         var comboArray:Array;
-
-        updateTimers(event);
+        if(!_paused) {
+          updateTimers(event);
         
-        _text.text = String(_overallTimer.toFixed(2));
-        _hud.update(); 
+          _text.text = String(_overallTimer.toFixed(2));
+          _hud.update(); 
         
-        if (_timer >= _speed) {
-          _snake.move(); 
+          if (_timer >= _speed) {
+            _snake.move(); 
           
-          doCombos();
-          eggCollide();
-          _timer -= _speed;
+            doCombos();
+            eggCollide();
+            _timer -= _speed;
+          }
+          updateCamera();
         }
         
       }
@@ -258,21 +269,56 @@ package Level
         
         _levelStage.x = Math.min(_levelStage.x, 0);
         _levelStage.y = Math.min(_levelStage.y, 0);
-        // TODO: Should be computet only once.
+        // TODO: Should be computed only once.
         _levelStage.x = Math.max(-(_bg.width * _zoom) + Starling.current.viewPort.width, _levelStage.x);
         _levelStage.y = Math.max(-(_bg.height * _zoom) + Starling.current.viewPort.height, _levelStage.y);
+      }
+      
+      private function pause():void {
+        _paused = true;
+      }
+      
+      private function unpause():void {
+        _paused = false;
       }
       
       private function onTouch(event:TouchEvent):void {
         var touch:Touch = event.getTouch(this, TouchPhase.BEGAN);
         if (touch) {
-          if (touch.getLocation(this).x > 480) {
-            _snake.moveRight();
+          if (touch.getLocation(this).y > 400) {
+            trace("Possible swipe!");
+            _possibleSwipe = true; 
+            _swipeY = touch.getLocation(this).y;
           } else {
-            _snake.moveLeft();
+            _possibleSwipe = false;
+            
           }
-        }        
+        } else {
+          touch = event.getTouch(this, TouchPhase.ENDED);
+          if (touch) {
+            if (_possibleSwipe && Math.abs((_swipeY - touch.getLocation(this).y)) > 50) {
+              trace("Swipe!");
+              if(_swipeMenu.y == Starling.current.viewPort.height && _swipeY > touch.getLocation(this).y) {
+                new GTween(_swipeMenu, 0.2, { "y": Starling.current.viewPort.height - _swipeMenu.height } );
+                pause();
+              } else if (_swipeMenu.y == Starling.current.viewPort.height - _swipeMenu.height && _swipeY < touch.getLocation(this).y) {
+                new GTween(_swipeMenu, 0.2, { "y": Starling.current.viewPort.height } );               
+                unpause();
+              }
+            } else {
+              if(_swipeMenu.y == Starling.current.viewPort.height) {
+                if (touch.getLocation(this).x > 480) {
+                  _snake.moveRight();
+                } else {
+                  _snake.moveLeft();
+                }
+              }
+            }
+          }
+        }
       }
+     
+      
     }
 
 }

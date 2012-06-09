@@ -28,7 +28,7 @@ package Level
   import starling.utils.HAlign;
   import Combo.*;
   import flash.utils.*;
-  import com.greensock.easing.Expo;
+  import com.gskinner.motion.easing.Exponential
   
 	
 	/**
@@ -50,7 +50,7 @@ package Level
           _overlay.smoothing = TextureSmoothing.NONE;
           _overlay.blendMode = BlendMode.ADD;
           _levelStage.addChild(_overlay);   
-          new GTween(_overlay, 0.3, { "alpha": 0 }, { ease: Expo.easeOut, reflect:true, repeatCount:0 } );          
+          new GTween(_overlay, 0.3, { "alpha": 0 }, { ease: Exponential.easeOut, reflect:true, repeatCount:0 } );          
           
           
           _overlay = new Image(AssetRegistry.ArcadeOverlayAtlas.getTexture("arcadeOverlay240x0"));
@@ -60,7 +60,7 @@ package Level
           
           _levelStage.addChild(_overlay);
         
-          new GTween(_overlay, 0.3, { "alpha": 0 }, { ease: Expo.easeOut, reflect:true, repeatCount:0 } );          
+          new GTween(_overlay, 0.3, { "alpha": 0 }, { ease: Exponential.easeOut, reflect:true, repeatCount:0 } );          
         }      
     }      
   }
