@@ -61,7 +61,7 @@ package Level
           _levelStage.addChild(_overlay);
         
           new GTween(_overlay, 0.3, { "alpha": 0 }, { ease: Exponential.easeOut, reflect:true, repeatCount:0 } );          
-        }      
+        } 
     }      
   }
     

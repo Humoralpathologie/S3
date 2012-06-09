@@ -21,6 +21,7 @@ package engine
       [Embed(source = "../../assets/Loading/loading.png")] static public const LoadingPNG:Class;
       [Embed(source = "../../assets/Levels/arcadeOverlay.png")] static public const ArcadeOverlayPNG:Class;
       [Embed(source = "../../assets/Levels/level01bg.png")] static public const Level1BackgroundPNG:Class;
+      [Embed(source = "../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")] static public const WinMusic:Class;
       
       [Embed(source="../../assets/Levels/arcadeoverlaytexture.xml", mimeType="application/octet-stream")] static private const ArcadeOverlayAtlasXML:Class
       [Embed(source = "../../assets/Levels/arcadeoverlaytexture.png")] static private const ArcadeOverlayAtlasPNG:Class;

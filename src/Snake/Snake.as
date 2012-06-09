@@ -22,6 +22,7 @@ package Snake
     private var _speed:Number;
     private var _body:Vector.<Snake.BodyPart>
     private var _newPart:Snake.BodyPart = null;
+    private var _eatenEggs:int = 0;
         
     public function Snake(speed:Number) 
     {
@@ -41,6 +42,7 @@ package Snake
     }
     
     public function eat(eggType:int):void {
+      _eatenEggs++;
       _newPart = new BodyPart( -1, -1, _speed, eggType);
     }
     
@@ -109,6 +111,11 @@ package Snake
     public function get body():Vector.<Snake.BodyPart> 
     {
         return _body;
+    }
+    
+    public function get eatenEggs():int 
+    {
+        return _eatenEggs;
     }
         
   }

@@ -28,7 +28,10 @@ package starling.animation
      *  <p>You can create juggler objects yourself, just as well. That way, you can group 
      *  your game into logical components that handle their animations independently. All you have
      *  to do is call the "advanceTime" method on your custom juggler once per frame.</p>
-     *  
+     * 
+     *  <p>A time multiplication factor can be set by changing the "timeFactor" property. This can
+     *  be used to slow down or speed up the game.</p>
+     * 
      *  <p>Another handy feature of the juggler is the "delayCall"-method. Use it to 
      *  execute a function at a later time. Different to conventional approaches, the method
      *  will only be called when the juggler is advanced, giving you perfect control over the 
@@ -47,11 +50,15 @@ package starling.animation
     {
         private var mObjects:Vector.<IAnimatable>;
         private var mElapsedTime:Number;
+        private var mTimeFactor:Number
+        private var mPaused:Boolean;
         
         /** Create an empty juggler. */
         public function Juggler()
         {
             mElapsedTime = 0;
+            mTimeFactor = 1;
+            mPaused = false;
             mObjects = new <IAnimatable>[];
         }
 
@@ -116,6 +123,10 @@ package starling.animation
         /** Advances all objects by a certain time (in seconds). */
         public function advanceTime(time:Number):void
         {   
+          if(!mPaused) {
+            // Adjust by time multiplation factor.
+            time *= mTimeFactor;
+            
             mElapsedTime += time;
             if (mObjects.length == 0) return;
             
@@ -127,6 +138,7 @@ package starling.animation
             
             for (var i:int=0; i<numObjects; ++i)
                 objectCopy[i].advanceTime(time);
+          }
         }
         
         private function onRemove(event:Event):void
@@ -136,5 +148,12 @@ package starling.animation
         
         /** The total life time of the juggler. */
         public function get elapsedTime():Number { return mElapsedTime; }        
+        
+        /** Get and set the time multiplication factor **/
+        public function set timeFactor(value:Number):void { mTimeFactor = value; } 
+        public function get timeFactor():Number { return mTimeFactor; }
+        
+        public function set paused(value:Boolean):void { mPaused = value; }
+        public function get paused():Boolean { return mPaused;}
     }
 }
