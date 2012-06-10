@@ -32,6 +32,8 @@ package Level
   import flash.events.GestureEvent;
   import flash.events.TransformGestureEvent;
   import flash.media.Sound;
+  import flash.events.Event;
+  import flash.media.SoundTransform;
   
   /**
    * ...
@@ -61,13 +63,25 @@ package Level
     private var _following:Snake.Head;
     private var _possibleSwipe:Boolean = false;
     private var _swipeY:int;
-    private var _swipeMenu:Quad;
+    private var _swipeMenu:Sprite;
     private var _paused:Boolean = false;
+    
+		private static const sfx:Sound = new AssetRegistry.WinMusic() as Sound;
+ 
+		private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
+ 
+		private static function playSoundSilentlyEndlessly(evt:Event = null):void
+		{
+			sfx.play(0, 1000, SilentSoundTransform).addEventListener(Event.SOUND_COMPLETE, playSoundSilentlyEndlessly, false, 0, true); // plays the sound with volume 0 endlessly
+		}
+    
     
     public function LevelState()
     {
       super();
-      AssetRegistry.init();
+      
+      // Fix for laggy sound
+      playSoundSilentlyEndlessly();
       
       _currentCombos = null;
       
@@ -114,8 +128,11 @@ package Level
       _text.hAlign = HAlign.LEFT;
       addChild(_text);
       
-      _swipeMenu = new Quad(Starling.current.viewPort.width, 100, 0x000000);
-      _swipeMenu.alpha = 0.3;
+      _swipeMenu = new Sprite();
+      var swipeBackground:Quad = new Quad(Starling.current.viewPort.width, 100, 0x000000);
+      swipeBackground.alpha = 0.3;
+            
+      _swipeMenu.addChild(swipeBackground);     
       _swipeMenu.y = Starling.current.viewPort.height;
       addChild(_swipeMenu);
       
@@ -145,8 +162,7 @@ package Level
       {
         new GTween(this, 0.5, {zoom: 5});
         new GTween(Starling.juggler, 0.5, { timeFactor: 0.1 } );
-        var ode:Sound = new AssetRegistry.WinMusic as Sound;
-        ode.play();
+        AssetRegistry.WinMusicSound.play();
       }
     }
     

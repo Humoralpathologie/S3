@@ -14,6 +14,7 @@ package
   import starling.core.Starling;
   import fr.kouma.starling.utils.Stats;
   import Level.*;
+  import engine.StageManager;
   
   /**
    * ...
@@ -38,7 +39,7 @@ package
       
       // entry point  
       
-      starling = new Starling(ArcadeState, stage, new Rectangle(0, 0, 960, 640));
+      starling = new Starling(StageManager, stage, new Rectangle(0, 0, 960, 640));
       
       var loadingSprite:Sprite = new Sprite()
       var loadingBMP:Bitmap = new AssetRegistry.LoadingPNG();

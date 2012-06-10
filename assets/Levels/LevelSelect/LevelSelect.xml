@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:1ba22cfba1fd06359191c28cda890deb$ -->
+<TextureAtlas imagePath="LevelSelect.png">
+    <SubTexture name="header_15-20" x="2" y="158" width="931" height="152"/>
+    <SubTexture name="info-level" x="436" y="661" width="810" height="550"/>
+    <SubTexture name="text-info-level1" x="833" y="2" width="596" height="76"/>
+    <SubTexture name="text-info-level2" x="325" y="80" width="371" height="76"/>
+    <SubTexture name="text-info-level3" x="1066" y="80" width="451" height="76"/>
+    <SubTexture name="text-info-level4" x="1431" y="2" width="516" height="76"/>
+    <SubTexture name="text-info-level5" x="698" y="80" width="366" height="76"/>
+    <SubTexture name="text-info-level6" x="415" y="2" width="416" height="66"/>
+    <SubTexture name="text-info-level7" x="2" y="80" width="321" height="76"/>
+    <SubTexture name="text-info-level8" x="2" y="2" width="411" height="66"/>
+    <SubTexture name="tile-boss_54-1190" x="1248" y="661" width="785" height="962"/>
+    <SubTexture name="tile-level1_15-262" x="935" y="158" width="432" height="236"/>
+    <SubTexture name="tile-level2_261-377" x="882" y="399" width="432" height="248"/>
+    <SubTexture name="tile-level3_514-509" x="2" y="399" width="432" height="242"/>
+    <SubTexture name="tile-level4_261-626" x="2" y="661" width="432" height="378"/>
+    <SubTexture name="tile-level5_11-743" x="1316" y="399" width="432" height="260"/>
+    <SubTexture name="tile-level6_261-890" x="1369" y="158" width="436" height="239"/>
+    <SubTexture name="tile-level7_515-1009" x="436" y="399" width="444" height="248"/>
+</TextureAtlas>

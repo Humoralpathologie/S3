@@ -266,8 +266,8 @@ package starling.core
             var passedTime:Number = now - mLastFrameTimestamp;
             mLastFrameTimestamp = now;
             
+            mJuggler.advanceTime(passedTime);          
             mStage.advanceTime(passedTime);
-            mJuggler.advanceTime(passedTime);
             mTouchProcessor.advanceTime(passedTime);
         }
         

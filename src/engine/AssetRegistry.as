@@ -1,5 +1,6 @@
 package engine 
 {
+    import flash.media.Sound;
     import starling.text.BitmapFont;
     import starling.textures.Texture;
     import starling.textures.TextureAtlas;
@@ -26,14 +27,26 @@ package engine
       [Embed(source="../../assets/Levels/arcadeoverlaytexture.xml", mimeType="application/octet-stream")] static private const ArcadeOverlayAtlasXML:Class
       [Embed(source = "../../assets/Levels/arcadeoverlaytexture.png")] static private const ArcadeOverlayAtlasPNG:Class;
       
+      [Embed(source = "../../assets/Menus/Menu.xml", mimeType="application/octet-stream")] static private const MenuXML:Class;
+      [Embed(source = "../../assets/Menus/Menu.png")] static private const MenuPNG:Class;
+      
+      [Embed(source = "../../assets/Levels/LevelSelect/LevelSelect.xml", mimeType = "application/octet-stream")] static private const LevelSelectXML:Class;
+      [Embed(source = "../../assets/Levels/LevelSelect/LevelSelect.png")] static private const LevelSelectPNG:Class;
+      [Embed(source = "../../assets/Levels/LevelSelect/background.png")] static private const LevelSelectBGPNG:Class;
+      
       public static var SnakeAtlas:TextureAtlas;
+      public static var MenuAtlas:TextureAtlas;
       public static var ArcadeOverlayAtlas:TextureAtlas;
+      public static var LevelSelectAtlas:TextureAtlas;
+      
       public static var UIOverlayTexture:Texture;
+      public static var LevelSelectBGTexture:Texture;
       public static var DrugParticleConfig:XML;
       public static var DrugParticleTexture:Texture;
       public static var ArcadeBackground:Texture;
       public static var ArcadeOverlay:Texture;
       public static var Level1Background:Texture;
+      public static var WinMusicSound:Sound;
       
       public static const TILESIZE:int = 15;
 
@@ -50,27 +63,42 @@ package engine
       public static const EGGSHUFFLE:int = 5;
       public static const EGGGOLDEN:int = 6;
       
-      public static var HQ:Boolean = true;
+      public static var HQ:Boolean = false;
     
       public static function init():void 
       {
-        
-        UIOverlayTexture = Texture.fromBitmap(new UIOverlayPNG);
-        ArcadeBackground = Texture.fromBitmap(new ArcadeBackgroundPNG);
-        ArcadeOverlay = Texture.fromBitmap(new ArcadeOverlayPNG);
+        TextField.registerBitmapFont(new BitmapFont(Texture.fromBitmap(new FontPNG()), XML(new FontXML)));
+        MenuAtlas = new TextureAtlas(Texture.fromBitmap(new MenuPNG), XML(new MenuXML));
+
+        /*
+
         
         Level1Background = Texture.fromBitmap(new Level1BackgroundPNG);
         
         var texture:Texture = Texture.fromBitmap(new SnakeTexturePNG);
-        SnakeAtlas = new TextureAtlas(texture, XML(new SnakeAtlasXML));
         
+        
+        */
+      }
+      
+      public static function loadArcadeGraphics():void {
+        UIOverlayTexture = Texture.fromBitmap(new UIOverlayPNG);
+        ArcadeBackground = Texture.fromBitmap(new ArcadeBackgroundPNG);
+        SnakeAtlas = new TextureAtlas(Texture.fromBitmap(new SnakeTexturePNG), XML(new SnakeAtlasXML));   
         ArcadeOverlayAtlas = new TextureAtlas(Texture.fromBitmap(new ArcadeOverlayAtlasPNG), XML(new ArcadeOverlayAtlasXML));
         
         DrugParticleConfig = XML(new DrugsParticleXML);
-        DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);
+        DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);     
+        WinMusicSound = new WinMusic as Sound;
         
-        TextField.registerBitmapFont(new BitmapFont(Texture.fromBitmap(new FontPNG()), XML(new FontXML)));
-        
+      }
+      
+      public static function loadLevelSelectGraphics():void {
+        LevelSelectAtlas = new TextureAtlas(Texture.fromBitmap(new LevelSelectPNG), XML(new LevelSelectXML));        
+      }
+      
+      public static function disposeLevelSelectGraphics():void {
+        LevelSelectAtlas.dispose();
       }
         
     }
