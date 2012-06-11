@@ -3,6 +3,7 @@ package Level
   import com.gskinner.motion.GTween;
   import Eggs.Egg;
   import Eggs.Eggs;
+  import flash.geom.Point;
   import fr.kouma.starling.utils.Stats;
   import Snake.Snake;
   import starling.animation.Tween;
@@ -12,6 +13,7 @@ package Level
   import starling.display.Quad;
   import starling.display.Sprite;
   import starling.extensions.ParticleDesignerPS;
+  import starling.extensions.ParticleSystem;
   import starling.extensions.PDParticleSystem;
   import starling.text.TextField;
   import starling.textures.Texture;
@@ -34,12 +36,15 @@ package Level
   import flash.media.Sound;
   import flash.events.Event;
   import flash.media.SoundTransform;
+  import engine.ManagedStage;
+  import engine.StageManager;
+  import Menu.MainMenu;
   
   /**
    * ...
    * @author
    */
-  public class LevelState extends Sprite
+  public class LevelState extends ManagedStage
   {
     protected var _bg:Image;
     protected var _bgTexture:Texture;
@@ -47,6 +52,7 @@ package Level
     private var _hud:HUD;
     private var _timer:Number = 0;
     private var _snake:Snake;
+    private var _lifes:int = 3;
     private var _speed:Number = 0.3;
     protected var _levelStage:Sprite;
     private var _particles:PDParticleSystem;
@@ -65,6 +71,8 @@ package Level
     private var _swipeY:int;
     private var _swipeMenu:Sprite;
     private var _paused:Boolean = false;
+    private var _firstFrame:Boolean = true;
+    private var _particlePool:Vector.<PDParticleSystem>;
     
 		private static const sfx:Sound = new AssetRegistry.WinMusic() as Sound;
  
@@ -79,7 +87,7 @@ package Level
     public function LevelState()
     {
       super();
-      
+
       // Fix for laggy sound
       playSoundSilentlyEndlessly();
       
@@ -119,9 +127,16 @@ package Level
       _hud = new HUD(_eggs, _snake);
       addChild(_hud);
       
-      _particles = new PDParticleSystem(AssetRegistry.DrugParticleConfig, AssetRegistry.DrugParticleTexture);
+      _particles = new PDParticleSystem(AssetRegistry.DrugParticleConfig, AssetRegistry.SnakeAtlas.getTexture("drugs_particle"));
       _levelStage.addChild(_particles);
       Starling.juggler.add(_particles);
+      
+      // Make the particle Systems for Combos;
+      _particlePool = new Vector.<PDParticleSystem>;
+      for (var i:int = 0; i < 10; i++) {
+        _particlePool.push(new PDParticleSystem(AssetRegistry.ComboParticleConfig, AssetRegistry.SnakeAtlas.getTexture("shell")));
+        _levelStage.addChild(_particlePool[i]);
+      }      
       
       _text = new TextField(300, 200, "SNAKE", "kroeger 06_65", 30);
       _text.color = Color.WHITE;
@@ -135,6 +150,17 @@ package Level
       _swipeMenu.addChild(swipeBackground);     
       _swipeMenu.y = Starling.current.viewPort.height;
       addChild(_swipeMenu);
+      
+      var back:TextField = new TextField(300, 100, "BACK", "kroeger 06_65", 80, Color.WHITE);
+      
+      back.addEventListener(TouchEvent.TOUCH, 
+        function(event:TouchEvent):void {
+          var touch:Touch = event.getTouch(back, TouchPhase.ENDED);
+          if (touch) {
+            StageManager.switchStage(MainMenu);
+          }
+        });
+      _swipeMenu.addChild(back);
       
       // For debugging. 
       Starling.current.showStats = true;
@@ -151,9 +177,22 @@ package Level
         {
           eatEgg(eggs[i]);
           _justAte = true;
-          peggle();
+          //peggle();
         }
       }
+    }
+    
+    private function showParticles(egg:DisplayObject):void {
+      var pd:ParticleSystem;
+      for (var i:int = 0; i < _particlePool.length; i++) {
+        
+      }      
+      pd = _particlePool[0];
+      pd.x = egg.x;
+      pd.y = egg.y;
+      
+      pd.start(1);
+      Starling.juggler.add(pd);
     }
     
     private function peggle():void
@@ -168,12 +207,16 @@ package Level
     
     private function eatEgg(egg:Egg):void
     {
+      AssetRegistry.BiteSound.play();
+      
       _particles.x = egg.x;
       _particles.y = egg.y;
       _particles.start(0.5);
       _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
       _eggs.removeChild(egg);
       _eggs.spawnRandomEgg();
+      
+      showPoints(egg, "2");
       
       if (egg.type < AssetRegistry.EGGROTTEN)
       {
@@ -220,12 +263,13 @@ package Level
           {
             expoCounter++;
             _score += fib;
-            //showPoints(egg, '+' + String(fib), new AxColor(Math.random(), Math.random(), Math.random(), 1));
+            showPoints(egg, '+' + String(fib));
             temp = fib;
             fib += prefib;
             prefib = temp;
             //_soundEffects[soundCounter].play();
             //AxParticleSystem.emit("combo", egg.x, egg.y);
+            showParticles(egg);
             _snake.removeChild(egg);
             _snake.body.splice(_snake.body.indexOf(egg), 1);
             soundCounter++;
@@ -235,6 +279,22 @@ package Level
       }
       
       func();
+    }
+    
+    private function showPoints(egg:DisplayObject, points:String):void {
+      var text:TextField = new TextField(200, 200, points, "kroeger 06_65", 60, Color.WHITE);
+      text.hAlign = HAlign.CENTER;
+      text.x = (Starling.current.viewPort.width - text.width) / 2;
+      text.y = (Starling.current.viewPort.height - text.height) / 2;
+      addChild(text);
+      var tween:Tween = new Tween(text, 3, "easeIn");
+      tween.animate("y", 0);
+      
+      tween.onComplete = function():void {
+        removeChild(text);
+      }
+      
+      Starling.juggler.add(tween);
     }
     
     protected function doCombos():void
@@ -284,17 +344,26 @@ package Level
     
     }
     
+
+    
     private function onEnterFrame(event:EnterFrameEvent):void
     {
+      trace(event.passedTime);
       var bodyArray:Array;
       var comboArray:Array;
       if (!_paused)
       {
-        updateTimers(event);
+        if (_firstFrame) {
+          _firstFrame = false;
+        } else {
+          updateTimers(event);
+        }
         
         _text.text = String(_overallTimer.toFixed(2));
         _hud.update();
-        updateCamera();
+        
+        _snake.update(event.passedTime * Starling.juggler.timeFactor);
+        
         if (_timer >= _speed)
         {
           _snake.move();
@@ -303,6 +372,8 @@ package Level
           eggCollide();
           _timer -= _speed;
         }
+        updateCamera();
+        
       }
     
     }

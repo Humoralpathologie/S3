@@ -12,6 +12,7 @@ package Level
   {
     public function Level1() 
     {
+      AssetRegistry.loadLevel1Graphics();
       super();
     }
     
@@ -20,6 +21,11 @@ package Level
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
+    }
+    
+    override public function dispose():void {
+      AssetRegistry.disposeLevel1Graphics();
+      super.dispose();
     }
         
   }

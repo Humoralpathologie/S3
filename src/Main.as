@@ -34,6 +34,8 @@ package
       stage.align = StageAlign.TOP_LEFT;
       stage.addEventListener(Event.DEACTIVATE, deactivate);
       
+      Starling.handleLostContext = false;
+      
       // touch or gesture?
       Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
       

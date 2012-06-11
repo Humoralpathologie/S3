@@ -189,6 +189,7 @@ package starling.text
                 mHelperImage.y = charLocation.y;
                 mHelperImage.scaleX = mHelperImage.scaleY = charLocation.scale;
                 mHelperImage.color = color;
+                mHelperImage.smoothing = TextureSmoothing.NONE;
                 quadBatch.addImage(mHelperImage);
             }
         }

@@ -25,11 +25,13 @@ package engine
     protected var _image:Image;
     protected var _tween:GTween;
     protected var _starlingTween:Tween;
+    private var _velocity:Point;
   
     public function TileSprite(tileX:int = 0, tileY:int = 0, image:Image = null, speed:Number = 0.3) 
     {
       super();
       _frameOffset = new Point(0, 0);
+      _velocity = new Point(15, 0);
 
       this.tileX = tileX;
       this.tileY = tileY;
@@ -64,33 +66,47 @@ package engine
       _prevFacing = _facing;
     }
     
+    public function update(time:Number):void {
+      x += time * (_velocity.x / _speed);
+      y += time * (_velocity.y / _speed);
+    }    
+    
     public function animateMove():void {
+      /*
       if(_starlingTween == null) {
         _starlingTween = new Tween(this, _speed);
       } else {
         Starling.juggler.remove(_starlingTween);
         _starlingTween.reset(this, _speed);
-      }
+      }*/
       
       switch(_facing) {
          case AssetRegistry.UP:
             //_tween.setValue("y", y - AssetRegistry.TILESIZE);
-            _starlingTween.animate("y", y - AssetRegistry.TILESIZE);
+            //_starlingTween.animate("y", y - AssetRegistry.TILESIZE);
+            _velocity.x = 0;
+            _velocity.y = -15;
             break;
         case AssetRegistry.DOWN:
             //_tween.setValue("y", y + AssetRegistry.TILESIZE);
-            _starlingTween.animate("y", y + AssetRegistry.TILESIZE);
+            //_starlingTween.animate("y", y + AssetRegistry.TILESIZE);
+            _velocity.x = 0;
+            _velocity.y = 15;
             break;
         case AssetRegistry.RIGHT:
             //_tween.setValue("x", x + AssetRegistry.TILESIZE);
-            _starlingTween.animate("x", x + AssetRegistry.TILESIZE);
+            //_starlingTween.animate("x", x + AssetRegistry.TILESIZE);
+            _velocity.x = 15;
+            _velocity.y = 0;
             break;
         case AssetRegistry.LEFT:
             //_tween.setValue("x", x - AssetRegistry.TILESIZE);
-            _starlingTween.animate("x", x - AssetRegistry.TILESIZE);
+            //_starlingTween.animate("x", x - AssetRegistry.TILESIZE);
+            _velocity.x = -15;
+            _velocity.y = 0;
             break;       
       } 
-      Starling.juggler.add(_starlingTween);
+      //Starling.juggler.add(_starlingTween);
       
     }
     

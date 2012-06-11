@@ -1,5 +1,6 @@
 package Menu
 {
+  import engine.ManagedStage;
   import flash.geom.Point;
   import starling.display.DisplayObject;
   import starling.display.Image;
@@ -10,12 +11,14 @@ package Menu
   import starling.events.TouchEvent;
   import starling.events.TouchPhase;
   import starling.core.Starling;
+  import engine.StageManager;
+  import Level.*;
   
   /**
    * ...
    * @author
    */
-  public class LevelSelect extends Sprite
+  public class LevelSelect extends ManagedStage
   {
     private var _bg:Quad;
     private var _levelInfo:Sprite;
@@ -26,9 +29,14 @@ package Menu
     
     public function LevelSelect()
     {
+      
+      AssetRegistry.loadLevelSelectGraphics();
+      
       _scrollable = new Sprite();
       _scrollable.addEventListener(TouchEvent.TOUCH, onTouch);
       _levelInfo = new Sprite();
+      _levelInfo.addChild(new Image(AssetRegistry.LevelSelectAtlas.getTexture("info-level")));
+      
       _showingInfo = false;
       _levelName = new Image(AssetRegistry.LevelSelectAtlas.getTexture("text-info-level1"));
       
@@ -46,13 +54,18 @@ package Menu
       level1.addEventListener(TouchEvent.TOUCH, showLevelInfo(1));
       _scrollable.addChild(level1);
       
+      var lockedLevel:Image;
+      
       var level2:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level2_261-377"));
       level2.x = 261;
       level2.y = 377;
-      level2.alpha = 0.5;
+      lockedLevel = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level-locked"));
+      lockedLevel.x = level2.x;
+      lockedLevel.y = level2.y;
       level2.addEventListener(TouchEvent.TOUCH, showLevelInfo(2));
       
-      _scrollable.addChild(level2);
+      //_scrollable.addChild(level2);
+      _scrollable.addChild(lockedLevel);
       
       var level3:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level3_514-509"));
       level3.x = 514;
@@ -103,6 +116,8 @@ package Menu
       _scrollable.addChild(level8);
       
       addChild(_scrollable);
+      
+      _scrollable.flatten();
     
     }
     
@@ -118,22 +133,40 @@ package Menu
           {
             if (_slideY < 50)
             {
-              _levelInfo.addChild(new Image(AssetRegistry.LevelSelectAtlas.getTexture("info-level")));
-              _levelInfo.x = (Starling.current.viewPort.width - _levelInfo.width) / 2;
-              _levelInfo.y = (Starling.current.viewPort.height - _levelInfo.height) / 2;
-              _levelName.texture = AssetRegistry.LevelSelectAtlas.getTexture("text-info-level" + String(level));
-              _levelInfo.addChild(_levelName);
+              _levelInfo.removeChild(_levelName);
+              _levelName.dispose();
               
+              _levelName = new Image(AssetRegistry.LevelSelectAtlas.getTexture("text-info-level" + String(level)));
               _levelName.x += 85;
               _levelName.y += 85;
+              
+              _levelInfo.addChild(_levelName);
+              _levelInfo.x = (Starling.current.viewPort.width - _levelInfo.width) / 2;
+              _levelInfo.y = (Starling.current.viewPort.height - _levelInfo.height) / 2;
+              _levelInfo.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
+                {
+                  var touch:Touch = event.getTouch(that, TouchPhase.ENDED);
+                  if (touch)
+                  {
+                    if(touch.getLocation(_levelInfo).y < _levelInfo.height * 2 / 3) {
+                      _showingInfo = false;
+                      that.removeChild(_levelInfo);
+                    } else {
+                      StageManager.switchStage(Level1);
+                    }
+                  }
+                });
               
               that.addChild(_levelInfo);
               
               _showingInfo = true;
             }
-          } else {
+          }
+          else
+          {
             touch = event.getTouch(that, TouchPhase.BEGAN);
-            if (touch) {
+            if (touch)
+            {
               _slideY = 0;
             }
           }
@@ -154,6 +187,11 @@ package Menu
           _scrollable.y = Math.max(-(_bg.height - Starling.current.viewPort.height), _scrollable.y);
         }
       }
+    }
+    
+    override public function dispose():void {
+      AssetRegistry.disposeLevelSelectGraphics();
+      super.dispose();
     }
   
   }

@@ -1,5 +1,8 @@
 package Menu
 {
+    import engine.ManagedStage;
+    import flash.events.Event;
+    import flash.media.SoundChannel;
     import Level.ArcadeState;
     import starling.display.Image;
     import starling.display.Sprite;
@@ -16,7 +19,7 @@ package Menu
    * ...
    * @author
    */
-  public class MainMenu extends Sprite
+  public class MainMenu extends ManagedStage
   {
     private var _bg:Image;
     private var _possibleSwipe:Boolean = false;
@@ -69,21 +72,28 @@ package Menu
       
       Starling.juggler.delayCall(function():void { new GTween(_swipeMessage, 1, {alpha: 1})}, 2);
       
+      /*
+      var soundchannel:SoundChannel = AssetRegistry.LevelMusic1Sound.play();
+      var loop:Function = function():void {
+        soundchannel = AssetRegistry.LevelMusic2Sound.play(50);
+        soundchannel.addEventListener(Event.ACTIVATE, loop)
+      }
+      
+      soundchannel.addEventListener(Event.SOUND_COMPLETE, loop);
+      */
     }
     
     private function startArcade(event:TouchEvent):void {
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch && _swipeMenu.y == Starling.current.viewPort.height - _swipeMenu.height) {
-        AssetRegistry.loadArcadeGraphics();
-        StageManager.switchStage(new ArcadeState);
+        StageManager.switchStage(ArcadeState);
       }
     }
     
     private function startLevelSelect(event:TouchEvent):void {
     var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch && _swipeMenu.y == Starling.current.viewPort.height - _swipeMenu.height) {
-        AssetRegistry.loadLevelSelectGraphics();
-        StageManager.switchStage(new LevelSelect);
+        StageManager.switchStage(LevelSelect);
       }     
     }
      
@@ -100,8 +110,7 @@ package Menu
         }
         else
         {
-          _possibleSwipe = false;
-          
+          _possibleSwipe = false;          
         }
       }
       else

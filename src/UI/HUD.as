@@ -45,6 +45,7 @@ package UI
       _neededEggsText.x = _neededEggs.x + _neededEggs.width + 15;
       _neededEggsText.y = _neededEggs.y;
       
+      
       _neededEggsText.hAlign = HAlign.LEFT;
 
       addChild(_overlay);

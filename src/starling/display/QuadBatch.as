@@ -574,7 +574,7 @@ package starling.display
         
         private static function getImageProgramName(tinted:Boolean,
                                                     mipMap:Boolean=true, repeat:Boolean=false,
-                                                    smoothing:String="bilinear"):String
+                                                    smoothing:String="none"):String
         {
             // to avoid temporary string creation, the program name is not built dynamically;
             // instead, we use a generated code that returns a string constant.

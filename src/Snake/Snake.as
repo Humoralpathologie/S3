@@ -69,6 +69,13 @@ package Snake
       _head.advance();
     }
     
+    public function update(time:Number):void {
+      _head.update(time);
+      for (var i:int = 0; i < _body.length; i++) {
+        _body[i].update(time);
+      }         
+    }
+    
     public function moveRight():void {
       switch(_head.facing) {
         case AssetRegistry.UP:
