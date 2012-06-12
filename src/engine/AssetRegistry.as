@@ -24,7 +24,7 @@ package engine
       [Embed(source = "../../assets/Levels/arcadeOverlay.png")] static public const ArcadeOverlayPNG:Class;
       [Embed(source = "../../assets/Levels/level01bg.png")] static public const Level1BackgroundPNG:Class;
       
-      [Embed(source = "../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")] static public const WinMusic:Class;
+      //[Embed(source = "../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")] static public const WinMusic:Class;
       [Embed(source = "../../assets/Sounds/Biss3.mp3")] static public const Bite:Class;
       
       [Embed(source="../../assets/Levels/arcadeoverlaytexture.xml", mimeType="application/octet-stream")] static private const ArcadeOverlayAtlasXML:Class
@@ -119,7 +119,7 @@ package engine
         DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);     
         ComboParticleConfig = XML(new ComboParticleXML);
         
-        WinMusicSound = new WinMusic as Sound;   
+//        WinMusicSound = new WinMusic as Sound;   
         BiteSound = new Bite as Sound;        
       }
       

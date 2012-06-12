@@ -29,6 +29,7 @@ package Level
   import starling.text.TextField;
   import starling.utils.Color;
   import starling.utils.HAlign;
+  import starling.utils.*;
   import Combo.*;
   import flash.utils.*;
   import flash.events.GestureEvent;
@@ -77,13 +78,13 @@ package Level
     protected var _levelNr:int = 0;
     private var _won:Boolean = false;
     
-		private static const sfx:Sound = new AssetRegistry.WinMusic() as Sound;
+//		private static const sfx:Sound = new AssetRegistry.WinMusic() as Sound;
  
 		private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
  
 		private static function playSoundSilentlyEndlessly(evt:Event = null):void
 		{
-			sfx.play(0, 1000, SilentSoundTransform).addEventListener(Event.SOUND_COMPLETE, playSoundSilentlyEndlessly, false, 0, true); // plays the sound with volume 0 endlessly
+//			sfx.play(0, 1000, SilentSoundTransform).addEventListener(Event.SOUND_COMPLETE, playSoundSilentlyEndlessly, false, 0, true); // plays the sound with volume 0 endlessly
 		}
         
     public function LevelState()
@@ -258,7 +259,7 @@ package Level
       _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
       _eggs.removeChild(egg);
       _eggs.spawnRandomEgg();
-      
+            
       showPoints(egg, "2");
       
       if (egg.type < AssetRegistry.EGGROTTEN)
@@ -306,7 +307,8 @@ package Level
           {
             expoCounter++;
             _score += fib;
-            showPoints(egg, '+' + String(fib));
+            var randColor:uint = Color.argb(256, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
+            showPoints(egg, '+' + String(fib) + randColor);
             temp = fib;
             fib += prefib;
             prefib = temp;
@@ -324,14 +326,21 @@ package Level
       func();
     }
     
-    private function showPoints(egg:DisplayObject, points:String):void {
-      var text:TextField = new TextField(200, 200, points, "kroeger 06_65", 60, Color.WHITE);
+    private function showPoints(egg:DisplayObject, points:String, color:uint = 0xffffff):void {
+      var text:TextField = new TextField(120, 120, points, "kroeger 06_65", 60);
+      text.color = color;
+      text.autoScale = true;
       text.hAlign = HAlign.CENTER;
-      text.x = (Starling.current.viewPort.width - text.width) / 2;
-      text.y = (Starling.current.viewPort.height - text.height) / 2;
-      addChild(text);
-      var tween:Tween = new Tween(text, 3, "easeIn");
+      text.x = egg.x - 60;
+      text.y = egg.y - 60;
+      _levelStage.addChild(text);
+      var tween:Tween = new Tween(text, 2, "linear");
       tween.animate("y", 0);
+      tween.animate("scaleX", 3);
+      tween.animate("scaleY", 3);
+      tween.animate("x", 0);
+      tween.animate("rotation", deg2rad(15));
+      tween.fadeTo(0); 
       
       tween.onComplete = function():void {
         removeChild(text);
