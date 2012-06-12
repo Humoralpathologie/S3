@@ -85,8 +85,7 @@ package Level
 		{
 			sfx.play(0, 1000, SilentSoundTransform).addEventListener(Event.SOUND_COMPLETE, playSoundSilentlyEndlessly, false, 0, true); // plays the sound with volume 0 endlessly
 		}
-    
-    
+        
     public function LevelState()
     {
       super();
@@ -405,7 +404,6 @@ package Level
     
     private function onEnterFrame(event:EnterFrameEvent):void
     {
-      trace(event.passedTime);
       var bodyArray:Array;
       var comboArray:Array;
       
@@ -431,7 +429,12 @@ package Level
         
         if (_timer >= _speed)
         {
+          var startTimer:Number, endTimer:Number;
+          startTimer = getTimer();
           _snake.move();
+          endTimer = getTimer();
+          
+          trace("Moving took " +String(endTimer - startTimer) + "ms");
           
           doCombos();
           eggCollide();

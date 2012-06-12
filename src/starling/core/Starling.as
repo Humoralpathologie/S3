@@ -380,7 +380,6 @@ package starling.core
             
             if (mStarted) advanceTime();
             if (mStarted || mNativeOverlay.parent) render();
-            trace("New Frame")
         }
         
         private function onKey(event:KeyboardEvent):void

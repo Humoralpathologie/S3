@@ -94,44 +94,41 @@ package engine
         ArcadeBackground = Texture.fromBitmap(new ArcadeBackgroundPNG);
         ArcadeOverlayAtlas = new TextureAtlas(Texture.fromBitmap(new ArcadeOverlayAtlasPNG), XML(new ArcadeOverlayAtlasXML));
         
-        DrugParticleConfig = XML(new DrugsParticleXML);
-        DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);     
-        ComboParticleConfig = XML(new ComboParticleXML);
-        
-        WinMusicSound = new WinMusic as Sound;       
-        BiteSound = new Bite as Sound;
+        loadLevelGraphics();
       }
       
       public static function disposeArcadeGraphics():void {
         UIOverlayTexture.dispose();
         ArcadeBackground.dispose();
-        //SnakeAtlas.dispose();
         ArcadeOverlayAtlas.dispose();
-        DrugParticleConfig = null;
-        DrugParticleTexture.dispose();
-        ComboParticleConfig = null;        
-        WinMusicSound = null;
+        disposeLevelGraphics();
       }
       
       public static function loadLevel1Graphics():void {
         Level1Background = Texture.fromBitmap(new Level1BackgroundPNG);
-        //SnakeAtlas = new TextureAtlas(Texture.fromBitmap(new SnakeTexturePNG), XML(new SnakeAtlasXML));   
+        loadLevelGraphics();
+      }
+      
+      public static function disposeLevel1Graphics():void {
+        Level1Background.dispose();
+        disposeLevelGraphics();
+      }
+      
+      public static function loadLevelGraphics():void {
         DrugParticleConfig = XML(new DrugsParticleXML);
         DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);     
         ComboParticleConfig = XML(new ComboParticleXML);
         
         WinMusicSound = new WinMusic as Sound;   
-        BiteSound = new Bite as Sound;
+        BiteSound = new Bite as Sound;        
       }
       
-      public static function disposeLevel1Graphics():void {
-        Level1Background.dispose();
-        //SnakeAtlas.dispose();
+      public static function disposeLevelGraphics():void {
         DrugParticleConfig = null;
         DrugParticleTexture.dispose();
         ComboParticleConfig = null;        
         
-        WinMusicSound = null;
+        WinMusicSound = null;        
       }
       
       public static function loadLevelSelectGraphics():void {

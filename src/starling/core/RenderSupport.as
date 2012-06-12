@@ -215,7 +215,6 @@ package starling.core
         /** Renders the current quad batch and resets it. */
         public function finishQuadBatch():void
         {
-            trace("Rendering Batch");
             currentQuadBatch.renderCustom(mProjectionMatrix);
             currentQuadBatch.reset();
             

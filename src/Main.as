@@ -1,5 +1,6 @@
 package
 {
+  import com.sociodox.theminer.TheMiner;
   import engine.AssetRegistry;
   import flash.desktop.NativeApplication;
   import flash.display.Bitmap;
@@ -16,6 +17,7 @@ package
   import Level.*;
   import engine.StageManager;
   import engine.SaveGame;
+  import com.demonsters.debugger.MonsterDebugger;
   
   /**
    * ...
@@ -36,6 +38,10 @@ package
       stage.addEventListener(Event.DEACTIVATE, deactivate);
       
       Starling.handleLostContext = false;
+      
+      //MonsterDebugger.initialize(this);
+      //MonsterDebugger.trace(this, "Hello World");
+      //stage.addChild(new TheMiner());
       
       // touch or gesture?
       Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
