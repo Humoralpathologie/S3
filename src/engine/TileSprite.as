@@ -31,7 +31,7 @@ package engine
     {
       super();
       _frameOffset = new Point(0, 0);
-      _velocity = new Point(15, 0);
+      _velocity = new Point(0, 0);
 
       this.tileX = tileX;
       this.tileY = tileY;
@@ -51,15 +51,19 @@ package engine
       switch(_prevFacing) {
         case AssetRegistry.UP:
             tileY -= 1;
+            tileX = tileX;
             break;
         case AssetRegistry.DOWN:
             tileY += 1;
+            tileX = tileX;
             break;
         case AssetRegistry.RIGHT:
             tileX += 1;
+            tileY = tileY;
             break;
         case AssetRegistry.LEFT:
             tileX -= 1;
+            tileY = tileY;
             break;
       }
       animateMove();

@@ -13,6 +13,7 @@ package Menu
   import starling.core.Starling;
   import engine.StageManager;
   import Level.*;
+  import engine.SaveGame;
   
   /**
    * ...
@@ -26,6 +27,27 @@ package Menu
     private var _levelName:Image;
     private var _scrollable:Sprite;
     private var _slideY:Number = 0;
+    private static const _lockedPositions:Array = [
+      [15, 262],
+      [261, 382],
+      [514, 512],
+      [261, 638],
+      [11, 764],
+      [261, 893],
+      [514, 1018],
+      [54, 1190]
+    ];
+    
+    private static const _unlockedPositions:Array = [
+      [15, 262],
+      [261, 377],
+      [514, 509],
+      [261, 626],
+      [11, 743],
+      [261, 890],
+      [515, 1009],
+      [54, 1190]      
+    ];
     
     public function LevelSelect()
     {
@@ -41,80 +63,43 @@ package Menu
       _levelName = new Image(AssetRegistry.LevelSelectAtlas.getTexture("text-info-level1"));
       
       _bg = new Quad(960, 2240, 0xCDB594);
-      _scrollable.addChild(_bg);
+      //_scrollable.addChild(_bg);
+      
+      var bgTop:Image = new Image(AssetRegistry.LevelSelectBGTexture);
+      _scrollable.addChild(bgTop);
+      
+      var bgBottom:Image = new Image(AssetRegistry.LevelSelectBGTexture);
+      bgBottom.y = bgTop.height * 2;
+      bgBottom.scaleY = -1;
+      
+      _scrollable.addChild(bgBottom);
       
       var header:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("header_15-20"));
       header.x = 15;
       header.y = 20;
       _scrollable.addChild(header);
       
-      var level1:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level1_15-262"));
-      level1.x = 15;
-      level1.y = 262;
-      level1.addEventListener(TouchEvent.TOUCH, showLevelInfo(1));
-      _scrollable.addChild(level1);
-      
-      var lockedLevel:Image;
-      
-      var level2:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level2_261-377"));
-      level2.x = 261;
-      level2.y = 377;
-      lockedLevel = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level-locked"));
-      lockedLevel.x = level2.x;
-      lockedLevel.y = level2.y;
-      level2.addEventListener(TouchEvent.TOUCH, showLevelInfo(2));
-      
-      //_scrollable.addChild(level2);
-      _scrollable.addChild(lockedLevel);
-      
-      var level3:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level3_514-509"));
-      level3.x = 514;
-      level3.y = 509;
-      level3.alpha = 0.5;
-      level3.addEventListener(TouchEvent.TOUCH, showLevelInfo(3));
-      
-      _scrollable.addChild(level3);
-      
-      var level4:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level4_261-626"));
-      level4.x = 261;
-      level4.y = 626;
-      level4.alpha = 0.5;
-      level4.addEventListener(TouchEvent.TOUCH, showLevelInfo(4));
-      
-      _scrollable.addChild(level4);
-      
-      var level5:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level5_11-743"));
-      level5.x = 11;
-      level5.y = 743;
-      level5.alpha = 0.5;
-      level5.addEventListener(TouchEvent.TOUCH, showLevelInfo(5));
-      
-      _scrollable.addChild(level5);
-      
-      var level6:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level6_261-890"));
-      level6.x = 261;
-      level6.y = 890;
-      level6.alpha = 0.5;
-      level6.addEventListener(TouchEvent.TOUCH, showLevelInfo(6));
-      
-      _scrollable.addChild(level6);
-      
-      var level7:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level7_515-1009"));
-      level7.x = 515;
-      level7.y = 1009;
-      level7.alpha = 0.5;
-      level7.addEventListener(TouchEvent.TOUCH, showLevelInfo(7));
-      
-      _scrollable.addChild(level7);
-      
-      var level8:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-boss_54-1190"));
-      level8.x = 54;
-      level8.y = 1190;
-      level8.alpha = 0.5;
-      level8.addEventListener(TouchEvent.TOUCH, showLevelInfo(8));
-      
-      _scrollable.addChild(level8);
-      
+      for (var i:int = 0; i < 8; i++) {
+        var textureStr:String;
+        var level:Image;
+        if(SaveGame.levelUnlocked(i + 1)) {
+          textureStr = "tile-level" + String(i + 1) + "_" + String(_unlockedPositions[i][0]) + "-" + String(_unlockedPositions[i][1]);
+          level = new Image(AssetRegistry.LevelSelectAtlas.getTexture(textureStr));
+          level.x = _unlockedPositions[i][0];
+          level.y = _unlockedPositions[i][1];
+          level.addEventListener(TouchEvent.TOUCH, showLevelInfo(i + 1));
+        } else {
+          if (i == 7) {
+            level = new Image(AssetRegistry.LevelSelectBossLocked);
+          } else {
+            level = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level-locked"));
+          }
+          level.x = _lockedPositions[i][0];
+          level.y = _lockedPositions[i][1];
+        }
+        _scrollable.addChild(level);
+      }
+            
       addChild(_scrollable);
       
       _scrollable.flatten();
@@ -188,6 +173,8 @@ package Menu
         }
       }
     }
+    
+
     
     override public function dispose():void {
       AssetRegistry.disposeLevelSelectGraphics();

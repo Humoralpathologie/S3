@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:a5dbe695e78735cb96d666ceaeab7d10$ -->
+<!-- $TexturePacker:SmartUpdate:e63fbac1005f6e05b21a003f1d1fc6af$ -->
 <TextureAtlas imagePath="LevelSelect.png">
     <SubTexture name="header_15-20" x="2" y="1821" width="931" height="152"/>
     <SubTexture name="info-level" x="789" y="800" width="810" height="550"/>
@@ -12,13 +12,13 @@
     <SubTexture name="text-info-level6" x="1479" y="2" width="416" height="66"/>
     <SubTexture name="text-info-level7" x="2" y="2" width="321" height="76"/>
     <SubTexture name="text-info-level8" x="1066" y="2" width="411" height="66"/>
-    <SubTexture name="tile-boss_54-1190" x="2" y="800" width="785" height="1019"/>
-    <SubTexture name="tile-level-locked" x="436" y="342" width="432" height="236"/>
-    <SubTexture name="tile-level1_15-262" x="436" y="80" width="432" height="236"/>
-    <SubTexture name="tile-level2_261-377" x="2" y="80" width="432" height="248"/>
-    <SubTexture name="tile-level3_514-509" x="1304" y="80" width="432" height="242"/>
-    <SubTexture name="tile-level4_261-626" x="2" y="342" width="432" height="378"/>
-    <SubTexture name="tile-level5_11-743" x="870" y="80" width="432" height="260"/>
+    <SubTexture name="tile-level-locked" x="2" y="342" width="432" height="236"/>
+    <SubTexture name="tile-level1_15-262" x="2" y="80" width="432" height="236"/>
+    <SubTexture name="tile-level2_261-377" x="436" y="80" width="432" height="248"/>
+    <SubTexture name="tile-level3_514-509" x="870" y="80" width="432" height="242"/>
+    <SubTexture name="tile-level4_261-626" x="436" y="342" width="432" height="378"/>
+    <SubTexture name="tile-level5_11-743" x="1304" y="80" width="432" height="260"/>
     <SubTexture name="tile-level6_261-890" x="870" y="342" width="436" height="239"/>
     <SubTexture name="tile-level7_515-1009" x="1308" y="342" width="444" height="248"/>
+    <SubTexture name="tile-level8_54-1190" x="2" y="800" width="785" height="1019"/>
 </TextureAtlas>

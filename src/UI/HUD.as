@@ -26,6 +26,9 @@ package UI
     private var _neededEggs:Image;
     private var _neededEggsText:TextField;
     
+    private var _lifes:Image;
+    private var _lifesText:TextField;
+    
     public function HUD(eggs:Eggs.Eggs, snake:Snake) 
     {
       _eggs = eggs;
@@ -44,23 +47,37 @@ package UI
       _neededEggsText = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
       _neededEggsText.x = _neededEggs.x + _neededEggs.width + 15;
       _neededEggsText.y = _neededEggs.y;
-      
-      
       _neededEggsText.hAlign = HAlign.LEFT;
-
-      addChild(_overlay);
-          
-      addChild(_neededEggsText);     
-      addChild(_neededEggs);
+      
+      
+      _lifes = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-lives"));
+      _lifes.smoothing = TextureSmoothing.NONE;
+      _lifes.scaleX = _lifes.scaleY = 2;
+      _lifes.x = 10;
+      _lifes.y = 10;
+      
+      _lifesText = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+      _lifesText.x = _lifes.x + _lifes.width + 15;
+      _lifesText.y = _lifes.y;
+      _lifesText.hAlign = HAlign.LEFT;
       
       _radar = new Radar(_eggs, _snake);
+
+      addChild(_overlay);
+      addChild(_lifes);
+      addChild(_neededEggs);
+      addChild(_radar);      
+          
+      addChild(_neededEggsText);     
+      addChild(_lifesText);
       
-      addChild(_radar);
+
     }
     
     public function update():void {
       _radar.update();
       _neededEggsText.text = String(_snake.eatenEggs);
+      _lifesText.text = String(_snake.lives);
     }
   }
 }

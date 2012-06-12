@@ -15,6 +15,7 @@ package
   import fr.kouma.starling.utils.Stats;
   import Level.*;
   import engine.StageManager;
+  import engine.SaveGame;
   
   /**
    * ...
@@ -40,7 +41,7 @@ package
       Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
       
       // entry point  
-      
+      SaveGame.load();
       starling = new Starling(StageManager, stage, new Rectangle(0, 0, 960, 640));
       
       var loadingSprite:Sprite = new Sprite()

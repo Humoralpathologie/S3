@@ -51,8 +51,7 @@ package Level
     protected var _overlay:Image;
     private var _hud:HUD;
     private var _timer:Number = 0;
-    private var _snake:Snake;
-    private var _lifes:int = 3;
+    protected var _snake:Snake;
     private var _speed:Number = 0.3;
     protected var _levelStage:Sprite;
     private var _particles:PDParticleSystem;
@@ -65,7 +64,7 @@ package Level
     private var _currentCombos:Array;
     private var _combos:int = 0;
     private var _score:int = 0;
-    private var _zoom:Number = 2.5;
+    private var _zoom:Number = 3;
     private var _following:Snake.Head;
     private var _possibleSwipe:Boolean = false;
     private var _swipeY:int;
@@ -73,6 +72,10 @@ package Level
     private var _paused:Boolean = false;
     private var _firstFrame:Boolean = true;
     private var _particlePool:Vector.<PDParticleSystem>;
+    private var _sadSnake:Image;
+    private var _evilSnake:Image;
+    protected var _levelNr:int = 0;
+    private var _won:Boolean = false;
     
 		private static const sfx:Sound = new AssetRegistry.WinMusic() as Sound;
  
@@ -180,6 +183,47 @@ package Level
           //peggle();
         }
       }
+    }
+    
+    private function screenCollide():void {
+      if (_snake.head.tileX < 0 || _snake.head.tileY < 0 || _snake.head.tileX >= _bg.width / AssetRegistry.TILESIZE || _snake.head.tileY >= _bg.height / AssetRegistry.TILESIZE) {
+        die();
+      }
+    }
+    
+    private function die():void {
+      _snake.lives--;
+      pause();
+      
+      _sadSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("sadsnake"));
+      _sadSnake.x = (Starling.current.viewPort.width - _sadSnake.width) / 2;
+      _sadSnake.y = Starling.current.viewPort.height;
+      addChild(_sadSnake);
+      
+      // Use a GTween, as the Starling tweens are paused.
+      new GTween(_sadSnake, 2, { y: Starling.current.viewPort.height - _sadSnake.height } );
+      
+      removeEventListener(TouchEvent.TOUCH, onTouch);
+      addEventListener(TouchEvent.TOUCH, dieScreenTouch);
+      
+    }
+    
+    private function dieScreenTouch(event:TouchEvent):void {
+      var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
+      if (touch) {
+        removeChild(_sadSnake);
+        removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
+        addEventListener(TouchEvent.TOUCH, onTouch);
+        resetSnake();
+        unpause();
+      }
+    }
+    
+    private function resetSnake():void {
+      _snake.head.tileX = 5;
+      _snake.head.tileY = 5;
+      _snake.head.facing = AssetRegistry.RIGHT;
+      _snake.head.prevFacing = _snake.head.facing;
     }
     
     private function showParticles(egg:DisplayObject):void {
@@ -344,15 +388,36 @@ package Level
     
     }
     
-
+    private function snakeAi():void {
+      var egg:Eggs.Egg = _eggs.eggPool[0];
+      if (egg.tileX > _snake.head.tileX) {
+        _snake.head.facing = AssetRegistry.RIGHT;
+      } else if (egg.tileX < _snake.head.tileX) {
+        _snake.head.facing = AssetRegistry.LEFT;
+        
+      } else if (egg.tileY < _snake.head.tileY) {
+        _snake.head.facing = AssetRegistry.UP;
+      } else if (egg.tileY > _snake.head.tileY){
+        _snake.head.facing = AssetRegistry.DOWN;
+      }
+      _snake.head.prevFacing = _snake.head.facing;
+    }
     
     private function onEnterFrame(event:EnterFrameEvent):void
     {
       trace(event.passedTime);
       var bodyArray:Array;
       var comboArray:Array;
+      
+      if(!_won) {
+        checkWin();
+      }
+      
       if (!_paused)
       {
+        
+        snakeAi();
+        
         if (_firstFrame) {
           _firstFrame = false;
         } else {
@@ -370,6 +435,7 @@ package Level
           
           doCombos();
           eggCollide();
+          screenCollide();
           _timer -= _speed;
         }
         updateCamera();
@@ -463,6 +529,26 @@ package Level
       }
     }
     
+    protected function checkWin():void {
+      
+    }    
+    
+    protected function win():void {
+      _won = true;
+      pause();
+      
+      _evilSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_evillaugh"));
+      _evilSnake.x = (Starling.current.viewPort.width - _evilSnake.width) / 2;
+      _evilSnake.y = Starling.current.viewPort.height;
+      addChild(_evilSnake);
+      
+      // Use a GTween, as the Starling tweens are paused.
+      new GTween(_evilSnake, 2, { y: Starling.current.viewPort.height - _evilSnake.height } );
+      
+      removeEventListener(TouchEvent.TOUCH, onTouch);
+      addEventListener(TouchEvent.TOUCH, dieScreenTouch);      
+    }
+    
     public function get zoom():Number
     {
       return _zoom;
@@ -473,6 +559,7 @@ package Level
       _zoom = value;
       _levelStage.scaleX = _levelStage.scaleY = _zoom;
     }
+    
   
   }
 

@@ -18,6 +18,7 @@ package engine
     private static var _loadingScreen:Bitmap;
     private static var _frame:int = 0;
     private static var _nextStage:Class;
+    private static var _argument:*;
     
     public function StageManager()
     {
@@ -27,12 +28,12 @@ package engine
       switchStage(MainMenu);
     }
     
-    public static function switchStage(newStage:Class):void
+    public static function switchStage(newStage:Class, argument:* = null):void
     {
       Starling.current.nativeStage.addChild(_loadingScreen);
-      
+
       _nextStage = newStage;
-      
+
       _manager.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
     }
     
@@ -47,7 +48,7 @@ package engine
           Starling.juggler.purge();
           _currentSprite.dispose();
         }
-        _currentSprite = new _nextStage;
+        _currentSprite = _argument ? new _nextStage(_argument) : new _nextStage();
         Starling.juggler.paused = false;
         _manager.addChild(_currentSprite);
       }

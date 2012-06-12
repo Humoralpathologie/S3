@@ -23,6 +23,7 @@ package Snake
     private var _body:Vector.<Snake.BodyPart>
     private var _newPart:Snake.BodyPart = null;
     private var _eatenEggs:int = 0;
+    private var _lives:int = 3;
         
     public function Snake(speed:Number) 
     {
@@ -123,6 +124,16 @@ package Snake
     public function get eatenEggs():int 
     {
         return _eatenEggs;
+    }
+    
+    public function get lives():int 
+    {
+        return _lives;
+    }
+    
+    public function set lives(value:int):void 
+    {
+        _lives = value;
     }
         
   }

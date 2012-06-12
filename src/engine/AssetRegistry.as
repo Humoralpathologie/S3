@@ -36,6 +36,7 @@ package engine
       [Embed(source = "../../assets/Levels/LevelSelect/LevelSelect.xml", mimeType = "application/octet-stream")] static private const LevelSelectXML:Class;
       [Embed(source = "../../assets/Levels/LevelSelect/LevelSelect.png")] static private const LevelSelectPNG:Class;
       [Embed(source = "../../assets/Levels/LevelSelect/background.png")] static private const LevelSelectBGPNG:Class;
+      [Embed(source = "../../assets/Levels/LevelSelect/tile-boss-locked.png")] static private const LevelSelectBossLockedPNG:Class;
       
       [Embed(source = "../../assets/Music/LevelMusikStufe1.mp3")] static private const LevelMusic1:Class;
       [Embed(source = "../../assets/Music/LevelMusikStufe2.mp3")] static private const LevelMusic2:Class;
@@ -47,6 +48,7 @@ package engine
       
       public static var UIOverlayTexture:Texture;
       public static var LevelSelectBGTexture:Texture;
+      public static var LevelSelectBossLocked:Texture;
       public static var ComboParticleConfig:XML;
       public static var DrugParticleConfig:XML;
       public static var DrugParticleTexture:Texture;
@@ -103,7 +105,7 @@ package engine
       public static function disposeArcadeGraphics():void {
         UIOverlayTexture.dispose();
         ArcadeBackground.dispose();
-        SnakeAtlas.dispose();
+        //SnakeAtlas.dispose();
         ArcadeOverlayAtlas.dispose();
         DrugParticleConfig = null;
         DrugParticleTexture.dispose();
@@ -113,7 +115,7 @@ package engine
       
       public static function loadLevel1Graphics():void {
         Level1Background = Texture.fromBitmap(new Level1BackgroundPNG);
-        SnakeAtlas = new TextureAtlas(Texture.fromBitmap(new SnakeTexturePNG), XML(new SnakeAtlasXML));   
+        //SnakeAtlas = new TextureAtlas(Texture.fromBitmap(new SnakeTexturePNG), XML(new SnakeAtlasXML));   
         DrugParticleConfig = XML(new DrugsParticleXML);
         DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);     
         ComboParticleConfig = XML(new ComboParticleXML);
@@ -124,7 +126,7 @@ package engine
       
       public static function disposeLevel1Graphics():void {
         Level1Background.dispose();
-        SnakeAtlas.dispose();
+        //SnakeAtlas.dispose();
         DrugParticleConfig = null;
         DrugParticleTexture.dispose();
         ComboParticleConfig = null;        
@@ -133,11 +135,15 @@ package engine
       }
       
       public static function loadLevelSelectGraphics():void {
-        LevelSelectAtlas = new TextureAtlas(Texture.fromBitmap(new LevelSelectPNG), XML(new LevelSelectXML));        
+        LevelSelectAtlas = new TextureAtlas(Texture.fromBitmap(new LevelSelectPNG), XML(new LevelSelectXML));    
+        LevelSelectBGTexture = Texture.fromBitmap(new LevelSelectBGPNG);
+        LevelSelectBossLocked = Texture.fromBitmap(new LevelSelectBossLockedPNG);
       }
       
       public static function disposeLevelSelectGraphics():void {
         LevelSelectAtlas.dispose();
+        LevelSelectBGTexture.dispose();
+        LevelSelectBossLocked.dispose();
       }
         
     }

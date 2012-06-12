@@ -13,6 +13,7 @@ package Level
     public function Level1() 
     {
       AssetRegistry.loadLevel1Graphics();
+      _levelNr = 1;
       super();
     }
     
@@ -27,7 +28,12 @@ package Level
       AssetRegistry.disposeLevel1Graphics();
       super.dispose();
     }
-        
+     
+    override protected function checkWin():void {
+      if (_snake.eatenEggs == 10) {
+        win();
+      }
+    }
   }
 
 }
