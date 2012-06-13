@@ -26,12 +26,14 @@ package engine
     protected var _tween:GTween;
     protected var _starlingTween:Tween;
     private var _velocity:Point;
+    private var _tilesize:int;
   
     public function TileSprite(tileX:int = 0, tileY:int = 0, image:Image = null, speed:Number = 0.3) 
     {
       super();
       _frameOffset = new Point(0, 0);
       _velocity = new Point(0, 0);
+      _tilesize = AssetRegistry.TILESIZE;
 
       this.tileX = tileX;
       this.tileY = tileY;
@@ -68,6 +70,14 @@ package engine
       }
       animateMove();
       _prevFacing = _facing;
+      
+    }
+    
+    private function calcPos():void
+    {
+      x = _tileX * _tilesize - _frameOffset.x;
+      y = _tileY * _tilesize - _frameOffset.y;
+
     }
     
     public function update(time:Number):void {
@@ -122,7 +132,7 @@ package engine
     public function set tileX(value:int):void 
     {
         _tileX = value;
-        x = _tileX * AssetRegistry.TILESIZE - _frameOffset.x;
+        x = _tileX * _tilesize - _frameOffset.x;
     }
     
     public function get tileY():int 
@@ -133,7 +143,7 @@ package engine
     public function set tileY(value:int):void 
     {
         _tileY = value;
-        y = _tileY * AssetRegistry.TILESIZE - _frameOffset.y;
+        y = _tileY * _tilesize - _frameOffset.y;
     }
     
     public function get facing():int 
@@ -168,7 +178,7 @@ package engine
         _prevFacing = value;
         facing = value;
     }
-    
+
     
   }
 

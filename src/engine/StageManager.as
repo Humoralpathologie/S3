@@ -30,6 +30,7 @@ package engine
     
     public static function switchStage(newStage:Class, argument:* = null):void
     {
+      _argument = argument;
       Starling.current.nativeStage.addChild(_loadingScreen);
 
       _nextStage = newStage;

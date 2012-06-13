@@ -8,6 +8,7 @@ package Level
   import Snake.Snake;
   import starling.animation.Tween;
   import starling.core.Starling;
+  import starling.core.StatsDisplay;
   import starling.display.DisplayObject;
   import starling.display.Image;
   import starling.display.Quad;
@@ -39,6 +40,8 @@ package Level
   import engine.ManagedStage;
   import engine.StageManager;
   import Menu.MainMenu;
+  import Menu.LevelScore;
+  import engine.SaveGame;
   
   /**
    * ...
@@ -56,15 +59,15 @@ package Level
     protected var _levelStage:Sprite;
     private var _particles:PDParticleSystem;
     private var _eggs:Eggs;
-    private var _overallTimer:Number = 0;
+    protected var _overallTimer:Number = 0;
     private var _text:TextField;
     private var _comboSet:Combo.ComboSet;
     private var _justAte:Boolean = false;
     private var _comboTimer:Number = 0;
     private var _currentCombos:Array;
-    private var _combos:int = 0;
+    protected var _combos:int = 0;
     private var _score:int = 0;
-    private var _zoom:Number = 3;
+    private var _zoom:Number = 2;
     private var _following:Snake.Head;
     private var _possibleSwipe:Boolean = false;
     private var _swipeY:int;
@@ -76,6 +79,9 @@ package Level
     private var _evilSnake:Image;
     protected var _levelNr:int = 0;
     private var _won:Boolean = false;
+    protected var _obstacles:Object = { };
+    protected var _tileWidth:int = 0;
+    protected var _tileHeight:int = 0;
     
 		private static const sfx:Sound = new AssetRegistry.WinMusic() as Sound;
  
@@ -112,6 +118,8 @@ package Level
       addChild(_levelStage);
       
       addBackground();
+      
+      addObstacles();
       
       _snake = new Snake(_speed);
       _following = _snake.head;
@@ -163,9 +171,7 @@ package Level
           }
         });
       _swipeMenu.addChild(back);
-      
-      // For debugging. 
-      Starling.current.showStats = true;
+
     }
     
     private function eggCollide():void
@@ -181,6 +187,16 @@ package Level
           _justAte = true;
           //peggle();
         }
+      }
+    }
+    
+    protected function addObstacles():void {
+      
+    }
+    
+    private function obstacleCollide():void {
+      if (_obstacles[_snake.head.tileX * _tileWidth + _snake.head.y]) {
+        die();
       }
     }
     
@@ -260,6 +276,7 @@ package Level
       _eggs.spawnRandomEgg();
       
       showPoints(egg, "2");
+      _score += 2;
       
       if (egg.type < AssetRegistry.EGGROTTEN)
       {
@@ -414,7 +431,7 @@ package Level
       if (!_paused)
       {
         
-        snakeAi();
+        //snakeAi();
         
         if (_firstFrame) {
           _firstFrame = false;
@@ -425,20 +442,30 @@ package Level
         _text.text = String(_overallTimer.toFixed(2));
         _hud.update();
         
+        var startTimer:Number, endTimer:Number;
+
+        startTimer = getTimer();
+        
         _snake.update(event.passedTime * Starling.juggler.timeFactor);
+        
+        endTimer = getTimer();
+          
+        Starling.current.mCombo = endTimer - startTimer;        
         
         if (_timer >= _speed)
         {
-          var startTimer:Number, endTimer:Number;
           startTimer = getTimer();
           _snake.move();
           endTimer = getTimer();
           
-          trace("Moving took " +String(endTimer - startTimer) + "ms");
+          Starling.current.mMove = endTimer - startTimer;
           
           doCombos();
+
+          
           eggCollide();
           screenCollide();
+          obstacleCollide();
           _timer -= _speed;
         }
         updateCamera();
@@ -549,7 +576,23 @@ package Level
       new GTween(_evilSnake, 2, { y: Starling.current.viewPort.height - _evilSnake.height } );
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
-      addEventListener(TouchEvent.TOUCH, dieScreenTouch);      
+      addEventListener(TouchEvent.TOUCH, winScreenTouch);      
+    }
+    
+    private function winScreenTouch(event:TouchEvent):void {
+      var touch:Touch;
+      touch = event.getTouch(this, TouchPhase.ENDED);
+      if (touch) {
+        var score:Object = {
+          score: _score,
+          lives: _snake.lives * 100,
+          time: _overallTimer,
+          level: _levelNr         
+        }
+        
+        StageManager.switchStage(LevelScore, score);
+        SaveGame.unlockLevel(_levelNr + 1);
+      }
     }
     
     public function get zoom():Number
@@ -562,8 +605,7 @@ package Level
       _zoom = value;
       _levelStage.scaleX = _levelStage.scaleY = _zoom;
     }
-    
-  
+   
   }
 
 }

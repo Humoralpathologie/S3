@@ -4,44 +4,37 @@ package Level
      * ...
      * @author 
      */
+  import com.gskinner.motion.GTween;
   import engine.AssetRegistry
   import starling.display.Image;
   import starling.display.BlendMode;
   
-  public class Level1 extends LevelState 
+  public class Level4 extends LevelState 
   {
-    public function Level1() 
+    public function Level4() 
     {
-      AssetRegistry.loadLevel1Graphics();
-      _levelNr = 1;
+      AssetRegistry.loadLevel4Graphics();
+      _levelNr = 4;
       super();
     }
     
     override protected function addBackground():void {
-      _bgTexture = AssetRegistry.Level1Background;
+      _bgTexture = AssetRegistry.Level4Background;
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
-      _tileHeight = _bg.height / AssetRegistry.TILESIZE;
-      _tileWidth = _bg.width / AssetRegistry.TILESIZE;
+      
     }
     
     override public function dispose():void {
-      AssetRegistry.disposeLevel1Graphics();
+      AssetRegistry.disposeLevel4Graphics();
       super.dispose();
     }
      
     override protected function checkWin():void {
-      if (_snake.eatenEggs == 50) {
+      if (_combos == 20 || _snake.eatenEggs == 100 || _overallTimer == 4 * 60) {
         win();
       }
-    }
-    
-    override protected function addObstacles():void {
-      var positions:Array = [
-        []
-      ];
-      
     }
   }
 

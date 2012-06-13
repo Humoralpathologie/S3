@@ -149,6 +149,10 @@ package starling.core
         private static var sCurrent:Starling;
         private static var sHandleLostContext:Boolean;
         
+        //DEBUG
+        public var mMove:Number;
+        public var mCombo:Number;
+        
         // construction
         
         /** Creates a new Starling instance. 

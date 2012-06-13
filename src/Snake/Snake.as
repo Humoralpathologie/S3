@@ -55,18 +55,45 @@ package Snake
         _newPart = null;
       }
       
-      for (var i:int = _body.length - 1; i >= 0; i-- ) {
-        if (i == 0) {
-          _body[i].tileX = _head.tileX;
-          _body[i].tileY = _head.tileY;
-          _body[i].facing = _head.prevFacing;
-        } else {
-          _body[i].tileX = _body[i - 1].tileX;
-          _body[i].tileY = _body[i - 1].tileY;
-          _body[i].facing = _body[i - 1].facing;
-        }
-        _body[i].animateMove();
+      var l:int = _body.length
+      var a:Snake.BodyPart, b:Snake.BodyPart;
+      a = body[l - 1];
+      for (var i:int = l - 1; i > 0; i-- ) {
+        b = _body[i - 1];
+        a.tileX = b.tileX;
+        a.tileY = b.tileY;
+        a.facing = b.facing;
+        a.animateMove();   
+        a = b;
       }
+      
+      a.tileX = _head.tileX;
+      a.tileY = _head.tileY;
+      a.facing = _head.prevFacing;     
+      a.animateMove();
+      
+      /*
+      var l:int = _body.length;
+      var a:Snake.BodyPart, b:Snake.BodyPart;
+      //_body.reverse();
+      
+      a = _body[0];
+      for (var i:int = 0; i < l - 1; i++) {
+        b = _body[i + 1];
+        a.tileX = b.tileX;
+        a.tileY = b.tileY;
+        a.facing = b.facing;
+        a.animateMove();
+        a = b;
+      }
+      
+      a.tileX = _head.tileX;
+      a.tileY = _head.tileY;
+      a.facing = _head.prevFacing;
+      a.animateMove();
+      
+      //_body.reverse();*/
+      
       _head.advance();
     }
     
@@ -92,6 +119,7 @@ package Snake
             _head.facing = AssetRegistry.DOWN;
             break;
       }
+      _head.prevFacing = _head.facing;
     }
     
     public function moveLeft():void {
@@ -109,6 +137,7 @@ package Snake
             _head.facing = AssetRegistry.UP;
             break;
       }
+      _head.prevFacing = _head.facing;
     }    
     
     public function get head():Snake.Head 
