@@ -35,10 +35,9 @@ package
     {
       stage.scaleMode = StageScaleMode.NO_SCALE;
       stage.align = StageAlign.TOP_LEFT;
-//      stage.addEventListener(Event.DEACTIVATE, deactivate);
-      
-      Starling.handleLostContext = false;
-      
+
+      stage.addEventListener(Event.DEACTIVATE, deactivate);
+            
       //MonsterDebugger.initialize(this);
       //MonsterDebugger.trace(this, "Hello World");
       //stage.addChild(new TheMiner());
@@ -48,6 +47,7 @@ package
       
       // entry point  
       SaveGame.load();
+      SaveGame.unlockLevels();
       starling = new Starling(StageManager, stage, new Rectangle(0, 0, 960, 640));
       
       var loadingSprite:Sprite = new Sprite()
@@ -55,6 +55,9 @@ package
       loadingSprite.addChild(loadingBMP);
       
       addChild(loadingSprite);
+      
+      // For debugging. 
+      Starling.current.showStats = true;
       
       starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE, function(e:Event):void
         {

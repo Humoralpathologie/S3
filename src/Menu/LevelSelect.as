@@ -137,7 +137,7 @@ package Menu
                       _showingInfo = false;
                       that.removeChild(_levelInfo);
                     } else {
-                      StageManager.switchStage(Level1);
+                      StageManager.switchStage(AssetRegistry.LEVELS[level - 1]);
                     }
                   }
                 });

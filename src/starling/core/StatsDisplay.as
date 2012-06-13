@@ -21,6 +21,7 @@ package starling.core
     import starling.text.TextField;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
+    import starling.core.Starling;
     
     /** A small, lightweight box that displays the current framerate and memory consumption. */
     internal class StatsDisplay extends Sprite
@@ -34,8 +35,8 @@ package starling.core
         /** Creates a new Statistics Box. */
         public function StatsDisplay()
         {
-            mBackground = new Quad(49, 18, 0x0);
-            mTextField = new TextField(60, 18, "", BitmapFont.MINI, BitmapFont.NATIVE_SIZE, 0xffffff);
+            mBackground = new Quad(49, 36, 0x0);
+            mTextField = new TextField(60, 36, "", BitmapFont.MINI, BitmapFont.NATIVE_SIZE, 0xffffff);
             mTextField.x = 2;
             mTextField.hAlign = HAlign.LEFT;
             mTextField.vAlign = VAlign.TOP;
@@ -44,14 +45,15 @@ package starling.core
             addChild(mTextField);
             
             addEventListener(Event.ENTER_FRAME, onEnterFrame);
-            updateText(0, getMemory());
+            updateText(0, getMemory(),Starling.current.mMove,Starling.current.mCombo);
             blendMode = BlendMode.NONE;
+            mBackground.width = 100;
         }
         
-        private function updateText(fps:Number, memory:Number):void
+        private function updateText(fps:Number, memory:Number, move:Number, combo:Number ):void
         {
-            mTextField.text = "FPS: " + fps.toFixed(1) + "\nMEM: " + memory.toFixed(1);
-            mBackground.width  = (fps >= 100 || memory >= 100) ? 55 : 49; 
+            mTextField.text = "FPS: " + fps.toFixed(1) + "\nMEM: " + memory.toFixed(1) + "\nMove: " + move.toFixed(1) + "\nCombo:" + combo.toFixed(1);
+            //mBackground.width  = (fps >= 100 || memory >= 100) ? 55 : 49; 
         }
         
         private function getMemory():Number
@@ -66,7 +68,7 @@ package starling.core
             
             if (mTotalTime > 1.0)
             {
-                updateText(mFrameCount / mTotalTime, getMemory());
+                updateText(mFrameCount / mTotalTime, getMemory(),Starling.current.mMove,Starling.current.mCombo);
                 mFrameCount = mTotalTime = 0;
             }
         }

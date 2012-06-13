@@ -3,6 +3,7 @@ package Menu
     import engine.ManagedStage;
     import flash.events.Event;
     import flash.media.SoundChannel;
+    import starling.text.TextField;
     import Level.ArcadeState;
     import starling.display.Image;
     import starling.display.Sprite;
@@ -25,11 +26,11 @@ package Menu
     private var _possibleSwipe:Boolean = false;
     private var _swipeY:int = 0;
     private var _swipeMenu:Sprite;
-    private var _swipeMessage:Image;
-    
+    private var _swipeMessage:Image;    
     
     public function MainMenu()
     {
+      AssetRegistry.loadMenuGraphics();
       this.addEventListener(TouchEvent.TOUCH, onTouch);
       
       _bg = new Image(AssetRegistry.MenuAtlas.getTexture("loading"));
@@ -56,9 +57,19 @@ package Menu
       levelSelectButton.y = arcadeButton.y;
       
       levelSelectButton.addEventListener(TouchEvent.TOUCH, startLevelSelect);
-     
       _swipeMenu.addChild(levelSelectButton);
-      
+       
+      var scoringButton:TextField = new TextField(200, 100, "SCORING", "kroeger 06_65", 40, 0xffffff);
+      levelSelectButton.y = arcadeButton.y;
+      scoringButton.x = levelSelectButton.x + levelSelectButton.width + 10;
+      scoringButton.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
+        var touch:Touch = event.getTouch(scoringButton, TouchPhase.ENDED);
+        if (touch) {
+          StageManager.switchStage(LevelScore);
+        }
+      });
+      _swipeMenu.addChild(scoringButton);
+         
       _swipeMenu.flatten();
       
       addChild(_swipeMenu);      
@@ -132,7 +143,12 @@ package Menu
           }
         }
       }
-    }    
+    }
+    
+    override public function dispose():void {
+      super.dispose();
+      AssetRegistry.disposeMenuGraphics();
+    }
   }
 
 }

@@ -8,40 +8,31 @@ package Level
   import starling.display.Image;
   import starling.display.BlendMode;
   
-  public class Level1 extends LevelState 
+  public class Level2 extends LevelState 
   {
-    public function Level1() 
+    public function Level2() 
     {
-      AssetRegistry.loadLevel1Graphics();
-      _levelNr = 1;
+      AssetRegistry.loadLevel2Graphics();
+      _levelNr = 2;
       super();
     }
     
     override protected function addBackground():void {
-      _bgTexture = AssetRegistry.Level1Background;
+      _bgTexture = AssetRegistry.Level2Background;
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
-      _tileHeight = _bg.height / AssetRegistry.TILESIZE;
-      _tileWidth = _bg.width / AssetRegistry.TILESIZE;
     }
     
     override public function dispose():void {
-      AssetRegistry.disposeLevel1Graphics();
+      AssetRegistry.disposeLevel2Graphics();
       super.dispose();
     }
      
     override protected function checkWin():void {
-      if (_snake.eatenEggs == 50) {
+      if (_combos == 10) {
         win();
       }
-    }
-    
-    override protected function addObstacles():void {
-      var positions:Array = [
-        []
-      ];
-      
     }
   }
 
