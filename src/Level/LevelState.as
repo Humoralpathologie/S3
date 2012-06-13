@@ -78,6 +78,11 @@ package Level
     protected var _levelNr:int = 0;
     private var _won:Boolean = false;
     
+    private var _bonusBarSprite:Sprite;
+    private var _bonusBackSprite:Sprite;
+    private var _bonusTimer:Number = 0; 
+    private var _bonusBar:Quad;
+    private var _bonusBack:Quad;
 //		private static const sfx:Sound = new AssetRegistry.WinMusic() as Sound;
  
 		private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
@@ -164,7 +169,20 @@ package Level
           }
         });
       _swipeMenu.addChild(back);
+
+      //create bonusbar
+      _bonusBarSprite = new Sprite()
+      _bonusBackSprite = new Sprite()
+      _bonusBar = new Quad(1, 8);
+      _bonusBack = new Quad(27, 10, 0x000000);
       
+      _bonusBackSprite.addChild(_bonusBack);
+      _bonusBarSprite.addChild(_bonusBar);
+      
+      _bonusBackSprite.alpha = 0;
+      _bonusBarSprite.scaleX = 0;
+      _levelStage.addChild(_bonusBarSprite);
+      _levelStage.addChild(_bonusBackSprite);
       // For debugging. 
       Starling.current.showStats = true;
     }
@@ -181,6 +199,7 @@ package Level
           eatEgg(eggs[i]);
           _justAte = true;
           //peggle();
+          _bonusTimer = 2.5;
         }
       }
     }
@@ -272,8 +291,27 @@ package Level
     {
       var passedTime:Number = event.passedTime * Starling.juggler.timeFactor;
       _timer += passedTime;
+      _bonusTimer -= passedTime;
       _overallTimer += passedTime;
       _comboTimer -= passedTime;
+    }
+    
+    private function updateBonusBar():void {
+      _bonusBarSprite.x = _snake.head.x - 5;
+      _bonusBarSprite.y = _snake.head.y - 15;
+      _bonusBackSprite.x = _bonusBarSprite.x - 1;
+      _bonusBackSprite.y = _bonusBarSprite.y - 1;
+      trace(_bonusTimer)
+     if (_bonusTimer > 0.5) {
+        _bonusBackSprite.alpha = 0.6;
+        _bonusBarSprite.scaleX = ((_bonusTimer - 0.5) / 2) * 25;
+        
+      } else {
+        _bonusBarSprite.scaleX = 0;
+        _bonusBackSprite.alpha = 0;
+      } 
+
+
     }
     
     protected function addBackground():void
@@ -339,7 +377,7 @@ package Level
       tween.animate("scaleX", 3);
       tween.animate("scaleY", 3);
       tween.animate("x", 0);
-      tween.animate("rotation", deg2rad(15));
+      tween.animate("rotation", deg2rad(180));
       tween.fadeTo(0); 
       
       tween.onComplete = function():void {
@@ -423,6 +461,7 @@ package Level
       if (!_paused)
       {
         
+        updateBonusBar();
         snakeAi();
         
         if (_firstFrame) {
