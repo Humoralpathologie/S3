@@ -78,9 +78,8 @@ package Level
     protected var _levelNr:int = 0;
     private var _won:Boolean = false;
     
-    private var _bonusBarSprite:Sprite;
-    private var _bonusBackSprite:Sprite;
     private var _bonusTimer:Number = 0; 
+    private var _bonusTimerPoints:Number = 0; 
     private var _bonusBar:Quad;
     private var _bonusBack:Quad;
 //		private static const sfx:Sound = new AssetRegistry.WinMusic() as Sound;
@@ -171,18 +170,14 @@ package Level
       _swipeMenu.addChild(back);
 
       //create bonusbar
-      _bonusBarSprite = new Sprite()
-      _bonusBackSprite = new Sprite()
-      _bonusBar = new Quad(1, 8);
+      _bonusBar = new Quad(1, 8, 0xffffff);
       _bonusBack = new Quad(27, 10, 0x000000);
       
-      _bonusBackSprite.addChild(_bonusBack);
-      _bonusBarSprite.addChild(_bonusBar);
       
-      _bonusBackSprite.alpha = 0;
-      _bonusBarSprite.scaleX = 0;
-      _levelStage.addChild(_bonusBarSprite);
-      _levelStage.addChild(_bonusBackSprite);
+      _bonusBack.alpha = 0;
+      _bonusBar.scaleX = 0;
+      _levelStage.addChild(_bonusBack);
+      _levelStage.addChild(_bonusBar);
       // For debugging. 
       Starling.current.showStats = true;
     }
@@ -199,7 +194,6 @@ package Level
           eatEgg(eggs[i]);
           _justAte = true;
           //peggle();
-          _bonusTimer = 2.5;
         }
       }
     }
@@ -280,11 +274,16 @@ package Level
       _eggs.spawnRandomEgg();
             
       showPoints(egg, "2");
-      
+      if (_bonusTimer > 0) {
+        var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
+        _bonusTimerPoints += 2;
+        showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
+      } 
       if (egg.type < AssetRegistry.EGGROTTEN)
       {
         _snake.eat(egg.type);
       }
+      _bonusTimer = 2.5;
     }
     
     private function updateTimers(event:EnterFrameEvent):void
@@ -297,18 +296,22 @@ package Level
     }
     
     private function updateBonusBar():void {
-      _bonusBarSprite.x = _snake.head.x - 5;
-      _bonusBarSprite.y = _snake.head.y - 15;
-      _bonusBackSprite.x = _bonusBarSprite.x - 1;
-      _bonusBackSprite.y = _bonusBarSprite.y - 1;
+      _bonusBar.x = _snake.head.x - 5;
+      _bonusBar.y = _snake.head.y - 10;
+      _bonusBack.x = _bonusBar.x - 1;
+      _bonusBack.y = _bonusBar.y - 1;
       trace(_bonusTimer)
      if (_bonusTimer > 0.5) {
-        _bonusBackSprite.alpha = 0.6;
-        _bonusBarSprite.scaleX = ((_bonusTimer - 0.5) / 2) * 25;
+        _bonusBack.alpha = 0.3;
+        _bonusBar.scaleX = ((_bonusTimer - 0.5) / 2) * 25;
+        _bonusBar.color = Color.argb(255, (1 - ((_bonusTimer - 0.5) / 2)) * 255, ((_bonusTimer - 0.5) / 2) * 255, 0);
         
       } else {
-        _bonusBarSprite.scaleX = 0;
-        _bonusBackSprite.alpha = 0;
+        if (_bonusTimer <= 0) {
+          _bonusTimerPoints = 0;
+        }
+        _bonusBar.scaleX = 0;
+        _bonusBack.alpha = 0;
       } 
 
 
@@ -346,7 +349,7 @@ package Level
             expoCounter++;
             _score += fib;
             var randColor:uint = Color.argb(256, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
-            showPoints(egg, '+' + String(fib) + randColor);
+            showPoints(egg, '+' + String(fib),  randColor);
             temp = fib;
             fib += prefib;
             prefib = temp;
@@ -364,20 +367,20 @@ package Level
       func();
     }
     
-    private function showPoints(egg:DisplayObject, points:String, color:uint = 0xffffff):void {
+    private function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void {
       var text:TextField = new TextField(120, 120, points, "kroeger 06_65", 60);
       text.color = color;
       text.autoScale = true;
       text.hAlign = HAlign.CENTER;
-      text.x = egg.x - 60;
-      text.y = egg.y - 60;
-      _levelStage.addChild(text);
-      var tween:Tween = new Tween(text, 2, "linear");
-      tween.animate("y", 0);
+      text.x = 800 + offset;
+      text.y = 500 + offset;
+      addChild(text);
+      var tween:Tween = new Tween(text, 2, "easeIn");
+      tween.animate("y", offset);
       tween.animate("scaleX", 3);
       tween.animate("scaleY", 3);
-      tween.animate("x", 0);
-      tween.animate("rotation", deg2rad(180));
+      tween.animate("x", offset);
+      tween.animate("rotation", deg2rad(45 - offset));
       tween.fadeTo(0); 
       
       tween.onComplete = function():void {
