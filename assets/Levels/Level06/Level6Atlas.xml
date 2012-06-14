@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:39f06737971e4fa3dda3acc6e9a03324$ -->
+<TextureAtlas imagePath="Level6Atlas.png">
+    <SubTexture name="level06" x="2" y="2" width="640" height="480"/>
+    <SubTexture name="level06_flowers" x="2" y="484" width="640" height="480"/>
+</TextureAtlas>

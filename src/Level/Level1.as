@@ -7,6 +7,7 @@ package Level
   import engine.AssetRegistry
   import starling.display.Image;
   import starling.display.BlendMode;
+  import starling.textures.TextureSmoothing;
   
   public class Level1 extends LevelState 
   {
@@ -21,6 +22,7 @@ package Level
       _bgTexture = AssetRegistry.Level1Background;
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
+      _bg.smoothing = TextureSmoothing.NONE;
       _levelStage.addChild(_bg);
     }
     

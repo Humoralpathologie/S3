@@ -137,6 +137,8 @@ package Level
       _following = _snake.head;
       _levelStage.addChild(_snake);
       
+      addAboveSnake();
+      
       _eggs = new Eggs();
       
       for (var j:int = 0; j < 10; j++)
@@ -214,6 +216,10 @@ package Level
       }
     }
     
+    protected function addAboveSnake():void {
+      
+    }
+    
     protected function addObstacles():void {
       
     }
@@ -280,7 +286,7 @@ package Level
     
     private function peggle():void
     {
-      if (_snake.eatenEggs == 3)
+      if (_snake.eatenEggs == 10)
       {
         new GTween(this, 0.5, {zoom: 5});
         new GTween(Starling.juggler, 0.5, { timeFactor: 0.1 } );
@@ -493,8 +499,7 @@ package Level
       if (!_paused)
       {
         
-        updateBonusBar();
-        snakeAi();
+        //snakeAi();
         
         if (_firstFrame) {
           _firstFrame = false;
@@ -530,6 +535,8 @@ package Level
           obstacleCollide();
           _timer -= _speed;
         }
+        
+        updateBonusBar();
         updateCamera();
         
       }
@@ -609,11 +616,20 @@ package Level
             {
               if (touch.getLocation(this).x > 480)
               {
-                _snake.moveRight();
+                //if (_snake.head.facing == AssetRegistry.DOWN) {
+                //  _snake.moveLeft();
+                //} else {
+                  _snake.moveRight();
+                //}
               }
               else
               {
-                _snake.moveLeft();
+                //if (_snake.head.facing == AssetRegistry.DOWN) {
+                //   _snake.moveRight();                 
+                //} else {
+                  _snake.moveLeft();
+                  
+                //}
               }
             }
           }
