@@ -127,6 +127,7 @@ package Level
       addChild(_levelStage);
       
       addBackground();
+      addFrame();
       
       _tileHeight = Math.ceil(_bg.height / AssetRegistry.TILESIZE);
       _tileWidth = Math.ceil( _bg.width / AssetRegistry.TILESIZE);      
@@ -143,7 +144,7 @@ package Level
       
       for (var j:int = 0; j < 10; j++)
       {
-        _eggs.spawnRandomEgg(_tileWidth, _tileHeight);
+        spawnRandomEgg();
       }
       
       _levelStage.addChild(_eggs);
@@ -200,6 +201,13 @@ package Level
 
     }
     
+    public function addFrame():void {
+      var frame:Image = new Image(AssetRegistry.LevelFrame);
+      frame.x = -200;
+      frame.y = -150;
+      _levelStage.addChild(frame);
+    }
+    
     private function eggCollide():void
     {
       var eggs:Vector.<Egg> = _eggs.eggPool;
@@ -211,7 +219,7 @@ package Level
         {
           eatEgg(eggs[i]);
           _justAte = true;
-          //peggle();
+          peggle();
         }
       }
     }
@@ -294,6 +302,15 @@ package Level
       }
     }
     
+    private function spawnRandomEgg():void {
+      var eggx:int;
+      var eggy:int;
+      eggx = Math.floor(Math.random() * _tileWidth);
+      eggy = Math.floor(Math.random() * _tileHeight);
+      var egg:Eggs.Egg = new Eggs.Egg(eggx, eggy, Math.floor(Math.random() * 4));
+      _eggs.addEgg(egg);
+    }
+    
     private function eatEgg(egg:Egg):void
     {
       AssetRegistry.BiteSound.play();
@@ -303,7 +320,7 @@ package Level
       _particles.start(0.5);
       _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
       _eggs.removeChild(egg);
-      _eggs.spawnRandomEgg(_tileWidth, _tileHeight);
+      spawnRandomEgg();
             
       showPoints(egg, "2");
 
@@ -555,11 +572,13 @@ package Level
       _levelStage.x = -(a * _zoom) + Starling.current.viewPort.width / 2;
       _levelStage.y = -(b * _zoom) + Starling.current.viewPort.height / 2;
       
-      _levelStage.x = Math.min(_levelStage.x, 0);
-      _levelStage.y = Math.min(_levelStage.y, 0);
+      var frame:int = 4 * AssetRegistry.TILESIZE;
+      
+      _levelStage.x = Math.min(_levelStage.x, frame);
+      _levelStage.y = Math.min(_levelStage.y, frame);
       // TODO: Should be computed only once.
-      _levelStage.x = Math.max(-(_bg.width * _zoom) + Starling.current.viewPort.width, _levelStage.x);
-      _levelStage.y = Math.max(-(_bg.height * _zoom) + Starling.current.viewPort.height, _levelStage.y);
+      _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + Starling.current.viewPort.width, _levelStage.x);
+      _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + Starling.current.viewPort.height, _levelStage.y);
     }
     
     private function pause():void
