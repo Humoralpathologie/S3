@@ -44,7 +44,8 @@ package Menu
         _scores = {
           score: 1000,
           lives: 3,
-          time: 200
+          time: 200,
+          level: 1
         }
       }
       
@@ -103,6 +104,14 @@ package Menu
       StageManager.switchStage(AssetRegistry.LEVELS[_scores.level - 1]);
     }
     
+    private function nextLevel():void {
+      StageManager.switchStage(AssetRegistry.LEVELS[_scores.level]);
+    }
+    
+    private function backToMenu():void {
+      StageManager.switchStage(MainMenu);
+    }
+    
     private function addButtons():void {
       _replayButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo"));
       _replayButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo-broken");
@@ -116,10 +125,14 @@ package Menu
       _nextLevelButton.x = 960 / 2 + 145 / 2 + 30;
       _nextLevelButton.y = _replayButton.y + 30;
       
+      _nextLevelButton.addEventListener(Event.TRIGGERED, nextLevel);
+      
       _backToMenuButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-back"));
       _backToMenuButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-back-broken");
       _backToMenuButton.x = 960 / 2 - 145 / 2 - 30 - 135;
       _backToMenuButton.y = _nextLevelButton.y;
+      
+      _backToMenuButton.addEventListener(Event.TRIGGERED, backToMenu);
       
       addChild(_replayButton);
       addChild(_nextLevelButton);

@@ -17,7 +17,7 @@ package Eggs
   {
     private var _type:int = 0;
     
-    public function Egg(tileX:int=0, tileY:int=0, type:int = AssetRegistry.EGGZERO) 
+    public function Egg(tileX:int = 0, tileY:int = 0, type:int = AssetRegistry.EGGZERO) 
     {
       _type = type;
       super(tileX, tileY, null, 1000);      

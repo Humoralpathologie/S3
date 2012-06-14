@@ -18,9 +18,9 @@ package Eggs
       _eggPool = new Vector.<Egg>;
     }
     
-    public function spawnRandomEgg():void
+    public function spawnRandomEgg(tileWidth:int, tileHeight:int ):void
     {
-      var egg:Egg = new Egg(Math.floor(Math.random() * (640 / 15)), Math.floor(Math.random() * (480 / 15)), Math.floor(Math.random() * 7));
+      var egg:Egg = new Egg(Math.floor(Math.random() * tileWidth), Math.floor(Math.random() * tileHeight), Math.floor(Math.random() * 7));
       _eggPool.push(egg);
       addChild(egg);
     }

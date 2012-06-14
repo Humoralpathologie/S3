@@ -18,6 +18,9 @@ package engine
       [Embed(source = "../../assets/Particles/drugs.pex", mimeType = "application/octet-stream")] private static const DrugsParticleXML:Class;
       [Embed(source = "../../assets/Particles/combo.pex", mimeType = "application/octet-stream")] private static const ComboParticleXML:Class;
       [Embed(source = "../../assets/Particles/drugs_particle.png")] private static const DrugsParticlePNG:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionB.pex", mimeType = "application/octet-stream")] private static const EggsplosionXML:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionB.png")] private static const EggsplosionPNG:Class;
+      
       [Embed(source = "../../assets/Levels/arcade.png")] private static const ArcadeBackgroundPNG:Class;
       [Embed(source = "../../assets/Font/8bit.fnt", mimeType = "application/octet-stream")] static private const FontXML:Class;
       [Embed(source = "../../assets/Font/8bit_0.png")] static private const FontPNG:Class;
@@ -64,6 +67,8 @@ package engine
       public static var ComboParticleConfig:XML;
       public static var DrugParticleConfig:XML;
       public static var DrugParticleTexture:Texture;
+      public static var EggsplosionParticleConfig:XML;
+      public static var EggsplosionParticleTexture:Texture;
       public static var ArcadeBackground:Texture;
       public static var ArcadeOverlay:Texture;
       
@@ -106,7 +111,7 @@ package engine
       public static function init():void 
       {
         LEVELS = [Level1, Level2, Level3, Level4];
-        
+        TextField.registerBitmapFont(new BitmapFont(Texture.fromBitmap(new FontPNG), XML(new FontXML)));              
         
         LevelMusic1Sound = new LevelMusic1;
         LevelMusic2Sound = new LevelMusic2;
@@ -189,12 +194,13 @@ package engine
       
       public static function loadLevelGraphics():void {
         SnakeAtlas = new TextureAtlas(Texture.fromBitmap(new SnakeTexturePNG), XML(new SnakeAtlasXML));   
-        TextField.registerBitmapFont(new BitmapFont(SnakeAtlas.getTexture("8bit_0"), XML(new FontXML)));       
-        
-        
+                
         DrugParticleConfig = XML(new DrugsParticleXML);
         DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);     
         ComboParticleConfig = XML(new ComboParticleXML);
+        
+        EggsplosionParticleConfig = XML(new EggsplosionXML);
+        EggsplosionParticleTexture = Texture.fromBitmap(new EggsplosionPNG);
         
 //        WinMusicSound = new WinMusic as Sound;   
         BiteSound = new Bite as Sound;        
@@ -205,12 +211,15 @@ package engine
         
         DrugParticleConfig = null;
         DrugParticleTexture.dispose();
-        ComboParticleConfig = null;        
+        ComboParticleConfig = null;       
+        
+        EggsplosionParticleConfig = null;
+        EggsplosionParticleTexture.dispose();
         
         WinMusicSound = null;        
       }
       
-      public static function loadLevelSelectGraphics():void {
+      public static function loadLevelSelectGraphics():void {          
         LevelSelectAtlas = new TextureAtlas(Texture.fromBitmap(new LevelSelectPNG), XML(new LevelSelectXML));    
         LevelSelectBGTexture = Texture.fromBitmap(new LevelSelectBGPNG);
         LevelSelectBossLocked = Texture.fromBitmap(new LevelSelectBossLockedPNG);

@@ -22,8 +22,6 @@ package Level
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
-      _tileHeight = _bg.height / AssetRegistry.TILESIZE;
-      _tileWidth = _bg.width / AssetRegistry.TILESIZE;
     }
     
     override public function dispose():void {
@@ -38,10 +36,10 @@ package Level
     }
     
     override protected function addObstacles():void {
-      var positions:Array = [
-        []
-      ];
-      
+      var pos:Array = [96, 97, 98, 99, 100, 10, 11, 12, 13, 14, 52, 53, 54, 55, 56, 57, 140, 141, 95];
+      for (var i:int = 0; i < pos.length; i++) {
+        _obstacles[pos[i]] = true;
+      }
     }
   }
 

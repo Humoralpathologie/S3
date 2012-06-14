@@ -20,7 +20,8 @@ package Snake
     
     private var _head:Head;
     private var _speed:Number;
-    private var _body:Vector.<Snake.BodyPart>
+    //private var _body:Vector.<Snake.BodyPart>;
+    private var _body:Array;
     private var _newPart:Snake.BodyPart = null;
     private var _eatenEggs:int = 0;
     private var _lives:int = 3;
@@ -33,10 +34,11 @@ package Snake
       
       addChild(_head);
             
-      _body = new Vector.<BodyPart>;
+      //_body = new Vector.<BodyPart>;
+      _body = [];
       
       for (var i:int = 0; i < 4; i++) {
-        var bodyPart:BodyPart = new BodyPart(_head.tileX - (i + 1), _head.tileY, _speed, Math.floor(Math.random() * 4));
+        var bodyPart:BodyPart = new BodyPart(_head.tileX - (i + 1), _head.tileY, _speed, AssetRegistry.EGGZERO);
         _body.push(bodyPart);
         addChild(bodyPart);
       }
@@ -145,7 +147,8 @@ package Snake
         return _head;
     }
     
-    public function get body():Vector.<Snake.BodyPart> 
+    //public function get body():Vector.<Snake.BodyPart> 
+    public function get body():Array
     {
         return _body;
     }

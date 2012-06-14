@@ -24,9 +24,6 @@ package Level
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
       
-      var stone:Image = new Image(AssetRegistry.Level3Stone);
-      _levelStage.addChild(stone);
-      
       var glowing:Image = new Image(AssetRegistry.Level3StoneGlow);
       glowing.x = 188;
       glowing.y = 219;
@@ -47,6 +44,17 @@ package Level
         win();
       }
     }
+    
+    override protected function addObstacles():void
+    {
+      var pos:Array = [704, 705, 788, 743, 744, 745, 746, 747, 748, 658, 659, 660, 789, 790, 700, 701, 702, 703];
+      
+      for (var i:int = 0; i < pos.length; i++)
+      {
+        _obstacles[pos[i]] = true;
+      }
+    }    
+    
   }
 
 }

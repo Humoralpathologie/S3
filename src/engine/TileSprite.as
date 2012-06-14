@@ -19,8 +19,8 @@ package engine
     private var _tileX:int;
     private var _tileY:int;
     private var _frameOffset:Point;
-    private var _facing:int;
-    private var _prevFacing:int;
+    public var facing:int;
+    public var prevFacing:int;
     private var _speed:Number;
     protected var _image:Image;
     protected var _tween:GTween;
@@ -45,12 +45,12 @@ package engine
         addChild(_image);
       }
       facing = AssetRegistry.RIGHT;     
-      _prevFacing = facing;
+      prevFacing = facing;
 
     }
     
     public function advance():void {
-      switch(_prevFacing) {
+      switch(prevFacing) {
         case AssetRegistry.UP:
             tileY -= 1;
             tileX = tileX;
@@ -69,7 +69,7 @@ package engine
             break;
       }
       animateMove();
-      _prevFacing = _facing;
+      prevFacing = facing;
       
     }
     
@@ -94,7 +94,7 @@ package engine
         _starlingTween.reset(this, _speed);
       }*/
       
-      switch(_facing) {
+      switch(facing) {
          case AssetRegistry.UP:
             //_tween.setValue("y", y - AssetRegistry.TILESIZE);
             //_starlingTween.animate("y", y - AssetRegistry.TILESIZE);
@@ -146,16 +146,6 @@ package engine
         y = _tileY * _tilesize - _frameOffset.y;
     }
     
-    public function get facing():int 
-    {
-        return _facing;
-    }
-    
-    public function set facing(value:int):void 
-    {
-        _facing = value;
-    }
-    
     public function get frameOffset():Point 
     {
         return _frameOffset;
@@ -168,16 +158,6 @@ package engine
         tileY = tileY;
     }
     
-    public function get prevFacing():int 
-    {
-        return _prevFacing;
-    }
-    
-    public function set prevFacing(value:int):void 
-    {
-        _prevFacing = value;
-        facing = value;
-    }
 
     
   }

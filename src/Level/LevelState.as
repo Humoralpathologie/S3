@@ -75,6 +75,7 @@ package Level
     private var _swipeMenu:Sprite;
     private var _paused:Boolean = false;
     private var _firstFrame:Boolean = true;
+    private var _frameCounter:int = 0;
     private var _particlePool:Vector.<PDParticleSystem>;
     private var _sadSnake:Image;
     private var _evilSnake:Image;
@@ -84,18 +85,20 @@ package Level
     protected var _tileWidth:int = 0;
     protected var _tileHeight:int = 0;
     
-//		private static const sfx:Sound = new AssetRegistry.WinMusic() as Sound;
+		private static var sfx:Sound;
  
 		private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
  
 		private static function playSoundSilentlyEndlessly(evt:Event = null):void
 		{
-//			sfx.play(0, 1000, SilentSoundTransform).addEventListener(Event.SOUND_COMPLETE, playSoundSilentlyEndlessly, false, 0, true); // plays the sound with volume 0 endlessly
+			sfx.play(0, 1000, SilentSoundTransform).addEventListener(Event.SOUND_COMPLETE, playSoundSilentlyEndlessly, false, 0, true); // plays the sound with volume 0 endlessly
 		}
         
     public function LevelState()
     {
       super();
+      
+      sfx = new AssetRegistry.Bite as Sound;
 
       // Fix for laggy sound
       playSoundSilentlyEndlessly();
@@ -120,6 +123,9 @@ package Level
       
       addBackground();
       
+      _tileHeight = Math.ceil(_bg.height / AssetRegistry.TILESIZE);
+      _tileWidth = Math.ceil( _bg.width / AssetRegistry.TILESIZE);      
+      
       addObstacles();
       
       _snake = new Snake(_speed);
@@ -130,7 +136,7 @@ package Level
       
       for (var j:int = 0; j < 10; j++)
       {
-        _eggs.spawnRandomEgg();
+        _eggs.spawnRandomEgg(_tileWidth, _tileHeight);
       }
       
       _levelStage.addChild(_eggs);
@@ -138,8 +144,10 @@ package Level
       _hud = new HUD(_eggs, _snake);
       addChild(_hud);
       
-      _particles = new PDParticleSystem(AssetRegistry.DrugParticleConfig, AssetRegistry.SnakeAtlas.getTexture("drugs_particle"));
+      //_particles = new PDParticleSystem(AssetRegistry.DrugParticleConfig, AssetRegistry.SnakeAtlas.getTexture("drugs_particle"));
+      _particles = new PDParticleSystem(AssetRegistry.EggsplosionParticleConfig, AssetRegistry.EggsplosionParticleTexture);
       _levelStage.addChild(_particles);
+      _particles.blendMode = BlendMode.ADD;
       Starling.juggler.add(_particles);
       
       // Make the particle Systems for Combos;
@@ -196,7 +204,7 @@ package Level
     }
     
     private function obstacleCollide():void {
-      if (_obstacles[_snake.head.tileX * _tileWidth + _snake.head.y]) {
+      if (_obstacles[_snake.head.tileY * _tileWidth + _snake.head.tileX]) {
         die();
       }
     }
@@ -274,7 +282,7 @@ package Level
       _particles.start(0.5);
       _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
       _eggs.removeChild(egg);
-      _eggs.spawnRandomEgg();
+      _eggs.spawnRandomEgg(_tileWidth, _tileHeight);
             
       showPoints(egg, "2");
       _score += 2;
@@ -325,7 +333,7 @@ package Level
             expoCounter++;
             _score += fib;
             var randColor:uint = Color.argb(256, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
-            showPoints(egg, '+' + String(fib) + randColor);
+            showPoints(egg, '+' + String(fib), randColor);
             temp = fib;
             fib += prefib;
             prefib = temp;
@@ -440,7 +448,7 @@ package Level
       if (!_paused)
       {
         
-        //snakeAi();
+        snakeAi();
         
         if (_firstFrame) {
           _firstFrame = false;
@@ -455,7 +463,7 @@ package Level
 
         startTimer = getTimer();
         
-        _snake.update(event.passedTime * Starling.juggler.timeFactor);
+        _snake.update(event.passedTime * Starling.juggler.timeFactor);        
         
         endTimer = getTimer();
           
@@ -470,8 +478,7 @@ package Level
           Starling.current.mMove = endTimer - startTimer;
           
           doCombos();
-
-          
+     
           eggCollide();
           screenCollide();
           obstacleCollide();
