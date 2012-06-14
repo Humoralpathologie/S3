@@ -86,6 +86,11 @@ package Level
     protected var _tileHeight:int = 0;
     
 		private static var sfx:Sound;
+    private var _bonusTimer:Number = 0; 
+    private var _bonusTimerPoints:Number = 0; 
+    private var _bonusBar:Quad;
+    private var _bonusBack:Quad;
+
  
 		private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
  
@@ -180,6 +185,16 @@ package Level
           }
         });
       _swipeMenu.addChild(back);
+
+      //create bonusbar
+      _bonusBar = new Quad(1, 8, 0xffffff);
+      _bonusBack = new Quad(27, 10, 0x000000);
+      
+      
+      _bonusBack.alpha = 0;
+      _bonusBar.scaleX = 0;
+      _levelStage.addChild(_bonusBack);
+      _levelStage.addChild(_bonusBar);
 
     }
     
@@ -285,20 +300,49 @@ package Level
       _eggs.spawnRandomEgg(_tileWidth, _tileHeight);
             
       showPoints(egg, "2");
-      _score += 2;
-      
+
+      if (_bonusTimer > 0) {
+        var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
+        _bonusTimerPoints += 2;
+        showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
+      } 
+
       if (egg.type < AssetRegistry.EGGROTTEN)
       {
         _snake.eat(egg.type);
       }
+      _bonusTimer = 2.5;
     }
     
     private function updateTimers(event:EnterFrameEvent):void
     {
       var passedTime:Number = event.passedTime * Starling.juggler.timeFactor;
       _timer += passedTime;
+      _bonusTimer -= passedTime;
       _overallTimer += passedTime;
       _comboTimer -= passedTime;
+    }
+    
+    private function updateBonusBar():void {
+      _bonusBar.x = _snake.head.x - 5;
+      _bonusBar.y = _snake.head.y - 10;
+      _bonusBack.x = _bonusBar.x - 1;
+      _bonusBack.y = _bonusBar.y - 1;
+      trace(_bonusTimer)
+     if (_bonusTimer > 0.5) {
+        _bonusBack.alpha = 0.3;
+        _bonusBar.scaleX = ((_bonusTimer - 0.5) / 2) * 25;
+        _bonusBar.color = Color.argb(255, (1 - ((_bonusTimer - 0.5) / 2)) * 255, ((_bonusTimer - 0.5) / 2) * 255, 0);
+        
+      } else {
+        if (_bonusTimer <= 0) {
+          _bonusTimerPoints = 0;
+        }
+        _bonusBar.scaleX = 0;
+        _bonusBack.alpha = 0;
+      } 
+
+
     }
     
     protected function addBackground():void
@@ -334,6 +378,7 @@ package Level
             _score += fib;
             var randColor:uint = Color.argb(256, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
             showPoints(egg, '+' + String(fib), randColor);
+
             temp = fib;
             fib += prefib;
             prefib = temp;
@@ -351,20 +396,20 @@ package Level
       func();
     }
     
-    private function showPoints(egg:DisplayObject, points:String, color:uint = 0xffffff):void {
+    private function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void {
       var text:TextField = new TextField(120, 120, points, "kroeger 06_65", 60);
       text.color = color;
       text.autoScale = true;
       text.hAlign = HAlign.CENTER;
-      text.x = egg.x - 60;
-      text.y = egg.y - 60;
-      _levelStage.addChild(text);
-      var tween:Tween = new Tween(text, 2, "linear");
-      tween.animate("y", 0);
+      text.x = 800 + offset;
+      text.y = 500 + offset;
+      addChild(text);
+      var tween:Tween = new Tween(text, 2, "easeIn");
+      tween.animate("y", offset);
       tween.animate("scaleX", 3);
       tween.animate("scaleY", 3);
-      tween.animate("x", 0);
-      tween.animate("rotation", deg2rad(15));
+      tween.animate("x", offset);
+      tween.animate("rotation", deg2rad(45 - offset));
       tween.fadeTo(0); 
       
       tween.onComplete = function():void {
@@ -448,6 +493,7 @@ package Level
       if (!_paused)
       {
         
+        updateBonusBar();
         snakeAi();
         
         if (_firstFrame) {
