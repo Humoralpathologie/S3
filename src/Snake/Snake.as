@@ -71,9 +71,9 @@ package Snake
       
       a.tileX = _head.tileX;
       a.tileY = _head.tileY;
-      a.facing = _head.prevFacing;     
+      a.facing = _head.facing;     
       a.animateMove();
-      
+
       /*
       var l:int = _body.length;
       var a:Snake.BodyPart, b:Snake.BodyPart;
@@ -121,7 +121,7 @@ package Snake
             _head.facing = AssetRegistry.DOWN;
             break;
       }
-      _head.prevFacing = _head.facing;
+      //_head.prevFacing = _head.facing;
     }
     
     public function moveLeft():void {
@@ -139,7 +139,7 @@ package Snake
             _head.facing = AssetRegistry.UP;
             break;
       }
-      _head.prevFacing = _head.facing;
+      //_head.prevFacing = _head.facing;
     }    
     
     public function get head():Snake.Head 

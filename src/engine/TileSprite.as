@@ -50,7 +50,7 @@ package engine
     }
     
     public function advance():void {
-      switch(prevFacing) {
+      switch(facing) {
         case AssetRegistry.UP:
             tileY -= 1;
             tileX = tileX;

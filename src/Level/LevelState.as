@@ -84,6 +84,8 @@ package Level
     protected var _obstacles:Object = { };
     protected var _tileWidth:int = 0;
     protected var _tileHeight:int = 0;
+    private var _camerax:Number = 0;
+    private var _cameray:Number = 0;
     
 		private static var sfx:Sound;
     private var _bonusTimer:Number = 0; 
@@ -219,7 +221,7 @@ package Level
         {
           eatEgg(eggs[i]);
           _justAte = true;
-          peggle();
+          //peggle();
         }
       }
     }
@@ -305,9 +307,11 @@ package Level
     private function spawnRandomEgg():void {
       var eggx:int;
       var eggy:int;
-      eggx = Math.floor(Math.random() * _tileWidth);
-      eggy = Math.floor(Math.random() * _tileHeight);
-      var egg:Eggs.Egg = new Eggs.Egg(eggx, eggy, Math.floor(Math.random() * 4));
+      do {
+        eggx = Math.floor(Math.random() * _tileWidth);
+        eggy = Math.floor(Math.random() * _tileHeight);
+        var egg:Eggs.Egg = new Eggs.Egg(eggx, eggy, Math.floor(Math.random() * 4));
+      } while (_obstacles[egg.y * _tileWidth + egg.x]);
       _eggs.addEgg(egg);
     }
     
@@ -567,8 +571,12 @@ package Level
       //_levelStage.x = - (_following.x + _following.frameOffset.x) + Starling.current.viewPort.width / 2;
       //_levelStage.y = - (_following.y + _following.frameOffset.x) + Starling.current.viewPort.height / 2;
       var a:Number, b:Number;
-      a = _following.x + _following.frameOffset.x + 7;
-      b = _following.y + _following.frameOffset.y + 7;
+    
+      _camerax = _following.x;
+      _cameray = _following.y;
+      
+      a = _camerax + _following.frameOffset.x + 7;
+      b = _cameray + _following.frameOffset.y + 7;
       _levelStage.x = -(a * _zoom) + Starling.current.viewPort.width / 2;
       _levelStage.y = -(b * _zoom) + Starling.current.viewPort.height / 2;
       
