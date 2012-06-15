@@ -41,7 +41,7 @@ package engine
       [Embed(source = "../../assets/Levels/Level05/level05.png")] static public const Level5BackgroundPNG:Class;
       [Embed(source = "../../assets/Levels/Level06/level06.png")] static public const Level6BackgroundPNG:Class;
       
-      [Embed(source = "../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")] static public const WinMusic:Class;
+      //[Embed(source = "../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")] static public const WinMusic:Class;
       [Embed(source = "../../assets/Sounds/Biss3.mp3")] static public const Bite:Class;
       
       [Embed(source="../../assets/Levels/arcadeoverlaytexture.xml", mimeType="application/octet-stream")] static private const ArcadeOverlayAtlasXML:Class
@@ -123,7 +123,7 @@ package engine
         
         LevelMusic1Sound = new LevelMusic1;
         LevelMusic2Sound = new LevelMusic2;
-        WinMusicSound = new WinMusic as Sound;
+        //WinMusicSound = new WinMusic as Sound;
       }
       
       public static function loadArcadeGraphics():void {
