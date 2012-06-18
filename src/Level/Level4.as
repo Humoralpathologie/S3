@@ -18,6 +18,8 @@ package Level
       AssetRegistry.loadLevel4Graphics();
       _levelNr = 4;
       super();
+      startAt(15, 15);
+      updateCamera();
     }
     
     override protected function addBackground():void {
@@ -45,6 +47,15 @@ package Level
       AssetRegistry.disposeLevel4Graphics();
       super.dispose();
     }
+    
+    override public function addFrame():void {
+      // Not needed here.
+    }    
+    
+    override protected function showObjective():void
+    {     
+      showObjectiveBox("Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snakes speed up to 11 and jump!");
+    }    
     
     override protected function addObstacles():void
     {

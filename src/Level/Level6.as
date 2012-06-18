@@ -25,6 +25,11 @@ package Level
       _bg.smoothing = TextureSmoothing.NONE;
       _levelStage.addChild(_bg);
     }
+ 
+    override protected function showObjective():void
+    {     
+      showObjectiveBox("Terror Triceratops has hidden 4 eggs especially well. Maybe they contain his heirs. Little Snake cannot afford to pass on these eggs.\n\nObjective:\nEat the 4 special eggs. If you have a problem getting into the tight spots, perform () to slow down time.", 40);
+    }        
     
     override public function dispose():void {
       AssetRegistry.disposeLevel6Graphics();

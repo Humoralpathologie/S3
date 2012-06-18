@@ -59,8 +59,8 @@ package Level
     protected var _snake:Snake;
     private var _speed:Number = 0.3;
     protected var _levelStage:Sprite;
-    private var _particles:PDParticleSystem;
     private var _eggs:Eggs;
+    private var _rottenEggs:Eggs.Eggs;
     protected var _overallTimer:Number = 0;
     private var _text:TextField;
     private var _comboSet:Combo.ComboSet;
@@ -82,32 +82,36 @@ package Level
     private var _evilSnake:Image;
     protected var _levelNr:int = 0;
     private var _won:Boolean = false;
-    protected var _obstacles:Object = { };
+    protected var _obstacles:Object = {};
     protected var _tileWidth:int = 0;
     protected var _tileHeight:int = 0;
     private var _camerax:Number = 0;
     private var _cameray:Number = 0;
     
-		private static var sfx:Sound;
-    private var _bonusTimer:Number = 0; 
-    private var _bonusTimerPoints:Number = 0; 
+    private static var sfx:Sound;
+    private var _bonusTimer:Number = 0;
+    private var _bonusTimerPoints:Number = 0;
     private var _bonusBar:Quad;
     private var _bonusBack:Quad;
-
- 
-		private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
- 
-		private static function playSoundSilentlyEndlessly(evt:Event = null):void
-		{
-			sfx.play(0, 1000, SilentSoundTransform).addEventListener(Event.SOUND_COMPLETE, playSoundSilentlyEndlessly, false, 0, true); // plays the sound with volume 0 endlessly
-		}
-        
+    
+    protected var _rottenTimer:Number = 0;
+    protected var _rottenEnabled:Boolean = false;
+    protected var _particles:Object;
+    
+    
+    private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
+    
+    private static function playSoundSilentlyEndlessly(evt:Event = null):void
+    {
+      sfx.play(0, 1000, SilentSoundTransform).addEventListener(Event.SOUND_COMPLETE, playSoundSilentlyEndlessly, false, 0, true); // plays the sound with volume 0 endlessly
+    }
+    
     public function LevelState()
     {
       super();
       
-      sfx =  AssetRegistry.WinMusicSound;
-
+      sfx = AssetRegistry.WinMusicSound;
+      
       // Fix for laggy sound
       playSoundSilentlyEndlessly();
       
@@ -134,7 +138,7 @@ package Level
       addFrame();
       
       _tileHeight = Math.ceil(_bg.height / AssetRegistry.TILESIZE);
-      _tileWidth = Math.ceil( _bg.width / AssetRegistry.TILESIZE);      
+      _tileWidth = Math.ceil(_bg.width / AssetRegistry.TILESIZE);
       
       addObstacles();
       
@@ -145,58 +149,41 @@ package Level
       addAboveSnake();
       
       _eggs = new Eggs();
+      _rottenEggs = new Eggs.Eggs();
       
-      for (var j:int = 0; j < 10; j++)
-      {
-        spawnRandomEgg();
-      }
+      spawnInitialEggs();
       
       _levelStage.addChild(_eggs);
+      _levelStage.addChild(_rottenEggs);
       
       _hud = new HUD(_eggs, _snake);
       addChild(_hud);
-      
-      //_particles = new PDParticleSystem(AssetRegistry.DrugParticleConfig, AssetRegistry.SnakeAtlas.getTexture("drugs_particle"));
-      _particles = new PDParticleSystem(AssetRegistry.EggsplosionParticleConfig, AssetRegistry.EggsplosionParticleTexture);
-      _levelStage.addChild(_particles);
-      _particles.blendMode = BlendMode.ADD;
-      Starling.juggler.add(_particles);
-      
-      // Make the particle Systems for Combos;
-      _particlePool = new Vector.<PDParticleSystem>;
-      for (var i:int = 0; i < 10; i++) {
-        _particlePool.push(new PDParticleSystem(AssetRegistry.ComboParticleConfig, AssetRegistry.SnakeAtlas.getTexture("shell")));
-        _levelStage.addChild(_particlePool[i]);
-      }      
-      
-      _text = new TextField(300, 200, "SNAKE", "kroeger 06_65", 30);
-      _text.color = Color.WHITE;
-      _text.hAlign = HAlign.LEFT;
-      addChild(_text);
+          
+      addParticles();
       
       _swipeMenu = new Sprite();
       var swipeBackground:Quad = new Quad(Starling.current.viewPort.width, 100, 0x000000);
       swipeBackground.alpha = 0.3;
-            
-      _swipeMenu.addChild(swipeBackground);     
+      
+      _swipeMenu.addChild(swipeBackground);
       _swipeMenu.y = Starling.current.viewPort.height;
       addChild(_swipeMenu);
       
       var back:TextField = new TextField(300, 100, "BACK", "kroeger 06_65", 80, Color.WHITE);
       
-      back.addEventListener(TouchEvent.TOUCH, 
-        function(event:TouchEvent):void {
+      back.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
+        {
           var touch:Touch = event.getTouch(back, TouchPhase.ENDED);
-          if (touch) {
+          if (touch)
+          {
             StageManager.switchStage(MainMenu);
           }
         });
       _swipeMenu.addChild(back);
-
+      
       //create bonusbar
       _bonusBar = new Quad(1, 8, 0xffffff);
       _bonusBack = new Quad(27, 10, 0x000000);
-      
       
       _bonusBack.alpha = 0;
       _bonusBar.scaleX = 0;
@@ -206,14 +193,35 @@ package Level
       pause();
       
       showObjective();
-
+    
     }
     
-    protected function showObjective():void {
+    protected function addParticles():void {
+      var list:Array = [
+        [AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionA), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")],
+        [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionB), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")],
+        [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionC), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")],
+        [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")],
+        [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")],
+        [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")],
+        [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")]
+      ];
+      
+      _particles = { };
+      for (var i:int = 0; i < list.length;i++) {
+        _particles[list[i][0]] = new PDParticleSystem(list[i][1], list[i][2]);
+        _levelStage.addChild(_particles[list[i][0]]);
+        Starling.juggler.add(_particles[list[i][0]]);
+      }
+    }
+    
+    protected function showObjective():void
+    {
       unpause();
     }
     
-    public function addFrame():void {
+    public function addFrame():void
+    {
       var frame:Image = new Image(AssetRegistry.LevelFrame);
       frame.x = -200;
       frame.y = -150;
@@ -231,34 +239,42 @@ package Level
         {
           eatEgg(eggs[i]);
           _justAte = true;
-          //peggle();
+            //peggle();
         }
       }
     }
     
-    protected function addAboveSnake():void {
-      
+    protected function addAboveSnake():void
+    {
+    
     }
     
-    protected function addObstacles():void {
-      
+    protected function addObstacles():void
+    {
+    
     }
     
-    private function obstacleCollide():void {
-      if (_obstacles[_snake.head.tileY * _tileWidth + _snake.head.tileX]) {
+    private function obstacleCollide():void
+    {
+      if (_obstacles[_snake.head.tileY * _tileWidth + _snake.head.tileX])
+      {
         die();
       }
     }
     
-    private function screenCollide():void {
-      if (_snake.head.tileX < 0 || _snake.head.tileY < 0 || _snake.head.tileX >= _bg.width / AssetRegistry.TILESIZE || _snake.head.tileY >= _bg.height / AssetRegistry.TILESIZE) {
+    private function screenCollide():void
+    {
+      if (_snake.head.tileX < 0 || _snake.head.tileY < 0 || _snake.head.tileX >= _bg.width / AssetRegistry.TILESIZE || _snake.head.tileY >= _bg.height / AssetRegistry.TILESIZE)
+      {
         die();
       }
     }
     
-    private function die():void {
+    private function die():void
+    {
       _snake.lives--;
       pause();
+      startAt(5, 5);
       
       _sadSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("sadsnake"));
       _sadSnake.x = (Starling.current.viewPort.width - _sadSnake.width) / 2;
@@ -266,46 +282,62 @@ package Level
       addChild(_sadSnake);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_sadSnake, 2, { y: Starling.current.viewPort.height - _sadSnake.height } );
+      new GTween(_sadSnake, 2, {y: Starling.current.viewPort.height - _sadSnake.height});
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
       addEventListener(TouchEvent.TOUCH, dieScreenTouch);
-      
+    
     }
     
-    private function _onKeyDown(event:KeyboardEvent):void {
-      switch(event.keyCode) {
-        case 40: //DOWN
-          if (_snake.head.facing == AssetRegistry.RIGHT || _snake.head.facing == AssetRegistry.LEFT) {
-            _snake.head.facing = AssetRegistry.DOWN;
-          } 
-        break;
-
-        case 38: //UP
-          if (_snake.head.facing == AssetRegistry.RIGHT || _snake.head.facing == AssetRegistry.LEFT) {
-            _snake.head.facing = AssetRegistry.UP;
-          } 
-        break;
-
-        case 39: //RIGHT
-          if (_snake.head.facing == AssetRegistry.UP || _snake.head.facing == AssetRegistry.DOWN) {
-            _snake.head.facing = AssetRegistry.RIGHT;
-          } 
-        break;
-
-        case 37: //LEFT
-          if (_snake.head.facing == AssetRegistry.UP || _snake.head.facing == AssetRegistry.DOWN) {
-            _snake.head.facing = AssetRegistry.LEFT;
-          } 
-        break;
-
+    protected function spawnInitialEggs():void
+    {
+      for (var j:int = 0; j < 4; j++)
+      {
+        spawnRandomEgg();
       }
-
     }
     
-    private function dieScreenTouch(event:TouchEvent):void {
+    private function _onKeyDown(event:KeyboardEvent):void
+    {
+      switch (event.keyCode)
+      {
+        case 40: //DOWN
+          if (_snake.head.facing == AssetRegistry.RIGHT || _snake.head.facing == AssetRegistry.LEFT)
+          {
+            _snake.head.facing = AssetRegistry.DOWN;
+          }
+          break;
+        
+        case 38: //UP
+          if (_snake.head.facing == AssetRegistry.RIGHT || _snake.head.facing == AssetRegistry.LEFT)
+          {
+            _snake.head.facing = AssetRegistry.UP;
+          }
+          break;
+        
+        case 39: //RIGHT
+          if (_snake.head.facing == AssetRegistry.UP || _snake.head.facing == AssetRegistry.DOWN)
+          {
+            _snake.head.facing = AssetRegistry.RIGHT;
+          }
+          break;
+        
+        case 37: //LEFT
+          if (_snake.head.facing == AssetRegistry.UP || _snake.head.facing == AssetRegistry.DOWN)
+          {
+            _snake.head.facing = AssetRegistry.LEFT;
+          }
+          break;
+      
+      }
+    
+    }
+    
+    private function dieScreenTouch(event:TouchEvent):void
+    {
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
-      if (touch) {
+      if (touch)
+      {
         removeChild(_sadSnake);
         removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
         addEventListener(TouchEvent.TOUCH, onTouch);
@@ -314,24 +346,29 @@ package Level
       }
     }
     
-    private function resetSnake():void {
+    private function resetSnake():void
+    {
       _snake.head.tileX = 5;
       _snake.head.tileY = 5;
       _snake.head.facing = AssetRegistry.RIGHT;
       _snake.head.prevFacing = _snake.head.facing;
     }
     
-    private function showParticles(egg:DisplayObject):void {
+    private function showParticles(egg:DisplayObject):void
+    {
+      /*
       var pd:ParticleSystem;
-      for (var i:int = 0; i < _particlePool.length; i++) {
+      for (var i:int = 0; i < _particlePool.length; i++)
+      {
         
-      }      
+      }
       pd = _particlePool[0];
       pd.x = egg.x;
       pd.y = egg.y;
       
       pd.start(1);
       Starling.juggler.add(pd);
+      */
     }
     
     private function peggle():void
@@ -339,47 +376,70 @@ package Level
       if (_snake.eatenEggs == 10)
       {
         new GTween(this, 0.5, {zoom: 5});
-        new GTween(Starling.juggler, 0.5, { timeFactor: 0.1 } );
+        new GTween(Starling.juggler, 0.5, {timeFactor: 0.1});
         AssetRegistry.WinMusicSound.play();
       }
     }
     
-    private function spawnRandomEgg():void {
+    protected function spawnRandomEgg():void
+    {
+      var egg:Eggs.Egg = new Eggs.Egg(0, 0, Math.floor(Math.random() * 4));
+      placeEgg(egg);
+    }
+    
+    protected function placeEgg(egg:Eggs.Egg):void
+    {
       var eggx:int;
       var eggy:int;
-      do {
+      do
+      {
         eggx = Math.floor(Math.random() * _tileWidth);
         eggy = Math.floor(Math.random() * _tileHeight);
       } while (_obstacles[eggy * _tileWidth + eggx]);
-        var egg:Eggs.Egg = new Eggs.Egg(eggx, eggy, Math.floor(Math.random() * 4));
+      egg.tileX = eggx;
+      egg.tileY = eggy;
       
       _eggs.addEgg(egg);
+
     }
     
     private function eatEgg(egg:Egg):void
     {
       AssetRegistry.BiteSound.play();
       
-      _particles.x = egg.x;
-      _particles.y = egg.y;
-      _particles.start(0.5);
-      _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
-      _eggs.removeChild(egg);
-      spawnRandomEgg();
-            
-      showPoints(egg, "2");
-
-      if (_bonusTimer > 0) {
-        var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
-        _bonusTimerPoints += 2;
-        showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
-      } 
-
-      if (egg.type < AssetRegistry.EGGROTTEN)
+      if (!_rottenEnabled || egg.type < AssetRegistry.EGGROTTEN)
       {
         _snake.eat(egg.type);
+        _bonusTimer = 2.5;
+        
+        var particle:PDParticleSystem = _particles[egg.type];
+        if(particle) {
+        particle.x = egg.x + 10;
+        particle.y = egg.y + 13;
+        particle.start(0.5);
+        }
+        _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
+        _eggs.removeChild(egg);
+        spawnRandomEgg();
+        
+        showPoints(egg, "2");
+        
+        if (_bonusTimer > 0)
+        {
+          var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
+          _bonusTimerPoints += 2;
+          showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
+        }
+        
       }
-      _bonusTimer = 2.5;
+      else
+      {
+        _score -= 5;
+        showPoints(egg, "-5", 20, Color.RED);
+        _bonusTimer = 0;
+        _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
+        _eggs.removeChild(egg);       
+      }
     }
     
     private function updateTimers(event:EnterFrameEvent):void
@@ -389,36 +449,43 @@ package Level
       _bonusTimer -= passedTime;
       _overallTimer += passedTime;
       _comboTimer -= passedTime;
+      _rottenTimer -= passedTime;
     }
     
-    private function updateBonusBar():void {
+    private function updateBonusBar():void
+    {
       _bonusBar.x = _snake.head.x - 5;
       _bonusBar.y = _snake.head.y - 10;
       _bonusBack.x = _bonusBar.x - 1;
       _bonusBack.y = _bonusBar.y - 1;
       trace(_bonusTimer)
-     if (_bonusTimer > 0.5) {
+      if (_bonusTimer > 0.5)
+      {
         _bonusBack.alpha = 0.3;
         _bonusBar.scaleX = ((_bonusTimer - 0.5) / 2) * 25;
         _bonusBar.color = Color.argb(255, (1 - ((_bonusTimer - 0.5) / 2)) * 255, ((_bonusTimer - 0.5) / 2) * 255, 0);
         
-      } else {
-        if (_bonusTimer <= 0) {
+      }
+      else
+      {
+        if (_bonusTimer <= 0)
+        {
           _bonusTimerPoints = 0;
         }
         _bonusBar.scaleX = 0;
         _bonusBack.alpha = 0;
-      } 
-
-
+      }
+    
     }
     
     protected function addBackground():void
     {
-      _bg = new Image(_bgTexture);
-      _bg.smoothing = TextureSmoothing.NONE;
-      _bg.blendMode = BlendMode.NONE;
-      _levelStage.addChild(_eggs);
+    /*
+       _bg = new Image(_bgTexture);
+       _bg.smoothing = TextureSmoothing.NONE;
+       _bg.blendMode = BlendMode.NONE;
+       _levelStage.addChild(_eggs);
+     */
     }
     
     protected function removeAndExplodeCombo(combo:Array):void
@@ -446,7 +513,7 @@ package Level
             _score += fib;
             var randColor:uint = Color.argb(256, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
             showPoints(egg, '+' + String(fib), randColor);
-
+            
             temp = fib;
             fib += prefib;
             prefib = temp;
@@ -464,7 +531,8 @@ package Level
       func();
     }
     
-    private function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void {
+    private function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void
+    {
       var text:TextField = new TextField(120, 120, points, "kroeger 06_65", 60);
       text.color = color;
       text.autoScale = true;
@@ -478,9 +546,10 @@ package Level
       tween.animate("scaleY", 3);
       tween.animate("x", offset);
       tween.animate("rotation", deg2rad(45 - offset));
-      tween.fadeTo(0); 
+      tween.fadeTo(0);
       
-      tween.onComplete = function():void {
+      tween.onComplete = function():void
+      {
         removeChild(text);
       }
       
@@ -534,16 +603,24 @@ package Level
     
     }
     
-    private function snakeAi():void {
+    private function snakeAi():void
+    {
       var egg:Eggs.Egg = _eggs.eggPool[0];
-      if (egg.tileX > _snake.head.tileX) {
+      if (egg.tileX > _snake.head.tileX)
+      {
         _snake.head.facing = AssetRegistry.RIGHT;
-      } else if (egg.tileX < _snake.head.tileX) {
+      }
+      else if (egg.tileX < _snake.head.tileX)
+      {
         _snake.head.facing = AssetRegistry.LEFT;
         
-      } else if (egg.tileY < _snake.head.tileY) {
+      }
+      else if (egg.tileY < _snake.head.tileY)
+      {
         _snake.head.facing = AssetRegistry.UP;
-      } else if (egg.tileY > _snake.head.tileY){
+      }
+      else if (egg.tileY > _snake.head.tileY)
+      {
         _snake.head.facing = AssetRegistry.DOWN;
       }
       _snake.head.prevFacing = _snake.head.facing;
@@ -554,7 +631,8 @@ package Level
       var bodyArray:Array;
       var comboArray:Array;
       
-      if(!_won) {
+      if (!_won)
+      {
         checkWin();
       }
       
@@ -563,23 +641,25 @@ package Level
         
         //snakeAi();
         
-        if (_firstFrame) {
+        if (_firstFrame)
+        {
           _firstFrame = false;
-        } else {
+        }
+        else
+        {
           updateTimers(event);
         }
         
-        _text.text = String(_overallTimer.toFixed(2));
         _hud.update();
         
         var startTimer:Number, endTimer:Number;
-
+        
         //startTimer = getTimer();
         
-        _snake.update(event.passedTime * Starling.juggler.timeFactor);        
+        _snake.update(event.passedTime * Starling.juggler.timeFactor);
         
         //endTimer = getTimer();
-          
+        
         //Starling.current.mCombo = endTimer - startTimer;        
         
         _speed = _snake.speed;
@@ -592,7 +672,7 @@ package Level
           //Starling.current.mMove = endTimer - startTimer;
           
           doCombos();
-     
+          
           eggCollide();
           screenCollide();
           obstacleCollide();
@@ -602,25 +682,38 @@ package Level
         
         updateBonusBar();
         updateCamera();
+        if (_rottenEnabled) {
+          updateRotten();
+        }
         
       }
     
     }
     
-    private function selfCollide():void {
-      if (_snake.selfCollide()) {
+    protected function updateRotten():void {
+      if (_rottenTimer < 0) {
+        _rottenTimer = 30;
+        var rotten:Eggs.Egg = new Eggs.Egg(0, 0, AssetRegistry.EGGROTTEN);
+        placeEgg(rotten);         
+      }
+    }
+    
+    private function selfCollide():void
+    {
+      if (_snake.selfCollide())
+      {
         die();
       }
     }
     
-    private function updateCamera():void
+    protected function updateCamera():void
     {
       //_levelStage.x = Math.min(0, -_snake.head.x * 2 + Starling.current.nativeStage.stageWidth / 2);
       //_levelStage.y = Math.min(0, -_snake.head.y * 2 + Starling.current.nativeStage.stageHeight / 2);
       //_levelStage.x = - (_following.x + _following.frameOffset.x) + Starling.current.viewPort.width / 2;
       //_levelStage.y = - (_following.y + _following.frameOffset.x) + Starling.current.viewPort.height / 2;
       var a:Number, b:Number;
-    
+      
       _camerax = _following.x;
       _cameray = _following.y;
       
@@ -638,13 +731,13 @@ package Level
       _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + Starling.current.viewPort.height, _levelStage.y);
     }
     
-    private function pause():void
+    public function pause():void
     {
       _paused = true;
       Starling.juggler.paused = true;
     }
     
-    private function unpause():void
+    public function unpause():void
     {
       _paused = false;
       Starling.juggler.paused = false;
@@ -695,17 +788,17 @@ package Level
                 //if (_snake.head.facing == AssetRegistry.DOWN) {
                 //  _snake.moveLeft();
                 //} else {
-                  _snake.moveRight();
-                //}
+                _snake.moveRight();
+                  //}
               }
               else
               {
                 //if (_snake.head.facing == AssetRegistry.DOWN) {
                 //   _snake.moveRight();                 
                 //} else {
-                  _snake.moveLeft();
-                  
-                //}
+                _snake.moveLeft();
+                
+                  //}
               }
             }
           }
@@ -713,11 +806,13 @@ package Level
       }
     }
     
-    protected function checkWin():void {
-      
-    }    
+    protected function checkWin():void
+    {
     
-    protected function win():void {
+    }
+    
+    protected function win():void
+    {
       _won = true;
       pause();
       
@@ -727,23 +822,61 @@ package Level
       addChild(_evilSnake);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_evilSnake, 2, { y: Starling.current.viewPort.height - _evilSnake.height } );
+      new GTween(_evilSnake, 2, {y: Starling.current.viewPort.height - _evilSnake.height});
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-      addEventListener(TouchEvent.TOUCH, winScreenTouch);      
+      addEventListener(TouchEvent.TOUCH, winScreenTouch);
     }
     
-    private function winScreenTouch(event:TouchEvent):void {
+    protected function showObjectiveBox(desc:String, fontSize:int = 50):void
+    {
+      var box:Quad = new Quad(800, 600, 0);
+      box.alpha = 0x44 / 0xff;
+      box.x = (960 - box.width) / 2;
+      box.y = (640 - box.height) / 2;
+      addChild(box);
+      
+      var text:TextField = new TextField(700, 500, "", "kroeger 06_65", fontSize, Color.WHITE);
+      text.text = desc;
+      
+      addChild(text);
+      text.x = (960 - text.width) / 2;
+      text.y = (640 - text.height) / 2;
+      text.touchable = false;
+      
+      box.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
+        {
+          var touch:Touch = event.getTouch(box, TouchPhase.ENDED);
+          if (touch)
+          {
+            removeChild(box);
+            removeChild(text);
+            unpause();
+          }
+        });
+    }
+    
+    protected function startAt(x:int, y:int):void
+    {
+      _snake.head.tileX = x;
+      _snake.head.tileY = y;
+      _snake.head.facing = AssetRegistry.RIGHT;
+      for (var i:int = 0; i < _snake.body.length; i++)
+      {
+        _snake.body[i].tileX = - 10;
+        _snake.body[i].tileY = - 10;
+        _snake.body[i].facing = AssetRegistry.RIGHT;
+      }
+    }
+    
+    private function winScreenTouch(event:TouchEvent):void
+    {
       var touch:Touch;
       touch = event.getTouch(this, TouchPhase.ENDED);
-      if (touch) {
-        var score:Object = {
-          score: _score,
-          lives: _snake.lives * 100,
-          time: _overallTimer,
-          level: _levelNr         
-        }
+      if (touch)
+      {
+        var score:Object = {score: _score, lives: _snake.lives * 100, time: _overallTimer, level: _levelNr}
         
         StageManager.switchStage(LevelScore, score);
         SaveGame.unlockLevel(_levelNr + 1);
@@ -761,11 +894,11 @@ package Level
       _levelStage.scaleX = _levelStage.scaleY = _zoom;
     }
     
-    public function get snake():Snake 
+    public function get snake():Snake
     {
-        return _snake;
+      return _snake;
     }
-   
+  
   }
 
 }

@@ -25,6 +25,11 @@ package Level
       _bg.smoothing = TextureSmoothing.NONE;
       _levelStage.addChild(_bg);
     }
+ 
+    override protected function showObjective():void
+    {     
+      showObjectiveBox("Addiction\n\nObjective:\nEat two chains of at least ten eggs & don't stop eating for longer than 5 seconds.");
+    }            
     
     override public function dispose():void {
       AssetRegistry.disposeLevel7Graphics();

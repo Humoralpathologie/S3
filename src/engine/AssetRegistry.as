@@ -44,7 +44,7 @@ package engine
       [Embed(source = "../../assets/Levels/Level06/level06.png")] static public const Level6BackgroundPNG:Class;
       [Embed(source = "../../assets/Loading/loading-screen.png")] static public const LoadingScreenPNG:Class;
       
-      //[Embed(source = "../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")] static public const WinMusic:Class;
+      [Embed(source = "../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")] static public const WinMusic:Class;
       [Embed(source = "../../assets/Sounds/Biss3.mp3")] static public const Bite:Class;
       
       [Embed(source="../../assets/Levels/arcadeoverlaytexture.xml", mimeType="application/octet-stream")] static private const ArcadeOverlayAtlasXML:Class
@@ -65,6 +65,15 @@ package engine
       [Embed(source = "../../assets/Music/LevelMusikStufe2.mp3")] static private const LevelMusic2:Class;
       
       [Embed(source = "../../assets/Levels/LevelFrame640x480.png")] static private const LevelFramePNG:Class;
+      
+      // Particles
+      [Embed(source = "../../assets/Particles/EggsplosionA.pex", mimeType = "application/octet-stream")] static public const EggsplosionA:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionB.pex", mimeType = "application/octet-stream")] static public const EggsplosionB:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionC.pex", mimeType = "application/octet-stream")] static public const EggsplosionC:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionGoldV2.pex", mimeType = "application/octet-stream")] static public const EggsplosionGold:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionRotten.pex", mimeType = "application/octet-stream")] static public const EggsplosionRotten:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionShuffle.pex", mimeType = "application/octet-stream")] static public const EggsplosionShuffle:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionGreen.pex", mimeType = "application/octet-stream")] static public const EggsplosionGreen:Class;
       
       public static var SnakeAtlas:TextureAtlas;
       public static var MenuAtlas:TextureAtlas;
@@ -120,8 +129,7 @@ package engine
       public static const EGGGOLDEN:int = 6;
       
       public static var HQ:Boolean = false;
-      public static var LEVELS:Array;
-     
+      public static var LEVELS:Array;     
     
       public static function init():void 
       {
@@ -130,7 +138,7 @@ package engine
         
         LevelMusic1Sound = new LevelMusic1;
         LevelMusic2Sound = new LevelMusic2;
-        //WinMusicSound = new WinMusic as Sound;
+        WinMusicSound = new WinMusic as Sound;
       }
       
       public static function loadArcadeGraphics():void {
