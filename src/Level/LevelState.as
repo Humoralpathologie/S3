@@ -105,7 +105,7 @@ package Level
     {
       super();
       
-      sfx = new AssetRegistry.Bite as Sound;
+      sfx =  AssetRegistry.WinMusicSound;
 
       // Fix for laggy sound
       playSoundSilentlyEndlessly();
@@ -136,7 +136,7 @@ package Level
       
       addObstacles();
       
-      _snake = new Snake(_speed);
+      _snake = new Snake(10);
       _following = _snake.head;
       _levelStage.addChild(_snake);
       
@@ -200,7 +200,15 @@ package Level
       _bonusBar.scaleX = 0;
       _levelStage.addChild(_bonusBack);
       _levelStage.addChild(_bonusBar);
+      
+      pause();
+      
+      showObjective();
 
+    }
+    
+    protected function showObjective():void {
+      unpause();
     }
     
     public function addFrame():void {
@@ -310,8 +318,9 @@ package Level
       do {
         eggx = Math.floor(Math.random() * _tileWidth);
         eggy = Math.floor(Math.random() * _tileHeight);
+      } while (_obstacles[eggy * _tileWidth + eggx]);
         var egg:Eggs.Egg = new Eggs.Egg(eggx, eggy, Math.floor(Math.random() * 4));
-      } while (_obstacles[egg.y * _tileWidth + egg.x]);
+      
       _eggs.addEgg(egg);
     }
     
@@ -456,7 +465,7 @@ package Level
         {
           combo = _currentCombos[j];
           removeAndExplodeCombo(combo.eggs);
-          //combo.combo.effect(this);
+          combo.combo.effect(this);
           _combos += 1;
         }
         _currentCombos = null;
@@ -533,27 +542,29 @@ package Level
         
         var startTimer:Number, endTimer:Number;
 
-        startTimer = getTimer();
+        //startTimer = getTimer();
         
         _snake.update(event.passedTime * Starling.juggler.timeFactor);        
         
-        endTimer = getTimer();
+        //endTimer = getTimer();
           
-        Starling.current.mCombo = endTimer - startTimer;        
+        //Starling.current.mCombo = endTimer - startTimer;        
         
+        _speed = _snake.speed;
         if (_timer >= _speed)
         {
-          startTimer = getTimer();
+          //startTimer = getTimer();
           _snake.move();
-          endTimer = getTimer();
+          //endTimer = getTimer();
           
-          Starling.current.mMove = endTimer - startTimer;
+          //Starling.current.mMove = endTimer - startTimer;
           
           doCombos();
      
           eggCollide();
           screenCollide();
           obstacleCollide();
+          selfCollide();
           _timer -= _speed;
         }
         
@@ -562,6 +573,12 @@ package Level
         
       }
     
+    }
+    
+    private function selfCollide():void {
+      if (_snake.selfCollide()) {
+        die();
+      }
     }
     
     private function updateCamera():void
@@ -709,6 +726,11 @@ package Level
     {
       _zoom = value;
       _levelStage.scaleX = _levelStage.scaleY = _zoom;
+    }
+    
+    public function get snake():Snake 
+    {
+        return _snake;
     }
    
   }

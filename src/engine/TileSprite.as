@@ -158,6 +158,16 @@ package engine
         tileY = tileY;
     }
     
+    public function get speed():Number 
+    {
+        return _speed;
+    }
+    
+    public function set speed(value:Number):void 
+    {
+        _speed = value;
+    }
+    
 
     
   }

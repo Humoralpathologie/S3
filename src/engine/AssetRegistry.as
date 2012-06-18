@@ -42,6 +42,7 @@ package engine
       [Embed(source = "../../assets/Levels/Level04/level4_palme.png")] static public const Level4PalmTreePNG:Class;
       [Embed(source = "../../assets/Levels/Level05/level05.png")] static public const Level5BackgroundPNG:Class;
       [Embed(source = "../../assets/Levels/Level06/level06.png")] static public const Level6BackgroundPNG:Class;
+      [Embed(source = "../../assets/Loading/loading-screen.png")] static public const LoadingScreenPNG:Class;
       
       [Embed(source = "../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")] static public const WinMusic:Class;
       [Embed(source = "../../assets/Sounds/Biss3.mp3")] static public const Bite:Class;

@@ -32,7 +32,7 @@ package Level
     }
      
     override protected function checkWin():void {
-      if (_snake.eatenEggs == 50) {
+      if (_snake.eatenEggs == 30) {
         win();
       }
     }

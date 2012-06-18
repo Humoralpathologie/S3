@@ -9,7 +9,7 @@ package engine
   
   /**
    * ...
-   * @author
+   * @author 
    */
   public class StageManager extends Sprite
   {
@@ -25,7 +25,7 @@ package engine
     {
       _manager = this;
       AssetRegistry.init();
-      _loadingScreen = new AssetRegistry.LoadingPNG;
+      _loadingScreen = new AssetRegistry.LoadingScreenPNG;
       switchStage(MainMenu);
     }
     
