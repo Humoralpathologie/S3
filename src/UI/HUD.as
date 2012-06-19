@@ -12,6 +12,7 @@ package UI
   import starling.utils.HAlign;
   import starling.utils.Color;
   import starling.display.BlendMode;
+  import starling.core.Starling;
 	
 	/**
      * ...
@@ -19,65 +20,86 @@ package UI
      */
   public class HUD extends Sprite 
   {       
-    private var _eggs:Eggs;
     private var _radar:Radar;
-    private var _snake:Snake;
     private var _overlay:Image;
-    private var _neededEggs:Image;
-    private var _neededEggsText:TextField;
+    private var _scoreText:TextField;
     
-    private var _lifes:Image;
-    private var _lifesText:TextField;
-    
-    public function HUD(eggs:Eggs.Eggs, snake:Snake) 
+    private var _lifes:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-lives"));
+    private var _time:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-time"));
+    private var _combo:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-combo"));
+    private var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+    private var _speed:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-speed"));
+
+    private var _lifesText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+    private var _neededEggsText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+    private var _timeText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+    private var _comboText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+    private var _speedText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+ 
+    private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 10, y: 10}],
+                          eggs: [_neededEggs, _neededEggsText, {x: 105, y: 60}],
+                          time: [_time, _timeText, {x: 105, y: 10}],
+                          speed: [_speed, _speedText, {x: 105, y: 60}]
+                          };
+    public function HUD(radar:Radar, others:Array)//[lifes, eggs, time ...]; 
     {
-      _eggs = eggs;
-      _snake = snake;
-      
+      _radar = radar;
+      _scoreText = new TextField(100, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+      _scoreText.x = Starling.current.viewPort.width/2 - _scoreText.width/2;
+      _scoreText.y = 10;
+      _scoreText.hAlign = HAlign.CENTER;
+
       _overlay = new Image(AssetRegistry.SnakeAtlas.getTexture("UIOverlay"));
       _overlay.smoothing = TextureSmoothing.NONE;
      
-      _neededEggs = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
-      _neededEggs.smoothing = TextureSmoothing.NONE;
-      _neededEggs.scaleX = _neededEggs.scaleY = 2;
-      
-      _neededEggs.x = 105;
-      _neededEggs.y = 65;
-      
-      _neededEggsText = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
-      _neededEggsText.x = _neededEggs.x + _neededEggs.width + 15;
-      _neededEggsText.y = _neededEggs.y;
-      _neededEggsText.hAlign = HAlign.LEFT;
-      
-      
-      _lifes = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-lives"));
-      _lifes.smoothing = TextureSmoothing.NONE;
-      _lifes.scaleX = _lifes.scaleY = 2;
-      _lifes.x = 10;
-      _lifes.y = 10;
-      
-      _lifesText = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
-      _lifesText.x = _lifes.x + _lifes.width + 15;
-      _lifesText.y = _lifes.y;
-      _lifesText.hAlign = HAlign.LEFT;
-      
-      _radar = new Radar(_eggs, _snake);
+      for (var i:int; i < others.length; i++) {
+        if(_icons[others[i]]) {
+          var posX:int = _icons[others[i]][2].x;
+          var posY:int = _icons[others[i]][2].y;
+          _icons[others[i]][0].smoothing = TextureSmoothing.NONE;
+          _icons[others[i]][0].scaleX = _icons[others[i]][0].scaleY = 2;
+          _icons[others[i]][0].x = posX;
+          _icons[others[i]][0].y = posY;
+          addChild(_icons[others[i]][0]);
+        }
+      } 
+
+      for (var j:int; j < others.length; j++){
+        if(_icons[others[j]]) {
+          _icons[others[j]][1].x = _icons[others[j]][0].x + _icons[others[j]][0].width + 15;
+          _icons[others[j]][1].y = _icons[others[j]][0].y;
+          _icons[others[j]][1].hAlign = HAlign.LEFT;
+          addChild( _icons[others[j]][1]);
+        }
+      }
 
       addChild(_overlay);
-      addChild(_lifes);
-      addChild(_neededEggs);
+      addChild(_scoreText);
       addChild(_radar);      
           
-      addChild(_neededEggsText);     
-      addChild(_lifesText);
-      
-
     }
     
-    public function update():void {
-      _radar.update();
-      _neededEggsText.text = String(_snake.eatenEggs);
-      _lifesText.text = String(_snake.lives);
+    public function get radar():Radar {
+      return _radar;
     }
+    public function set lifesText(lifes:String):void {
+      _lifesText.text = lifes;
+    }
+    public function set timeText(time:String):void {
+      _timeText.text = time;
+    }
+    public function set comboText(combo:String):void {
+      _comboText.text = combo;
+    }
+    public function set speedText(speed:String):void {
+      _speedText.text = speed;
+    }
+    public function set eggsText(eggs:String):void {
+      _neededEggsText.text = eggs;
+    }
+    public function set score(score:String):void {
+      _scoreText.text = score;
+    }
+   
   }
 }

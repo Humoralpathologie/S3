@@ -167,7 +167,10 @@ package Snake
     {
         _lives = value;
     }
-        
+    
+    public function get speed():Number {
+      return _speed;
+    }    
   }
 
 }

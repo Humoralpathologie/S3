@@ -25,6 +25,7 @@ package Level
   import starling.events.TouchPhase;
   import engine.AssetRegistry;
   import UI.HUD;
+  import UI.Radar;
   import flash.system.Capabilities;
   import starling.display.BlendMode;
   import starling.text.TextField;
@@ -148,9 +149,7 @@ package Level
       
       _levelStage.addChild(_eggs);
       
-      _hud = new HUD(_eggs, _snake);
-      addChild(_hud);
-      
+      addHud(); 
       //_particles = new PDParticleSystem(AssetRegistry.DrugParticleConfig, AssetRegistry.SnakeAtlas.getTexture("drugs_particle"));
       _particles = new PDParticleSystem(AssetRegistry.EggsplosionParticleConfig, AssetRegistry.EggsplosionParticleTexture);
       _levelStage.addChild(_particles);
@@ -200,6 +199,11 @@ package Level
 
     }
     
+    protected function addHud():void {
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed"]);
+      addChild(_hud);
+    }
+
     private function eggCollide():void
     {
       var eggs:Vector.<Egg> = _eggs.eggPool;
@@ -487,6 +491,13 @@ package Level
       _snake.head.prevFacing = _snake.head.facing;
     }
     
+    protected function updateHud():void {
+      _hud.score = String(_score);
+      _hud.lifesText = String(_snake.lives);
+      _hud.speedText = String(_snake.speed);
+      _hud.timeText = String(_overallTimer.toFixed(2)); 
+    }
+ 
     private function onEnterFrame(event:EnterFrameEvent):void
     {
       var bodyArray:Array;
@@ -507,9 +518,9 @@ package Level
           updateTimers(event);
         }
         
-        _text.text = String(_overallTimer.toFixed(2));
-        _hud.update();
-        
+        //_text.text = String(_overallTimer.toFixed(2));
+        //_hud.update();
+        updateHud();    
         var startTimer:Number, endTimer:Number;
 
         startTimer = getTimer();

@@ -1,8 +1,8 @@
 package
 {
-  import com.sociodox.theminer.TheMiner;
+//  import com.sociodox.theminer.TheMiner;
   import engine.AssetRegistry;
-  import flash.desktop.NativeApplication;
+//  import flash.desktop.NativeApplication;
   import flash.display.Bitmap;
   import flash.events.Event;
   import flash.display.Sprite;
@@ -70,7 +70,7 @@ package
       
       // When the game becomes inactive, we pause Starling; otherwise, the enter frame event
       // would report a very long 'passedTime' when the app is reactivated. 
-      
+  /*    
       NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, function(e:Event):void
        {
           starling.start();
@@ -80,14 +80,14 @@ package
         {
           starling.stop();
         });
+  */
     }
     
     private function deactivate(e:Event):void
     {
       // auto-close
-      NativeApplication.nativeApplication.exit();
+      //    NativeApplication.nativeApplication.exit();
     }
-  
   }
 
 }
