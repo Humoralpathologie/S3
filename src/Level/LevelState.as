@@ -23,7 +23,6 @@ package Level
   import starling.events.TouchEvent;
   import starling.events.Touch;
   import starling.events.TouchPhase;
-  import starling.events.KeyboardEvent;
   import engine.AssetRegistry;
   import UI.HUD;
   import UI.Radar;
@@ -116,7 +115,6 @@ package Level
       
       this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
       this.addEventListener(TouchEvent.TOUCH, onTouch);
-      Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
       // Combos:
       
@@ -257,36 +255,6 @@ package Level
       removeEventListener(TouchEvent.TOUCH, onTouch);
       addEventListener(TouchEvent.TOUCH, dieScreenTouch);
       
-    }
-    
-    private function _onKeyDown(event:KeyboardEvent):void {
-      switch(event.keyCode) {
-        case 40: //DOWN
-          if (_snake.head.facing == AssetRegistry.RIGHT || _snake.head.facing == AssetRegistry.LEFT) {
-            _snake.head.facing = AssetRegistry.DOWN;
-          } 
-        break;
-
-        case 38: //UP
-          if (_snake.head.facing == AssetRegistry.RIGHT || _snake.head.facing == AssetRegistry.LEFT) {
-            _snake.head.facing = AssetRegistry.UP;
-          } 
-        break;
-
-        case 39: //RIGHT
-          if (_snake.head.facing == AssetRegistry.UP || _snake.head.facing == AssetRegistry.DOWN) {
-            _snake.head.facing = AssetRegistry.RIGHT;
-          } 
-        break;
-
-        case 37: //LEFT
-          if (_snake.head.facing == AssetRegistry.UP || _snake.head.facing == AssetRegistry.DOWN) {
-            _snake.head.facing = AssetRegistry.LEFT;
-          } 
-        break;
-
-      }
-
     }
     
     private function dieScreenTouch(event:TouchEvent):void {
@@ -697,7 +665,6 @@ package Level
       new GTween(_evilSnake, 2, { y: Starling.current.viewPort.height - _evilSnake.height } );
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
-      removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       addEventListener(TouchEvent.TOUCH, winScreenTouch);      
     }
     
