@@ -35,6 +35,14 @@ package Eggs
       return _eggPool;
     }
   
+    public function hit(x:int, y:int):Boolean {
+      for (var i:int = 0; i < _eggPool.length; i++) {
+        if (_eggPool[i].tileX == x && _eggPool[i].tileY == y) {
+          return true;
+        }
+      }
+      return false;
+    }
   }
 
 }

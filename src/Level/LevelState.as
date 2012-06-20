@@ -429,7 +429,7 @@ package Level
       {
         eggx = _levelBoundaries.x + Math.floor(Math.random() * _levelBoundaries.width);
         eggy = _levelBoundaries.y + Math.floor(Math.random() * _levelBoundaries.height);
-      } while (_obstacles[eggy * _tileWidth + eggx]);
+      } while (!free(eggx, eggy));
       egg.tileX = eggx;
       egg.tileY = eggy;
       
@@ -439,6 +439,10 @@ package Level
       _rottenEggs.addEgg(egg);
       }
     
+    }
+    
+    private function free(x:int, y:int):Boolean {
+      return !(_obstacles[y * _tileWidth + x]) && !(_snake.hit(x, y)) && !(_eggs.hit(x, y)) && !(_rottenEggs.hit(x, y));
     }
     
     private function eatEgg(egg:Egg):void
@@ -587,8 +591,10 @@ package Level
       text.color = color;
       text.autoScale = true;
       text.hAlign = HAlign.CENTER;
-      text.x = 800 + offset;
-      text.y = 500 + offset;
+      var p:Point = new Point(egg.x, egg.y);
+      p = _levelStage.localToGlobal(p);
+      text.x = p.x + egg.width / 2 - text.width / 2 + offset;
+      text.y = p.y + egg.height / 2 - text.height / 2 + offset;//egg.y + (egg.height / 2) - text.height / 2);
       addChild(text);
       var tween:Tween = new Tween(text, 2, "easeIn");
       tween.animate("y", offset);

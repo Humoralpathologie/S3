@@ -23,7 +23,7 @@ package
    * ...
    * @author
    */
-  [SWF(width="960",height="640",frameRate="60",backgroundColor="#ffffff")]
+  [SWF(width="960",height="640",frameRate="60",backgroundColor="#000000")]
   
   public class Main extends Sprite
   {
@@ -35,11 +35,11 @@ package
     {
       stage.scaleMode = StageScaleMode.NO_SCALE;
       stage.align = StageAlign.TOP_LEFT;
-
+      
       stage.addEventListener(Event.DEACTIVATE, deactivate);
       
       //Starling.handleLostContext = true;
-            
+      
       //MonsterDebugger.initialize(this);
       //MonsterDebugger.trace(this, "Hello World");
       //stage.addChild(new TheMiner());
@@ -50,7 +50,13 @@ package
       // entry point  
       SaveGame.load();
       SaveGame.unlockLevels();
-      starling = new Starling(StageManager, stage, new Rectangle(0, 0, 960, 640));
+      
+      var screenWidth:int = stage.fullScreenWidth;
+      var screenHeight:int = stage.fullScreenHeight;
+      
+      starling = new Starling(StageManager, stage, new Rectangle(0,0,960, 640));// , viewPort);
+      starling.stage.stageHeight = 640;
+      starling.stage.stageWidth = 960;
       
       var loadingSprite:Sprite = new Sprite()
       var loadingBMP:Bitmap = new AssetRegistry.LoadingPNG();
@@ -67,19 +73,19 @@ package
           removeChild(loadingSprite);
           starling.start();
         });
-      
+    
       // When the game becomes inactive, we pause Starling; otherwise, the enter frame event
       // would report a very long 'passedTime' when the app is reactivated. 
-     /* 
-      NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, function(e:Event):void
+    /*
+       NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, function(e:Event):void
        {
-          starling.start();
-        });
-      
-      NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, function(e:Event):void
-        {
-          starling.stop();
-        });*/
+       starling.start();
+       });
+    
+       NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, function(e:Event):void
+       {
+       starling.stop();
+     });*/
     }
     
     private function deactivate(e:Event):void
