@@ -68,7 +68,7 @@ package Level
     private var _comboTimer:Number = 0;
     private var _currentCombos:Array;
     protected var _combos:int = 0;
-    private var _score:int = 0;
+    protected var _score:int = 0;
     private var _zoom:Number = 2;
     private var _following:Snake.Head;
     private var _possibleSwipe:Boolean = false;
@@ -342,13 +342,16 @@ package Level
         var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
         _bonusTimerPoints += 2;
         showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
+        _score += _bonusTimerPoints;
       } 
-
+      _score += 2;
+      
       if (egg.type < AssetRegistry.EGGROTTEN)
       {
         _snake.eat(egg.type);
       }
       _bonusTimer = 2.5;
+      
     }
     
     private function updateTimers(event:EnterFrameEvent):void
@@ -519,6 +522,7 @@ package Level
     }
     
     protected function updateHud():void {
+      _hud.radar.update(); 
       var _sec:String = (int(_overallTimer) % 60) < 10 ? "0" + String(int(_overallTimer) % 60) : String(int(_overallTimer) % 60);
       var _min:String = (int(_overallTimer) / 60) < 10 ? "0" + String(int(int(_overallTimer) / 60)) : String(int(int(_overallTimer) / 60));
       _hud.score = String(_score);
