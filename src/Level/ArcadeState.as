@@ -50,6 +50,13 @@ package Level
       // Not needed here.
     }
     
+    override protected function updateHud():void {
+      _hud.radar.update(); 
+      _hud.score = String(_score);
+      _hud.lifesText = String(_snake.lives);
+      _hud.timeText = String(_overallTimer.toFixed(2)); 
+    }
+
     override protected function addBackground():void
     {
       _bgTexture = AssetRegistry.ArcadeBackground;

@@ -71,7 +71,7 @@ package UI
 
       for (var j:int; j < others.length; j++){
         if(_icons[others[j]]) {
-          _icons[others[j]][1].x = _icons[others[j]][0].x + _icons[others[j]][0].width + 15;
+          _icons[others[j]][1].x = _icons[others[j]][0].x + _icons[others[j]][0].width + 12;
           _icons[others[j]][1].y = _icons[others[j]][0].y - 5;
           _icons[others[j]][1].hAlign = HAlign.LEFT;
           addChild( _icons[others[j]][1]);

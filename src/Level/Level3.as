@@ -71,12 +71,12 @@ package Level
       addChild(_hud);
       _hud.poison.x = 98;
       _hud.poison.y = 60;
-      _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 15;  
+      _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;  
     }
     override protected function updateHud():void {
       super.updateHud();
       _hud.comboText = String(_combos);
-      _hud.poisonText = "0";   
+      _hud.poisonText = String(_poisonEggs);   
     }
     
     override protected function addObstacles():void

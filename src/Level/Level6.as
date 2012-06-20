@@ -50,8 +50,8 @@ package Level
     }
     override protected function updateHud():void {
       super.updateHud();
-      _hud.comboText = String(_combos);
-      _hud.speedText = "0";   
+      _hud.speedText = String(_snake.mps);
+      _hud.poisonText = String(_poisonEggs);   
     }
      
     override protected function addObstacles():void {

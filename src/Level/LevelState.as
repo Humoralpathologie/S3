@@ -98,7 +98,7 @@ package Level
     protected var _rottenEnabled:Boolean = false;
     protected var _particles:Object;
     
-    
+    protected var _poisonEggs:int = 0; 
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
     private static function playSoundSilentlyEndlessly(evt:Event = null):void
@@ -442,6 +442,7 @@ package Level
       }
       else
       {
+        _poisonEggs += 1;
         _score -= 5;
         showPoints(egg, "-5", 20, Color.RED);
         var particle:PDParticleSystem = _particles["realRotten"];
