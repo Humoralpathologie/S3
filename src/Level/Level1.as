@@ -75,7 +75,7 @@ package Level
 
     override protected function updateHud():void {
       super.updateHud();
-      _hud.eggsText = String(_eggs.eggPool.length);   
+      _hud.eggsText = String(_snake.eatenEggs);   
     }
 
     override protected function addObstacles():void

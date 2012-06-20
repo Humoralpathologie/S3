@@ -8,6 +8,8 @@ package Level
   import starling.display.Image;
   import starling.display.BlendMode;
   import Eggs.Egg;
+  import UI.HUD;
+  import UI.Radar;
   
   public class Level2 extends LevelState
   {
@@ -59,6 +61,17 @@ package Level
       }
     }
     
+    override protected function addHud():void {
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "speed"]);
+      addChild(_hud);
+      
+    }
+    override protected function updateHud():void {
+      super.updateHud();
+      _hud.comboText = String(_combos);
+      _hud.speedText = String(_snake.mps);   
+    }
+
     override protected function addObstacles():void
     {
       var pos:Array = [704, 705, 788, 743, 744, 745, 746, 747, 748, 658, 659, 660, 789, 790, 700, 701, 702, 703];

@@ -60,7 +60,6 @@ package Level
     protected var _snake:Snake;
     private var _speed:Number = 0.3;
     protected var _levelStage:Sprite;
-    private var _particles:PDParticleSystem;
     protected var _eggs:Eggs;
     private var _rottenEggs:Eggs.Eggs;
     protected var _overallTimer:Number = 0;
@@ -157,20 +156,6 @@ package Level
       _levelStage.addChild(_rottenEggs);
       
       addHud(); 
-      //_particles = new PDParticleSystem(AssetRegistry.DrugParticleConfig, AssetRegistry.SnakeAtlas.getTexture("drugs_particle"));
-      _particles = new PDParticleSystem(AssetRegistry.EggsplosionParticleConfig, AssetRegistry.EggsplosionParticleTexture);
-      _levelStage.addChild(_particles);
-      _particles.blendMode = BlendMode.ADD;
-      Starling.juggler.add(_particles);
-      
-      // Make the particle Systems for Combos;
-      _particlePool = new Vector.<PDParticleSystem>;
-      for (var i:int = 0; i < 10; i++) {
-        _particlePool.push(new PDParticleSystem(AssetRegistry.ComboParticleConfig, AssetRegistry.SnakeAtlas.getTexture("shell")));
-        _levelStage.addChild(_particlePool[i]);
-      }      
-
-          
       addParticles();
       
       _swipeMenu = new Sprite();
@@ -425,34 +410,19 @@ package Level
     private function eatEgg(egg:Egg):void
     {
       AssetRegistry.BiteSound.play();
-      
-      _particles.x = egg.x;
-      _particles.y = egg.y;
-      _particles.start(0.5);
-      _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
-      _eggs.removeChild(egg);
-      _eggs.spawnRandomEgg(_tileWidth, _tileHeight);
-            
-      showPoints(egg, "2");
-
-      if (_bonusTimer > 0) {
-        var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
-        _bonusTimerPoints += 2;
-        showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
-        _score += _bonusTimerPoints;
-      } 
-      _score += 2;
-      
-      if (!_rottenEnabled || egg.type < AssetRegistry.EGGROTTEN)
+      if (!_rottenEnabled && egg.type == AssetRegistry.EGGROTTEN || egg.type != AssetRegistry.EGGROTTEN) // || egg.type < AssetRegistry.EGGROTTEN)
       {
-        _snake.eat(egg.type);
-        _bonusTimer = 2.5;
+        if (egg.type <= AssetRegistry.EGGROTTEN)
+        {
+          _snake.eat(egg.type);
+        }
         
         var particle:PDParticleSystem = _particles[egg.type];
-        if(particle) {
-        particle.x = egg.x + 10;
-        particle.y = egg.y + 13;
-        particle.start(0.5);
+        if (particle)
+        {
+          particle.x = egg.x + 10;
+          particle.y = egg.y + 13;
+          particle.start(0.5);
         }
         _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
         _eggs.removeChild(egg);
@@ -465,19 +435,26 @@ package Level
           var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
           _bonusTimerPoints += 2;
           showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
+          _score += _bonusTimerPoints;
         }
-        
+        _score += 2;
+        _bonusTimer = 2.5;
       }
       else
       {
         _score -= 5;
         showPoints(egg, "-5", 20, Color.RED);
+        var particle:PDParticleSystem = _particles["realRotten"];
+        if (particle)
+        {
+          particle.x = egg.x + 10;
+          particle.y = egg.y + 13;
+          particle.start(0.5);
+        }
+        _rottenEggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
+        _rottenEggs.removeChild(egg);
         _bonusTimer = 0;
-        _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
-        _eggs.removeChild(egg);       
       }
-      _bonusTimer = 2.5;
-      
     }
     
     private function updateTimers(event:EnterFrameEvent):void
@@ -697,12 +674,8 @@ package Level
           updateTimers(event);
         }
         
-<<<<<<< HEAD
         updateHud();    
-=======
-        _hud.update();
         
->>>>>>> 34ba05311180d5fc3d0df4a840584f289e9fbcd8
         var startTimer:Number, endTimer:Number;
         
         //startTimer = getTimer();

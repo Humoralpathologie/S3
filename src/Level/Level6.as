@@ -8,6 +8,8 @@ package Level
   import starling.display.Image;
   import starling.display.BlendMode;
   import starling.textures.TextureSmoothing;
+  import UI.HUD;
+  import UI.Radar;
   
   public class Level6 extends LevelState 
   {
@@ -40,6 +42,16 @@ package Level
       var flowers:Image = new Image(AssetRegistry.Level6Atlas.getTexture("level06_flowers"));
       flowers.smoothing = TextureSmoothing.NONE;
       _levelStage.addChild(flowers);
+    }
+    override protected function addHud():void {
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed", "poison"]);
+      addChild(_hud);
+      
+    }
+    override protected function updateHud():void {
+      super.updateHud();
+      _hud.comboText = String(_combos);
+      _hud.speedText = "0";   
     }
      
     override protected function addObstacles():void {

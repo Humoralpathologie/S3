@@ -38,11 +38,12 @@ package UI
     private var _speedText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _poisonText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
  
-    private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 10, y: 10}],
-                          eggs: [_neededEggs, _neededEggsText, {x: 105, y: 60}],
-                          time: [_time, _timeText, {x: 105, y: 10}],
-                          speed: [_speed, _speedText, {x: 105, y: 60}],
-                          poison: [_poison, _poisonText, {x: 10, y: 60}]
+    private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 2, y: 2}],
+                          combo: [_combo, _comboText, {x: 2, y: 60}],
+                          eggs: [_neededEggs, _neededEggsText, {x: 2, y: 60}],
+                          time: [_time, _timeText, {x: 98, y: 2}],
+                          speed: [_speed, _speedText, {x: 98, y: 60}],
+                          poison: [_poison, _poisonText, {x: 2, y: 60}]
                           };
     public function HUD(radar:Radar, others:Array)//[lifes, eggs, time ...]; 
     {
@@ -84,6 +85,12 @@ package UI
     
     public function get radar():Radar {
       return _radar;
+    }
+    public function get poison():Image {
+      return _poison;
+    }
+    public function get poisonTextField():TextField {
+      return _poisonText;
     }
     public function set lifesText(lifes:String):void {
       _lifesText.text = lifes;
