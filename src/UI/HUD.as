@@ -29,17 +29,20 @@ package UI
     private var _combo:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-combo"));
     private var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
     private var _speed:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-speed"));
+    private var _poison:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-poison"));
 
     private var _lifesText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _neededEggsText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _timeText:TextField = new TextField(150, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _comboText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _speedText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+    private var _poisonText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
  
     private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 10, y: 10}],
                           eggs: [_neededEggs, _neededEggsText, {x: 105, y: 60}],
                           time: [_time, _timeText, {x: 105, y: 10}],
-                          speed: [_speed, _speedText, {x: 105, y: 60}]
+                          speed: [_speed, _speedText, {x: 105, y: 60}],
+                          poison: [_poison, _poisonText, {x: 10, y: 60}]
                           };
     public function HUD(radar:Radar, others:Array)//[lifes, eggs, time ...]; 
     {
@@ -96,6 +99,9 @@ package UI
     }
     public function set eggsText(eggs:String):void {
       _neededEggsText.text = eggs;
+    }
+    public function set poisonText(poison:String):void {
+      _poisonText.text = poison;
     }
     public function set score(score:String):void {
       _scoreText.text = score;

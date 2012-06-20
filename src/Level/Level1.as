@@ -9,8 +9,6 @@ package Level
   import starling.display.BlendMode;
   import starling.textures.TextureSmoothing;
   import UI.HUD;
-  import Eggs.Egg;
-  import Eggs.Eggs;
   import UI.Radar;
 
   public class Level1 extends LevelState 
