@@ -5,10 +5,11 @@ package engine
   import Menu.MainMenu;
   import starling.core.Starling;
   import starling.events.EnterFrameEvent;
+  import Level.Level1;
   
   /**
    * ...
-   * @author
+   * @author 
    */
   public class StageManager extends Sprite
   {
@@ -24,7 +25,7 @@ package engine
     {
       _manager = this;
       AssetRegistry.init();
-      _loadingScreen = new AssetRegistry.LoadingPNG;
+      _loadingScreen = new AssetRegistry.LoadingScreenPNG;
       switchStage(MainMenu);
     }
     

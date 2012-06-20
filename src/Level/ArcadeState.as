@@ -46,6 +46,10 @@ package Level
       super.dispose();
     }
     
+    override public function addFrame():void {
+      // Not needed here.
+    }
+    
     override protected function addBackground():void
     {
       _bgTexture = AssetRegistry.ArcadeBackground;

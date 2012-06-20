@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:66b5e8b80c71322e15589c7e5887d2c0$ -->
+<TextureAtlas imagePath="Level7Atlas.png">
+    <SubTexture name="OverlayLV7" x="2" y="2" width="593" height="339"/>
+    <SubTexture name="level07" x="2" y="343" width="640" height="480"/>
+</TextureAtlas>

@@ -8,6 +8,7 @@ package Level
   import engine.AssetRegistry
   import starling.display.Image;
   import starling.display.BlendMode;
+  import Eggs.Egg;
   
   public class Level3 extends LevelState 
   {
@@ -15,6 +16,7 @@ package Level
     {
       AssetRegistry.loadLevel3Graphics();
       _levelNr = 3;
+      _rottenEnabled = true;
       super();
     }
     
@@ -38,12 +40,29 @@ package Level
       AssetRegistry.disposeLevel3Graphics();
       super.dispose();
     }
-     
+
+    override protected function spawnRandomEgg():void {
+      var egg:Egg;
+      var rand:int = Math.floor(Math.random() * 100);
+      
+      if (rand < 50) {
+        egg = new Egg(0, 0, AssetRegistry.EGGA);
+      } else {
+        egg = new Egg(0, 0, AssetRegistry.EGGZERO);
+      }      
+      placeEgg(egg);
+    }        
+    
     override protected function checkWin():void {
       if (_combos == 20 || _snake.eatenEggs == 100 || _overallTimer == 4 * 60) {
         win();
       }
     }
+    
+    override protected function showObjective():void
+    {     
+      showObjectiveBox("On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 3 minutes or devouring 100 eggs.", 40);
+    }    
     
     override protected function addObstacles():void
     {

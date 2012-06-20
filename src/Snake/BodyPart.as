@@ -47,9 +47,13 @@ package Snake
           _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_6");
           break;
         case AssetRegistry.EGGC: 
+          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_9");
+          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_8");
+          break;
+        case AssetRegistry.EGGROTTEN: 
           _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_5");
           _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_4");
-          break;
+          break;          
       }
 
     }

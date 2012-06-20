@@ -7,6 +7,7 @@ package Level
   import engine.AssetRegistry
   import starling.display.Image;
   import starling.display.BlendMode;
+  import Eggs.Egg;
   
   public class Level2 extends LevelState
   {
@@ -23,6 +24,25 @@ package Level
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
+    }
+    
+    override protected function spawnRandomEgg():void {
+      var egg:Egg;
+      var rand:int = Math.floor(Math.random() * 100);
+      
+      if (rand < 50) {
+        egg = new Egg(0, 0, AssetRegistry.EGGA);
+      } else if (rand < 70) {
+        egg = new Egg(0, 0, AssetRegistry.EGGROTTEN);
+      } else {
+        egg = new Egg(0, 0, AssetRegistry.EGGZERO);
+      }      
+      placeEgg(egg);
+    }    
+    
+    override protected function showObjective():void
+    {     
+      showObjectiveBox("Little Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.\n\nObjective:\nDevour 10 Blue Egg Combos!");
     }
     
     override public function dispose():void

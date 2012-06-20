@@ -20,16 +20,17 @@ package Snake
     
     private var _head:Head;
     private var _speed:Number;
+    private var _mps:int;
     //private var _body:Vector.<Snake.BodyPart>;
     private var _body:Array;
     private var _newPart:Snake.BodyPart = null;
     private var _eatenEggs:int = 0;
     private var _lives:int = 3;
         
-    public function Snake(speed:Number) 
+    public function Snake(mps:Number) 
     {
-      _speed = speed;   
-      
+      this.mps = mps;   
+
       _head = new Head(5, 5, _speed);
       
       addChild(_head);
@@ -44,9 +45,26 @@ package Snake
       }
     }
     
+    public function faster():void {
+      this.mps += 1;
+      _head.speed = _speed;
+      for (var i:int = 0; i < _body.length; i++) {
+        _body[i].speed = _speed;
+      }
+    }
+    
     public function eat(eggType:int):void {
       _eatenEggs++;
       _newPart = new BodyPart( -1, -1, _speed, eggType);
+    }
+    
+    public function selfCollide():Boolean {
+      for (var i:int = 0; i < _body.length; i++) {
+        if (_head.tileX == _body[i].tileX && _head.tileY == _body[i].tileY) {
+          return true;
+        }
+      }
+      return false;
     }
     
     public function move():void {
@@ -71,9 +89,9 @@ package Snake
       
       a.tileX = _head.tileX;
       a.tileY = _head.tileY;
-      a.facing = _head.prevFacing;     
+      a.facing = _head.facing;     
       a.animateMove();
-      
+
       /*
       var l:int = _body.length;
       var a:Snake.BodyPart, b:Snake.BodyPart;
@@ -121,7 +139,7 @@ package Snake
             _head.facing = AssetRegistry.DOWN;
             break;
       }
-      _head.prevFacing = _head.facing;
+      //_head.prevFacing = _head.facing;
     }
     
     public function moveLeft():void {
@@ -139,7 +157,7 @@ package Snake
             _head.facing = AssetRegistry.UP;
             break;
       }
-      _head.prevFacing = _head.facing;
+      //_head.prevFacing = _head.facing;
     }    
     
     public function get head():Snake.Head 
@@ -168,9 +186,22 @@ package Snake
         _lives = value;
     }
     
-    public function get speed():Number {
-      return _speed;
-    }    
+    public function get mps():int 
+    {
+        return _mps;
+    }
+    
+    public function set mps(value:int):void 
+    {
+        _speed = 1 / value;
+        _mps = value;
+    }
+    
+    public function get speed():Number 
+    {
+        return _speed;
+    }
+        
   }
 
 }

@@ -50,7 +50,7 @@ package engine
     }
     
     public function advance():void {
-      switch(prevFacing) {
+      switch(facing) {
         case AssetRegistry.UP:
             tileY -= 1;
             tileX = tileX;
@@ -156,6 +156,16 @@ package engine
         _frameOffset = value;
         tileX = tileX;
         tileY = tileY;
+    }
+    
+    public function get speed():Number 
+    {
+        return _speed;
+    }
+    
+    public function set speed(value:Number):void 
+    {
+        _speed = value;
     }
     
 

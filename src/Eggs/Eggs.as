@@ -25,6 +25,11 @@ package Eggs
       addChild(egg);
     }
     
+    public function addEgg(egg:Eggs.Egg):void {
+      _eggPool.push(egg);
+      addChild(egg);
+    }
+    
     public function get eggPool():Vector.<Egg>
     {
       return _eggPool;

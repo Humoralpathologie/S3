@@ -82,7 +82,7 @@ package UI
       
 
       for (var i:int = 0; i < _eggs.length; i++) {
-        if (_eggs[i].visible) {
+        if (_eggs[i].visible && _eggs[i].type != AssetRegistry.EGGROTTEN) {
           rEgg = freshEgg();
           dx = _eggs[i].x - _snake.head.x;
           dy = _eggs[i].y - _snake.head.y;

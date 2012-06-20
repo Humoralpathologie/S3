@@ -21,6 +21,8 @@ package engine
       [Embed(source = "../../assets/Levels/Level04/level4atlas.png")] private static const Level4AtlasPNG:Class;
       [Embed(source = "../../assets/Levels/Level06/Level6Atlas.xml", mimeType = "application/octet-stream")] private static const Level6AtlasXML:Class;
       [Embed(source = "../../assets/Levels/Level06/Level6Atlas.png")] private static const Level6AtlasPNG:Class;
+      [Embed(source = "../../assets/Levels/Level07/Level7Atlas.xml",  mimeType = "application/octet-stream")] private static const Level7AtlasXML:Class;
+      [Embed(source = "../../assets/Levels/Level07/Level7Atlas.png")] private static const Level7AtlasPNG:Class;
       [Embed(source = "../../assets/Particles/drugs_particle.png")] private static const DrugsParticlePNG:Class;
       [Embed(source = "../../assets/Particles/EggsplosionB.pex", mimeType = "application/octet-stream")] private static const EggsplosionXML:Class;
       [Embed(source = "../../assets/Particles/EggsplosionB.png")] private static const EggsplosionPNG:Class;
@@ -40,8 +42,9 @@ package engine
       [Embed(source = "../../assets/Levels/Level04/level4_palme.png")] static public const Level4PalmTreePNG:Class;
       [Embed(source = "../../assets/Levels/Level05/level05.png")] static public const Level5BackgroundPNG:Class;
       [Embed(source = "../../assets/Levels/Level06/level06.png")] static public const Level6BackgroundPNG:Class;
+      [Embed(source = "../../assets/Loading/loading-screen.png")] static public const LoadingScreenPNG:Class;
       
-      //[Embed(source = "../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")] static public const WinMusic:Class;
+      [Embed(source = "../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")] static public const WinMusic:Class;
       [Embed(source = "../../assets/Sounds/Biss3.mp3")] static public const Bite:Class;
       
       [Embed(source="../../assets/Levels/arcadeoverlaytexture.xml", mimeType="application/octet-stream")] static private const ArcadeOverlayAtlasXML:Class
@@ -61,6 +64,17 @@ package engine
       [Embed(source = "../../assets/Music/LevelMusikStufe1.mp3")] static private const LevelMusic1:Class;
       [Embed(source = "../../assets/Music/LevelMusikStufe2.mp3")] static private const LevelMusic2:Class;
       
+      [Embed(source = "../../assets/Levels/LevelFrame640x480.png")] static private const LevelFramePNG:Class;
+      
+      // Particles
+      [Embed(source = "../../assets/Particles/EggsplosionA.pex", mimeType = "application/octet-stream")] static public const EggsplosionA:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionB.pex", mimeType = "application/octet-stream")] static public const EggsplosionB:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionC.pex", mimeType = "application/octet-stream")] static public const EggsplosionC:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionGoldV2.pex", mimeType = "application/octet-stream")] static public const EggsplosionGold:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionRotten.pex", mimeType = "application/octet-stream")] static public const EggsplosionRotten:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionShuffle.pex", mimeType = "application/octet-stream")] static public const EggsplosionShuffle:Class;
+      [Embed(source = "../../assets/Particles/EggsplosionGreen.pex", mimeType = "application/octet-stream")] static public const EggsplosionGreen:Class;
+      
       public static var SnakeAtlas:TextureAtlas;
       public static var MenuAtlas:TextureAtlas;
       public static var ArcadeOverlayAtlas:TextureAtlas;
@@ -68,6 +82,7 @@ package engine
       public static var ScoringAtlas:TextureAtlas;
       public static var Level4Atlas:TextureAtlas;
       public static var Level6Atlas:TextureAtlas;
+      public static var Level7Atlas:TextureAtlas;
       
       public static var UIOverlayTexture:Texture;
       public static var LevelSelectBGTexture:Texture;
@@ -90,6 +105,7 @@ package engine
       public static var Level6Background:Texture;
       public static var Level7Background:Texture;
       public static var Level8Background:Texture;
+      public static var LevelFrame:Texture;
       
       public static var WinMusicSound:Sound;
       public static var BiteSound:Sound;
@@ -113,17 +129,16 @@ package engine
       public static const EGGGOLDEN:int = 6;
       
       public static var HQ:Boolean = false;
-      public static var LEVELS:Array;
-     
+      public static var LEVELS:Array;     
     
       public static function init():void 
       {
-        LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6];
+        LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6, Level7];
         TextField.registerBitmapFont(new BitmapFont(Texture.fromBitmap(new FontPNG), XML(new FontXML)));              
         
         LevelMusic1Sound = new LevelMusic1;
         LevelMusic2Sound = new LevelMusic2;
-        //WinMusicSound = new WinMusic as Sound;
+        WinMusicSound = new WinMusic as Sound;
       }
       
       public static function loadArcadeGraphics():void {
@@ -227,6 +242,7 @@ package engine
       
       public static function loadLevelGraphics():void {
         SnakeAtlas = new TextureAtlas(Texture.fromBitmap(new SnakeTexturePNG), XML(new SnakeAtlasXML));   
+        LevelFrame = Texture.fromBitmap(new LevelFramePNG);
                 
         DrugParticleConfig = XML(new DrugsParticleXML);
         DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);     
@@ -241,6 +257,7 @@ package engine
       
       public static function disposeLevelGraphics():void {
         SnakeAtlas.dispose();
+        LevelFrame.dispose();
         
         DrugParticleConfig = null;
         DrugParticleTexture.dispose();
@@ -250,6 +267,18 @@ package engine
         EggsplosionParticleTexture.dispose();
         
         //WinMusicSound = null;        
+      }
+      
+      public static function loadLevel7Graphics():void {
+        //Level6Background = Texture.fromBitmap(new Level6BackgroundPNG);
+        Level7Atlas = new TextureAtlas(Texture.fromBitmap(new Level7AtlasPNG), XML(new Level7AtlasXML));
+        loadLevelGraphics();
+      }
+      
+      public static function disposeLevel7Graphics():void {
+        //Level6Background.dispose();
+        Level7Atlas.dispose();
+        disposeLevelGraphics();
       }
       
       public static function loadLevelSelectGraphics():void {          
