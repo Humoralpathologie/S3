@@ -23,8 +23,9 @@ package Snake
     {
       super(tileX, tileY, null, speed);
       makeHeadClips();
-   
+      
       frameOffset = new Point(15, 30);
+      update(0);
     }
     
     private function makeHeadClips():void

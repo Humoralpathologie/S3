@@ -4,6 +4,7 @@ package Level
   import Eggs.Egg;
   import Eggs.Eggs;
   import flash.geom.Point;
+  import flash.geom.Rectangle;
   import fr.kouma.starling.utils.Stats;
   import Snake.Snake;
   import starling.animation.Tween;
@@ -63,7 +64,7 @@ package Level
     private var _rottenEggs:Eggs.Eggs;
     protected var _overallTimer:Number = 0;
     private var _text:TextField;
-    private var _comboSet:Combo.ComboSet;
+    protected var _comboSet:Combo.ComboSet;
     private var _justAte:Boolean = false;
     private var _comboTimer:Number = 0;
     private var _currentCombos:Array;
@@ -82,6 +83,7 @@ package Level
     private var _evilSnake:Image;
     protected var _levelNr:int = 0;
     private var _won:Boolean = false;
+    private var _lost:Boolean = false;
     protected var _obstacles:Object = {};
     protected var _tileWidth:int = 0;
     protected var _tileHeight:int = 0;
@@ -98,6 +100,9 @@ package Level
     protected var _rottenEnabled:Boolean = false;
     protected var _particles:Object;
     
+    protected var _startPos:Point = new Point(5, 5);
+    protected var _levelBoundaries:Rectangle;
+    protected var _timeLeft:Number = 3 * 60;
     
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
@@ -141,6 +146,7 @@ package Level
       _tileWidth = Math.ceil(_bg.width / AssetRegistry.TILESIZE);
       
       addObstacles();
+      setBoundaries();
       
       _snake = new Snake(10);
       _following = _snake.head;
@@ -158,7 +164,7 @@ package Level
       
       _hud = new HUD(_eggs, _snake);
       addChild(_hud);
-          
+      
       addParticles();
       
       _swipeMenu = new Sprite();
@@ -190,25 +196,21 @@ package Level
       _levelStage.addChild(_bonusBack);
       _levelStage.addChild(_bonusBar);
       
+      startAt(_startPos.x, _startPos.y);
+      
       pause();
       
       showObjective();
     
     }
     
-    protected function addParticles():void {
-      var list:Array = [
-        [AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionA), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")],
-        [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionB), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")],
-        [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionC), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")],
-        [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")],
-        [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")],
-        [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")],
-        [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")]
-      ];
+    protected function addParticles():void
+    {
+      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")]];
       
-      _particles = { };
-      for (var i:int = 0; i < list.length;i++) {
+      _particles = {};
+      for (var i:int = 0; i < list.length; i++)
+      {
         _particles[list[i][0]] = new PDParticleSystem(list[i][1], list[i][2]);
         _levelStage.addChild(_particles[list[i][0]]);
         Starling.juggler.add(_particles[list[i][0]]);
@@ -218,6 +220,29 @@ package Level
     protected function showObjective():void
     {
       unpause();
+    }
+    
+    public function showMessage(message:String):void {
+      var field:TextField = recycleText();
+      field.text = message;
+      addChild(field);
+      var tween:Tween = new Tween(field, 3);
+      tween.animate("y", - field.height);
+      //tween.animate("scaleX", 3);
+      //tween.animate("scaleY", 3);
+      tween.animate("alpha", 0);
+      tween.onComplete = function():void {
+        removeChild(field);
+      }
+      Starling.current.juggler.add(tween);
+    }
+    
+    private function recycleText():TextField {
+      return new TextField(Starling.current.viewPort.width, Starling.current.viewPort.height, "", "kroeger 06_65", 90, Color.WHITE);
+    }
+    
+    protected function setBoundaries():void {
+      _levelBoundaries = new Rectangle(0, 0, _tileWidth, _tileHeight);
     }
     
     public function addFrame():void
@@ -242,6 +267,17 @@ package Level
             //peggle();
         }
       }
+      
+      eggs = _rottenEggs.eggPool;
+      for (var i:int = 0; i < eggs.length; i++)
+      {
+        if (head.tileX == eggs[i].tileX && head.tileY == eggs[i].tileY)
+        {
+          eatEgg(eggs[i]);
+          //_justAte = true;
+            //peggle();
+        }
+      }      
     }
     
     protected function addAboveSnake():void
@@ -262,9 +298,9 @@ package Level
       }
     }
     
-    private function screenCollide():void
+    protected function screenCollide():void
     {
-      if (_snake.head.tileX < 0 || _snake.head.tileY < 0 || _snake.head.tileX >= _bg.width / AssetRegistry.TILESIZE || _snake.head.tileY >= _bg.height / AssetRegistry.TILESIZE)
+      if (_snake.head.tileX < _levelBoundaries.x || _snake.head.tileY < _levelBoundaries.y || _snake.head.tileX >= _levelBoundaries.x + _levelBoundaries.width || _snake.head.tileY >= _levelBoundaries.y + _levelBoundaries.height)
       {
         die();
       }
@@ -274,7 +310,6 @@ package Level
     {
       _snake.lives--;
       pause();
-      startAt(5, 5);
       
       _sadSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("sadsnake"));
       _sadSnake.x = (Starling.current.viewPort.width - _sadSnake.width) / 2;
@@ -348,27 +383,26 @@ package Level
     
     private function resetSnake():void
     {
-      _snake.head.tileX = 5;
-      _snake.head.tileY = 5;
+      startAt(_startPos.x, _startPos.y);      
       _snake.head.facing = AssetRegistry.RIGHT;
       _snake.head.prevFacing = _snake.head.facing;
     }
     
     private function showParticles(egg:DisplayObject):void
     {
-      /*
-      var pd:ParticleSystem;
-      for (var i:int = 0; i < _particlePool.length; i++)
-      {
-        
-      }
-      pd = _particlePool[0];
-      pd.x = egg.x;
-      pd.y = egg.y;
-      
-      pd.start(1);
-      Starling.juggler.add(pd);
-      */
+    /*
+       var pd:ParticleSystem;
+       for (var i:int = 0; i < _particlePool.length; i++)
+       {
+    
+       }
+       pd = _particlePool[0];
+       pd.x = egg.x;
+       pd.y = egg.y;
+    
+       pd.start(1);
+       Starling.juggler.add(pd);
+     */
     }
     
     private function peggle():void
@@ -383,40 +417,48 @@ package Level
     
     protected function spawnRandomEgg():void
     {
-      var egg:Eggs.Egg = new Eggs.Egg(0, 0, Math.floor(Math.random() * 4));
+      var egg:Eggs.Egg = new Eggs.Egg(0, 0, Math.floor(Math.random() * 7));
       placeEgg(egg);
     }
     
-    protected function placeEgg(egg:Eggs.Egg):void
+    public function placeEgg(egg:Eggs.Egg, rotten:Boolean = false):void
     {
       var eggx:int;
       var eggy:int;
       do
       {
-        eggx = Math.floor(Math.random() * _tileWidth);
-        eggy = Math.floor(Math.random() * _tileHeight);
+        eggx = _levelBoundaries.x + Math.floor(Math.random() * _levelBoundaries.width);
+        eggy = _levelBoundaries.y + Math.floor(Math.random() * _levelBoundaries.height);
       } while (_obstacles[eggy * _tileWidth + eggx]);
       egg.tileX = eggx;
       egg.tileY = eggy;
       
+      if(!rotten) {
       _eggs.addEgg(egg);
-
+      } else {
+      _rottenEggs.addEgg(egg);
+      }
+    
     }
     
     private function eatEgg(egg:Egg):void
     {
       AssetRegistry.BiteSound.play();
       
-      if (!_rottenEnabled || egg.type < AssetRegistry.EGGROTTEN)
+      if (!_rottenEnabled && egg.type == AssetRegistry.EGGROTTEN || egg.type != AssetRegistry.EGGROTTEN) // || egg.type < AssetRegistry.EGGROTTEN)
       {
-        _snake.eat(egg.type);
+        if (egg.type <= AssetRegistry.EGGROTTEN)
+        {
+          _snake.eat(egg.type);
+        }
         _bonusTimer = 2.5;
         
         var particle:PDParticleSystem = _particles[egg.type];
-        if(particle) {
-        particle.x = egg.x + 10;
-        particle.y = egg.y + 13;
-        particle.start(0.5);
+        if (particle)
+        {
+          particle.x = egg.x + 10;
+          particle.y = egg.y + 13;
+          particle.start(0.5);
         }
         _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
         _eggs.removeChild(egg);
@@ -437,8 +479,15 @@ package Level
         _score -= 5;
         showPoints(egg, "-5", 20, Color.RED);
         _bonusTimer = 0;
-        _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
-        _eggs.removeChild(egg);       
+        var particle:PDParticleSystem = _particles["realRotten"];
+        if (particle)
+        {
+          particle.x = egg.x + 10;
+          particle.y = egg.y + 13;
+          particle.start(0.5);
+        }
+        _rottenEggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
+        _rottenEggs.removeChild(egg);
       }
     }
     
@@ -450,6 +499,7 @@ package Level
       _overallTimer += passedTime;
       _comboTimer -= passedTime;
       _rottenTimer -= passedTime;
+      _timeLeft -= passedTime;
     }
     
     private function updateBonusBar():void
@@ -626,6 +676,29 @@ package Level
       _snake.head.prevFacing = _snake.head.facing;
     }
     
+    private function checkLost():void {
+      if (snake.lives < 0) {
+        lose();
+      }
+    }
+    
+    private function lose():void {
+      _lost = true;
+      var image:Image;
+      image = new Image(AssetRegistry.SnakeAtlas.getTexture("game over_gravestone"));
+      image.x = (Starling.current.viewPort.width - image.width) / 2;
+      image.y = Starling.current.viewPort.height;
+      addChild(image);
+      
+      // Use a GTween, as the Starling tweens are paused.
+      new GTween(image, 2, { y: Starling.current.viewPort.height - image.height } ); 
+      removeEventListener(TouchEvent.TOUCH, onTouch);
+      removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+      addEventListener(TouchEvent.TOUCH, function():void {
+        StageManager.switchStage(MainMenu);
+      });      
+    }
+    
     private function onEnterFrame(event:EnterFrameEvent):void
     {
       var bodyArray:Array;
@@ -634,6 +707,11 @@ package Level
       if (!_won)
       {
         checkWin();
+      }
+      
+      if (!_lost)
+      {
+        checkLost();
       }
       
       if (!_paused)
@@ -682,7 +760,8 @@ package Level
         
         updateBonusBar();
         updateCamera();
-        if (_rottenEnabled) {
+        if (_rottenEnabled)
+        {
           updateRotten();
         }
         
@@ -690,11 +769,13 @@ package Level
     
     }
     
-    protected function updateRotten():void {
-      if (_rottenTimer < 0) {
+    protected function updateRotten():void
+    {
+      if (_rottenTimer < 0)
+      {
         _rottenTimer = 30;
         var rotten:Eggs.Egg = new Eggs.Egg(0, 0, AssetRegistry.EGGROTTEN);
-        placeEgg(rotten);         
+        placeEgg(rotten, true);
       }
     }
     
@@ -864,8 +945,8 @@ package Level
       _snake.head.facing = AssetRegistry.RIGHT;
       for (var i:int = 0; i < _snake.body.length; i++)
       {
-        _snake.body[i].tileX = - 10;
-        _snake.body[i].tileY = - 10;
+        _snake.body[i].tileX = -10;
+        _snake.body[i].tileY = -10;
         _snake.body[i].facing = AssetRegistry.RIGHT;
       }
     }
@@ -898,6 +979,18 @@ package Level
     {
       return _snake;
     }
+    
+    public function get timeLeft():Number 
+    {
+        return _timeLeft;
+    }
+    
+    public function set timeLeft(value:Number):void 
+    {
+        _timeLeft = value;
+    }
+    
+    
   
   }
 

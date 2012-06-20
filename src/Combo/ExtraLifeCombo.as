@@ -1,24 +1,29 @@
-package Combo 
+package Combo
 {
-	/**
-     * ...
-     * @author 
-     */
-    public class ExtraLifeCombo extends Combo 
+  
+  /**
+   * ...
+   * @author
+   */
+  import Level.LevelState;
+  import engine.AssetRegistry;
+  
+  public class ExtraLifeCombo extends Combo
+  {
+    
+    public function ExtraLifeCombo()
     {
-        
-        public function ExtraLifeCombo() 
-        {
-            super();
-		        repeat = false;
-            trigger = [EggTypes.EGGC, EggTypes.EGGA, EggTypes.EGGA, EggTypes.EGGB];
-        }
-        
-        override public function effect(state:LevelState):void {
-          state.snake.lives += 1;
-          state.showMessage("Bonus Life!");
-        }
-        
+      super();
+      repeat = false;
+      trigger = [AssetRegistry.EGGC, AssetRegistry.EGGA, AssetRegistry.EGGA, AssetRegistry.EGGB];
     }
+    
+    override public function effect(state:LevelState):void
+    {
+      state.snake.lives += 1;
+      state.showMessage("Bonus Life!");
+    }
+  
+  }
 
 }

@@ -39,7 +39,10 @@ package UI
             break;           
         case AssetRegistry.EGGZERO:
             texture = AssetRegistry.SnakeAtlas.getTexture("radar_green");
-            break;            
+            break;        
+        case AssetRegistry.EGGROTTEN:
+            texture = AssetRegistry.SnakeAtlas.getTexture("radar_rotten");
+            break;                   
       }
       smoothing = TextureSmoothing.NONE;
     }

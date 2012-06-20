@@ -6,6 +6,7 @@ package engine
   import starling.core.Starling;
   import starling.events.EnterFrameEvent;
   import Level.Level1;
+  import flash.system.System;
   
   /**
    * ...
@@ -49,6 +50,8 @@ package engine
           _manager.removeChild(_currentSprite);
           Starling.juggler.purge();
           _currentSprite.dispose();
+          _currentSprite = null;
+          System.gc(); // clean up;
         }
         _currentSprite = _argument ? new _nextStage(_argument) : new _nextStage();
         Starling.juggler.paused = false;
