@@ -80,7 +80,9 @@ package Level
     private var _frameCounter:int = 0;
     private var _particlePool:Vector.<PDParticleSystem>;
     private var _sadSnake:Image;
+    private var _sadText:Image;
     private var _evilSnake:Image;
+    private var _evilText:Image;
     protected var _levelNr:int = 0;
     private var _won:Boolean = false;
     private var _lost:Boolean = false;
@@ -312,12 +314,20 @@ package Level
       pause();
       
       _sadSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("sadsnake"));
-      _sadSnake.x = (Starling.current.viewPort.width - _sadSnake.width) / 2;
-      _sadSnake.y = Starling.current.viewPort.height;
+      _sadSnake.x = (Starling.current.stage.stageWidth - _sadSnake.width) / 2;
+      _sadSnake.y = Starling.current.stage.stageHeight;
+      
+      _sadText = new Image(AssetRegistry.SnakeAtlas.getTexture("SadSnakeText"));
+      _sadText.x = (Starling.current.stage.stageWidth - _sadText.width) / 2;
+      _sadText.y = - _sadText.height;
+      
+      
       addChild(_sadSnake);
+      addChild(_sadText);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_sadSnake, 2, {y: Starling.current.viewPort.height - _sadSnake.height});
+      new GTween(_sadSnake, 2, { y: Starling.current.stage.stageHeight - _sadSnake.height } );
+      new GTween(_sadText, 2, { y : 0 } );
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
       addEventListener(TouchEvent.TOUCH, dieScreenTouch);
@@ -374,6 +384,8 @@ package Level
       if (touch)
       {
         removeChild(_sadSnake);
+        removeChild(_sadText);
+        
         removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
         addEventListener(TouchEvent.TOUCH, onTouch);
         resetSnake();
@@ -904,12 +916,18 @@ package Level
       pause();
       
       _evilSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_evillaugh"));
-      _evilSnake.x = (Starling.current.viewPort.width - _evilSnake.width) / 2;
-      _evilSnake.y = Starling.current.viewPort.height;
+      _evilSnake.x = (Starling.current.stage.stageWidth - _evilSnake.width) / 2;
+      _evilSnake.y = Starling.current.stage.stageHeight;
       addChild(_evilSnake);
       
+      _evilText = new Image(AssetRegistry.SnakeAtlas.getTexture("Snake_EvilLaughText"));
+      _evilText.x = (Starling.current.stage.stageWidth - _evilText.width) / 2;
+      _evilText.y = 0;
+      addChild(_evilText);
+      
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_evilSnake, 2, {y: Starling.current.viewPort.height - _evilSnake.height});
+      new GTween(_evilSnake, 2, { y: Starling.current.stage.stageHeight - _evilSnake.height } );
+      new GTween(_evilText, 2, { y: 0 } );
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
