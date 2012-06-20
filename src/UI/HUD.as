@@ -32,7 +32,7 @@ package UI
 
     private var _lifesText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _neededEggsText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
-    private var _timeText:TextField = new TextField(600, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+    private var _timeText:TextField = new TextField(150, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _comboText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _speedText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
  
@@ -46,7 +46,7 @@ package UI
       _radar = radar;
       _scoreText = new TextField(100, 50, "0", "kroeger 06_65", 45, Color.WHITE);
       _scoreText.x = Starling.current.viewPort.width/2 - _scoreText.width/2;
-      _scoreText.y = 10;
+      _scoreText.y = 0;
       _scoreText.hAlign = HAlign.CENTER;
 
       _overlay = new Image(AssetRegistry.SnakeAtlas.getTexture("UIOverlay"));
@@ -68,7 +68,7 @@ package UI
       for (var j:int; j < others.length; j++){
         if(_icons[others[j]]) {
           _icons[others[j]][1].x = _icons[others[j]][0].x + _icons[others[j]][0].width + 15;
-          _icons[others[j]][1].y = _icons[others[j]][0].y;
+          _icons[others[j]][1].y = _icons[others[j]][0].y - 5;
           _icons[others[j]][1].hAlign = HAlign.LEFT;
           addChild( _icons[others[j]][1]);
         }
