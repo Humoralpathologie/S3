@@ -8,7 +8,11 @@ package Level
   import starling.display.Image;
   import starling.display.BlendMode;
   import starling.textures.TextureSmoothing;
-  
+  import UI.HUD;
+  import Eggs.Egg;
+  import Eggs.Eggs;
+  import UI.Radar;
+
   public class Level1 extends LevelState 
   {
     public function Level1() 
@@ -35,6 +39,17 @@ package Level
       if (_snake.eatenEggs == 50) {
         win();
       }
+    }
+
+    override protected function addHud():void {
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "eggs"]);
+      addChild(_hud);
+      
+    }
+
+    override protected function updateHud():void {
+      super.updateHud();
+      _hud.eggsText = String(_eggs.eggPool.length);   
     }
     
     override protected function addObstacles():void {

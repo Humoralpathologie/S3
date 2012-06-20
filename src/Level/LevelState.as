@@ -55,15 +55,14 @@ package Level
     protected var _bg:Image;
     protected var _bgTexture:Texture;
     protected var _overlay:Image;
-    private var _hud:HUD;
+    protected var _hud:HUD;
     private var _timer:Number = 0;
     protected var _snake:Snake;
     private var _speed:Number = 0.3;
     protected var _levelStage:Sprite;
     private var _particles:PDParticleSystem;
-    private var _eggs:Eggs;
+    protected var _eggs:Eggs;
     protected var _overallTimer:Number = 0;
-    private var _text:TextField;
     private var _comboSet:Combo.ComboSet;
     private var _justAte:Boolean = false;
     private var _comboTimer:Number = 0;
@@ -163,12 +162,7 @@ package Level
         _particlePool.push(new PDParticleSystem(AssetRegistry.ComboParticleConfig, AssetRegistry.SnakeAtlas.getTexture("shell")));
         _levelStage.addChild(_particlePool[i]);
       }      
-      
-      _text = new TextField(300, 200, "SNAKE", "kroeger 06_65", 30);
-      _text.color = Color.WHITE;
-      _text.hAlign = HAlign.LEFT;
-      addChild(_text);
-      
+
       _swipeMenu = new Sprite();
       var swipeBackground:Quad = new Quad(Starling.current.viewPort.width, 100, 0x000000);
       swipeBackground.alpha = 0.3;
@@ -201,7 +195,7 @@ package Level
     }
     
     protected function addHud():void {
-      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed"]);
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time"]);
       addChild(_hud);
     }
 
@@ -525,10 +519,11 @@ package Level
     }
     
     protected function updateHud():void {
+      var _sec:String = (int(_overallTimer) % 60) < 10 ? "0" + String(int(_overallTimer) % 60) : String(int(_overallTimer) % 60);
+      var _min:String = (int(_overallTimer) / 60) < 10 ? "0" + String(int(int(_overallTimer) / 60)) : String(int(int(_overallTimer) / 60));
       _hud.score = String(_score);
       _hud.lifesText = String(_snake.lives);
-      _hud.speedText = String(_snake.speed);
-      _hud.timeText = String(_overallTimer.toFixed(2)); 
+      _hud.timeText = _min + ":" + _sec; 
     }
  
     private function onEnterFrame(event:EnterFrameEvent):void
@@ -551,8 +546,6 @@ package Level
           updateTimers(event);
         }
         
-        //_text.text = String(_overallTimer.toFixed(2));
-        //_hud.update();
         updateHud();    
         var startTimer:Number, endTimer:Number;
 

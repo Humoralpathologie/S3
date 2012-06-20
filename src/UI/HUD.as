@@ -32,7 +32,7 @@ package UI
 
     private var _lifesText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _neededEggsText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
-    private var _timeText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+    private var _timeText:TextField = new TextField(600, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _comboText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _speedText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
  
@@ -51,6 +51,7 @@ package UI
 
       _overlay = new Image(AssetRegistry.SnakeAtlas.getTexture("UIOverlay"));
       _overlay.smoothing = TextureSmoothing.NONE;
+      addChild(_overlay);
      
       for (var i:int; i < others.length; i++) {
         if(_icons[others[i]]) {
@@ -73,7 +74,6 @@ package UI
         }
       }
 
-      addChild(_overlay);
       addChild(_scoreText);
       addChild(_radar);      
           
