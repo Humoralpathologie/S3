@@ -27,12 +27,15 @@ package engine
       _manager = this;
       AssetRegistry.init();
       _loadingScreen = new AssetRegistry.LoadingScreenPNG;
+      
       switchStage(MainMenu);
     }
     
     public static function switchStage(newStage:Class, argument:* = null):void
     {
       _argument = argument;
+      _loadingScreen.y = Starling.current.viewPort.y;
+      _loadingScreen.scaleX = _loadingScreen.scaleY = Starling.current.viewPort.width / 960;      
       Starling.current.nativeStage.addChild(_loadingScreen);
 
       _nextStage = newStage;

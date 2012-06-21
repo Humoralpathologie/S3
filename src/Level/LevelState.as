@@ -170,14 +170,16 @@ package Level
       addParticles();
       
       _swipeMenu = new Sprite();
-      var swipeBackground:Quad = new Quad(Starling.current.viewPort.width, 100, 0x000000);
+      var swipeBackground:Quad = new Quad(Starling.current.stage.stageWidth, 100, 0x000000);
       swipeBackground.alpha = 0.3;
       
       _swipeMenu.addChild(swipeBackground);
-      _swipeMenu.y = Starling.current.viewPort.height;
+      _swipeMenu.y = Starling.current.stage.stageHeight;
       addChild(_swipeMenu);
       
-      var back:TextField = new TextField(300, 100, "BACK", "kroeger 06_65", 80, Color.WHITE);
+      var back:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("text-ingame-main menu"));
+      back.x = 20;
+      back.y = (_swipeMenu.height - back.height) / 2;
       
       back.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
         {
@@ -240,7 +242,7 @@ package Level
     }
     
     private function recycleText():TextField {
-      return new TextField(Starling.current.viewPort.width, Starling.current.viewPort.height, "", "kroeger 06_65", 90, Color.WHITE);
+      return new TextField(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight, "", "kroeger 06_65", 90, Color.WHITE);
     }
     
     protected function setBoundaries():void {
@@ -704,12 +706,12 @@ package Level
       _lost = true;
       var image:Image;
       image = new Image(AssetRegistry.SnakeAtlas.getTexture("game over_gravestone"));
-      image.x = (Starling.current.viewPort.width - image.width) / 2;
-      image.y = Starling.current.viewPort.height;
+      image.x = (Starling.current.stage.stageWidth - image.width) / 2;
+      image.y = Starling.current.stage.stageHeight;
       addChild(image);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(image, 2, { y: Starling.current.viewPort.height - image.height } ); 
+      new GTween(image, 2, { y: Starling.current.stage.stageHeight - image.height } ); 
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       addEventListener(TouchEvent.TOUCH, function():void {
@@ -807,10 +809,7 @@ package Level
     
     protected function updateCamera():void
     {
-      //_levelStage.x = Math.min(0, -_snake.head.x * 2 + Starling.current.nativeStage.stageWidth / 2);
-      //_levelStage.y = Math.min(0, -_snake.head.y * 2 + Starling.current.nativeStage.stageHeight / 2);
-      //_levelStage.x = - (_following.x + _following.frameOffset.x) + Starling.current.viewPort.width / 2;
-      //_levelStage.y = - (_following.y + _following.frameOffset.x) + Starling.current.viewPort.height / 2;
+
       var a:Number, b:Number;
       
       _camerax = _following.x;
@@ -818,16 +817,16 @@ package Level
       
       a = _camerax + _following.frameOffset.x + 7;
       b = _cameray + _following.frameOffset.y + 7;
-      _levelStage.x = -(a * _zoom) + Starling.current.viewPort.width / 2;
-      _levelStage.y = -(b * _zoom) + Starling.current.viewPort.height / 2;
+      _levelStage.x = -(a * _zoom) + Starling.current.stage.stageWidth / 2;
+      _levelStage.y = -(b * _zoom) + Starling.current.stage.stageHeight / 2;
       
       var frame:int = 4 * AssetRegistry.TILESIZE;
       
       _levelStage.x = Math.min(_levelStage.x, frame);
       _levelStage.y = Math.min(_levelStage.y, frame);
       // TODO: Should be computed only once.
-      _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + Starling.current.viewPort.width, _levelStage.x);
-      _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + Starling.current.viewPort.height, _levelStage.y);
+      _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.x);
+      _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.y);
     }
     
     public function pause():void
@@ -867,20 +866,20 @@ package Level
           if (_possibleSwipe && Math.abs((_swipeY - touch.getLocation(this).y)) > 50)
           {
             trace("Swipe!");
-            if (_swipeMenu.y == Starling.current.viewPort.height && _swipeY > touch.getLocation(this).y)
+            if (_swipeMenu.y == Starling.current.stage.stageHeight && _swipeY > touch.getLocation(this).y)
             {
-              new GTween(_swipeMenu, 0.2, {"y": Starling.current.viewPort.height - _swipeMenu.height});
+              new GTween(_swipeMenu, 0.2, {"y": Starling.current.stage.stageHeight - _swipeMenu.height});
               pause();
             }
-            else if (_swipeMenu.y == Starling.current.viewPort.height - _swipeMenu.height && _swipeY < touch.getLocation(this).y)
+            else if (_swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height && _swipeY < touch.getLocation(this).y)
             {
-              new GTween(_swipeMenu, 0.2, {"y": Starling.current.viewPort.height});
+              new GTween(_swipeMenu, 0.2, {"y": Starling.current.stage.stageHeight});
               unpause();
             }
           }
           else
           {
-            if (_swipeMenu.y == Starling.current.viewPort.height)
+            if (_swipeMenu.y == Starling.current.stage.stageHeight)
             {
               if (touch.getLocation(this).x > 480)
               {

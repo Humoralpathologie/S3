@@ -18,6 +18,8 @@ package
   import engine.StageManager;
   import engine.SaveGame;
   //import com.demonsters.debugger.MonsterDebugger;
+  import flash.system.Capabilities;
+  
   
   /**
    * ...
@@ -54,9 +56,18 @@ package
       var screenWidth:int = stage.fullScreenWidth;
       var screenHeight:int = stage.fullScreenHeight;
       
-      starling = new Starling(StageManager, stage, new Rectangle(0,0,960, 640));// , viewPort);
-      starling.stage.stageHeight = 640;
-      starling.stage.stageWidth = 960;
+      if(Capabilities.os.indexOf("Windows") != -1) {
+        starling = new Starling(StageManager, stage, new Rectangle(0,0,960, 640));// , viewPort);
+        starling.stage.stageHeight = 640;
+        starling.stage.stageWidth = 960;
+      } else {
+        var wwidth:int = screenWidth;
+        var hheight:int = int(screenWidth / (960 / 640));
+        var yy = (screenHeight - hheight) / 2;
+        starling = new  starling.core.Starling(StageManager, stage, new Rectangle(0, yy, wwidth, hheight));
+        starling.stage.stageHeight = 640;
+        starling.stage.stageWidth = 960;
+      }
       
       var loadingSprite:Sprite = new Sprite()
       var loadingBMP:Bitmap = new AssetRegistry.LoadingPNG();

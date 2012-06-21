@@ -126,8 +126,8 @@ package Menu
               _levelName.y += 85;
               
               _levelInfo.addChild(_levelName);
-              _levelInfo.x = (Starling.current.viewPort.width - _levelInfo.width) / 2;
-              _levelInfo.y = (Starling.current.viewPort.height - _levelInfo.height) / 2;
+              _levelInfo.x = (Starling.current.stage.stageWidth - _levelInfo.width) / 2;
+              _levelInfo.y = (Starling.current.stage.stageHeight - _levelInfo.height) / 2;
               _levelInfo.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
                 {
                   var touch:Touch = event.getTouch(that, TouchPhase.ENDED);
@@ -169,7 +169,7 @@ package Menu
           _slideY += Math.abs(touch.getMovement(_scrollable).y);
           _scrollable.y += touch.getMovement(_scrollable).y;
           _scrollable.y = Math.min(0, _scrollable.y);
-          _scrollable.y = Math.max(-(_bg.height - Starling.current.viewPort.height), _scrollable.y);
+          _scrollable.y = Math.max(-(_bg.height - Starling.current.stage.stageHeight), _scrollable.y);
         }
       }
     }
