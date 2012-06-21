@@ -38,11 +38,11 @@ package Menu
       
       _swipeMenu = new Sprite();
       
-      var menuBG:Quad = new Quad(Starling.current.viewPort.width, 100, 0x000000);
+      var menuBG:Quad = new Quad(Starling.current.stage.stageWidth, 100, 0x000000);
       menuBG.alpha = 0.3;
       _swipeMenu.addChild(menuBG);
       
-      _swipeMenu.y = Starling.current.viewPort.height;
+      _swipeMenu.y = Starling.current.stage.stageHeight - _swipeMenu.height;
       
       var arcadeButton:Image = new Image(AssetRegistry.MenuAtlas.getTexture("text-arcade"));
       arcadeButton.x = 22;
@@ -58,52 +58,22 @@ package Menu
       
       levelSelectButton.addEventListener(TouchEvent.TOUCH, startLevelSelect);
       _swipeMenu.addChild(levelSelectButton);
-       
-      var scoringButton:TextField = new TextField(200, 100, "SCORING", "kroeger 06_65", 40, 0xffffff);
-      levelSelectButton.y = arcadeButton.y;
-      scoringButton.x = levelSelectButton.x + levelSelectButton.width + 10;
-      scoringButton.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
-        var touch:Touch = event.getTouch(scoringButton, TouchPhase.ENDED);
-        if (touch) {
-          StageManager.switchStage(LevelScore);
-        }
-      });
-      _swipeMenu.addChild(scoringButton);
          
       _swipeMenu.flatten();
       
       addChild(_swipeMenu);      
-      
-      _swipeMessage = new Image(AssetRegistry.MenuAtlas.getTexture("pleaseswipeup"));
-      _swipeMessage.x = (Starling.current.viewPort.width - _swipeMessage.width) / 2;
-      _swipeMessage.y = (Starling.current.viewPort.height - _swipeMessage.height) / 2;
-      _swipeMessage.alpha = 0;
-      
-      addChild(_swipeMessage);
-      
-      Starling.juggler.delayCall(function():void { new GTween(_swipeMessage, 1, {alpha: 1})}, 2);
-      
-      /*
-      var soundchannel:SoundChannel = AssetRegistry.LevelMusic1Sound.play();
-      var loop:Function = function():void {
-        soundchannel = AssetRegistry.LevelMusic2Sound.play(50);
-        soundchannel.addEventListener(Event.ACTIVATE, loop)
-      }
-      
-      soundchannel.addEventListener(Event.SOUND_COMPLETE, loop);
-      */
     }
     
     private function startArcade(event:TouchEvent):void {
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
-      if (touch && _swipeMenu.y == Starling.current.viewPort.height - _swipeMenu.height) {
+      if (touch && _swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height) {
         StageManager.switchStage(ArcadeState);
       }
     }
     
     private function startLevelSelect(event:TouchEvent):void {
     var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
-      if (touch && _swipeMenu.y == Starling.current.viewPort.height - _swipeMenu.height) {
+      if (touch && _swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height) {
         StageManager.switchStage(LevelSelect);
       }     
     }
@@ -132,13 +102,13 @@ package Menu
           if (_possibleSwipe && Math.abs((_swipeY - touch.getLocation(this).y)) > 50)
           {
             trace("Swipe!");
-            if (_swipeMenu.y == Starling.current.viewPort.height && _swipeY > touch.getLocation(this).y)
+            if (_swipeMenu.y == Starling.current.stage.stageHeight && _swipeY > touch.getLocation(this).y)
             {
-              new GTween(_swipeMenu, 0.2, {"y": Starling.current.viewPort.height - _swipeMenu.height});
+              new GTween(_swipeMenu, 0.2, {"y": Starling.current.stage.stageHeight - _swipeMenu.height});
             }
-            else if (_swipeMenu.y == Starling.current.viewPort.height - _swipeMenu.height && _swipeY < touch.getLocation(this).y)
+            else if (_swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height && _swipeY < touch.getLocation(this).y)
             {
-              new GTween(_swipeMenu, 0.2, {"y": Starling.current.viewPort.height});
+              new GTween(_swipeMenu, 0.2, {"y": Starling.current.stage.stageHeight});
             }
           }
         }
