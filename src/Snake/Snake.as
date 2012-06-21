@@ -91,7 +91,7 @@ package Snake
       //move Tail
       _tail.tileX = _body[l - 1].tileX;
       _tail.tileY = _body[l - 1].tileY;
-      _tail.facing = _body[l - 2].facing;
+      _tail.facing = _body[l - 1].facing;
       _tail.animateMove();
 
       for (var i:int = l - 1; i > 0; i-- ) {
@@ -103,6 +103,8 @@ package Snake
         a = b;
       }
       
+
+      trace("facing: " + String(_tail.facing));
       a.tileX = _head.tileX;
       a.tileY = _head.tileY;
       a.facing = _head.facing;     

@@ -40,8 +40,8 @@ package Snake
     override public function update(time:Number):void
     {
       super.update(time);
-      if (facing != prevFacing)
-      {
+    //  if (facing != prevFacing)
+    //  {
         switch (facing)
         {
           case AssetRegistry.UP: 
@@ -57,7 +57,7 @@ package Snake
             _image.texture = _imageLeft;
             break;
         }
-      }
+      //}
     }
     public function get image():Image {
       return _image;
