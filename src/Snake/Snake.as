@@ -9,6 +9,7 @@ package Snake
   import starling.core.Starling;
   import Snake.Head;
   import Snake.BodyPart;
+  import Snake.Tail;
 	
 	/**
      * ...
@@ -23,6 +24,7 @@ package Snake
     private var _mps:int;
     //private var _body:Vector.<Snake.BodyPart>;
     private var _body:Array;
+    private var _tail:Tail;
     private var _newPart:Snake.BodyPart = null;
     private var _eatenEggs:int = 0;
     private var _lives:int = 3;
@@ -43,6 +45,9 @@ package Snake
         _body.push(bodyPart);
         addChild(bodyPart);
       }
+
+      _tail = new Tail(_body[3].tileX - 1, _head.tileY, _speed);
+      addChild(_tail);      
     }
     
     public function faster():void {
@@ -51,6 +56,7 @@ package Snake
       for (var i:int = 0; i < _body.length; i++) {
         _body[i].speed = _speed;
       }
+      _tail.speed = _speed
     }
     
     public function eat(eggType:int):void {
@@ -70,14 +76,24 @@ package Snake
     public function move():void {
       
       if (_newPart != null) {
+        removeChild(_tail);
         _body.push(_newPart);
+        _tail = new Tail(_newPart.tileX, _newPart.tileY, _newPart.speed);
         addChild(_newPart);
+        addChild(_tail);
         _newPart = null;
       }
       
       var l:int = _body.length
       var a:Snake.BodyPart, b:Snake.BodyPart;
       a = body[l - 1];
+      //move Tail
+      _tail.tileX = _body[l - 1].tileX;
+      _tail.tileY = _body[l - 1].tileY;
+      _tail.facing = _body[l - 1].facing;
+      //_tail.animateMove();
+      trace("_tail.x:" + String(_tail.x));
+      trace(_tail.image.texture);
       for (var i:int = l - 1; i > 0; i-- ) {
         b = _body[i - 1];
         a.tileX = b.tileX;
@@ -87,6 +103,7 @@ package Snake
         a = b;
       }
       
+      trace("prePart.x:" + String(_body[l - 1].x));
       a.tileX = _head.tileX;
       a.tileY = _head.tileY;
       a.facing = _head.facing;     
@@ -122,6 +139,7 @@ package Snake
       for (var i:int = 0; i < _body.length; i++) {
         _body[i].update(time);
       }         
+      _tail.update(time);
     }
     
     public function moveRight():void {
@@ -171,6 +189,10 @@ package Snake
         return _body;
     }
     
+    public function get tail():Snake.Tail
+    {
+      return _tail;
+    }
     public function get eatenEggs():int 
     {
         return _eatenEggs;
