@@ -87,13 +87,13 @@ package Snake
       var l:int = _body.length
       var a:Snake.BodyPart, b:Snake.BodyPart;
       a = body[l - 1];
+
       //move Tail
       _tail.tileX = _body[l - 1].tileX;
       _tail.tileY = _body[l - 1].tileY;
-      _tail.facing = _body[l - 1].facing;
-      //_tail.animateMove();
-      trace("_tail.x:" + String(_tail.x));
-      trace(_tail.image.texture);
+      _tail.facing = _body[l - 2].facing;
+      _tail.animateMove();
+
       for (var i:int = l - 1; i > 0; i-- ) {
         b = _body[i - 1];
         a.tileX = b.tileX;
@@ -103,7 +103,6 @@ package Snake
         a = b;
       }
       
-      trace("prePart.x:" + String(_body[l - 1].x));
       a.tileX = _head.tileX;
       a.tileY = _head.tileY;
       a.facing = _head.facing;     

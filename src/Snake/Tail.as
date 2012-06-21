@@ -26,6 +26,7 @@ package Snake
       makeImages(); 
       _image = new Image(_imageRight);
       _image.smoothing = TextureSmoothing.NONE;
+      super(tileX, tileY, _image, speed);
       frameOffset = new Point(15, 15);
     }
     private function makeImages():void
