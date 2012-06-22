@@ -69,7 +69,7 @@ package Menu
       _scrollable.addChild(bgTop);
       
       var bgBottom:Image = new Image(AssetRegistry.LevelSelectBGTexture);
-      bgBottom.y = bgTop.height * 2;
+      bgBottom.y = (bgTop.height * 2) - 1;
       bgBottom.scaleY = -1;
       
       _scrollable.addChild(bgBottom);
