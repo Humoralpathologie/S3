@@ -35,7 +35,8 @@ package engine
     {
       _argument = argument;
       _loadingScreen.y = Starling.current.viewPort.y;
-      _loadingScreen.scaleX = _loadingScreen.scaleY = Starling.current.viewPort.width / 960;      
+      _loadingScreen.x = Starling.current.viewPort.x;     
+      _loadingScreen.scaleX = _loadingScreen.scaleY = AssetRegistry.SCALE;      
       Starling.current.nativeStage.addChild(_loadingScreen);
 
       _nextStage = newStage;

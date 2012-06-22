@@ -194,6 +194,7 @@ package engine
     public static const STAGE_HEIGHT:int = 960;
     
     public static const ASPECT_RATIO:Number = STAGE_HEIGHT / STAGE_WIDTH;
+    public static var SCALE:Number = 0;
     
     public static function init():void
     {

@@ -61,10 +61,24 @@ package
         starling.stage.stageHeight = 640;
         starling.stage.stageWidth = 960;
       } else {
-        var wwidth:int = screenWidth;
-        var hheight:int = int(screenWidth / (960 / 640));
-        var yy = (screenHeight - hheight) / 2;
-        starling = new  starling.core.Starling(StageManager, stage, new Rectangle(0, yy, wwidth, hheight));
+        var wwidth:int;
+        var hheight:int;
+        
+        if (AssetRegistry.ASPECT_RATIO < screenWidth / screenHeight) {
+          //var wwidth:int = screenWidth;
+          //var hheight:int = int(screenWidth / (960 / 640));    
+          wwidth = int(screenHeight * (960 / 640));
+          hheight = screenHeight;
+        } else {
+          wwidth = screenWidth;
+          hheight = int(screenWidth / (960 / 640));
+        }
+        
+        AssetRegistry.SCALE = wwidth / screenWidth;
+
+        var yy:int = (screenHeight - hheight) / 2;
+        var xx:int = (screenWidth - wwidth) / 2;
+        starling = new  starling.core.Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight));
         starling.stage.stageHeight = 640;
         starling.stage.stageWidth = 960;
       }
