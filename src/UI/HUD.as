@@ -38,12 +38,12 @@ package UI
     private var _speedText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _poisonText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
  
-    private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 2, y: 2}],
-                          combo: [_combo, _comboText, {x: 2, y: 60}],
-                          eggs: [_neededEggs, _neededEggsText, {x: 2, y: 60}],
-                          time: [_time, _timeText, {x: 98, y: 2}],
-                          speed: [_speed, _speedText, {x: 98, y: 60}],
-                          poison: [_poison, _poisonText, {x: 2, y: 60}]
+    private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 12, y: 12}],
+                          combo: [_combo, _comboText, {x: 12, y: 70}],
+                          eggs: [_neededEggs, _neededEggsText, {x: 12, y: 70}],
+                          time: [_time, _timeText, {x: 108, y: 12}],
+                          speed: [_speed, _speedText, {x: 108, y: 70}],
+                          poison: [_poison, _poisonText, {x: 12, y: 70}]
                           };
     public function HUD(radar:Radar, others:Array)//[lifes, eggs, time ...]; 
     {
