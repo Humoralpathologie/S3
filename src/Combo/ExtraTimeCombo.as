@@ -1,10 +1,13 @@
 package Combo
 {
+  import Level.LevelState;
+  import engine.AssetRegistry;
+  
   public class ExtraTimeCombo extends Combo {
     public function ExtraTimeCombo() {
       super();
       repeat = true;
-      trigger = [EggTypes.EGGB, EggTypes.EGGB, EggTypes.EGGB];
+      trigger = [AssetRegistry.EGGB, AssetRegistry.EGGB, AssetRegistry.EGGB];
     }
     
     override public function effect(state:LevelState):void {

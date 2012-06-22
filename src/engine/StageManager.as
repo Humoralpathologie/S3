@@ -6,6 +6,7 @@ package engine
   import starling.core.Starling;
   import starling.events.EnterFrameEvent;
   import Level.Level1;
+  import flash.system.System;
   
   /**
    * ...
@@ -26,12 +27,16 @@ package engine
       _manager = this;
       AssetRegistry.init();
       _loadingScreen = new AssetRegistry.LoadingScreenPNG;
+      
       switchStage(MainMenu);
     }
     
     public static function switchStage(newStage:Class, argument:* = null):void
     {
       _argument = argument;
+      _loadingScreen.y = Starling.current.viewPort.y;
+      _loadingScreen.x = Starling.current.viewPort.x;     
+      _loadingScreen.scaleX = _loadingScreen.scaleY = AssetRegistry.SCALE;      
       Starling.current.nativeStage.addChild(_loadingScreen);
 
       _nextStage = newStage;
@@ -49,6 +54,8 @@ package engine
           _manager.removeChild(_currentSprite);
           Starling.juggler.purge();
           _currentSprite.dispose();
+          _currentSprite = null;
+          System.gc(); // clean up;
         }
         _currentSprite = _argument ? new _nextStage(_argument) : new _nextStage();
         Starling.juggler.paused = false;

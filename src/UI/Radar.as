@@ -31,7 +31,7 @@ package UI
       _snake = snake;
 
       var radarCircle:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("KreisRadar"));    
-      _center = new Point(Starling.current.nativeStage.stageWidth / 2, Starling.current.nativeStage.stageHeight / 2);
+      _center = new Point(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
       radarCircle.x = _center.x - radarCircle.width / 2;
       radarCircle.y = _center.y - radarCircle.height / 2;
       radarCircle.smoothing = TextureSmoothing.NONE;
@@ -82,7 +82,7 @@ package UI
       
 
       for (var i:int = 0; i < _eggs.length; i++) {
-        if (_eggs[i].visible && _eggs[i].type != AssetRegistry.EGGROTTEN) {
+        if (_eggs[i].visible){ // && _eggs[i].type != AssetRegistry.EGGROTTEN) {
           rEgg = freshEgg();
           dx = _eggs[i].x - _snake.head.x;
           dy = _eggs[i].y - _snake.head.y;

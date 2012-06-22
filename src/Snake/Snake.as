@@ -73,6 +73,20 @@ package Snake
       return false;
     }
     
+    public function hit(x:int, y:int):Boolean {
+      if (_head.tileX == x && _head.tileY == y) {
+        return true;
+      }
+      
+      for (var i:int = 0; i < _body.length; i++) {
+        if (x == body[i].tileX && y == body[i].tileY) {
+          return true;
+        }
+      }
+      
+      return false;
+    }
+    
     public function move():void {
       
       if (_newPart != null) {

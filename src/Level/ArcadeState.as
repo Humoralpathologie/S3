@@ -1,8 +1,11 @@
 package Level
 {
   import com.gskinner.motion.GTween;
+  import com.gskinner.motion.plugins.SoundTransformPlugin;
   import Eggs.Egg;
   import Eggs.Eggs;
+  import flash.geom.Rectangle;
+  import flash.media.Sound;
   import fr.kouma.starling.utils.Stats;
   import Snake.Snake;
   import starling.animation.Tween;
@@ -39,6 +42,22 @@ package Level
     public function ArcadeState() {
       AssetRegistry.loadArcadeGraphics();
       super();
+      
+      _comboSet.addCombo(new Combo.ExtraLifeCombo);
+      _comboSet.addCombo(new Combo.NoRottenCombo);
+      _comboSet.addCombo(new Combo.ShuffleCombo);
+      _comboSet.addCombo(new Combo.GoldenCombo);
+      _comboSet.addCombo(new Combo.ExtraTimeCombo);
+      
+      _startPos.x = 20;
+      _startPos.y = 20;
+      startAt(_startPos.x, _startPos.y);
+      var sound:Sound = new (AssetRegistry.ArcadeMusic) as Sound;
+      sound.play();
+    }
+    
+    override protected function setBoundaries():void {
+      _levelBoundaries = new Rectangle(13, 12, 43, 38);
     }
     
     override public function dispose():void {
@@ -48,6 +67,19 @@ package Level
     
     override public function addFrame():void {
       // Not needed here.
+    }
+    
+    override protected function addObstacles():void {
+      var pos:Array = [1506, 1507, 3055, 3056, 3057, 1771, 3090, 3091, 1044, 1045, 3049, 1309, 3052, 3053, 3283, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819, 821, 822, 823, 824, 825, 3122, 3123, 820, 1333, 1334, 1335, 1071, 3120, 1308, 1770, 1836, 1069, 1070, 1572, 1573, 2892, 2893, 846, 847, 3115, 3116, 1837, 3156, 3157, 1110, 1111, 3054, 1374, 1375, 3118, 3119, 3121, 871, 872, 873, 874, 875, 876, 877, 878, 879, 1136, 881, 3186, 3187, 3188, 3181, 1135, 880, 1137, 3051, 3189, 3182, 3183, 1638, 1639, 3117, 3184, 3050, 2958, 2959, 912, 913, 3222, 3223, 1176, 1177, 1440, 1441, 3185, 937, 938, 939, 3247, 1202, 1203, 3252, 3253, 3254, 3255, 3248, 1201, 1705, 3251, 3249, 1704, 3277, 3278, 3279, 3024, 3025, 978, 979, 3284, 3285, 3286, 3287, 3288, 3289, 1242, 1243, 3280, 1003, 1004, 1005, 1267, 1268, 1269, 3281, 3282, 3250];
+      for (var i:int = 0; i < pos.length; i++) {
+        _obstacles[pos[i]] = true;
+      }
+    }   
+    
+    override protected function checkWin():void {
+      if (_timeLeft <= 0) {
+        win();
+      }
     }
     
     override protected function updateHud():void {

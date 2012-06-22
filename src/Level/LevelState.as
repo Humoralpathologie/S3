@@ -4,6 +4,7 @@ package Level
   import Eggs.Egg;
   import Eggs.Eggs;
   import flash.geom.Point;
+  import flash.geom.Rectangle;
   import fr.kouma.starling.utils.Stats;
   import Snake.Snake;
   import starling.animation.Tween;
@@ -63,7 +64,8 @@ package Level
     protected var _eggs:Eggs;
     private var _rottenEggs:Eggs.Eggs;
     protected var _overallTimer:Number = 0;
-    private var _comboSet:Combo.ComboSet;
+    private var _text:TextField;
+    protected var _comboSet:Combo.ComboSet;
     private var _justAte:Boolean = false;
     private var _comboTimer:Number = 0;
     private var _currentCombos:Array;
@@ -79,9 +81,12 @@ package Level
     private var _frameCounter:int = 0;
     private var _particlePool:Vector.<PDParticleSystem>;
     private var _sadSnake:Image;
+    private var _sadText:Image;
     private var _evilSnake:Image;
+    private var _evilText:Image;
     protected var _levelNr:int = 0;
     private var _won:Boolean = false;
+    private var _lost:Boolean = false;
     protected var _obstacles:Object = {};
     protected var _tileWidth:int = 0;
     protected var _tileHeight:int = 0;
@@ -98,7 +103,11 @@ package Level
     protected var _rottenEnabled:Boolean = false;
     protected var _particles:Object;
     
-    protected var _poisonEggs:int = 0; 
+    protected var _startPos:Point = new Point(5, 5);
+    protected var _levelBoundaries:Rectangle;
+    protected var _timeLeft:Number = 3 * 60;
+    protected var _poisonEggs:int = 0;
+    
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
     private static function playSoundSilentlyEndlessly(evt:Event = null):void
@@ -140,6 +149,7 @@ package Level
       _tileWidth = Math.ceil(_bg.width / AssetRegistry.TILESIZE);
       
       addObstacles();
+      setBoundaries();
       
       _snake = new Snake(10);
       _following = _snake.head;
@@ -155,18 +165,20 @@ package Level
       _levelStage.addChild(_eggs);
       _levelStage.addChild(_rottenEggs);
       
-      addHud(); 
+      addHud();
       addParticles();
       
       _swipeMenu = new Sprite();
-      var swipeBackground:Quad = new Quad(Starling.current.viewPort.width, 100, 0x000000);
+      var swipeBackground:Quad = new Quad(Starling.current.stage.stageWidth, 100, 0x000000);
       swipeBackground.alpha = 0.3;
       
       _swipeMenu.addChild(swipeBackground);
-      _swipeMenu.y = Starling.current.viewPort.height;
+      _swipeMenu.y = Starling.current.stage.stageHeight;
       addChild(_swipeMenu);
       
-      var back:TextField = new TextField(300, 100, "BACK", "kroeger 06_65", 80, Color.WHITE);
+      var back:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("text-ingame-main menu"));
+      back.x = 20;
+      back.y = (_swipeMenu.height - back.height) / 2;
       
       back.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
         {
@@ -187,25 +199,21 @@ package Level
       _levelStage.addChild(_bonusBack);
       _levelStage.addChild(_bonusBar);
       
+      startAt(_startPos.x, _startPos.y);
+      
       pause();
       
       showObjective();
     
     }
     
-    protected function addParticles():void {
-      var list:Array = [
-        [AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionA), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")],
-        [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionB), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")],
-        [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionC), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")],
-        [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")],
-        [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")],
-        [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")],
-        [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")]
-      ];
+    protected function addParticles():void
+    {
+      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")]];
       
-      _particles = { };
-      for (var i:int = 0; i < list.length;i++) {
+      _particles = {};
+      for (var i:int = 0; i < list.length; i++)
+      {
         _particles[list[i][0]] = new PDParticleSystem(list[i][1], list[i][2]);
         _levelStage.addChild(_particles[list[i][0]]);
         Starling.juggler.add(_particles[list[i][0]]);
@@ -217,6 +225,33 @@ package Level
       unpause();
     }
     
+    public function showMessage(message:String):void
+    {
+      var field:TextField = recycleText();
+      field.text = message;
+      addChild(field);
+      var tween:Tween = new Tween(field, 3);
+      tween.animate("y", -field.height);
+      //tween.animate("scaleX", 3);
+      //tween.animate("scaleY", 3);
+      tween.animate("alpha", 0);
+      tween.onComplete = function():void
+      {
+        removeChild(field);
+      }
+      Starling.current.juggler.add(tween);
+    }
+    
+    private function recycleText():TextField
+    {
+      return new TextField(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight, "", "kroeger 06_65", 90, Color.WHITE);
+    }
+    
+    protected function setBoundaries():void
+    {
+      _levelBoundaries = new Rectangle(0, 0, _tileWidth, _tileHeight);
+    }
+    
     public function addFrame():void
     {
       var frame:Image = new Image(AssetRegistry.LevelFrame);
@@ -225,11 +260,12 @@ package Level
       _levelStage.addChild(frame);
     }
     
-    protected function addHud():void {
+    protected function addHud():void
+    {
       _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time"]);
       addChild(_hud);
     }
-
+    
     private function eggCollide():void
     {
       var eggs:Vector.<Egg> = _eggs.eggPool;
@@ -241,6 +277,17 @@ package Level
         {
           eatEgg(eggs[i]);
           _justAte = true;
+            //peggle();
+        }
+      }
+      
+      eggs = _rottenEggs.eggPool;
+      for (var i:int = 0; i < eggs.length; i++)
+      {
+        if (head.tileX == eggs[i].tileX && head.tileY == eggs[i].tileY)
+        {
+          eatEgg(eggs[i]);
+            //_justAte = true;
             //peggle();
         }
       }
@@ -264,9 +311,9 @@ package Level
       }
     }
     
-    private function screenCollide():void
+    protected function screenCollide():void
     {
-      if (_snake.head.tileX < 0 || _snake.head.tileY < 0 || _snake.head.tileX >= _bg.width / AssetRegistry.TILESIZE || _snake.head.tileY >= _bg.height / AssetRegistry.TILESIZE)
+      if (_snake.head.tileX < _levelBoundaries.x || _snake.head.tileY < _levelBoundaries.y || _snake.head.tileX >= _levelBoundaries.x + _levelBoundaries.width || _snake.head.tileY >= _levelBoundaries.y + _levelBoundaries.height)
       {
         die();
       }
@@ -276,15 +323,21 @@ package Level
     {
       _snake.lives--;
       pause();
-      startAt(5, 5);
       
       _sadSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("sadsnake"));
-      _sadSnake.x = (Starling.current.viewPort.width - _sadSnake.width) / 2;
-      _sadSnake.y = Starling.current.viewPort.height;
+      _sadSnake.x = (Starling.current.stage.stageWidth - _sadSnake.width) / 2;
+      _sadSnake.y = Starling.current.stage.stageHeight;
+      
+      _sadText = new Image(AssetRegistry.SnakeAtlas.getTexture("SadSnakeText"));
+      _sadText.x = (Starling.current.stage.stageWidth - _sadText.width) / 2;
+      _sadText.y = -_sadText.height;
+      
       addChild(_sadSnake);
+      addChild(_sadText);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_sadSnake, 2, {y: Starling.current.viewPort.height - _sadSnake.height});
+      new GTween(_sadSnake, 2, {y: Starling.current.stage.stageHeight - _sadSnake.height});
+      new GTween(_sadText, 2, {y: 0});
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
@@ -342,6 +395,8 @@ package Level
       if (touch)
       {
         removeChild(_sadSnake);
+        removeChild(_sadText);
+        
         removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
         addEventListener(TouchEvent.TOUCH, onTouch);
         addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
@@ -352,27 +407,26 @@ package Level
     
     private function resetSnake():void
     {
-      _snake.head.tileX = 5;
-      _snake.head.tileY = 5;
+      startAt(_startPos.x, _startPos.y);
       _snake.head.facing = AssetRegistry.RIGHT;
       _snake.head.prevFacing = _snake.head.facing;
     }
     
     private function showParticles(egg:DisplayObject):void
     {
-      /*
-      var pd:ParticleSystem;
-      for (var i:int = 0; i < _particlePool.length; i++)
-      {
-        
-      }
-      pd = _particlePool[0];
-      pd.x = egg.x;
-      pd.y = egg.y;
-      
-      pd.start(1);
-      Starling.juggler.add(pd);
-      */
+    /*
+       var pd:ParticleSystem;
+       for (var i:int = 0; i < _particlePool.length; i++)
+       {
+    
+       }
+       pd = _particlePool[0];
+       pd.x = egg.x;
+       pd.y = egg.y;
+    
+       pd.start(1);
+       Starling.juggler.add(pd);
+     */
     }
     
     private function peggle():void
@@ -387,29 +441,42 @@ package Level
     
     protected function spawnRandomEgg():void
     {
-      var egg:Eggs.Egg = new Eggs.Egg(0, 0, Math.floor(Math.random() * 4));
+      var egg:Eggs.Egg = new Eggs.Egg(0, 0, Math.floor(Math.random() * 7));
       placeEgg(egg);
     }
     
-    protected function placeEgg(egg:Eggs.Egg):void
+    public function placeEgg(egg:Eggs.Egg, rotten:Boolean = false):void
     {
       var eggx:int;
       var eggy:int;
       do
       {
-        eggx = Math.floor(Math.random() * _tileWidth);
-        eggy = Math.floor(Math.random() * _tileHeight);
-      } while (_obstacles[eggy * _tileWidth + eggx]);
+        eggx = _levelBoundaries.x + Math.floor(Math.random() * _levelBoundaries.width);
+        eggy = _levelBoundaries.y + Math.floor(Math.random() * _levelBoundaries.height);
+      } while (!free(eggx, eggy));
       egg.tileX = eggx;
       egg.tileY = eggy;
       
-      _eggs.addEgg(egg);
-
+      if (!rotten)
+      {
+        _eggs.addEgg(egg);
+      }
+      else
+      {
+        _rottenEggs.addEgg(egg);
+      }
+    
+    }
+    
+    private function free(x:int, y:int):Boolean
+    {
+      return !(_obstacles[y * _tileWidth + x]) && !(_snake.hit(x, y)) && !(_eggs.hit(x, y)) && !(_rottenEggs.hit(x, y));
     }
     
     private function eatEgg(egg:Egg):void
     {
       AssetRegistry.BiteSound.play();
+      
       if (!_rottenEnabled && egg.type == AssetRegistry.EGGROTTEN || egg.type != AssetRegistry.EGGROTTEN) // || egg.type < AssetRegistry.EGGROTTEN)
       {
         if (egg.type <= AssetRegistry.EGGROTTEN)
@@ -466,6 +533,7 @@ package Level
       _overallTimer += passedTime;
       _comboTimer -= passedTime;
       _rottenTimer -= passedTime;
+      _timeLeft -= passedTime;
     }
     
     private function updateBonusBar():void
@@ -553,8 +621,10 @@ package Level
       text.color = color;
       text.autoScale = true;
       text.hAlign = HAlign.CENTER;
-      text.x = 800 + offset;
-      text.y = 500 + offset;
+      var p:Point = new Point(egg.x, egg.y);
+      p = _levelStage.localToGlobal(p);
+      text.x = p.x + egg.width / 2 - text.width / 2 + offset;
+      text.y = p.y + egg.height / 2 - text.height / 2 + offset; //egg.y + (egg.height / 2) - text.height / 2);
       addChild(text);
       var tween:Tween = new Tween(text, 2, "easeIn");
       tween.animate("y", offset);
@@ -642,15 +712,43 @@ package Level
       _snake.head.prevFacing = _snake.head.facing;
     }
     
-    protected function updateHud():void {
-      _hud.radar.update(); 
+    private function checkLost():void
+    {
+      if (snake.lives < 0)
+      {
+        lose();
+      }
+    }
+    
+    private function lose():void
+    {
+      _lost = true;
+      var image:Image;
+      image = new Image(AssetRegistry.SnakeAtlas.getTexture("game over_gravestone"));
+      image.x = (Starling.current.stage.stageWidth - image.width) / 2;
+      image.y = Starling.current.stage.stageHeight;
+      addChild(image);
+      
+      // Use a GTween, as the Starling tweens are paused.
+      new GTween(image, 2, {y: Starling.current.stage.stageHeight - image.height});
+      removeEventListener(TouchEvent.TOUCH, onTouch);
+      removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+      addEventListener(TouchEvent.TOUCH, function():void
+        {
+          StageManager.switchStage(MainMenu);
+        });
+    }
+    
+    protected function updateHud():void
+    {
+      _hud.radar.update();
       var _sec:String = (int(_overallTimer) % 60) < 10 ? "0" + String(int(_overallTimer) % 60) : String(int(_overallTimer) % 60);
       var _min:String = (int(_overallTimer) / 60) < 10 ? "0" + String(int(int(_overallTimer) / 60)) : String(int(int(_overallTimer) / 60));
       _hud.score = String(_score);
       _hud.lifesText = String(_snake.lives);
-      _hud.timeText = _min + ":" + _sec; 
+      _hud.timeText = _min + ":" + _sec;
     }
- 
+    
     private function onEnterFrame(event:EnterFrameEvent):void
     {
       var bodyArray:Array;
@@ -659,6 +757,11 @@ package Level
       if (!_won)
       {
         checkWin();
+      }
+      
+      if (!_lost)
+      {
+        checkLost();
       }
       
       if (!_paused)
@@ -675,7 +778,7 @@ package Level
           updateTimers(event);
         }
         
-        updateHud();    
+        updateHud();
         
         var startTimer:Number, endTimer:Number;
         
@@ -707,7 +810,8 @@ package Level
         
         updateBonusBar();
         updateCamera();
-        if (_rottenEnabled) {
+        if (_rottenEnabled)
+        {
           updateRotten();
         }
         
@@ -715,11 +819,13 @@ package Level
     
     }
     
-    protected function updateRotten():void {
-      if (_rottenTimer < 0) {
+    protected function updateRotten():void
+    {
+      if (_rottenTimer < 0)
+      {
         _rottenTimer = 30;
         var rotten:Eggs.Egg = new Eggs.Egg(0, 0, AssetRegistry.EGGROTTEN);
-        placeEgg(rotten);         
+        placeEgg(rotten, true);
       }
     }
     
@@ -733,10 +839,7 @@ package Level
     
     protected function updateCamera():void
     {
-      //_levelStage.x = Math.min(0, -_snake.head.x * 2 + Starling.current.nativeStage.stageWidth / 2);
-      //_levelStage.y = Math.min(0, -_snake.head.y * 2 + Starling.current.nativeStage.stageHeight / 2);
-      //_levelStage.x = - (_following.x + _following.frameOffset.x) + Starling.current.viewPort.width / 2;
-      //_levelStage.y = - (_following.y + _following.frameOffset.x) + Starling.current.viewPort.height / 2;
+      
       var a:Number, b:Number;
       
       _camerax = _following.x;
@@ -744,16 +847,16 @@ package Level
       
       a = _camerax + _following.frameOffset.x + 7;
       b = _cameray + _following.frameOffset.y + 7;
-      _levelStage.x = -(a * _zoom) + Starling.current.viewPort.width / 2;
-      _levelStage.y = -(b * _zoom) + Starling.current.viewPort.height / 2;
+      _levelStage.x = -(a * _zoom) + Starling.current.stage.stageWidth / 2;
+      _levelStage.y = -(b * _zoom) + Starling.current.stage.stageHeight / 2;
       
       var frame:int = 4 * AssetRegistry.TILESIZE;
       
       _levelStage.x = Math.min(_levelStage.x, frame);
       _levelStage.y = Math.min(_levelStage.y, frame);
       // TODO: Should be computed only once.
-      _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + Starling.current.viewPort.width, _levelStage.x);
-      _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + Starling.current.viewPort.height, _levelStage.y);
+      _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.x);
+      _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.y);
     }
     
     public function pause():void
@@ -793,20 +896,20 @@ package Level
           if (_possibleSwipe && Math.abs((_swipeY - touch.getLocation(this).y)) > 50)
           {
             trace("Swipe!");
-            if (_swipeMenu.y == Starling.current.viewPort.height && _swipeY > touch.getLocation(this).y)
+            if (_swipeMenu.y == Starling.current.stage.stageHeight && _swipeY > touch.getLocation(this).y)
             {
-              new GTween(_swipeMenu, 0.2, {"y": Starling.current.viewPort.height - _swipeMenu.height});
+              new GTween(_swipeMenu, 0.2, {"y": Starling.current.stage.stageHeight - _swipeMenu.height});
               pause();
             }
-            else if (_swipeMenu.y == Starling.current.viewPort.height - _swipeMenu.height && _swipeY < touch.getLocation(this).y)
+            else if (_swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height && _swipeY < touch.getLocation(this).y)
             {
-              new GTween(_swipeMenu, 0.2, {"y": Starling.current.viewPort.height});
+              new GTween(_swipeMenu, 0.2, {"y": Starling.current.stage.stageHeight});
               unpause();
             }
           }
           else
           {
-            if (_swipeMenu.y == Starling.current.viewPort.height)
+            if (_swipeMenu.y == Starling.current.stage.stageHeight)
             {
               if (touch.getLocation(this).x > 480)
               {
@@ -842,12 +945,18 @@ package Level
       pause();
       
       _evilSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_evillaugh"));
-      _evilSnake.x = (Starling.current.viewPort.width - _evilSnake.width) / 2;
-      _evilSnake.y = Starling.current.viewPort.height;
+      _evilSnake.x = (Starling.current.stage.stageWidth - _evilSnake.width) / 2;
+      _evilSnake.y = Starling.current.stage.stageHeight;
       addChild(_evilSnake);
       
+      _evilText = new Image(AssetRegistry.SnakeAtlas.getTexture("Snake_EvilLaughText"));
+      _evilText.x = (Starling.current.stage.stageWidth - _evilText.width) / 2;
+      _evilText.y = 0;
+      addChild(_evilText);
+      
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_evilSnake, 2, {y: Starling.current.viewPort.height - _evilSnake.height});
+      new GTween(_evilSnake, 2, {y: Starling.current.stage.stageHeight - _evilSnake.height});
+      new GTween(_evilText, 2, {y: 0});
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
@@ -889,8 +998,8 @@ package Level
       _snake.head.facing = AssetRegistry.RIGHT;
       for (var i:int = 0; i < _snake.body.length; i++)
       {
-        _snake.body[i].tileX = - 10;
-        _snake.body[i].tileY = - 10;
+        _snake.body[i].tileX = -10;
+        _snake.body[i].tileY = -10;
         _snake.body[i].facing = AssetRegistry.RIGHT;
       }
       _snake.tail.tileX = -10;
@@ -925,6 +1034,16 @@ package Level
     public function get snake():Snake
     {
       return _snake;
+    }
+    
+    public function get timeLeft():Number
+    {
+      return _timeLeft;
+    }
+    
+    public function set timeLeft(value:Number):void
+    {
+      _timeLeft = value;
     }
   
   }

@@ -6,6 +6,7 @@ package Level
      */
   import com.gskinner.motion.GTween;
   import engine.AssetRegistry
+  import flash.geom.Rectangle;
   import flash.system.ImageDecodingPolicy;
   import starling.display.Image;
   import starling.display.BlendMode;
@@ -20,8 +21,15 @@ package Level
       AssetRegistry.loadLevel4Graphics();
       _levelNr = 4;
       super();
-      startAt(15, 15);
+      _startPos.x = 20;
+      _startPos.y = 20;
+      startAt(_startPos.x, _startPos.y);
+      
       updateCamera();
+    }
+    
+    override protected function setBoundaries():void {
+      _levelBoundaries = new Rectangle(10, 7, 42, 30);
     }
     
     override protected function addBackground():void {

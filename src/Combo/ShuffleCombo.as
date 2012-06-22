@@ -1,14 +1,21 @@
-package Combo 
+package Combo
 {
-  public class ShuffleCombo extends Combo {
-    public function ShuffleCombo() {
+  import Level.LevelState;
+  import Eggs.Egg;
+  import engine.AssetRegistry;
+  
+  public class ShuffleCombo extends Combo
+  {
+    public function ShuffleCombo()
+    {
       super();
       repeat = false;
-      trigger = [EggTypes.EGGC, EggTypes.EGGB, EggTypes.EGGC, EggTypes.EGGB, EggTypes.EGGA];
+      trigger = [AssetRegistry.EGGC, AssetRegistry.EGGB, AssetRegistry.EGGC, AssetRegistry.EGGB, AssetRegistry.EGGA];
     }
     
-    override public function effect(state:LevelState):void {
-      state.spawnEgg(new Egg(EggTypes.SHUFFLE));
+    override public function effect(state:LevelState):void
+    {
+      state.placeEgg(new Egg(0,0, AssetRegistry.EGGSHUFFLE));
       state.showMessage("Shuffle!");
     }
   }

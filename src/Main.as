@@ -18,12 +18,14 @@ package
   import engine.StageManager;
   import engine.SaveGame;
   //import com.demonsters.debugger.MonsterDebugger;
+  import flash.system.Capabilities;
+  
   
   /**
    * ...
    * @author
    */
-  [SWF(width="960",height="640",frameRate="60",backgroundColor="#ffffff")]
+  [SWF(width="960",height="640",frameRate="60",backgroundColor="#000000")]
   
   public class Main extends Sprite
   {
@@ -35,11 +37,11 @@ package
     {
       stage.scaleMode = StageScaleMode.NO_SCALE;
       stage.align = StageAlign.TOP_LEFT;
-
+      
       stage.addEventListener(Event.DEACTIVATE, deactivate);
       
       //Starling.handleLostContext = true;
-            
+      
       //MonsterDebugger.initialize(this);
       //MonsterDebugger.trace(this, "Hello World");
       //stage.addChild(new TheMiner());
@@ -50,7 +52,36 @@ package
       // entry point  
       SaveGame.load();
       SaveGame.unlockLevels();
-      starling = new Starling(StageManager, stage, new Rectangle(0, 0, 960, 640));
+      
+      var screenWidth:int = stage.fullScreenWidth;
+      var screenHeight:int = stage.fullScreenHeight;
+      
+      if(Capabilities.os.indexOf("Windows") != -1 || Capabilities.os.indexOf("Linux") != -1) {
+        starling = new Starling(StageManager, stage, new Rectangle(0,0,960, 640));// , viewPort);
+        starling.stage.stageHeight = 640;
+        starling.stage.stageWidth = 960;
+      } else {
+        var wwidth:int;
+        var hheight:int;
+        
+        if (AssetRegistry.ASPECT_RATIO < screenWidth / screenHeight) {
+          //var wwidth:int = screenWidth;
+          //var hheight:int = int(screenWidth / (960 / 640));    
+          wwidth = int(screenHeight * (960 / 640));
+          hheight = screenHeight;
+        } else {
+          wwidth = screenWidth;
+          hheight = int(screenWidth / (960 / 640));
+        }
+        
+        AssetRegistry.SCALE = wwidth / screenWidth;
+
+        var yy:int = (screenHeight - hheight) / 2;
+        var xx:int = (screenWidth - wwidth) / 2;
+        starling = new  starling.core.Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight));
+        starling.stage.stageHeight = 640;
+        starling.stage.stageWidth = 960;
+      }
       
       var loadingSprite:Sprite = new Sprite()
       var loadingBMP:Bitmap = new AssetRegistry.LoadingPNG();
@@ -59,7 +90,7 @@ package
       addChild(loadingSprite);
       
       // For debugging. 
-      Starling.current.showStats = true;
+      // Starling.current.showStats = true;
       
       starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE, function(e:Event):void
         {
@@ -67,19 +98,19 @@ package
           removeChild(loadingSprite);
           starling.start();
         });
-      
+    
       // When the game becomes inactive, we pause Starling; otherwise, the enter frame event
       // would report a very long 'passedTime' when the app is reactivated. 
-     /* 
-      NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, function(e:Event):void
+    /*
+       NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, function(e:Event):void
        {
-          starling.start();
-        });
-      
-      NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, function(e:Event):void
-        {
-          starling.stop();
-        });*/
+       starling.start();
+       });
+    
+       NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, function(e:Event):void
+       {
+       starling.stop();
+     });*/
     }
     private function deactivate(e:Event):void
     {
