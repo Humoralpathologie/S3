@@ -9,6 +9,8 @@ package Level
   import starling.display.Image;
   import starling.display.BlendMode;
   import Eggs.Egg;
+  import UI.HUD;
+  import UI.Radar;
   
   public class Level3 extends LevelState 
   {
@@ -63,6 +65,19 @@ package Level
     {     
       showObjectiveBox("On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 3 minutes or devouring 100 eggs.", 40);
     }    
+
+    override protected function addHud():void {
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "poison"]);
+      addChild(_hud);
+      _hud.poison.x = 98;
+      _hud.poison.y = 60;
+      _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;  
+    }
+    override protected function updateHud():void {
+      super.updateHud();
+      _hud.comboText = String(_combos);
+      _hud.poisonText = String(_poisonEggs);   
+    }
     
     override protected function addObstacles():void
     {

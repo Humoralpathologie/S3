@@ -14,6 +14,8 @@ package Level
   import starling.events.TouchPhase;
   import starling.text.TextField;
   import starling.textures.TextureSmoothing;
+  import UI.HUD;
+  import UI.Radar;
   import starling.utils.Color;
   
   public class Level1 extends LevelState
@@ -63,8 +65,19 @@ package Level
       if (_snake.eatenEggs == 50) {
         win();
       }
-    }    
-    
+    }
+
+    override protected function addHud():void {
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "eggs"]);
+      addChild(_hud);
+      
+    }
+
+    override protected function updateHud():void {
+      super.updateHud();
+      _hud.eggsText = String(_snake.eatenEggs);   
+    }
+
     override protected function addObstacles():void
     {
       var pos:Array = [96, 97, 98, 99, 100, 10, 11, 12, 13, 14, 52, 53, 54, 55, 56, 57, 140, 141, 95];

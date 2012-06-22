@@ -112,13 +112,11 @@ package
        starling.stop();
      });*/
     }
-    
     private function deactivate(e:Event):void
     {
       // auto-close
       //NativeApplication.nativeApplication.exit();
     }
-  
   }
 
 }

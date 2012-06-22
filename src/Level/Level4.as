@@ -11,6 +11,8 @@ package Level
   import starling.display.Image;
   import starling.display.BlendMode;
   import starling.textures.TextureSmoothing;
+  import UI.HUD;
+  import UI.Radar;
   
   public class Level4 extends LevelState 
   {
@@ -65,6 +67,16 @@ package Level
       showObjectiveBox("Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snakes speed up to 11 and jump!");
     }    
     
+    override protected function addHud():void {
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed", "poison"]);
+      addChild(_hud);
+      
+    }
+    override protected function updateHud():void {
+      super.updateHud();
+      _hud.speedText = String(_snake.mps);
+      _hud.poisonText = String(_poisonEggs);   
+    }
     override protected function addObstacles():void
     {
       var pos:Array = [1552, 1489, 1488, 1551];

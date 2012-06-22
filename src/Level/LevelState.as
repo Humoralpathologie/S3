@@ -27,6 +27,7 @@ package Level
   import starling.events.KeyboardEvent;
   import engine.AssetRegistry;
   import UI.HUD;
+  import UI.Radar;
   import flash.system.Capabilities;
   import starling.display.BlendMode;
   import starling.text.TextField;
@@ -55,12 +56,12 @@ package Level
     protected var _bg:Image;
     protected var _bgTexture:Texture;
     protected var _overlay:Image;
-    private var _hud:HUD;
+    protected var _hud:HUD;
     private var _timer:Number = 0;
     protected var _snake:Snake;
     private var _speed:Number = 0.3;
     protected var _levelStage:Sprite;
-    private var _eggs:Eggs;
+    protected var _eggs:Eggs;
     private var _rottenEggs:Eggs.Eggs;
     protected var _overallTimer:Number = 0;
     private var _text:TextField;
@@ -69,7 +70,7 @@ package Level
     private var _comboTimer:Number = 0;
     private var _currentCombos:Array;
     protected var _combos:int = 0;
-    private var _score:int = 0;
+    protected var _score:int = 0;
     private var _zoom:Number = 2;
     private var _following:Snake.Head;
     private var _possibleSwipe:Boolean = false;
@@ -105,6 +106,7 @@ package Level
     protected var _startPos:Point = new Point(5, 5);
     protected var _levelBoundaries:Rectangle;
     protected var _timeLeft:Number = 3 * 60;
+    protected var _poisonEggs:int = 0;
     
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
@@ -129,7 +131,6 @@ package Level
       this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
       this.addEventListener(TouchEvent.TOUCH, onTouch);
       Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-      
       // Combos:
       
       _comboSet = new Combo.ComboSet();
@@ -164,9 +165,7 @@ package Level
       _levelStage.addChild(_eggs);
       _levelStage.addChild(_rottenEggs);
       
-      _hud = new HUD(_eggs, _snake);
-      addChild(_hud);
-      
+      addHud();
       addParticles();
       
       _swipeMenu = new Sprite();
@@ -226,26 +225,30 @@ package Level
       unpause();
     }
     
-    public function showMessage(message:String):void {
+    public function showMessage(message:String):void
+    {
       var field:TextField = recycleText();
       field.text = message;
       addChild(field);
       var tween:Tween = new Tween(field, 3);
-      tween.animate("y", - field.height);
+      tween.animate("y", -field.height);
       //tween.animate("scaleX", 3);
       //tween.animate("scaleY", 3);
       tween.animate("alpha", 0);
-      tween.onComplete = function():void {
+      tween.onComplete = function():void
+      {
         removeChild(field);
       }
       Starling.current.juggler.add(tween);
     }
     
-    private function recycleText():TextField {
+    private function recycleText():TextField
+    {
       return new TextField(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight, "", "kroeger 06_65", 90, Color.WHITE);
     }
     
-    protected function setBoundaries():void {
+    protected function setBoundaries():void
+    {
       _levelBoundaries = new Rectangle(0, 0, _tileWidth, _tileHeight);
     }
     
@@ -255,6 +258,12 @@ package Level
       frame.x = -200;
       frame.y = -150;
       _levelStage.addChild(frame);
+    }
+    
+    protected function addHud():void
+    {
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time"]);
+      addChild(_hud);
     }
     
     private function eggCollide():void
@@ -278,10 +287,10 @@ package Level
         if (head.tileX == eggs[i].tileX && head.tileY == eggs[i].tileY)
         {
           eatEgg(eggs[i]);
-          //_justAte = true;
+            //_justAte = true;
             //peggle();
         }
-      }      
+      }
     }
     
     protected function addAboveSnake():void
@@ -321,17 +330,17 @@ package Level
       
       _sadText = new Image(AssetRegistry.SnakeAtlas.getTexture("SadSnakeText"));
       _sadText.x = (Starling.current.stage.stageWidth - _sadText.width) / 2;
-      _sadText.y = - _sadText.height;
-      
+      _sadText.y = -_sadText.height;
       
       addChild(_sadSnake);
       addChild(_sadText);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_sadSnake, 2, { y: Starling.current.stage.stageHeight - _sadSnake.height } );
-      new GTween(_sadText, 2, { y : 0 } );
+      new GTween(_sadSnake, 2, {y: Starling.current.stage.stageHeight - _sadSnake.height});
+      new GTween(_sadText, 2, {y: 0});
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
+      removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       addEventListener(TouchEvent.TOUCH, dieScreenTouch);
     
     }
@@ -390,6 +399,7 @@ package Level
         
         removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
         addEventListener(TouchEvent.TOUCH, onTouch);
+        addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
         resetSnake();
         unpause();
       }
@@ -397,7 +407,7 @@ package Level
     
     private function resetSnake():void
     {
-      startAt(_startPos.x, _startPos.y);      
+      startAt(_startPos.x, _startPos.y);
       _snake.head.facing = AssetRegistry.RIGHT;
       _snake.head.prevFacing = _snake.head.facing;
     }
@@ -447,15 +457,19 @@ package Level
       egg.tileX = eggx;
       egg.tileY = eggy;
       
-      if(!rotten) {
-      _eggs.addEgg(egg);
-      } else {
-      _rottenEggs.addEgg(egg);
+      if (!rotten)
+      {
+        _eggs.addEgg(egg);
+      }
+      else
+      {
+        _rottenEggs.addEgg(egg);
       }
     
     }
     
-    private function free(x:int, y:int):Boolean {
+    private function free(x:int, y:int):Boolean
+    {
       return !(_obstacles[y * _tileWidth + x]) && !(_snake.hit(x, y)) && !(_eggs.hit(x, y)) && !(_rottenEggs.hit(x, y));
     }
     
@@ -469,7 +483,6 @@ package Level
         {
           _snake.eat(egg.type);
         }
-        _bonusTimer = 2.5;
         
         var particle:PDParticleSystem = _particles[egg.type];
         if (particle)
@@ -489,14 +502,16 @@ package Level
           var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
           _bonusTimerPoints += 2;
           showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
+          _score += _bonusTimerPoints;
         }
-        
+        _score += 2;
+        _bonusTimer = 2.5;
       }
       else
       {
+        _poisonEggs += 1;
         _score -= 5;
         showPoints(egg, "-5", 20, Color.RED);
-        _bonusTimer = 0;
         var particle:PDParticleSystem = _particles["realRotten"];
         if (particle)
         {
@@ -506,6 +521,7 @@ package Level
         }
         _rottenEggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
         _rottenEggs.removeChild(egg);
+        _bonusTimer = 0;
       }
     }
     
@@ -608,7 +624,7 @@ package Level
       var p:Point = new Point(egg.x, egg.y);
       p = _levelStage.localToGlobal(p);
       text.x = p.x + egg.width / 2 - text.width / 2 + offset;
-      text.y = p.y + egg.height / 2 - text.height / 2 + offset;//egg.y + (egg.height / 2) - text.height / 2);
+      text.y = p.y + egg.height / 2 - text.height / 2 + offset; //egg.y + (egg.height / 2) - text.height / 2);
       addChild(text);
       var tween:Tween = new Tween(text, 2, "easeIn");
       tween.animate("y", offset);
@@ -696,13 +712,16 @@ package Level
       _snake.head.prevFacing = _snake.head.facing;
     }
     
-    private function checkLost():void {
-      if (snake.lives < 0) {
+    private function checkLost():void
+    {
+      if (snake.lives < 0)
+      {
         lose();
       }
     }
     
-    private function lose():void {
+    private function lose():void
+    {
       _lost = true;
       var image:Image;
       image = new Image(AssetRegistry.SnakeAtlas.getTexture("game over_gravestone"));
@@ -711,12 +730,23 @@ package Level
       addChild(image);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(image, 2, { y: Starling.current.stage.stageHeight - image.height } ); 
+      new GTween(image, 2, {y: Starling.current.stage.stageHeight - image.height});
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-      addEventListener(TouchEvent.TOUCH, function():void {
-        StageManager.switchStage(MainMenu);
-      });      
+      addEventListener(TouchEvent.TOUCH, function():void
+        {
+          StageManager.switchStage(MainMenu);
+        });
+    }
+    
+    protected function updateHud():void
+    {
+      _hud.radar.update();
+      var _sec:String = (int(_overallTimer) % 60) < 10 ? "0" + String(int(_overallTimer) % 60) : String(int(_overallTimer) % 60);
+      var _min:String = (int(_overallTimer) / 60) < 10 ? "0" + String(int(int(_overallTimer) / 60)) : String(int(int(_overallTimer) / 60));
+      _hud.score = String(_score);
+      _hud.lifesText = String(_snake.lives);
+      _hud.timeText = _min + ":" + _sec;
     }
     
     private function onEnterFrame(event:EnterFrameEvent):void
@@ -748,7 +778,7 @@ package Level
           updateTimers(event);
         }
         
-        _hud.update();
+        updateHud();
         
         var startTimer:Number, endTimer:Number;
         
@@ -809,7 +839,7 @@ package Level
     
     protected function updateCamera():void
     {
-
+      
       var a:Number, b:Number;
       
       _camerax = _following.x;
@@ -925,8 +955,8 @@ package Level
       addChild(_evilText);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_evilSnake, 2, { y: Starling.current.stage.stageHeight - _evilSnake.height } );
-      new GTween(_evilText, 2, { y: 0 } );
+      new GTween(_evilSnake, 2, {y: Starling.current.stage.stageHeight - _evilSnake.height});
+      new GTween(_evilText, 2, {y: 0});
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
@@ -1003,17 +1033,15 @@ package Level
       return _snake;
     }
     
-    public function get timeLeft():Number 
+    public function get timeLeft():Number
     {
-        return _timeLeft;
+      return _timeLeft;
     }
     
-    public function set timeLeft(value:Number):void 
+    public function set timeLeft(value:Number):void
     {
-        _timeLeft = value;
+      _timeLeft = value;
     }
-    
-    
   
   }
 
