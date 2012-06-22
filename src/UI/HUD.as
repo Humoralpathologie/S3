@@ -38,11 +38,12 @@ package UI
     private var _speedText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _poisonText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
  
-    private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 10, y: 10}],
-                          eggs: [_neededEggs, _neededEggsText, {x: 105, y: 60}],
-                          time: [_time, _timeText, {x: 105, y: 10}],
-                          speed: [_speed, _speedText, {x: 105, y: 60}],
-                          poison: [_poison, _poisonText, {x: 10, y: 60}]
+    private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 12, y: 12}],
+                          combo: [_combo, _comboText, {x: 12, y: 70}],
+                          eggs: [_neededEggs, _neededEggsText, {x: 12, y: 70}],
+                          time: [_time, _timeText, {x: 108, y: 12}],
+                          speed: [_speed, _speedText, {x: 108, y: 70}],
+                          poison: [_poison, _poisonText, {x: 12, y: 70}]
                           };
     public function HUD(radar:Radar, others:Array)//[lifes, eggs, time ...]; 
     {
@@ -70,7 +71,7 @@ package UI
 
       for (var j:int; j < others.length; j++){
         if(_icons[others[j]]) {
-          _icons[others[j]][1].x = _icons[others[j]][0].x + _icons[others[j]][0].width + 15;
+          _icons[others[j]][1].x = _icons[others[j]][0].x + _icons[others[j]][0].width + 12;
           _icons[others[j]][1].y = _icons[others[j]][0].y - 5;
           _icons[others[j]][1].hAlign = HAlign.LEFT;
           addChild( _icons[others[j]][1]);
@@ -84,6 +85,12 @@ package UI
     
     public function get radar():Radar {
       return _radar;
+    }
+    public function get poison():Image {
+      return _poison;
+    }
+    public function get poisonTextField():TextField {
+      return _poisonText;
     }
     public function set lifesText(lifes:String):void {
       _lifesText.text = lifes;
