@@ -911,23 +911,38 @@ package Level
           {
             if (_swipeMenu.y == Starling.current.stage.stageHeight)
             {
-              if (touch.getLocation(this).x > 480)
+              if (SaveGame.controlType == 1)
               {
-                //if (_snake.head.facing == AssetRegistry.DOWN) {
-                //  _snake.moveLeft();
-                //} else {
-                _snake.moveRight();
-                  //}
+                if (touch.getLocation(this).x > 480)
+                {
+                  _snake.moveRight();
+                }
+                else
+                {
+                  _snake.moveLeft();
+                }
               }
-              else
+              else if (SaveGame.controlType == 2)
               {
-                //if (_snake.head.facing == AssetRegistry.DOWN) {
-                //   _snake.moveRight();                 
-                //} else {
-                _snake.moveLeft();
-                
-                  //}
+                if (touch.getLocation(this).x > 480)
+                {
+                  if (_snake.head.facing == AssetRegistry.DOWN) {
+                    _snake.moveLeft();
+                  } else {
+                  _snake.moveRight();
+                  }
+                }
+                else
+                {
+                  if (_snake.head.facing == AssetRegistry.DOWN) {
+                     _snake.moveRight();                 
+                  } else {
+                  _snake.moveLeft();
+                  
+                  }
+                }
               }
+              
             }
           }
         }

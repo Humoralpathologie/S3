@@ -1,7 +1,12 @@
 package Menu
 {
     import engine.ManagedStage;
-    import flash.events.Event;
+    import org.josht.starling.foxhole.controls.Radio;
+    import org.josht.starling.foxhole.core.ToggleGroup;
+    import org.josht.starling.foxhole.text.BitmapFontTextFormat;
+    import org.josht.starling.foxhole.themes.IFoxholeTheme;
+    import starling.events.Event;
+    //import flash.events.Event;
     import flash.media.SoundChannel;
     import starling.text.TextField;
     import Level.ArcadeState;
@@ -15,6 +20,9 @@ package Menu
     import starling.events.Touch;
     import com.gskinner.motion.GTween;
     import engine.StageManager;
+    import org.josht.starling.foxhole.controls.Button;
+    import org.josht.starling.foxhole.themes.MinimalTheme;
+    import engine.SaveGame;
   
   /**
    * ...
@@ -27,10 +35,13 @@ package Menu
     private var _swipeY:int = 0;
     private var _swipeMenu:Sprite;
     private var _swipeMessage:Image;    
+    private var _theme:IFoxholeTheme;
     
     public function MainMenu()
     {
       AssetRegistry.loadMenuGraphics();
+      
+      _theme = new MinimalTheme(Starling.current.stage, false);
       this.addEventListener(TouchEvent.TOUCH, onTouch);
       
       _bg = new Image(AssetRegistry.MenuAtlas.getTexture("loading"));
@@ -44,38 +55,93 @@ package Menu
       
       _swipeMenu.y = Starling.current.stage.stageHeight - _swipeMenu.height;
       
-      var arcadeButton:Image = new Image(AssetRegistry.MenuAtlas.getTexture("text-arcade"));
+      var arcadeButton:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("text-arcade"));
       arcadeButton.x = 22;
       arcadeButton.y = (_swipeMenu.height - arcadeButton.height) / 2;
       
-      arcadeButton.addEventListener(TouchEvent.TOUCH, startArcade);
+      arcadeButton.addEventListener(Event.TRIGGERED, startArcade);
       _swipeMenu.addChild(arcadeButton);
 
       
-      var levelSelectButton:Image = new Image(AssetRegistry.MenuAtlas.getTexture("text-story"));
+      var levelSelectButton:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("text-story"));
       levelSelectButton.x = 389;
       levelSelectButton.y = arcadeButton.y;
       
-      levelSelectButton.addEventListener(TouchEvent.TOUCH, startLevelSelect);
+      levelSelectButton.addEventListener(Event.TRIGGERED, startLevelSelect);
       _swipeMenu.addChild(levelSelectButton);
-         
-      _swipeMenu.flatten();
       
-      addChild(_swipeMenu);      
+      var settingsButton:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("text-settings"));
+      
+      settingsButton.x = 701;
+      settingsButton.y = arcadeButton.y;
+      //settingsButton.onRelease.add(showSettingsMenu);
+      settingsButton.addEventListener(Event.TRIGGERED, showSettingsMenu);
+      _swipeMenu.addChild(settingsButton);
+    
+      addChild(_swipeMenu);
     }
     
-    private function startArcade(event:TouchEvent):void {
-      var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
-      if (touch && _swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height) {
+    private function showSettingsMenu(event:Event):void {
+      var settingsMenu:Sprite;
+      settingsMenu = new Sprite();
+      
+      var bg:Image = new Image(AssetRegistry.MenuAtlas.getTexture("settings menu"));
+      settingsMenu.addChild(bg);
+      bg.x = (Starling.current.stage.stageWidth - bg.width) / 2;
+      bg.y = (Starling.current.stage.stageHeight - bg.height) / 2;
+      
+      var controlGroup:ToggleGroup = new ToggleGroup;
+      var boyStyle:Radio = new Radio();
+      boyStyle.label = "Type 1";
+      boyStyle.toggleGroup = controlGroup;
+      boyStyle.onPress.add(function(radio:Radio) {
+        SaveGame.controlType = 1;
+      });
+      var girlStyle:Radio = new Radio();
+      girlStyle.label = "Type 2";
+      girlStyle.toggleGroup = controlGroup;
+      girlStyle.onPress.add(function(radio:Radio) {
+        SaveGame.controlType = 2;
+      });
+      
+      controlGroup.selectedIndex = SaveGame.controlType - 1;
+      boyStyle.x = girlStyle.x = 200;
+      
+      //boyStyle.scaleX = boyStyle.scaleY = girlStyle.scaleX = girlStyle.scaleY = 3;
+      
+      boyStyle.validate();
+      
+      boyStyle.y = 200;
+      girlStyle.y = boyStyle.y + 50;
+      
+      settingsMenu.addChild(boyStyle);
+      settingsMenu.addChild(girlStyle);
+      
+      addChild(settingsMenu);
+      
+      var close:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("x"));
+      settingsMenu.addChild(close);
+      close.x = 787;
+      close.y = 115;
+      
+      close.addEventListener(Event.TRIGGERED, function(event:Event):void {
+        removeChild(settingsMenu);
+      });
+      
+    }
+    
+    private function startArcade(event:Event):void {
+//      var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
+//      if (touch && _swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height) {
         StageManager.switchStage(ArcadeState);
-      }
+//      }
     }
     
-    private function startLevelSelect(event:TouchEvent):void {
-    var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
-      if (touch && _swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height) {
+    private function startLevelSelect(event:Event):void {
+//    var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
+//      if (touch && _swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height) {
         StageManager.switchStage(LevelSelect);
-      }     
+//      }     
     }
      
     private function onTouch(event:TouchEvent):void

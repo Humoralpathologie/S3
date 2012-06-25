@@ -12,6 +12,14 @@ package engine {
         initializeData(); 
       }
     } 
+    
+    public static function get controlType():int {
+      return _sharedObject.data.controlType || 1;
+    }
+    
+    public static function set controlType(value:int):void {
+      _sharedObject.data.controlType = value;
+    }
   
     public static function initializeData():void {
       _sharedObject.data.levels = {};
