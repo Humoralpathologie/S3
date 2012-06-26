@@ -469,10 +469,13 @@ package Level
     {
       var eggx:int;
       var eggy:int;
+      
+      const safety:int = 2;
+      
       do
       {
-        eggx = _levelBoundaries.x + Math.floor(Math.random() * _levelBoundaries.width);
-        eggy = _levelBoundaries.y + Math.floor(Math.random() * _levelBoundaries.height);
+        eggx = safety + _levelBoundaries.x + Math.floor(Math.random() * (_levelBoundaries.width - safety));
+        eggy = safety + _levelBoundaries.y + Math.floor(Math.random() * (_levelBoundaries.height - safety));
       } while (!free(eggx, eggy));
       egg.tileX = eggx;
       egg.tileY = eggy;
