@@ -1045,6 +1045,10 @@ package Level
         _snake.body[i].tileY = -10;
         _snake.body[i].facing = AssetRegistry.RIGHT;
       }
+      _snake.tail.tileX = -10;
+      _snake.tail.tileY = -10;
+      _snake.tail.facing = AssetRegistry.RIGHT;
+      
     }
     
     private function winScreenTouch(event:TouchEvent):void
