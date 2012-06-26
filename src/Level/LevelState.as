@@ -322,6 +322,9 @@ package Level
     private function die():void
     {
       _snake.lives--;
+      if (_snake.lives < 0) {
+        return;
+      }
       pause();
       
       _sadSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("sadsnake"));
@@ -341,7 +344,12 @@ package Level
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-      addEventListener(TouchEvent.TOUCH, dieScreenTouch);
+      
+      var registerTouchHandler = function() {
+        addEventListener(TouchEvent.TOUCH, dieScreenTouch);
+      }
+      
+      new GTween(null, 2, null, { paused:false, onComplete:registerTouchHandler } );
     
     }
     
@@ -723,6 +731,7 @@ package Level
     private function lose():void
     {
       _lost = true;
+      pause();
       var image:Image;
       image = new Image(AssetRegistry.SnakeAtlas.getTexture("game over_gravestone"));
       image.x = (Starling.current.stage.stageWidth - image.width) / 2;
@@ -733,10 +742,23 @@ package Level
       new GTween(image, 2, {y: Starling.current.stage.stageHeight - image.height});
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-      addEventListener(TouchEvent.TOUCH, function():void
-        {
-          StageManager.switchStage(MainMenu);
-        });
+      
+      var registerTouchHandler = function()
+      {
+        addEventListener(TouchEvent.TOUCH, onLoseHandler);
+      }
+      
+      new GTween(null, 2, null, { onComplete:registerTouchHandler, paused:false } );
+    
+    }
+    
+    protected function onLoseHandler(event:TouchEvent):void {
+      var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
+      if(touch) {
+        var score:Object = {score: _score, lives: _snake.lives * 100, time: _overallTimer, level: _levelNr}
+            
+        StageManager.switchStage(LevelScore, score);
+     }      
     }
     
     protected function updateHud():void
@@ -926,19 +948,25 @@ package Level
               {
                 if (touch.getLocation(this).x > 480)
                 {
-                  if (_snake.head.facing == AssetRegistry.DOWN) {
+                  if (_snake.head.facing == AssetRegistry.DOWN)
+                  {
                     _snake.moveLeft();
-                  } else {
-                  _snake.moveRight();
+                  }
+                  else
+                  {
+                    _snake.moveRight();
                   }
                 }
                 else
                 {
-                  if (_snake.head.facing == AssetRegistry.DOWN) {
-                     _snake.moveRight();                 
-                  } else {
-                  _snake.moveLeft();
-                  
+                  if (_snake.head.facing == AssetRegistry.DOWN)
+                  {
+                    _snake.moveRight();
+                  }
+                  else
+                  {
+                    _snake.moveLeft();
+                    
                   }
                 }
               }
