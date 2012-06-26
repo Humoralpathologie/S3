@@ -77,8 +77,6 @@ package engine
     [Embed(source="../../assets/Loading/loading-screen.png")]
     static public const LoadingScreenPNG:Class;
     
-    [Embed(source="../../assets/Music/Ode to Joy (Short version found in Peggle).mp3")]
-    static public const WinMusic:Class;
     [Embed(source="../../assets/Sounds/Biss3.mp3")]
     static public const Bite:Class;
     
@@ -237,7 +235,6 @@ package engine
       
       LevelMusic1Sound = new LevelMusic1;
       LevelMusic2Sound = new LevelMusic2;
-      WinMusicSound = new WinMusic as Sound;
       
       soundmanager = new SoundManager();
       

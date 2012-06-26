@@ -63,7 +63,7 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 3 minutes or devouring 100 eggs.", 40);
+      showObjectiveBox("On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 3 minutes or devouring 100 eggs. And don't eat more than 4 gray eggs!!", 40);
     }    
 
     override protected function addHud():void {
