@@ -41,6 +41,7 @@ package Level
   {
     public function ArcadeState() {
       AssetRegistry.loadArcadeGraphics();
+      _rottenEnabled = true;
       super();
       
       _comboSet.addCombo(new Combo.ExtraLifeCombo);
