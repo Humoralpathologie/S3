@@ -7,6 +7,7 @@ package engine
   import starling.textures.TextureAtlas;
   import starling.text.TextField;
   import Level.*;
+  import engine.SoundManager;
   
   /**
    * ...
@@ -116,6 +117,27 @@ package engine
     [Embed(source="../../assets/Levels/LevelFrame640x480.png")]
     static private const LevelFramePNG:Class;
     
+    // Sounds
+    [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt1.mp3")]
+    static private const ComboSound0:Class;
+    [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt2.mp3")]
+    static private const ComboSound1:Class;
+    [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt3.mp3")]
+    static private const ComboSound2:Class;
+    [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt4.mp3")]
+    static private const ComboSound3:Class;
+    [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt5.mp3")]
+    static private const ComboSound4:Class;
+    [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt6.mp3")]
+    static private const ComboSound5:Class;
+    [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt7.mp3")]
+    static private const ComboSound6:Class;
+    [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt8.mp3")]
+    static private const ComboSound7:Class;
+  
+    
+    
+    
     // Particles
     [Embed(source="../../assets/Particles/EggsplosionA.pex",mimeType="application/octet-stream")]
     static public const EggsplosionA:Class;
@@ -206,6 +228,8 @@ package engine
     public static const ASPECT_RATIO:Number = STAGE_HEIGHT / STAGE_WIDTH;
     public static var SCALE:Number = 0;
     
+    public static var soundmanager:SoundManager;
+    
     public static function init():void
     {
       LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6, Level7];
@@ -214,6 +238,29 @@ package engine
       LevelMusic1Sound = new LevelMusic1;
       LevelMusic2Sound = new LevelMusic2;
       WinMusicSound = new WinMusic as Sound;
+      
+      soundmanager = new SoundManager();
+      
+      registerSounds();
+      registerMusic();
+    }
+    
+    public static function registerSounds():void {
+      soundmanager.registerSound("comboSound0", new ComboSound0);
+      soundmanager.registerSound("comboSound1", new ComboSound1);
+      soundmanager.registerSound("comboSound2", new ComboSound2);
+      soundmanager.registerSound("comboSound3", new ComboSound3);
+      soundmanager.registerSound("comboSound4", new ComboSound4);
+      soundmanager.registerSound("comboSound5", new ComboSound5);
+      soundmanager.registerSound("comboSound6", new ComboSound6);
+      soundmanager.registerSound("comboSound7", new ComboSound7);
+      
+      
+      
+    }
+    
+    public static function registerMusic():void {
+      soundmanager.registerSound("arcadeMusic", new ArcadeMusic);
     }
     
     public static function loadArcadeGraphics():void

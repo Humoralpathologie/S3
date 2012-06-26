@@ -53,8 +53,7 @@ package Level
       _startPos.x = 20;
       _startPos.y = 20;
       startAt(_startPos.x, _startPos.y);
-      var sound:Sound = new (AssetRegistry.ArcadeMusic) as Sound;
-      sound.play();
+      AssetRegistry.soundmanager.playMusic("arcadeMusic");
     }
     
     override protected function setBoundaries():void {

@@ -187,6 +187,7 @@ package Level
           var touch:Touch = event.getTouch(back, TouchPhase.ENDED);
           if (touch)
           {
+            AssetRegistry.soundmanager.fadeOutMusic();
             StageManager.switchStage(MainMenu);
           }
         });
@@ -629,6 +630,7 @@ package Level
             fib += prefib;
             prefib = temp;
             //_soundEffects[soundCounter].play();
+            AssetRegistry.soundmanager.playSound("comboSound" + Math.min(soundCounter, 7));
             //AxParticleSystem.emit("combo", egg.x, egg.y);
             showParticles(egg, soundCounter);
             _snake.removeChild(egg);
@@ -776,6 +778,7 @@ package Level
       if(touch) {
         var score:Object = {score: _score, lives: _snake.lives * 100, time: _overallTimer, level: _levelNr}
             
+        AssetRegistry.soundmanager.fadeOutMusic();
         StageManager.switchStage(LevelScore, score);
      }      
     }
@@ -1100,7 +1103,7 @@ package Level
       if (touch)
       {
         var score:Object = {score: _score, lives: _snake.lives * 100, time: _overallTimer, level: _levelNr}
-        
+        AssetRegistry.soundmanager.fadeOutMusic();
         StageManager.switchStage(LevelScore, score);
         SaveGame.unlockLevel(_levelNr + 1);
       }
