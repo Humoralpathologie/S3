@@ -133,6 +133,8 @@ package engine
     static public const EggsplosionGreen:Class;
     [Embed(source="../../assets/Particles/EggsplosionRottenLV1and2.pex",mimeType="application/octet-stream")]
     static public const EggsplosionRottenLV1:Class;
+    [Embed(source = "../../assets/Particles/Taileggsplosion1.pex", mimeType = "application/octet-stream")]
+    static public const Taileggsplosion:Class;
     
     public static var SnakeAtlas:TextureAtlas;
     public static var MenuAtlas:TextureAtlas;

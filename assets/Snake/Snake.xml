@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:1d7e4dfd14e33d6d69f83656de08d8f1$ -->
+<!-- $TexturePacker:SmartUpdate:9a6355d0657980a4903c1543c6fc7ebd$ -->
 <TextureAtlas imagePath="Snake.png">
     <SubTexture name="8bit_0" x="720" y="696" width="256" height="254" frameX="0" frameY="0" frameWidth="256" frameHeight="256"/>
     <SubTexture name="EggsplosionA" x="978" y="910" width="17" height="17"/>
@@ -43,6 +43,7 @@
     <SubTexture name="icon-poison" x="995" y="744" width="20" height="20"/>
     <SubTexture name="icon-speed" x="995" y="722" width="20" height="20"/>
     <SubTexture name="icon-time" x="995" y="700" width="20" height="20"/>
+    <SubTexture name="particleTexture" x="950" y="985" width="64" height="64"/>
     <SubTexture name="radar_a" x="978" y="797" width="12" height="12"/>
     <SubTexture name="radar_b" x="978" y="783" width="12" height="12"/>
     <SubTexture name="radar_c" x="978" y="769" width="12" height="12"/>

@@ -211,7 +211,7 @@ package Level
     
     protected function addParticles():void
     {
-      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")]];
+      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")],["combo", XML(new AssetRegistry.Taileggsplosion), AssetRegistry.SnakeAtlas.getTexture("particleTexture")]];
       
       _particles = {};
       for (var i:int = 0; i < list.length; i++)
@@ -424,6 +424,11 @@ package Level
     
     private function showParticles(egg:DisplayObject):void
     {
+      var pd:ParticleSystem;
+      pd = _particles["combo"];
+      pd.x = egg.x + egg.width / 2;
+      pd.y = egg.y + egg.height / 2;
+      pd.start(0.5);
     /*
        var pd:ParticleSystem;
        for (var i:int = 0; i < _particlePool.length; i++)
@@ -451,7 +456,12 @@ package Level
     
     protected function spawnRandomEgg():void
     {
-      var egg:Eggs.Egg = new Eggs.Egg(0, 0, Math.floor(Math.random() * 7));
+      var egg:Eggs.Egg;
+      
+      do {
+        egg = new Eggs.Egg(0, 0, Math.floor(Math.random() * 7));
+      } while (_rottenEggs && egg.type == AssetRegistry.EGGROTTEN);
+      
       placeEgg(egg);
     }
     
