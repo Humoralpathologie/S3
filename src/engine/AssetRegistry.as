@@ -134,7 +134,15 @@ package engine
     [Embed(source="../../assets/Particles/EggsplosionRottenLV1and2.pex",mimeType="application/octet-stream")]
     static public const EggsplosionRottenLV1:Class;
     [Embed(source = "../../assets/Particles/Taileggsplosion1.pex", mimeType = "application/octet-stream")]
-    static public const Taileggsplosion:Class;
+    static public const Taileggsplosion0:Class;
+    [Embed(source = "../../assets/Particles/Taileggsplosion2.pex", mimeType = "application/octet-stream")]
+    static public const Taileggsplosion1:Class;
+    [Embed(source = "../../assets/Particles/Taileggsplosion3.pex", mimeType = "application/octet-stream")]
+    static public const Taileggsplosion2:Class;
+    [Embed(source = "../../assets/Particles/Taileggsplosion4.pex", mimeType = "application/octet-stream")]
+    static public const Taileggsplosion3:Class;
+    [Embed(source = "../../assets/Particles/Taileggsplosion5.pex", mimeType = "application/octet-stream")]
+    static public const Taileggsplosion4:Class;
     
     public static var SnakeAtlas:TextureAtlas;
     public static var MenuAtlas:TextureAtlas;
