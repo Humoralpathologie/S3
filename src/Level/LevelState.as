@@ -1003,7 +1003,12 @@ package Level
       
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-      addEventListener(TouchEvent.TOUCH, winScreenTouch);
+      
+      var registerTouchHandler = function():void {
+        addEventListener(TouchEvent.TOUCH, winScreenTouch);
+      }
+      
+      new GTween(null, 2, null, { paused:false, onComplete:registerTouchHandler } );
     }
     
     protected function showObjectiveBox(desc:String, fontSize:int = 50):void
