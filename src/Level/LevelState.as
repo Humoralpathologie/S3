@@ -110,6 +110,8 @@ package Level
     
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
+    private static const WINDOW:Number = 100;
+    
     private static function playSoundSilentlyEndlessly(evt:Event = null):void
     {
       sfx.play(0, 1000, SilentSoundTransform).addEventListener(Event.SOUND_COMPLETE, playSoundSilentlyEndlessly, false, 0, true); // plays the sound with volume 0 endlessly
@@ -863,14 +865,32 @@ package Level
     {
       
       var a:Number, b:Number;
-      
+      var centerX:Number, centerY:Number;
+          
       _camerax = _following.x;
       _cameray = _following.y;
       
       a = _camerax + _following.frameOffset.x + 7;
       b = _cameray + _following.frameOffset.y + 7;
-      _levelStage.x = -(a * _zoom) + Starling.current.stage.stageWidth / 2;
-      _levelStage.y = -(b * _zoom) + Starling.current.stage.stageHeight / 2;
+      centerX = -(a * _zoom) + Starling.current.stage.stageWidth / 2;
+      centerY = -(b * _zoom) + Starling.current.stage.stageHeight / 2;
+      
+      
+      if (Math.abs(centerX - _levelStage.x) > WINDOW) {
+        if(centerX > _levelStage.x) {
+          _levelStage.x += (centerX - _levelStage.x) - WINDOW;
+        } else {
+          _levelStage.x += (centerX - _levelStage.x) + WINDOW;         
+        }
+      }
+      
+      if (Math.abs(centerY - _levelStage.y) > WINDOW) {
+        if(centerY > _levelStage.y) {
+          _levelStage.y += (centerY - _levelStage.y) - WINDOW;
+        } else {
+          _levelStage.y += (centerY - _levelStage.y) + WINDOW;         
+        }
+      }      
       
       var frame:int = 4 * AssetRegistry.TILESIZE;
       
