@@ -121,10 +121,10 @@ package Level
     {
       super();
       
-      sfx = AssetRegistry.WinMusicSound;
+      //sfx = AssetRegistry.WinMusicSound;
       
       // Fix for laggy sound
-      playSoundSilentlyEndlessly();
+     // playSoundSilentlyEndlessly();
       
       _currentCombos = null;
       
@@ -1093,7 +1093,7 @@ package Level
       _snake.tail.tileX = -10;
       _snake.tail.tileY = -10;
       _snake.tail.facing = AssetRegistry.RIGHT;
-      
+
     }
     
     private function winScreenTouch(event:TouchEvent):void

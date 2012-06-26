@@ -18,9 +18,16 @@ package Snake
     private var _headRight:MovieClip;
     private var _headUp:MovieClip;
     private var _headDown:MovieClip;
-    
-    public function Head(tileX:int, tileY:int, speed:Number)
+    private var _mps:Number;
+    private var _newFramesLeft:Vector.<Texture> = new Vector.<Texture>;
+    private var _newFramesRight:Vector.<Texture> = new Vector.<Texture>;
+    private var _newFramesUp:Vector.<Texture> = new Vector.<Texture>;
+    private var _newFramesDown:Vector.<Texture> = new Vector.<Texture>;
+    private var _changed:Boolean = false;
+
+    public function Head(tileX:int, tileY:int, speed:Number, mps:Number)
     {
+      _mps = mps;
       super(tileX, tileY, null, speed);
       makeHeadClips();
       
@@ -60,7 +67,64 @@ package Snake
       Starling.juggler.add(_headRight);
       Starling.juggler.add(_headUp);
     }
-    
+    private function changeTexture():void
+    {
+      if (!_changed) {
+        if (_mps < 16) {
+          _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_0");
+          _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_1");
+          _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_2"); 
+          _newFramesLeft[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_3");
+          _newFramesUp[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_4");
+          _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_5");
+          _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_6");
+          _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_7");
+        } else if (_mps >= 16 && _mps < 21) {
+          _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_8");
+          _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_9");
+          _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_10"); 
+          _newFramesLeft[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_11");
+          _newFramesUp[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_12");
+          _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_13");
+          _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_14");
+          _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_15");
+        } else if (_mps >= 21 && _mps < 26) {
+          _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_16");
+          _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_17");
+          _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_18"); 
+          _newFramesLeft[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_19");
+          _newFramesUp[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_20");
+          _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_21");
+          _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_22");
+          _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_23");
+        } else if (_mps >= 26 && _mps < 31){
+          _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_24");
+          _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_25");
+          _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_26"); 
+          _newFramesLeft[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_27");
+          _newFramesUp[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_28");
+          _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_29");
+          _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_30");
+          _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_31");
+        }
+        _headRight.setFrameTexture(0, _newFramesRight[0]);
+        _headRight.setFrameTexture(1, _newFramesRight[1]);
+        _headLeft.setFrameTexture(0, _newFramesLeft[0]);
+        _headLeft.setFrameTexture(1, _newFramesLeft[1]);
+        _headUp.setFrameTexture(0, _newFramesUp[0]);
+        _headUp.setFrameTexture(1, _newFramesUp[1]);
+        _headDown.setFrameTexture(0, _newFramesDown[0]);
+        _headDown.setFrameTexture(1, _newFramesDown[1]);
+        _changed = true;
+      }
+    }
+    public function set changed(changed:Boolean):void {
+      _changed = changed;
+    }
+    public function set mps(mps:Number):void {
+      _mps = mps;
+      changeTexture();      
+    }
     override public function update(time:Number):void
     {
       super.update(time);

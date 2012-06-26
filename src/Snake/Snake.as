@@ -33,7 +33,7 @@ package Snake
     {
       this.mps = mps;   
 
-      _head = new Head(5, 5, _speed);
+      _head = new Head(5, 5, _speed, mps);
       
       addChild(_head);
             
@@ -52,6 +52,8 @@ package Snake
     
     public function faster():void {
       this.mps += 1;
+      _head.mps = this.mps;
+      _head.changed = false;
       _head.speed = _speed;
       for (var i:int = 0; i < _body.length; i++) {
         _body[i].speed = _speed;
