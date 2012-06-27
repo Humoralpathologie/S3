@@ -62,7 +62,7 @@ package engine {
     public static function saveScore(n:Number, score:Number):void {
       _sharedObject.data.levels[n].score = score;
       _sharedObject.flush();
-      publishScore();
+      publishScore(n);
     }
     
     public static function saveSpecial(special:Array):void {
@@ -87,18 +87,27 @@ package engine {
       }
       return n; 
     }
+    
+    public static function get userName():String {
+      return _sharedObject.data.user ? _sharedObject.data.user : "anonymous"; 
+    }
+    
+    public static function set userName(value:String):void {
+      _sharedObject.data.user = value;
+    }
 
-    private static function publishScore():void {
-      var user:String = _sharedObject.data.user ? _sharedObject.data.user : "anonymous";    
+    private static function publishScore(level:int = 1):void {
+      var user:String = userName;
       var url:String = "https://www.scoreoid.com/api/createScore";
       var request:URLRequest = new URLRequest(url);
       var requestVars:URLVariables = new URLVariables();
       request.data = requestVars;
       requestVars.api_key = "7bb1d7f5ac027ae81b6c42649fddc490b3eef755";
-      requestVars.game_id = "2RCmMyKmt";
-      requestVars.response ="XML"
+      requestVars.game_id = "5UIVQJJ3X";
+      requestVars.response = "XML"
+      requestVars.difficulty = level;
       requestVars.username = user;
-      requestVars.score = fullScore();
+      requestVars.score = _sharedObject.data.levels[level].score //fullScore();
        
       request.method = URLRequestMethod.POST;
    

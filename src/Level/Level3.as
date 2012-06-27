@@ -56,7 +56,7 @@ package Level
     }        
     
     override protected function checkWin():void {
-      if (_combos == 20 || _snake.eatenEggs == 100 || _overallTimer == 4 * 60) {
+      if (_combos == 20 || _snake.eatenEggs == 100 || _overallTimer >= 4 * 60) {
         win();
       }
     }

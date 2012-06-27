@@ -56,7 +56,7 @@ package
       var screenWidth:int = stage.fullScreenWidth;
       var screenHeight:int = stage.fullScreenHeight;
       
-      if(Capabilities.os.indexOf("Windows") != -1 || Capabilities.os.indexOf("Linux") != -1) {
+      if(Capabilities.os.indexOf("Windows") != -1 || Capabilities.os.indexOf("Linux") != -1 || Capabilities.os.indexOf("Mac") != -1) {
         starling = new Starling(StageManager, stage, new Rectangle(0,0,960, 640));// , viewPort);
         starling.stage.stageHeight = 640;
         starling.stage.stageWidth = 960;
@@ -64,9 +64,7 @@ package
         var wwidth:int;
         var hheight:int;
         
-        if (AssetRegistry.ASPECT_RATIO < screenWidth / screenHeight) {
-          //var wwidth:int = screenWidth;
-          //var hheight:int = int(screenWidth / (960 / 640));    
+        if (AssetRegistry.ASPECT_RATIO < screenWidth / screenHeight) { 
           wwidth = int(screenHeight * (960 / 640));
           hheight = screenHeight;
         } else {

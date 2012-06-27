@@ -23,6 +23,8 @@ package Menu
     import org.josht.starling.foxhole.controls.Button;
     import org.josht.starling.foxhole.themes.MinimalTheme;
     import engine.SaveGame;
+    import org.josht.starling.foxhole.controls.TextInput;
+    
   
   /**
    * ...
@@ -100,7 +102,7 @@ package Menu
       var girlStyle:Radio = new Radio();
       girlStyle.label = "Type 2";
       girlStyle.toggleGroup = controlGroup;
-      girlStyle.onPress.add(function(radio:Radio) {
+      girlStyle.onPress.add(function(radio:Radio):void {
         SaveGame.controlType = 2;
       });
       
@@ -109,13 +111,29 @@ package Menu
       
       //boyStyle.scaleX = boyStyle.scaleY = girlStyle.scaleX = girlStyle.scaleY = 3;
       
-      boyStyle.validate();
+      //boyStyle.validate();
       
-      boyStyle.y = 200;
+      boyStyle.y = 250;
       girlStyle.y = boyStyle.y + 50;
       
       settingsMenu.addChild(boyStyle);
       settingsMenu.addChild(girlStyle);
+      
+      
+      // Name for leaderboards.
+       
+      var input:TextInput = new TextInput();
+      input.text = SaveGame.userName;
+      
+      input.x = 200;
+      input.y = 400;
+      
+      input.onChange.add(function(input:TextInput) {
+        SaveGame.userName = input.text;
+      });
+      
+      settingsMenu.addChild(input);
+      
       
       addChild(settingsMenu);
       

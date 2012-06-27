@@ -1,17 +1,23 @@
 package Menu
 {
+  import com.gskinner.motion.easing.Exponential;
   import com.gskinner.motion.GTween;
-  import engine.ManagedStage;
   import engine.AssetRegistry;
+  import engine.ManagedStage;
+  import engine.SaveGame;
+  import engine.StageManager;
+  import starling.events.Event;
+  
+  import flash.events.Event;
   import starling.display.Button;
   import starling.display.Image;
   import starling.events.EnterFrameEvent;
   import starling.text.TextField;
-  import starling.utils.HAlign;
   import starling.utils.Color;
-  import com.gskinner.motion.easing.Exponential;
-  import starling.events.Event;
-  import engine.StageManager;
+  import starling.utils.HAlign;
+  import flash.net.*;
+  import JSON;
+  
   
   /**
    * ...
@@ -40,46 +46,101 @@ package Menu
     public function LevelScore(scores:Object = null)
     {
       _scores = scores;
-      if (_scores == null) {
-        _scores = {
-          score: 1000,
-          lives: 3,
-          time: 200,
-          level: 1
-        }
+      if (_scores == null)
+      {
+        _scores = {score: 1000, lives: 3, time: 200, level: 1}
+      }
+      else
+      {
+        SaveGame.saveScore(_scores.level, _scores.score);
       }
       
       AssetRegistry.loadScoringGraphics();
       buildMenu();
       startScoring();
+      updateLeaderboard();
     }
     
-    private function buildMenu():void {
+    private function updateLeaderboard():void
+    {
+      var url:String = "https://www.scoreoid.com/api/getBestScores";
+      var request:URLRequest = new URLRequest(url);
+      var requestVars:URLVariables = new URLVariables();
+      request.data = requestVars;      
+      requestVars.api_key = "7bb1d7f5ac027ae81b6c42649fddc490b3eef755";
+      requestVars.game_id = "5UIVQJJ3X";      
+      requestVars.response = "JSON"
+      requestVars.order_by = "score";
+      requestVars.order = "desc";
+      requestVars.limit = 10;
+      requestVars.difficulty = _scores.level;
+      
+      request.method = URLRequestMethod.POST;
+      
+      var loading:TextField = new TextField(300, 50, "Loading...", "kroeger 06_65", 30, 0xffffff);
+      loading.hAlign = HAlign.LEFT;
+      loading.x = _leaderboard.x + 20;
+      loading.y = _leaderboard.y + 50;
+      addChild(loading);
+      
+      var loaderCompleteHandler:Function = function(event:flash.events.Event):void {
+        trace(event.target.data);
+        removeChild(loading);
+        var data:Array = JSON.parse(event.target.data) as Array;
+        
+        var pos:int = 0;
+        for (var i:int = 0; i < data.length; i++) {
+          var score:Object = data[i];
+          var text:TextField = new TextField(300, 50, "", "kroeger 06_65", 30, 0xffffff);
+          text.hAlign = HAlign.LEFT;
+          text.text = String(1 + i) + ". " + score.Player.username + ": " + String(score.Score.score);
+          text.x = _leaderboard.x + 20;
+          text.y = _leaderboard.y + 50 + i * 30;
+          addChild(text);
+        }
+      }
+      
+      
+      
+      
+      var urlLoader:URLLoader = new URLLoader();
+      urlLoader = new URLLoader();
+      urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
+      urlLoader.addEventListener(flash.events.Event.COMPLETE, loaderCompleteHandler);
+      
+      urlLoader.load(request);
+    }
+    
+    private function buildMenu():void
+    {
       addBackground();
       addBoards();
       addTexts();
       addButtons();
     }
     
-    private function startScoring():void {
+    private function startScoring():void
+    {
       addEventListener(EnterFrameEvent.ENTER_FRAME, updateTexts);
-      new GTween(this, 2, { _scoreCounter: _scores.score }, {ease: Exponential.easeOut} );
-      new GTween(this, 2, { _lifeBonusCounter: _scores.lives }, {ease: Exponential.easeOut} );
-      new GTween(this, 2, { _timeBonusCounter: _scores.time }, {ease: Exponential.easeOut} );
-      /*
-      var tweenScore:GTween = new GTween(_scoreCounter, 2, {i: _score}, {ease: Exponential.easeOut});
-      var tweenLive:GTween = new GTween(_lifeBonusCounter, 2, {i: _liveBonus}, {ease: Exponential.easeOut});
-      var tweenTime:GTween = new GTween(_BCounter, 2, {i: _timeBonus}, {ease: Exponential.easeOut});
-      var tweenEXP:GTween = new GTween(_EXPCounter, 2, {i: _EXP}, {ease: Exponential.easeOut});  */    
+      new GTween(this, 2, {_scoreCounter: _scores.score}, {ease: Exponential.easeOut});
+      new GTween(this, 2, {_lifeBonusCounter: _scores.lives}, {ease: Exponential.easeOut});
+      new GTween(this, 2, {_timeBonusCounter: _scores.time}, {ease: Exponential.easeOut});
+    /*
+       var tweenScore:GTween = new GTween(_scoreCounter, 2, {i: _score}, {ease: Exponential.easeOut});
+       var tweenLive:GTween = new GTween(_lifeBonusCounter, 2, {i: _liveBonus}, {ease: Exponential.easeOut});
+       var tweenTime:GTween = new GTween(_BCounter, 2, {i: _timeBonus}, {ease: Exponential.easeOut});
+     var tweenEXP:GTween = new GTween(_EXPCounter, 2, {i: _EXP}, {ease: Exponential.easeOut});  */
     }
     
-    private function updateTexts(event:EnterFrameEvent):void {
+    private function updateTexts(event:EnterFrameEvent):void
+    {
       _lifeBonusText.text = String(_lifeBonusCounter);
       _timeBonusText.text = String(_timeBonusCounter);
       _scoreText.text = String(_scoreCounter);
     }
     
-    private function addTexts():void {
+    private function addTexts():void
+    {
       _lifeBonusText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
       _lifeBonusText.hAlign = HAlign.RIGHT;
       _lifeBonusText.x = _lifeBonusPic.x + _lifeBonusPic.width + 10;
@@ -100,51 +161,57 @@ package Menu
       addChild(_timeBonusText);
     }
     
-    private function replay():void {
+    private function replay():void
+    {
       StageManager.switchStage(AssetRegistry.LEVELS[_scores.level - 1]);
     }
     
-    private function nextLevel():void {
+    private function nextLevel():void
+    {
       StageManager.switchStage(AssetRegistry.LEVELS[_scores.level]);
     }
     
-    private function backToMenu():void {
+    private function backToMenu():void
+    {
       StageManager.switchStage(MainMenu);
     }
     
-    private function addButtons():void {
+    private function addButtons():void
+    {
       _replayButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo"));
       _replayButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo-broken");
       _replayButton.x = 960 / 2 - 145 / 2;
       _replayButton.y = 460;
       
-      _replayButton.addEventListener(Event.TRIGGERED, replay);
+      _replayButton.addEventListener(starling.events.Event.TRIGGERED, replay);
       
       _nextLevelButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-next"));
       _nextLevelButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-next-broken");
       _nextLevelButton.x = 960 / 2 + 145 / 2 + 30;
       _nextLevelButton.y = _replayButton.y + 30;
       
-      _nextLevelButton.addEventListener(Event.TRIGGERED, nextLevel);
+      _nextLevelButton.addEventListener(starling.events.Event.TRIGGERED, nextLevel);
       
       _backToMenuButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-back"));
       _backToMenuButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-back-broken");
       _backToMenuButton.x = 960 / 2 - 145 / 2 - 30 - 135;
       _backToMenuButton.y = _nextLevelButton.y;
       
-      _backToMenuButton.addEventListener(Event.TRIGGERED, backToMenu);
+      _backToMenuButton.addEventListener(starling.events.Event.TRIGGERED, backToMenu);
       
       addChild(_replayButton);
       addChild(_nextLevelButton);
       addChild(_backToMenuButton);
     }
     
-    private function addBackground():void {
+    private function addBackground():void
+    {
       _bg = new Image(AssetRegistry.ScoringAtlas.getTexture("menu_iphone_background"));
       addChild(_bg);
     }
     
-    private function addBoards():void {
+    private function addBoards():void
+    {
       _scoreboard = new Image(AssetRegistry.ScoringAtlas.getTexture("score board"));
       _scoreboard.x = 70;
       _scoreboard.y = 30;
@@ -163,7 +230,7 @@ package Menu
       
       _lifeBonusPic = new Image(AssetRegistry.ScoringAtlas.getTexture("life bonus"));
       _lifeBonusPic.x = _timeBonusPic.x;
-      _lifeBonusPic.y = _timeBonusPic.y + _timeBonusPic.height + 20;     
+      _lifeBonusPic.y = _timeBonusPic.y + _timeBonusPic.height + 20;
       
       addChild(_scoreboard);
       addChild(_leaderboard);
@@ -172,8 +239,9 @@ package Menu
       addChild(_timeBonusPic);
       addChild(_lifeBonusPic);
     }
-  
-    override public function dispose():void {
+    
+    override public function dispose():void
+    {
       AssetRegistry.disposeScoringGraphics();
     }
   }
