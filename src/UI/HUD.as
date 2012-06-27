@@ -49,7 +49,7 @@ package UI
     {
       _radar = radar;
       _scoreText = new TextField(100, 50, "0", "kroeger 06_65", 45, Color.WHITE);
-      _scoreText.x = Starling.current.viewPort.width/2 - _scoreText.width/2;
+      _scoreText.x = Starling.current.stage.stageWidth / 2 - _scoreText.width/2;
       _scoreText.y = 0;
       _scoreText.hAlign = HAlign.CENTER;
 

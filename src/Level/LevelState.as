@@ -329,6 +329,7 @@ package Level
     private function die():void
     {
       _snake.lives--;
+      _snake.mps = 10;
       if (_snake.lives < 0) {
         return;
       }

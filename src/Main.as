@@ -60,6 +60,7 @@ package
         starling = new Starling(StageManager, stage, new Rectangle(0,0,960, 640));// , viewPort);
         starling.stage.stageHeight = 640;
         starling.stage.stageWidth = 960;
+        AssetRegistry.SCALE = 1;
       } else {
         var wwidth:int;
         var hheight:int;
@@ -72,7 +73,7 @@ package
           hheight = int(screenWidth / (960 / 640));
         }
         
-        AssetRegistry.SCALE = wwidth / screenWidth;
+        AssetRegistry.SCALE = wwidth / 960;
 
         var yy:int = (screenHeight - hheight) / 2;
         var xx:int = (screenWidth - wwidth) / 2;
@@ -83,6 +84,9 @@ package
       
       var loadingSprite:Sprite = new Sprite()
       var loadingBMP:Bitmap = new AssetRegistry.LoadingPNG();
+      loadingBMP.x = Starling.current.viewPort.x;
+      loadingBMP.y = Starling.current.viewPort.y;
+      loadingBMP.scaleX = loadingBMP.scaleY = AssetRegistry.SCALE;
       loadingSprite.addChild(loadingBMP);
       
       addChild(loadingSprite);

@@ -121,10 +121,12 @@ package Snake
     public function set changed(changed:Boolean):void {
       _changed = changed;
     }
+    
     public function set mps(mps:Number):void {
       _mps = mps;
       changeTexture();      
     }
+    
     override public function update(time:Number):void
     {
       super.update(time);
