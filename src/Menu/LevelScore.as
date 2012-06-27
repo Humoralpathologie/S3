@@ -86,7 +86,11 @@ package Menu
       var loaderCompleteHandler:Function = function(event:flash.events.Event):void {
         trace(event.target.data);
         removeChild(loading);
-        var data:Array = JSON.parse(event.target.data) as Array;
+        var result:Object = JSON.parse(event.target.data);
+        if (result.error) {
+          return;
+        }
+        var data:Array = result as Array;
         
         var pos:int = 0;
         for (var i:int = 0; i < data.length; i++) {
@@ -200,7 +204,9 @@ package Menu
       _backToMenuButton.addEventListener(starling.events.Event.TRIGGERED, backToMenu);
       
       addChild(_replayButton);
-      addChild(_nextLevelButton);
+      if(_scores.level != 9) {
+        addChild(_nextLevelButton);
+      }
       addChild(_backToMenuButton);
     }
     

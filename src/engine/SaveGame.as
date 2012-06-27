@@ -107,7 +107,7 @@ package engine {
       requestVars.response = "XML"
       requestVars.difficulty = level;
       requestVars.username = user;
-      requestVars.score = _sharedObject.data.levels[level].score //fullScore();
+      requestVars.score = _sharedObject.data.levels[level].score; //fullScore();
        
       request.method = URLRequestMethod.POST;
    
