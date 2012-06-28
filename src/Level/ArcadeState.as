@@ -98,7 +98,7 @@ package Level
       _hud.radar.update(); 
       _hud.score = String(_score);
       _hud.lifesText = String(_snake.lives);
-      _hud.timeText = String(_overallTimer.toFixed(2)); 
+      _hud.timeText = String(_timeLeft.toFixed(2)); 
     }
 
     override protected function addBackground():void

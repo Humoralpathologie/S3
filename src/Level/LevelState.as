@@ -623,8 +623,9 @@ package Level
           {
             expoCounter++;
             _score += fib;
-            var randColor:uint = Color.argb(256, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
-            showPoints(egg, '+' + String(fib), randColor);
+
+            //var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));            
+            showPoints(egg, '+' + String(fib));//, 0x00ff00);
             
             temp = fib;
             fib += prefib;
