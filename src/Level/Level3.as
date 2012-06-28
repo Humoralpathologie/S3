@@ -45,13 +45,12 @@ package Level
 
     override protected function spawnRandomEgg():void {
       var egg:Egg;
-      var rand:int = Math.floor(Math.random() * 100);
+      var type:int;
+      var types:Array = [AssetRegistry.EGGA, AssetRegistry.EGGZERO];
+      type = types[Math.floor(Math.random() * types.length)];
       
-      if (rand < 50) {
-        egg = new Egg(0, 0, AssetRegistry.EGGA);
-      } else {
-        egg = new Egg(0, 0, AssetRegistry.EGGZERO);
-      }      
+      egg = new Egg(0, 0, type);
+      
       placeEgg(egg);
     }        
     
@@ -69,8 +68,8 @@ package Level
     override protected function addHud():void {
       _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "poison"]);
       addChild(_hud);
-      _hud.poison.x = 98;
-      _hud.poison.y = 60;
+      _hud.poison.x = 108;
+      _hud.poison.y = 70;
       _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;  
     }
     override protected function updateHud():void {
