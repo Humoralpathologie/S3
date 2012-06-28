@@ -2,11 +2,13 @@ package Menu
 {
   import engine.ManagedStage;
   import flash.geom.Point;
+  import starling.display.Button;
   import starling.display.DisplayObject;
   import starling.display.Image;
   import starling.display.Quad;
   import starling.display.Sprite;
   import engine.AssetRegistry;
+  import starling.events.Event;
   import starling.events.Touch;
   import starling.events.TouchEvent;
   import starling.events.TouchPhase;
@@ -99,6 +101,15 @@ package Menu
         }
         _scrollable.addChild(level);
       }
+      
+      var backButton:Button = new Button(AssetRegistry.LevelSelectAtlas.getTexture("back-button_705-205"));
+      backButton.x = 705;
+      backButton.y = 205;
+      backButton.addEventListener(Event.TRIGGERED, function(event:Event) {
+        StageManager.switchStage(MainMenu);
+      });
+      
+      _scrollable.addChild(backButton);
             
       addChild(_scrollable);
       

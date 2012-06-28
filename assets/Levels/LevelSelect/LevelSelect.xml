@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:e63fbac1005f6e05b21a003f1d1fc6af$ -->
+<!-- $TexturePacker:SmartUpdate:44db29fa5641365f549b2a31378a1efd$ -->
 <TextureAtlas imagePath="LevelSelect.png">
-    <SubTexture name="header_15-20" x="2" y="1821" width="931" height="152"/>
-    <SubTexture name="info-level" x="789" y="800" width="810" height="550"/>
-    <SubTexture name="text-info-level1" x="973" y="722" width="596" height="76"/>
-    <SubTexture name="text-info-level2" x="693" y="2" width="371" height="76"/>
-    <SubTexture name="text-info-level3" x="2" y="722" width="451" height="76"/>
-    <SubTexture name="text-info-level4" x="455" y="722" width="516" height="76"/>
-    <SubTexture name="text-info-level5" x="325" y="2" width="366" height="76"/>
-    <SubTexture name="text-info-level6" x="1479" y="2" width="416" height="66"/>
-    <SubTexture name="text-info-level7" x="2" y="2" width="321" height="76"/>
-    <SubTexture name="text-info-level8" x="1066" y="2" width="411" height="66"/>
-    <SubTexture name="tile-level-locked" x="2" y="342" width="432" height="236"/>
-    <SubTexture name="tile-level1_15-262" x="2" y="80" width="432" height="236"/>
-    <SubTexture name="tile-level2_261-377" x="436" y="80" width="432" height="248"/>
-    <SubTexture name="tile-level3_514-509" x="870" y="80" width="432" height="242"/>
-    <SubTexture name="tile-level4_261-626" x="436" y="342" width="432" height="378"/>
-    <SubTexture name="tile-level5_11-743" x="1304" y="80" width="432" height="260"/>
-    <SubTexture name="tile-level6_261-890" x="870" y="342" width="436" height="239"/>
-    <SubTexture name="tile-level7_515-1009" x="1308" y="342" width="444" height="248"/>
-    <SubTexture name="tile-level8_54-1190" x="2" y="800" width="785" height="1019"/>
+    <SubTexture name="back-button_705-205" x="1722" y="80" width="215" height="121"/>
+    <SubTexture name="header_15-20" x="789" y="2" width="931" height="152"/>
+    <SubTexture name="info-level" x="789" y="156" width="784" height="524" frameX="-13" frameY="-13" frameWidth="810" frameHeight="550"/>
+    <SubTexture name="text-info-level1" x="789" y="682" width="596" height="76"/>
+    <SubTexture name="text-info-level2" x="1302" y="1288" width="371" height="76"/>
+    <SubTexture name="text-info-level3" x="1575" y="203" width="451" height="76"/>
+    <SubTexture name="text-info-level4" x="789" y="760" width="516" height="76"/>
+    <SubTexture name="text-info-level5" x="1675" y="1288" width="366" height="76"/>
+    <SubTexture name="text-info-level6" x="1302" y="1152" width="416" height="66"/>
+    <SubTexture name="text-info-level7" x="1722" y="2" width="321" height="76"/>
+    <SubTexture name="text-info-level8" x="1302" y="1220" width="411" height="66"/>
+    <SubTexture name="tile-level-locked" x="870" y="1100" width="430" height="236" frameX="-1" frameY="0" frameWidth="432" frameHeight="236"/>
+    <SubTexture name="tile-level1_15-262" x="2" y="1273" width="432" height="236"/>
+    <SubTexture name="tile-level2_261-377" x="2" y="1023" width="432" height="248"/>
+    <SubTexture name="tile-level3_514-509" x="436" y="1100" width="432" height="242"/>
+    <SubTexture name="tile-level4_261-626" x="1307" y="772" width="432" height="378"/>
+    <SubTexture name="tile-level5_11-743" x="789" y="838" width="432" height="260"/>
+    <SubTexture name="tile-level6_261-890" x="1575" y="531" width="436" height="239"/>
+    <SubTexture name="tile-level7_515-1009" x="1575" y="281" width="444" height="248"/>
+    <SubTexture name="tile-level8_54-1190" x="2" y="2" width="785" height="1019"/>
 </TextureAtlas>
