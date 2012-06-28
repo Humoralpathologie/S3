@@ -42,6 +42,7 @@ package Level
     public function ArcadeState() {
       AssetRegistry.loadArcadeGraphics();
       _rottenEnabled = true;
+      
       super();
       
       _comboSet.addCombo(new Combo.ExtraLifeCombo);
@@ -59,6 +60,16 @@ package Level
     
     override protected function setBoundaries():void {
       _levelBoundaries = new Rectangle(13, 12, 43, 38);
+    }
+    
+    override protected function spawnRandomEgg():void {
+      var egg:Eggs.Egg;
+      var types:Array = [AssetRegistry.EGGZERO, AssetRegistry.EGGA, AssetRegistry.EGGB, AssetRegistry.EGGC]
+      var type:int = types[Math.floor(Math.random() * types.length)];
+      
+      egg = new Egg(0, 0, type);
+      
+      placeEgg(egg);     
     }
     
     override public function dispose():void {
