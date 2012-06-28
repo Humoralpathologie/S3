@@ -157,7 +157,6 @@ package Level
       _following = _snake.head;
       _levelStage.addChild(_snake);
       
-      addAboveSnake();
       
       _eggs = new Eggs();
       _rottenEggs = new Eggs.Eggs();
@@ -166,7 +165,8 @@ package Level
       
       _levelStage.addChild(_eggs);
       _levelStage.addChild(_rottenEggs);
-      
+      addAboveSnake();
+
       addHud();
       addParticles();
       
@@ -769,7 +769,7 @@ package Level
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
-      var registerTouchHandler = function():void
+      var registerTouchHandler:Function = function():void
       {
         addEventListener(TouchEvent.TOUCH, onLoseHandler);
       }
