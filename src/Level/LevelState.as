@@ -322,7 +322,7 @@ package Level
       }
     }
     
-    private function die():void
+    protected function die():void
     {
       _snake.lives--;
       _snake.mps = 10;
@@ -742,7 +742,7 @@ package Level
       _snake.head.prevFacing = _snake.head.facing;
     }
     
-    private function checkLost():void
+    protected function checkLost():void
     {
       if (snake.lives < 0)
       {
@@ -750,7 +750,11 @@ package Level
       }
     }
     
-    private function lose():void
+    protected function checkDie():void {
+      
+    }
+    
+    protected function lose():void
     {
       _lost = true;
       pause();
@@ -765,7 +769,7 @@ package Level
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
-      var registerTouchHandler = function()
+      var registerTouchHandler = function():void
       {
         addEventListener(TouchEvent.TOUCH, onLoseHandler);
       }
@@ -852,6 +856,7 @@ package Level
           screenCollide();
           obstacleCollide();
           selfCollide();
+          checkDie(); // For subclasses.
           _timer -= _speed;
         }
         
@@ -870,7 +875,7 @@ package Level
     {
       if (_rottenTimer < 0)
       {
-        _rottenTimer = 30;
+        _rottenTimer = 20;
         var rotten:Eggs.Egg = new Eggs.Egg(0, 0, AssetRegistry.EGGROTTEN);
         placeEgg(rotten, true);
       }

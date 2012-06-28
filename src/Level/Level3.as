@@ -52,10 +52,17 @@ package Level
       egg = new Egg(0, 0, type);
       
       placeEgg(egg);
-    }        
+    } 
+    
+    override protected function checkLost():void {
+      if (_poisonEggs > 4) {
+        lose();
+      }
+      super.checkLost();
+    }
     
     override protected function checkWin():void {
-      if (_combos == 20 || _snake.eatenEggs == 100 || _overallTimer >= 4 * 60) {
+      if (_combos == 10 || _overallTimer >= 4 * 60) {
         win();
       }
     }
