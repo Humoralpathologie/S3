@@ -34,6 +34,13 @@ package Eggs
     {
       return _eggPool;
     }
+    
+    public function clear():void {
+      for (var i:int = 0; i < _eggPool.length; i++) {
+        removeChild(_eggPool[i]);
+      }
+      _eggPool.length = 0;
+    }
   
     public function hit(x:int, y:int):Boolean {
       for (var i:int = 0; i < _eggPool.length; i++) {

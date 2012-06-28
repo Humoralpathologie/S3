@@ -124,7 +124,7 @@ package Level
       //sfx = AssetRegistry.WinMusicSound;
       
       // Fix for laggy sound
-     // playSoundSilentlyEndlessly();
+      // playSoundSilentlyEndlessly();
       
       _currentCombos = null;
       
@@ -212,11 +212,7 @@ package Level
     
     protected function addParticles():void
     {
-      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")], ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.SnakeAtlas.getTexture("particleTexture")],
-      ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.SnakeAtlas.getTexture("particleTexture")],
-      ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.SnakeAtlas.getTexture("particleTexture")],
-      ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.SnakeAtlas.getTexture("particleTexture")],
-      ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.SnakeAtlas.getTexture("particleTexture")]];
+      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")], ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.SnakeAtlas.getTexture("particleTexture")]];
       
       _particles = {};
       for (var i:int = 0; i < list.length; i++)
@@ -330,7 +326,8 @@ package Level
     {
       _snake.lives--;
       _snake.mps = 10;
-      if (_snake.lives < 0) {
+      if (_snake.lives < 0)
+      {
         return;
       }
       pause();
@@ -353,11 +350,12 @@ package Level
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
-      var registerTouchHandler = function() {
+      var registerTouchHandler = function()
+      {
         addEventListener(TouchEvent.TOUCH, dieScreenTouch);
       }
       
-      new GTween(null, 2, null, { paused:false, onComplete:registerTouchHandler } );
+      new GTween(null, 2, null, {paused: false, onComplete: registerTouchHandler});
     
     }
     
@@ -464,7 +462,8 @@ package Level
     {
       var egg:Eggs.Egg;
       
-      do {
+      do
+      {
         egg = new Eggs.Egg(0, 0, Math.floor(Math.random() * 7));
       } while (_rottenEggs && egg.type == AssetRegistry.EGGROTTEN);
       
@@ -770,18 +769,20 @@ package Level
         addEventListener(TouchEvent.TOUCH, onLoseHandler);
       }
       
-      new GTween(null, 2, null, { onComplete:registerTouchHandler, paused:false } );
+      new GTween(null, 2, null, {onComplete: registerTouchHandler, paused: false});
     
     }
     
-    protected function onLoseHandler(event:TouchEvent):void {
+    protected function onLoseHandler(event:TouchEvent):void
+    {
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
-      if(touch) {
+      if (touch)
+      {
         var score:Object = {score: _score, lives: _snake.lives * 100, time: _overallTimer, level: _levelNr}
-            
+        
         AssetRegistry.soundmanager.fadeOutMusic();
         StageManager.switchStage(LevelScore, score);
-     }      
+      }
     }
     
     protected function updateHud():void
@@ -887,7 +888,7 @@ package Level
       
       var a:Number, b:Number;
       var centerX:Number, centerY:Number;
-          
+      
       _camerax = _following.x;
       _cameray = _following.y;
       
@@ -896,22 +897,29 @@ package Level
       centerX = -(a * _zoom) + Starling.current.stage.stageWidth / 2;
       centerY = -(b * _zoom) + Starling.current.stage.stageHeight / 2;
       
-      
-      if (Math.abs(centerX - _levelStage.x) > WINDOW) {
-        if(centerX > _levelStage.x) {
+      if (Math.abs(centerX - _levelStage.x) > WINDOW)
+      {
+        if (centerX > _levelStage.x)
+        {
           _levelStage.x += (centerX - _levelStage.x) - WINDOW;
-        } else {
-          _levelStage.x += (centerX - _levelStage.x) + WINDOW;         
+        }
+        else
+        {
+          _levelStage.x += (centerX - _levelStage.x) + WINDOW;
         }
       }
       
-      if (Math.abs(centerY - _levelStage.y) > WINDOW) {
-        if(centerY > _levelStage.y) {
+      if (Math.abs(centerY - _levelStage.y) > WINDOW)
+      {
+        if (centerY > _levelStage.y)
+        {
           _levelStage.y += (centerY - _levelStage.y) - WINDOW;
-        } else {
-          _levelStage.y += (centerY - _levelStage.y) + WINDOW;         
         }
-      }      
+        else
+        {
+          _levelStage.y += (centerY - _levelStage.y) + WINDOW;
+        }
+      }
       
       var frame:int = 4 * AssetRegistry.TILESIZE;
       
@@ -1045,11 +1053,12 @@ package Level
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
-      var registerTouchHandler = function():void {
+      var registerTouchHandler = function():void
+      {
         addEventListener(TouchEvent.TOUCH, winScreenTouch);
       }
       
-      new GTween(null, 2, null, { paused:false, onComplete:registerTouchHandler } );
+      new GTween(null, 2, null, {paused: false, onComplete: registerTouchHandler});
     }
     
     protected function showObjectiveBox(desc:String, fontSize:int = 50):void
@@ -1094,7 +1103,7 @@ package Level
       _snake.tail.tileX = -10;
       _snake.tail.tileY = -10;
       _snake.tail.facing = AssetRegistry.RIGHT;
-
+    
     }
     
     private function winScreenTouch(event:TouchEvent):void
@@ -1134,6 +1143,11 @@ package Level
     public function set timeLeft(value:Number):void
     {
       _timeLeft = value;
+    }
+    
+    public function get rottenEggs():Eggs.Eggs 
+    {
+        return _rottenEggs;
     }
   
   }
