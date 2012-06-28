@@ -547,7 +547,7 @@ package Level
           particle.y = egg.y + 13;
           particle.start(0.5);
         }
-        _rottenEggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
+        _rottenEggs.eggPool.splice(_rottenEggs.eggPool.indexOf(egg), 1);
         _rottenEggs.removeChild(egg);
         _bonusTimer = 0;
       }
