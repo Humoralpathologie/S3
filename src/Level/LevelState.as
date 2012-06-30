@@ -157,7 +157,6 @@ package Level
       _following = _snake.head;
       _levelStage.addChild(_snake);
       
-      
       _eggs = new Eggs();
       _rottenEggs = new Eggs.Eggs();
       
@@ -166,7 +165,7 @@ package Level
       _levelStage.addChild(_eggs);
       _levelStage.addChild(_rottenEggs);
       addAboveSnake();
-
+      
       addHud();
       addParticles();
       
@@ -623,9 +622,9 @@ package Level
           {
             expoCounter++;
             _score += fib;
-
+            
             //var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));            
-            showPoints(egg, '+' + String(fib));//, 0x00ff00);
+            showPoints(egg, '+' + String(fib)); //, 0x00ff00);
             
             temp = fib;
             fib += prefib;
@@ -750,8 +749,9 @@ package Level
       }
     }
     
-    protected function checkDie():void {
-      
+    protected function checkDie():void
+    {
+    
     }
     
     protected function lose():void
@@ -948,6 +948,7 @@ package Level
       Starling.juggler.paused = false;
     }
     
+    // TODO: This is crazy and should be cleaned up.
     private function onTouch(event:TouchEvent):void
     {
       var touch:Touch = event.getTouch(this, TouchPhase.BEGAN);
@@ -988,44 +989,55 @@ package Level
           {
             if (_swipeMenu.y == Starling.current.stage.stageHeight)
             {
-              if (SaveGame.controlType == 1)
+              if (_snake.oneeighty == 0)
               {
-                if (touch.getLocation(this).x > 480)
+                if (touch.getLocation(this).y > 500)
                 {
-                  _snake.moveRight();
-                }
-                else
-                {
-                  _snake.moveLeft();
+                  if (SaveGame.controlType == 1)
+                  {
+                    if (touch.getLocation(this).x > 480)
+                    {
+                      _snake.moveRight();
+                    }
+                    else
+                    {
+                      _snake.moveLeft();
+                    }
+                  }
+                  else if (SaveGame.controlType == 2)
+                  {
+                    if (touch.getLocation(this).x > 480)
+                    {
+                      if (_snake.head.facing == AssetRegistry.DOWN)
+                      {
+                        _snake.moveLeft();
+                      }
+                      else
+                      {
+                        _snake.moveRight();
+                      }
+                    }
+                    else
+                    {
+                      if (_snake.head.facing == AssetRegistry.DOWN)
+                      {
+                        _snake.moveRight();
+                      }
+                      else
+                      {
+                        _snake.moveLeft();
+                        
+                      }
+                    }
+                  }
+                } else {
+                  if (touch.getLocation(this).x > 480) {
+                    _snake.oneeightyRight();
+                  } else {
+                    _snake.oneeightyLeft();
+                  }
                 }
               }
-              else if (SaveGame.controlType == 2)
-              {
-                if (touch.getLocation(this).x > 480)
-                {
-                  if (_snake.head.facing == AssetRegistry.DOWN)
-                  {
-                    _snake.moveLeft();
-                  }
-                  else
-                  {
-                    _snake.moveRight();
-                  }
-                }
-                else
-                {
-                  if (_snake.head.facing == AssetRegistry.DOWN)
-                  {
-                    _snake.moveRight();
-                  }
-                  else
-                  {
-                    _snake.moveLeft();
-                    
-                  }
-                }
-              }
-              
             }
           }
         }
@@ -1151,9 +1163,9 @@ package Level
       _timeLeft = value;
     }
     
-    public function get rottenEggs():Eggs.Eggs 
+    public function get rottenEggs():Eggs.Eggs
     {
-        return _rottenEggs;
+      return _rottenEggs;
     }
   
   }

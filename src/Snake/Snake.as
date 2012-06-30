@@ -28,6 +28,8 @@ package Snake
     private var _newPart:Snake.BodyPart = null;
     private var _eatenEggs:int = 0;
     private var _lives:int = 3;
+    private var _oneeighty:int = 0;
+    private var _oneeightyDirection:int;
     
     public function Snake(mps:Number)
     {
@@ -94,6 +96,14 @@ package Snake
     
     public function move():void
     {
+      if (_oneeighty != 0) {
+        _oneeighty--;
+        if (_oneeightyDirection == AssetRegistry.RIGHT) {
+          moveRight();
+        } else {
+          moveLeft();
+        }
+      }
       
       if (_newPart != null)
       {
@@ -206,6 +216,16 @@ package Snake
       //_head.prevFacing = _head.facing;
     }
     
+    public function oneeightyLeft():void {
+      _oneeighty = 2;
+      _oneeightyDirection = AssetRegistry.LEFT;
+    }
+    
+    public function oneeightyRight():void {
+      _oneeighty = 2;
+      _oneeightyDirection = AssetRegistry.RIGHT;
+    }
+    
     public function get head():Snake.Head
     {
       return _head;
@@ -259,6 +279,11 @@ package Snake
     public function get speed():Number
     {
       return _speed;
+    }
+    
+    public function get oneeighty():int 
+    {
+        return _oneeighty;
     }
   
   }

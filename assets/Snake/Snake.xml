@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:9a6355d0657980a4903c1543c6fc7ebd$ -->
+<!-- $TexturePacker:SmartUpdate:a43d3114e54ff9669d9f5c18a1cc2651$ -->
 <TextureAtlas imagePath="Snake.png">
     <SubTexture name="8bit_0" x="720" y="696" width="256" height="254" frameX="0" frameY="0" frameWidth="256" frameHeight="256"/>
-    <SubTexture name="EggsplosionA" x="978" y="910" width="17" height="17"/>
+    <SubTexture name="EggsplosionA" x="997" y="860" width="17" height="17"/>
     <SubTexture name="EggsplosionB" x="985" y="670" width="7" height="9"/>
-    <SubTexture name="EggsplosionC" x="978" y="736" width="15" height="17"/>
-    <SubTexture name="EggsplosionGold" x="998" y="905" width="17" height="17"/>
-    <SubTexture name="EggsplosionGreen" x="933" y="666" width="14" height="19"/>
-    <SubTexture name="EggsplosionRotten" x="978" y="717" width="15" height="17" frameX="-1" frameY="0" frameWidth="17" frameHeight="17"/>
-    <SubTexture name="EggsplosionRottenLV1and2" x="949" y="632" width="13" height="16"/>
-    <SubTexture name="EggsplosionShuffle" x="720" y="678" width="16" height="16"/>
-    <SubTexture name="ExtraLife" x="874" y="678" width="15" height="13"/>
+    <SubTexture name="EggsplosionC" x="978" y="715" width="15" height="17"/>
+    <SubTexture name="EggsplosionGold" x="978" y="844" width="17" height="17"/>
+    <SubTexture name="EggsplosionGreen" x="978" y="945" width="14" height="19"/>
+    <SubTexture name="EggsplosionRotten" x="978" y="696" width="15" height="17" frameX="-1" frameY="0" frameWidth="17" frameHeight="17"/>
+    <SubTexture name="EggsplosionRottenLV1and2" x="949" y="636" width="13" height="16"/>
+    <SubTexture name="EggsplosionShuffle" x="996" y="938" width="16" height="16"/>
+    <SubTexture name="ExtraLife" x="978" y="751" width="15" height="13"/>
     <SubTexture name="KreisRadar" x="351" y="1536" width="421" height="421"/>
     <SubTexture name="PreviewIconEiA" x="964" y="116" width="36" height="36"/>
     <SubTexture name="PreviewIconEiB" x="964" y="78" width="36" height="36"/>
     <SubTexture name="PreviewIconEiC" x="964" y="40" width="36" height="36"/>
-    <SubTexture name="SadSnakeText" x="2" y="1198" width="456" height="162" frameX="-229" frameY="-59" frameWidth="960" frameHeight="230"/>
-    <SubTexture name="Snake_EvilLaughText" x="2" y="632" width="716" height="114" frameX="-122" frameY="-102" frameWidth="960" frameHeight="230"/>
+    <SubTexture name="SadSnakeText" x="2" y="1202" width="456" height="162" frameX="-229" frameY="-59" frameWidth="960" frameHeight="230"/>
+    <SubTexture name="Snake_EvilLaughText" x="2" y="636" width="716" height="114" frameX="-122" frameY="-102" frameWidth="960" frameHeight="230"/>
     <SubTexture name="UIBoxFuerPreview" x="964" y="2" width="36" height="36"/>
-    <SubTexture name="UIOverlay" x="2" y="2" width="960" height="628" frameX="0" frameY="0" frameWidth="960" frameHeight="640"/>
+    <SubTexture name="UIOverlay" x="2" y="2" width="960" height="632" frameX="0" frameY="0" frameWidth="960" frameHeight="640"/>
     <SubTexture name="drugs_particle" x="964" y="386" width="30" height="30" frameX="0" frameY="0" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="eggs_0" x="913" y="666" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
+    <SubTexture name="eggs_0" x="742" y="670" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
     <SubTexture name="eggs_1" x="1002" y="54" width="20" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
-    <SubTexture name="eggs_10" x="998" y="832" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
+    <SubTexture name="eggs_10" x="782" y="670" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
     <SubTexture name="eggs_11" x="1002" y="106" width="20" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
-    <SubTexture name="eggs_12" x="978" y="832" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
+    <SubTexture name="eggs_12" x="762" y="670" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
     <SubTexture name="eggs_13" x="1002" y="80" width="20" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
-    <SubTexture name="eggs_2" x="978" y="884" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
-    <SubTexture name="eggs_3" x="891" y="666" width="20" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
-    <SubTexture name="eggs_4" x="998" y="858" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
+    <SubTexture name="eggs_2" x="842" y="670" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
+    <SubTexture name="eggs_3" x="720" y="670" width="20" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
+    <SubTexture name="eggs_4" x="822" y="670" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
     <SubTexture name="eggs_5" x="963" y="670" width="20" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
-    <SubTexture name="eggs_6" x="978" y="858" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
+    <SubTexture name="eggs_6" x="802" y="670" width="18" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
     <SubTexture name="eggs_7" x="1002" y="132" width="20" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
     <SubTexture name="eggs_8" x="1002" y="28" width="20" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
     <SubTexture name="eggs_9" x="1002" y="2" width="20" height="24" frameX="0" frameY="0" frameWidth="30" frameHeight="30"/>
     <SubTexture name="game over_gravestone" x="479" y="952" width="469" height="582" frameX="-212" frameY="-27" frameWidth="853" frameHeight="640"/>
     <SubTexture name="hole" x="964" y="418" width="30" height="18"/>
-    <SubTexture name="icon-combo" x="992" y="810" width="20" height="20"/>
-    <SubTexture name="icon-eggs" x="992" y="788" width="20" height="20"/>
-    <SubTexture name="icon-lives" x="992" y="766" width="20" height="20"/>
+    <SubTexture name="icon-combo" x="978" y="788" width="20" height="20"/>
+    <SubTexture name="icon-eggs" x="1000" y="766" width="20" height="20"/>
+    <SubTexture name="icon-lives" x="978" y="766" width="20" height="20"/>
     <SubTexture name="icon-poison" x="995" y="744" width="20" height="20"/>
     <SubTexture name="icon-speed" x="995" y="722" width="20" height="20"/>
     <SubTexture name="icon-time" x="995" y="700" width="20" height="20"/>
-    <SubTexture name="particleTexture" x="950" y="985" width="64" height="64"/>
-    <SubTexture name="radar_a" x="978" y="797" width="12" height="12"/>
-    <SubTexture name="radar_b" x="978" y="783" width="12" height="12"/>
-    <SubTexture name="radar_c" x="978" y="769" width="12" height="12"/>
-    <SubTexture name="radar_gold" x="978" y="755" width="12" height="12"/>
-    <SubTexture name="radar_green" x="949" y="678" width="12" height="12"/>
-    <SubTexture name="radar_rotten" x="949" y="664" width="12" height="12"/>
-    <SubTexture name="radar_shuffle" x="949" y="650" width="12" height="12"/>
+    <SubTexture name="particleTexture" x="950" y="966" width="64" height="64"/>
+    <SubTexture name="radar_a" x="918" y="682" width="12" height="12"/>
+    <SubTexture name="radar_b" x="904" y="682" width="12" height="12"/>
+    <SubTexture name="radar_c" x="890" y="682" width="12" height="12"/>
+    <SubTexture name="radar_gold" x="876" y="682" width="12" height="12"/>
+    <SubTexture name="radar_green" x="862" y="682" width="12" height="12"/>
+    <SubTexture name="radar_rotten" x="949" y="668" width="12" height="12"/>
+    <SubTexture name="radar_shuffle" x="949" y="654" width="12" height="12"/>
     <SubTexture name="sadsnake" x="2" y="1536" width="347" height="468" frameX="-58" frameY="-14" frameWidth="525" frameHeight="482"/>
-    <SubTexture name="shell" x="857" y="678" width="15" height="15"/>
-    <SubTexture name="snake_body_0" x="950" y="952" width="16" height="19" frameX="-14" frameY="-14" frameWidth="30" frameHeight="45"/>
-    <SubTexture name="snake_body_1" x="818" y="678" width="18" height="15" frameX="-12" frameY="-15" frameWidth="30" frameHeight="45"/>
-    <SubTexture name="snake_body_2" x="996" y="964" width="16" height="19" frameX="-14" frameY="-14" frameWidth="30" frameHeight="45"/>
-    <SubTexture name="snake_body_3" x="798" y="678" width="18" height="15" frameX="-12" frameY="-15" frameWidth="30" frameHeight="45"/>
-    <SubTexture name="snake_body_4" x="978" y="950" width="16" height="19" frameX="-14" frameY="-14" frameWidth="30" frameHeight="45"/>
-    <SubTexture name="snake_body_5" x="778" y="678" width="18" height="15" frameX="-12" frameY="-15" frameWidth="30" frameHeight="45"/>
-    <SubTexture name="snake_body_6" x="996" y="943" width="16" height="19" frameX="-14" frameY="-14" frameWidth="30" frameHeight="45"/>
-    <SubTexture name="snake_body_7" x="758" y="678" width="18" height="15" frameX="-12" frameY="-15" frameWidth="30" frameHeight="45"/>
-    <SubTexture name="snake_body_8" x="978" y="929" width="16" height="19" frameX="-14" frameY="-14" frameWidth="30" frameHeight="45"/>
-    <SubTexture name="snake_body_9" x="738" y="678" width="18" height="15" frameX="-12" frameY="-15" frameWidth="30" frameHeight="45"/>
-    <SubTexture name="snake_evillaugh" x="2" y="748" width="475" height="448" frameX="-27" frameY="-34" frameWidth="525" frameHeight="482"/>
+    <SubTexture name="shell" x="978" y="734" width="15" height="15"/>
+    <SubTexture name="snake_body_0" x="978" y="924" width="16" height="19" frameX="-14" frameY="-14" frameWidth="30" frameHeight="45"/>
+    <SubTexture name="snake_body_1" x="978" y="827" width="18" height="15" frameX="-12" frameY="-15" frameWidth="30" frameHeight="45"/>
+    <SubTexture name="snake_body_2" x="996" y="917" width="16" height="19" frameX="-14" frameY="-14" frameWidth="30" frameHeight="45"/>
+    <SubTexture name="snake_body_3" x="998" y="822" width="18" height="15" frameX="-12" frameY="-15" frameWidth="30" frameHeight="45"/>
+    <SubTexture name="snake_body_4" x="978" y="903" width="16" height="19" frameX="-14" frameY="-14" frameWidth="30" frameHeight="45"/>
+    <SubTexture name="snake_body_5" x="978" y="810" width="18" height="15" frameX="-12" frameY="-15" frameWidth="30" frameHeight="45"/>
+    <SubTexture name="snake_body_6" x="996" y="896" width="16" height="19" frameX="-14" frameY="-14" frameWidth="30" frameHeight="45"/>
+    <SubTexture name="snake_body_7" x="1000" y="805" width="18" height="15" frameX="-12" frameY="-15" frameWidth="30" frameHeight="45"/>
+    <SubTexture name="snake_body_8" x="978" y="882" width="16" height="19" frameX="-14" frameY="-14" frameWidth="30" frameHeight="45"/>
+    <SubTexture name="snake_body_9" x="1000" y="788" width="18" height="15" frameX="-12" frameY="-15" frameWidth="30" frameHeight="45"/>
+    <SubTexture name="snake_evillaugh" x="2" y="752" width="475" height="448" frameX="-27" frameY="-34" frameWidth="525" frameHeight="482"/>
     <SubTexture name="snake_head_0" x="964" y="438" width="29" height="29" frameX="-15" frameY="-19" frameWidth="45" frameHeight="75"/>
     <SubTexture name="snake_head_1" x="964" y="556" width="29" height="27" frameX="-14" frameY="-21" frameWidth="45" frameHeight="75"/>
     <SubTexture name="snake_head_10" x="964" y="243" width="31" height="27" frameX="0" frameY="-21" frameWidth="45" frameHeight="75"/>
@@ -96,11 +96,11 @@
     <SubTexture name="snake_head_7" x="997" y="228" width="25" height="33" frameX="-9" frameY="-29" frameWidth="45" frameHeight="75"/>
     <SubTexture name="snake_head_8" x="964" y="527" width="29" height="27" frameX="-15" frameY="-21" frameWidth="45" frameHeight="75"/>
     <SubTexture name="snake_head_9" x="964" y="498" width="29" height="27" frameX="-15" frameY="-21" frameWidth="45" frameHeight="75"/>
-    <SubTexture name="snake_tail_0" x="978" y="696" width="15" height="19" frameX="-15" frameY="-14" frameWidth="45" frameHeight="45"/>
-    <SubTexture name="snake_tail_1" x="998" y="884" width="17" height="19" frameX="-13" frameY="-14" frameWidth="45" frameHeight="45"/>
-    <SubTexture name="snake_tail_2" x="997" y="924" width="17" height="17" frameX="-13" frameY="-15" frameWidth="45" frameHeight="45"/>
-    <SubTexture name="snake_tail_3" x="838" y="678" width="17" height="15" frameX="-13" frameY="-15" frameWidth="45" frameHeight="45"/>
+    <SubTexture name="snake_tail_0" x="932" y="670" width="15" height="19" frameX="-15" frameY="-14" frameWidth="45" frameHeight="45"/>
+    <SubTexture name="snake_tail_1" x="998" y="839" width="17" height="19" frameX="-13" frameY="-14" frameWidth="45" frameHeight="45"/>
+    <SubTexture name="snake_tail_2" x="978" y="863" width="17" height="17" frameX="-13" frameY="-15" frameWidth="45" frameHeight="45"/>
+    <SubTexture name="snake_tail_3" x="997" y="879" width="17" height="15" frameX="-13" frameY="-15" frameWidth="45" frameHeight="45"/>
     <SubTexture name="text-ingame-main menu" x="2" y="2006" width="281" height="32"/>
-    <SubTexture name="text-ingame-restart" x="720" y="632" width="227" height="32"/>
+    <SubTexture name="text-ingame-restart" x="720" y="636" width="227" height="32"/>
     <SubTexture name="text-ingame-settings" x="285" y="2006" width="246" height="32"/>
 </TextureAtlas>
