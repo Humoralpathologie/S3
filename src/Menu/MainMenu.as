@@ -139,8 +139,9 @@ package Menu
       
       var close:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("x"));
       settingsMenu.addChild(close);
-      close.x = 787;
+      close.x = 787 - close.width;
       close.y = 115;
+      close.scaleX = close.scaleY = 2;
       
       close.addEventListener(Event.TRIGGERED, function(event:Event):void {
         removeChild(settingsMenu);

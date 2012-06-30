@@ -27,6 +27,7 @@ package Menu
     public function ComboMenu()
     {
       super();
+      // TODO: Don't reload the Menu Graphics.
       AssetRegistry.loadMenuGraphics();
          
       var bg:Image = new Image(AssetRegistry.MenuAtlas.getTexture("arcade-background_iphone4"));
