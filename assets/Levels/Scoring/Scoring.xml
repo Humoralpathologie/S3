@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:58425052606ddc1060a0373b92290727$ -->
+<!-- $TexturePacker:SmartUpdate:4d3b4e0f47450aba60e9fa2142bcdd17$ -->
 <TextureAtlas imagePath="Scoring.png">
-    <SubTexture name="bronze_small" x="2" y="2" width="100" height="100"/>
-    <SubTexture name="gold_small" x="104" y="2" width="100" height="100"/>
-    <SubTexture name="leaderboard" x="206" y="2" width="375" height="475"/>
-    <SubTexture name="life bonus" x="583" y="2" width="195" height="18"/>
-    <SubTexture name="menu-egg-back-broken" x="780" y="2" width="116" height="142"/>
-    <SubTexture name="menu-egg-back" x="898" y="2" width="116" height="142"/>
-    <SubTexture name="menu-egg-next-broken" x="2" y="479" width="116" height="142"/>
-    <SubTexture name="menu-egg-next" x="120" y="479" width="116" height="142"/>
-    <SubTexture name="menu-egg-redo-broken" x="238" y="479" width="145" height="178"/>
-    <SubTexture name="menu-egg-redo" x="385" y="479" width="145" height="178"/>
-    <SubTexture name="menu_iphone_background" x="2" y="659" width="960" height="640"/>
-    <SubTexture name="saphire_small" x="2" y="1301" width="100" height="100"/>
-    <SubTexture name="score board" x="104" y="1301" width="375" height="475"/>
-    <SubTexture name="score" x="481" y="1301" width="115" height="18"/>
-    <SubTexture name="silver_small" x="598" y="1301" width="100" height="100"/>
-    <SubTexture name="time bonus" x="700" y="1301" width="201" height="18"/>
+    <SubTexture name="bronze_small" x="695" y="1090" width="100" height="100"/>
+    <SubTexture name="gold_small" x="797" y="1070" width="100" height="100"/>
+    <SubTexture name="leaderboard" x="1575" y="479" width="375" height="475"/>
+    <SubTexture name="life bonus" x="1778" y="956" width="195" height="18"/>
+    <SubTexture name="medaille_bronze" x="2" y="644" width="573" height="517" frameX="-94" frameY="-98" frameWidth="749" frameHeight="733"/>
+    <SubTexture name="medaille_gold" x="964" y="427" width="609" height="529" frameX="-103" frameY="-94" frameWidth="749" frameHeight="733"/>
+    <SubTexture name="medaille_saphir" x="964" y="2" width="621" height="423" frameX="-87" frameY="-152" frameWidth="749" frameHeight="733"/>
+    <SubTexture name="medaille_silber" x="931" y="958" width="569" height="535" frameX="-95" frameY="-88" frameWidth="749" frameHeight="733"/>
+    <SubTexture name="menu-egg-back-broken" x="577" y="968" width="116" height="142"/>
+    <SubTexture name="menu-egg-back" x="577" y="824" width="116" height="142"/>
+    <SubTexture name="menu-egg-next-broken" x="695" y="824" width="116" height="142"/>
+    <SubTexture name="menu-egg-next" x="813" y="824" width="116" height="142"/>
+    <SubTexture name="menu-egg-redo-broken" x="577" y="644" width="145" height="178"/>
+    <SubTexture name="menu-egg-redo" x="724" y="644" width="145" height="178"/>
+    <SubTexture name="menu_iphone_background" x="2" y="2" width="960" height="640"/>
+    <SubTexture name="saphire_small" x="695" y="988" width="100" height="100"/>
+    <SubTexture name="score board" x="1587" y="2" width="375" height="475"/>
+    <SubTexture name="score" x="695" y="968" width="115" height="18"/>
+    <SubTexture name="silver_small" x="812" y="968" width="100" height="100"/>
+    <SubTexture name="time bonus" x="1575" y="956" width="201" height="18"/>
 </TextureAtlas>
