@@ -140,7 +140,7 @@ package Menu
       var backButton:Button = new Button(AssetRegistry.LevelSelectAtlas.getTexture("back-button_705-205"));
       backButton.x = 705;
       backButton.y = 205;
-      backButton.addEventListener(Event.TRIGGERED, function(event:Event) {
+      backButton.addEventListener(Event.TRIGGERED, function(event:Event):void {
         StageManager.switchStage(MainMenu);
       });
       

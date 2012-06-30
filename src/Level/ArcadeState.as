@@ -32,6 +32,7 @@ package Level
   import Combo.*;
   import flash.utils.*;
   import com.gskinner.motion.easing.Exponential
+  import UI.Radar;
   
   /**
    * ...
@@ -94,13 +95,30 @@ package Level
       }
     }
     
+    override protected function addHud():void {
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "poison"]);
+      addChild(_hud);
+      _hud.poison.x = 108;
+      _hud.poison.y = 70;
+      _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;  
+    }    
+    
     override protected function updateHud():void {
       _hud.radar.update(); 
       _hud.score = String(_score);
       _hud.lifesText = String(_snake.lives);
       _hud.timeText = String(_timeLeft.toFixed(2)); 
+      _hud.poisonText = String(_poisonEggs);
+      _hud.comboText = String(_combos);
     }
 
+    override protected function checkLost():void {
+      if (_poisonEggs > 4) {
+        lose();
+      }
+      super.checkLost();
+    }    
+    
     override protected function addBackground():void
     {
       _bgTexture = AssetRegistry.ArcadeBackground;
