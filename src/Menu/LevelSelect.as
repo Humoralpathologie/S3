@@ -67,15 +67,50 @@ package Menu
       _bg = new Quad(960, 2240, 0xCDB594);
       //_scrollable.addChild(_bg);
       
-      var bgTop:Image = new Image(AssetRegistry.LevelSelectBGTexture);
-      _scrollable.addChild(bgTop);
+      var bgLeft1:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("background_small"));
+      _scrollable.addChild(bgLeft1);
       
-      var bgBottom:Image = new Image(AssetRegistry.LevelSelectBGTexture);
-      bgBottom.y = (bgTop.height * 2) - 1;
-      bgBottom.scaleY = -1;
+      var bgLeft2:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("background_small"));
+      bgLeft2.y = (bgLeft1.height * 2) - 1;
+      bgLeft2.scaleY = -1;
       
-      _scrollable.addChild(bgBottom);
+      _scrollable.addChild(bgLeft2);
       
+      var bgLeft3:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("background_small"));
+      bgLeft3.y = (bgLeft1.height * 2) - 1;
+      _scrollable.addChild(bgLeft3);
+      
+      var bgLeft4:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("background_small"));
+      bgLeft4.y = (bgLeft4.height * 4) - 1;
+      bgLeft4.scaleY = -1;
+      _scrollable.addChild(bgLeft4);
+      
+      var bgRight1:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("background_small"));
+      bgRight1.x = (bgRight1.width * 2) - 1;
+      bgRight1.scaleX = -1;
+      _scrollable.addChild(bgRight1);
+      
+      var bgRight2:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("background_small"));
+      bgRight2.x = bgRight1.x;
+      bgRight2.y = bgLeft2.y;
+      bgRight2.scaleY = bgLeft2.scaleY;
+      bgRight2.scaleX = bgRight1.scaleX;
+      _scrollable.addChild(bgRight2);
+          
+      var bgRight3:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("background_small"));
+      bgRight3.x = bgRight1.x;
+      bgRight3.y = bgLeft3.y;
+      bgRight3.scaleX = bgRight1.scaleX;
+      bgRight3.scaleY = bgLeft3.scaleY;
+      _scrollable.addChild(bgRight3);
+      
+      var bgRight4:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("background_small"));
+      bgRight4.x = bgRight1.x;
+      bgRight4.y = bgLeft4.y;
+      bgRight4.scaleX = bgRight1.scaleX;
+      bgRight4.scaleY = bgLeft4.scaleY;
+      _scrollable.addChild(bgRight4);
+         
       var header:Image = new Image(AssetRegistry.LevelSelectAtlas.getTexture("header_15-20"));
       header.x = 15;
       header.y = 20;
@@ -92,7 +127,7 @@ package Menu
           level.addEventListener(TouchEvent.TOUCH, showLevelInfo(i + 1));
         } else {
           if (i == 7) {
-            level = new Image(AssetRegistry.LevelSelectBossLocked);
+            level = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-boss-locked"));
           } else {
             level = new Image(AssetRegistry.LevelSelectAtlas.getTexture("tile-level-locked"));
           }

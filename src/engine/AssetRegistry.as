@@ -100,10 +100,10 @@ package engine
     [Embed(source="../../assets/Levels/LevelSelect/LevelSelect.png")]
     static private const LevelSelectPNG:Class;
     //[Embed(source = "../../assets/Levels/LevelSelect/LevelSelect.atf", mimeType = "application/octet-stream")] static private const LevelSelectATF:Class;
-    [Embed(source="../../assets/Levels/LevelSelect/background.png")]
-    static private const LevelSelectBGPNG:Class;
-    [Embed(source="../../assets/Levels/LevelSelect/tile-boss-locked.png")]
-    static private const LevelSelectBossLockedPNG:Class;
+    //[Embed(source="../../assets/Levels/LevelSelect/background.png")]
+   // static private const LevelSelectBGPNG:Class;
+   // [Embed(source="../../assets/Levels/LevelSelect/tile-boss-locked.png")]
+   // static private const LevelSelectBossLockedPNG:Class;
     
     [Embed(source="../../assets/Music/LevelMusikStufe1.mp3")]
     static private const LevelMusic1:Class;
@@ -174,8 +174,8 @@ package engine
     public static var Level7Atlas:TextureAtlas;
     
     public static var UIOverlayTexture:Texture;
-    public static var LevelSelectBGTexture:Texture;
-    public static var LevelSelectBossLocked:Texture;
+    //public static var LevelSelectBGTexture:Texture;
+    //public static var LevelSelectBossLocked:Texture;
     public static var ComboParticleConfig:XML;
     public static var DrugParticleConfig:XML;
     public static var DrugParticleTexture:Texture;
@@ -427,15 +427,15 @@ package engine
     {
       LevelSelectAtlas = new TextureAtlas(Texture.fromBitmap(new LevelSelectPNG), XML(new LevelSelectXML));
       //LevelSelectAtlas = new TextureAtlas(Texture.fromAtfData(new LevelSelectATF as ByteArray), XML(new LevelSelectXML));
-      LevelSelectBGTexture = Texture.fromBitmap(new LevelSelectBGPNG);
-      LevelSelectBossLocked = Texture.fromBitmap(new LevelSelectBossLockedPNG);
+      //LevelSelectBGTexture = Texture.fromBitmap(new LevelSelectBGPNG);
+      //LevelSelectBossLocked = Texture.fromBitmap(new LevelSelectBossLockedPNG);
     }
     
     public static function disposeLevelSelectGraphics():void
     {
       LevelSelectAtlas.dispose();
-      LevelSelectBGTexture.dispose();
-      LevelSelectBossLocked.dispose();
+      //LevelSelectBGTexture.dispose();
+      //LevelSelectBossLocked.dispose();
     }
   
   }
