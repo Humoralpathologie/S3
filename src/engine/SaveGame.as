@@ -65,17 +65,25 @@ package engine {
       publishScore(n);
     }
     
-    public static function saveSpecial(special:Array):void {
-      _sharedObject.data.special = special;
-      _sharedObject.flush();
+    public static function saveSpecial(slot:int, special:Object):void {
+      for (var i in specials) {
+        if (specials[i] && (specials[i].effect == special.effect || specials[i].combo == special.combo)) {
+          specials[i] = null;
+        }
+      }
+      specials[slot] = special;
     }
     
-    public static function getSpecial():Array {
-      if (_sharedObject.data.special != null) {
-        return _sharedObject.data.special;
-      } else {
-        return [];
+    public static function get specials():Object {
+      if (!_sharedObject.data.specials) {
+        specials = {}
       }
+      return _sharedObject.data.specials;
+    }
+    
+    public static function set specials(val:Object):void {
+      _sharedObject.data.specials = val;
+      _sharedObject.flush();
     }
 
     public static function fullScore():Number {

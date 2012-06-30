@@ -128,7 +128,7 @@ package Menu
       input.x = 200;
       input.y = 400;
       
-      input.onChange.add(function(input:TextInput) {
+      input.onChange.add(function(input:TextInput):void {
         SaveGame.userName = input.text;
       });
       
@@ -151,7 +151,7 @@ package Menu
     private function startArcade(event:Event):void {
 //      var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
 //      if (touch && _swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height) {
-        StageManager.switchStage(ArcadeState);
+        StageManager.switchStage(ComboMenu);
 //      }
     }
     

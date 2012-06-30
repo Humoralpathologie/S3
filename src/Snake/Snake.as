@@ -109,7 +109,11 @@ package Snake
       {
         removeChild(_tail);
         _body.push(_newPart);
-        _tail = new Tail(_newPart.tileX, _newPart.tileY, _newPart.speed);
+        _newPart.tileX = -10;
+        _newPart.tileY = - 10;
+        // _tail = new Tail(_newPart.tileX, _newPart.tileY, _newPart.speed);
+        _tail.tileX = -10;
+        _tail.tileY = -10;
         addChild(_newPart);
         addChild(_tail);
         _newPart = null;
