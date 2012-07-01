@@ -32,15 +32,25 @@ package Menu
     private var _replayButton:Button;
     private var _nextLevelButton:Button;
     private var _backToMenuButton:Button;
+
     private var _scorePic:Image;
     private var _scoreText:TextField;
     public var _scoreCounter:int = 0;
+
     private var _timeBonusPic:Image;
     private var _timeBonusText:TextField;
     public var _timeBonusCounter:int = 0;
+
     private var _lifeBonusPic:Image;
     private var _lifeBonusText:TextField;
     public var _lifeBonusCounter:int = 0;
+   
+    private var _EXPText:TextField;
+    public var _EXPCounter:int;
+
+    private var _totalText:TextField;
+    public var _totalCounter:int;
+
     private var _scores:Object = null;
     
     public function LevelScore(scores:Object = null)
@@ -48,7 +58,7 @@ package Menu
       _scores = scores;
       if (_scores == null)
       {
-        _scores = {score: 1000, lives: 3, time: 200, level: 1}
+        _scores = {score: 1000, lives: 3, time: 200, level: 1, total: 0, EXP: 0}
       }
       else
       {
@@ -126,9 +136,20 @@ package Menu
     private function startScoring():void
     {
       addEventListener(EnterFrameEvent.ENTER_FRAME, updateTexts);
-      new GTween(this, 2, {_scoreCounter: _scores.score}, {ease: Exponential.easeOut});
-      new GTween(this, 2, {_lifeBonusCounter: _scores.lives}, {ease: Exponential.easeOut});
-      new GTween(this, 2, {_timeBonusCounter: _scores.time}, {ease: Exponential.easeOut});
+      var triggerLife:Function = function(tween:GTween):void{
+        new GTween(this, 2, {_lifeBonusCounter: _scores.lives}, {ease: Exponential.easeOut, onComplete:triggerTime});
+      }
+      var triggerTime:Function = function(tween:GTween):void{
+        new GTween(this, 2, {_timeBonusCounter: _scores.time}, {ease: Exponential.easeOut, onComplete:triggerTotal});
+      }
+      var triggerTotal:Function = function(tween:GTween):void{
+        new GTween(this, 2, {_totalCounter: _scores.total}, {ease: Exponential.easeOut, onComplete:triggerEXP});
+      }
+      var triggerEXP:Function = function(tween:GTween):void{
+        new GTween(this, 2, {_EXPCounter: _scores.EXP}, {ease: Exponential.easeOut});
+      }
+      
+      new GTween(this, 2, {_scoreCounter: _scores.score}, {ease: Exponential.easeOut, onComplete:triggerLife});
     /*
        var tweenScore:GTween = new GTween(_scoreCounter, 2, {i: _score}, {ease: Exponential.easeOut});
        var tweenLive:GTween = new GTween(_lifeBonusCounter, 2, {i: _liveBonus}, {ease: Exponential.easeOut});
@@ -160,9 +181,16 @@ package Menu
       _timeBonusText.x = _lifeBonusText.x;
       _timeBonusText.y = _timeBonusPic.y - 10;
       
+      _totalText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
+      _totalText.hAlign = HAlign.RIGHT;
+      _totalText.x = _lifeBonusPic.x + 120;
+      _totalText.y = _lifeBonusText.y + 77;
+
       addChild(_lifeBonusText);
       addChild(_scoreText);
       addChild(_timeBonusText);
+      addChild(_totalText);
+      addChild(_EXPText);
     }
     
     private function replay():void

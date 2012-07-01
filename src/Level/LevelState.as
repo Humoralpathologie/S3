@@ -349,7 +349,7 @@ package Level
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
-      var registerTouchHandler = function()
+      var registerTouchHandler:Function = function():void
       {
         addEventListener(TouchEvent.TOUCH, dieScreenTouch);
       }
@@ -1071,7 +1071,7 @@ package Level
       removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
-      var registerTouchHandler = function():void
+      var registerTouchHandler:Function = function():void
       {
         addEventListener(TouchEvent.TOUCH, winScreenTouch);
       }

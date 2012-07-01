@@ -96,7 +96,7 @@ package Menu
       var boyStyle:Radio = new Radio();
       boyStyle.label = "Type 1";
       boyStyle.toggleGroup = controlGroup;
-      boyStyle.onPress.add(function(radio:Radio) {
+      boyStyle.onPress.add(function(radio:Radio):void {
         SaveGame.controlType = 1;
       });
       var girlStyle:Radio = new Radio();
@@ -128,7 +128,7 @@ package Menu
       input.x = 200;
       input.y = 400;
       
-      input.onChange.add(function(input:TextInput) {
+      input.onChange.add(function(input:TextInput):void {
         SaveGame.userName = input.text;
       });
       
