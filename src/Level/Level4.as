@@ -13,6 +13,7 @@ package Level
   import starling.textures.TextureSmoothing;
   import UI.HUD;
   import UI.Radar;
+  import Eggs.Egg;
   
   public class Level4 extends LevelState 
   {
@@ -20,6 +21,7 @@ package Level
     {
       AssetRegistry.loadLevel4Graphics();
       _levelNr = 4;
+      _rottenEnabled = true;
       super();
       _startPos.x = 20;
       _startPos.y = 20;
@@ -79,12 +81,30 @@ package Level
     }
     override protected function addObstacles():void
     {
-      var pos:Array = [1552, 1489, 1488, 1551, 2415, 2480, 2370, 2371, 2372, 2373, 2494, 2431, 2369, 2378, 2379, 2380, 2381, 2382, 2383, 2376, 2368, 2374, 2375, 2366, 2377, 2354, 2341, 2342, 2343, 2344, 2345, 2346, 2347, 2348, 2349, 2350, 2479, 2352, 2481, 2482, 2483, 2484, 2485, 2478, 2351, 2488, 2489, 2490, 2491, 2492, 2493, 2486, 2487];
+      var pos:Array = [1552, 1489, 1488, 1551, 2432, 2433, 2434, 2435, 2436, 2437, 2438, 2439, 2440, 2441, 2442, 2443, 2381, 2445, 2446, 2444, 2354, 2467, 2468, 2469, 2470, 2471, 2344, 2345, 2346, 2347, 2348, 2477, 2478, 2479, 2352, 2481, 2482, 2483, 2484, 2485, 2486, 2487, 2480, 2489, 2490, 2491, 2492, 2493, 2349, 2350, 2488, 2342, 2343, 2472, 2473, 2474, 2475, 2476, 2368, 2369, 2351, 2341, 2372, 2509, 2502, 2494, 2504, 2505, 2506, 2370, 2371, 2500, 2501, 2383, 2503, 2376, 2495, 2496, 2507, 2508, 2499, 2382, 2373, 2374, 2375, 2404, 2405, 2406, 2407, 2408, 2409, 2410, 2411, 2412, 2413, 2414, 2415, 2378, 2379, 2380, 2497, 2498, 2377, 2366, 2431];
       
       for (var i:int = 0; i < pos.length; i++)
       {
         _obstacles[pos[i]] = true;
       }
+    } 
+    
+    override protected function checkLost():void {
+      if (_poisonEggs > 4) {
+        lose();
+      }
+      super.checkLost();
+    }
+    
+    override public function spawnRandomEgg():void {
+      var egg:Egg;
+      var type:int;
+      var types:Array = [AssetRegistry.EGGA, AssetRegistry.EGGZERO];
+      type = types[Math.floor(Math.random() * types.length)];
+      
+      egg = new Egg(0, 0, type);
+      
+      placeEgg(egg);
     } 
     
     override protected function checkWin():void {
