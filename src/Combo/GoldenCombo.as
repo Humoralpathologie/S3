@@ -3,6 +3,7 @@ package Combo
   import Level.LevelState;
   import engine.AssetRegistry;
   import Eggs.Egg;
+  import starling.core.Starling;
   
   public class GoldenCombo extends Combo {
     public function GoldenCombo() {
@@ -12,7 +13,14 @@ package Combo
     }
     
     override public function effect(state:LevelState):void {
-      state.placeEgg(new Egg(0,0, AssetRegistry.EGGGOLDEN));
+      var goldEgg:Egg = new Egg(0,0, AssetRegistry.EGGGOLDEN)
+      state.placeEgg(goldEgg);
+      Starling.juggler.delayCall(function():void {
+        if (state.eggs.eggPool.indexOf(goldEgg) != -1) {
+          state.eggs.eggPool.splice(state.eggs.eggPool.indexOf(goldEgg), 1);
+          state.eggs.removeChild(goldEgg);
+        }
+      }, 6);
       state.showMessage("Golden Egg!");
     }
   }

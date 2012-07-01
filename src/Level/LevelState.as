@@ -1211,6 +1211,16 @@ package Level
     {
         _chainTime = value;
     }
+    
+    public function get eggs():Eggs 
+    {
+        return _eggs;
+    }
+    
+    public function set eggs(value:Eggs):void 
+    {
+        _eggs = value;
+    }
   
   }
 
