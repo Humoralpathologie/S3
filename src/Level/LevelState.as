@@ -107,6 +107,7 @@ package Level
     protected var _levelBoundaries:Rectangle;
     protected var _timeLeft:Number = 3 * 60;
     protected var _poisonEggs:int = 0;
+    protected var _maxEggs:int = 5;
     
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
@@ -520,9 +521,21 @@ package Level
         }
         _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
         _eggs.removeChild(egg);
-        spawnRandomEgg();
         
-        showPoints(egg, "2");
+        var points:int = 2;
+        
+        if (egg.type == AssetRegistry.EGGGOLDEN) {
+          points = 100;
+        }
+        
+        if (egg.type == AssetRegistry.EGGSHUFFLE) {
+          _snake.shuffle();
+          points = 0;
+        }
+        
+        if(points > 0) {
+          showPoints(egg, String(points));
+        }
         
         if (_bonusTimer > 0)
         {
@@ -531,7 +544,7 @@ package Level
           showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
           _score += _bonusTimerPoints;
         }
-        _score += 2;
+        _score += points;
         _bonusTimer = 2.5;
       }
       else
@@ -827,6 +840,11 @@ package Level
         else
         {
           updateTimers(event);
+        }
+        
+        
+        if (_eggs.eggPool.length < _maxEggs) {
+          spawnRandomEgg();
         }
         
         updateHud();
