@@ -29,7 +29,7 @@ package Level
     }
     
     override protected function setBoundaries():void {
-      _levelBoundaries = new Rectangle(10, 7, 42, 30);
+      _levelBoundaries = new Rectangle(10, 7, 42, 32);
     }
     
     override protected function addBackground():void {
@@ -79,7 +79,7 @@ package Level
     }
     override protected function addObstacles():void
     {
-      var pos:Array = [1552, 1489, 1488, 1551];
+      var pos:Array = [1552, 1489, 1488, 1551, 2415, 2480, 2370, 2371, 2372, 2373, 2494, 2431, 2369, 2378, 2379, 2380, 2381, 2382, 2383, 2376, 2368, 2374, 2375, 2366, 2377, 2354, 2341, 2342, 2343, 2344, 2345, 2346, 2347, 2348, 2349, 2350, 2479, 2352, 2481, 2482, 2483, 2484, 2485, 2478, 2351, 2488, 2489, 2490, 2491, 2492, 2493, 2486, 2487];
       
       for (var i:int = 0; i < pos.length; i++)
       {
