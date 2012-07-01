@@ -11,7 +11,7 @@ package Combo
     }
     
     override public function effect(state:LevelState):void {
-      state.timeLeft += 3;
+      state.extendTime();
       state.showMessage("Bonus Time!");
     }
   }

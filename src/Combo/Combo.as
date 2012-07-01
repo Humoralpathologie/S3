@@ -1,6 +1,7 @@
 package Combo
 {  
   import Level.LevelState;
+  import engine.AssetRegistry;
   public class Combo 
   {
     private var _trigger:Array;
@@ -20,6 +21,25 @@ package Combo
         triggerStr += "+";
       }
       _triggerRegexp = new RegExp(triggerStr, "g");
+    }
+    
+    public function set triggerString(str:String):void {
+      var trigarray:Array = [];
+      var trigstring:Array = str.split("");
+      for (var i:int = 0; i < trigstring.length; i++) {
+        switch(trigstring[i]) {
+          case "a":
+              trigarray.push(AssetRegistry.EGGA);
+              break;
+          case "b":
+              trigarray.push(AssetRegistry.EGGB);
+              break;
+          case "c":
+              trigarray.push(AssetRegistry.EGGC);
+              break;
+        }
+      }
+      trigger = trigarray;
     }
     
     public function check(eggs:Array):Array {

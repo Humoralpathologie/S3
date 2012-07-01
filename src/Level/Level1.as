@@ -41,7 +41,7 @@ package Level
       showObjectiveBox("For Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 50 eggs & pay attention to the bonus scoring on your performance!");
     }
     
-    override protected function spawnRandomEgg():void {
+    override public function spawnRandomEgg():void {
       var egg:Egg;
       var rand:int = Math.floor(Math.random() * 100);
       

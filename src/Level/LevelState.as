@@ -108,6 +108,8 @@ package Level
     protected var _timeLeft:Number = 3 * 60;
     protected var _poisonEggs:int = 0;
     protected var _maxEggs:int = 5;
+    protected var _timeExtension:Number = 3;
+    protected var _chainTime:Number = 2.5;
     
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
@@ -208,6 +210,10 @@ package Level
       
       showObjective();
     
+    }
+    
+    public function extendTime():void {
+      _timeLeft += _timeExtension;
     }
     
     protected function addParticles():void
@@ -458,7 +464,7 @@ package Level
       }
     }
     
-    protected function spawnRandomEgg():void
+    public function spawnRandomEgg():void
     {
       var egg:Eggs.Egg;
       
@@ -545,7 +551,7 @@ package Level
           _score += _bonusTimerPoints;
         }
         _score += points;
-        _bonusTimer = 2.5;
+        _bonusTimer = _chainTime;
       }
       else
       {
@@ -1184,6 +1190,26 @@ package Level
     public function get rottenEggs():Eggs.Eggs
     {
       return _rottenEggs;
+    }
+    
+    public function get timeExtension():Number 
+    {
+        return _timeExtension;
+    }
+    
+    public function set timeExtension(value:Number):void 
+    {
+        _timeExtension = value;
+    }
+    
+    public function get chainTime():Number 
+    {
+        return _chainTime;
+    }
+    
+    public function set chainTime(value:Number):void 
+    {
+        _chainTime = value;
     }
   
   }

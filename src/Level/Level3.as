@@ -43,7 +43,7 @@ package Level
       super.dispose();
     }
 
-    override protected function spawnRandomEgg():void {
+    override public function spawnRandomEgg():void {
       var egg:Egg;
       var type:int;
       var types:Array = [AssetRegistry.EGGA, AssetRegistry.EGGZERO];
