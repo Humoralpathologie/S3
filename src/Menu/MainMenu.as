@@ -118,9 +118,16 @@ package Menu
         SaveGame.controlType = 2;
       });
       
+      var directionStyle:Radio = new Radio();
+      directionStyle.label = "Type 3";
+      directionStyle.toggleGroup = controlGroup;
+      directionStyle.onPress.add(function(radio:Radio):void {
+        SaveGame.controlType = 3;
+      });      
+      
       controlGroup.selectedIndex = SaveGame.controlType - 1;
       
-      boyStyle.x = girlStyle.x = 160;
+      boyStyle.x = girlStyle.x = directionStyle.x = 160;
       boyStyle.scaleX = boyStyle.scaleY = girlStyle.scaleX = girlStyle.scaleY = 1;
       
       //boyStyle.scaleX = boyStyle.scaleY = girlStyle.scaleX = girlStyle.scaleY = 3;
@@ -129,11 +136,12 @@ package Menu
       
       boyStyle.y = 220;
       girlStyle.y = boyStyle.y + 70;
+      directionStyle.y = girlStyle.y + 70;
       
       settingsMenu.addChild(boyStyle);
       settingsMenu.addChild(girlStyle);
-      
-      
+      settingsMenu.addChild(directionStyle);
+           
       // Name for leaderboards.
        
       var input:TextInput = new TextInput();

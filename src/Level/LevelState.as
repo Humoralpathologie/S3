@@ -1015,7 +1015,7 @@ package Level
             {
               if (_snake.oneeighty == 0)
               {
-                if (touch.getLocation(this).y > 500)
+                if (touch.getLocation(this).y > 500 || SaveGame.controlType == 3)
                 {
                   if (SaveGame.controlType == 1)
                   {
@@ -1051,6 +1051,24 @@ package Level
                       {
                         _snake.moveLeft();
                         
+                      }
+                    }
+                  } else if (SaveGame.controlType == 3) {
+                    var touchpoint:Point = touch.getLocation(this);
+                    var center:Point = new Point(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
+                    var dx = Math.abs(touchpoint.x - center.x);
+                    var dy = Math.abs(touchpoint.y - center.y);;
+                    if (dx > dy) {
+                      if (touchpoint.x < center.x && _snake.head.facing != AssetRegistry.RIGHT){
+                        _snake.head.facing = AssetRegistry.LEFT;
+                      } else if (touchpoint.x > center.x && _snake.head.facing != AssetRegistry.LEFT) {
+                        _snake.head.facing = AssetRegistry.RIGHT;
+                      }
+                    } else {
+                      if (touchpoint.y < center.y && _snake.head.facing != AssetRegistry.DOWN) {
+                        _snake.head.facing = AssetRegistry.UP;
+                      } else if (touchpoint.y > center.y && _snake.head.facing != AssetRegistry.UP) {
+                        _snake.head.facing = AssetRegistry.DOWN;
                       }
                     }
                   }
