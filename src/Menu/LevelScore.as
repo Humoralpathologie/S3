@@ -78,7 +78,7 @@ package Menu
       
       _scores.total += (_timeBonus * 5);
       if(!_scores.lost) {
-        SaveGame.saveScore(_scores.level, _scores.score);
+        SaveGame.saveScore(_scores.level, _scores.total);
       }
       AssetRegistry.loadScoringGraphics();
       buildMenu();
