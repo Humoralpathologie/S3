@@ -15,13 +15,18 @@ package Level
   import UI.Radar;
   import Eggs.Egg;
   
+  
   public class Level4 extends LevelState 
   {
+    private var _winningPositions:Array;
+    
     public function Level4() 
     {
       AssetRegistry.loadLevel4Graphics();
       _levelNr = 4;
       _rottenEnabled = true;
+      _winningPositions = [2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428];
+      
       super();
       _startPos.x = 20;
       _startPos.y = 20;
@@ -66,7 +71,7 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snakes speed up to 11 and jump!");
+      showObjectiveBox("Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snakes speed up to 7 and jump!");
     }    
     
     override protected function addHud():void {
@@ -108,7 +113,7 @@ package Level
     } 
     
     override protected function checkWin():void {
-      if (_combos == 20 || _snake.eatenEggs == 100 || _overallTimer == 4 * 60) {
+      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= 16) {
         win();
       }
     }
