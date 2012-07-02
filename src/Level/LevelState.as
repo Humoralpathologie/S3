@@ -124,10 +124,10 @@ package Level
     {
       super();
       
-      //sfx = AssetRegistry.WinMusicSound;
+      sfx = AssetRegistry.LevelMusic1Sound;
       
       // Fix for laggy sound
-      // playSoundSilentlyEndlessly();
+      playSoundSilentlyEndlessly();
       
       _currentCombos = null;
       
