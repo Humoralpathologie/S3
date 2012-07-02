@@ -24,6 +24,8 @@ package Menu
     import org.josht.starling.foxhole.themes.MinimalTheme;
     import engine.SaveGame;
     import org.josht.starling.foxhole.controls.TextInput;
+    import starling.utils.HAlign;
+    import starling.utils.VAlign;
     
   
   /**
@@ -92,6 +94,16 @@ package Menu
       bg.x = (Starling.current.stage.stageWidth - bg.width) / 2;
       bg.y = (Starling.current.stage.stageHeight - bg.height) / 2;
       
+      /*var controlText:TextField = new TextField(200, 100, "Control Type", "kroeger 06_65", 30, 0xffffff);
+      controlText.hAlign = HAlign.LEFT;
+      controlText.vAlign = VAlign.TOP;
+      const*/
+      
+      var controls:Image = new Image(AssetRegistry.MenuAtlas.getTexture("controls"));
+      controls.x = 160;
+      controls.y = 179;
+      settingsMenu.addChild(controls);
+      
       var controlGroup:ToggleGroup = new ToggleGroup;
       var boyStyle:Radio = new Radio();
       boyStyle.label = "Type 1";
@@ -107,14 +119,16 @@ package Menu
       });
       
       controlGroup.selectedIndex = SaveGame.controlType - 1;
-      boyStyle.x = girlStyle.x = 200;
+      
+      boyStyle.x = girlStyle.x = 160;
+      boyStyle.scaleX = boyStyle.scaleY = girlStyle.scaleX = girlStyle.scaleY = 1;
       
       //boyStyle.scaleX = boyStyle.scaleY = girlStyle.scaleX = girlStyle.scaleY = 3;
       
       //boyStyle.validate();
       
-      boyStyle.y = 250;
-      girlStyle.y = boyStyle.y + 50;
+      boyStyle.y = 220;
+      girlStyle.y = boyStyle.y + 70;
       
       settingsMenu.addChild(boyStyle);
       settingsMenu.addChild(girlStyle);
@@ -125,22 +139,22 @@ package Menu
       var input:TextInput = new TextInput();
       input.text = SaveGame.userName;
       
-      input.x = 200;
-      input.y = 400;
+      input.x = 400;
+      input.y = 220;
       
       input.onChange.add(function(input:TextInput):void {
         SaveGame.userName = input.text;
       });
       
       settingsMenu.addChild(input);
-      
-      
+           
       addChild(settingsMenu);
       
       var close:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("x"));
       settingsMenu.addChild(close);
-      close.x = 787;
+      close.x = 787 - close.width;
       close.y = 115;
+      close.scaleX = close.scaleY = 2;
       
       close.addEventListener(Event.TRIGGERED, function(event:Event):void {
         removeChild(settingsMenu);
@@ -151,7 +165,7 @@ package Menu
     private function startArcade(event:Event):void {
 //      var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
 //      if (touch && _swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height) {
-        StageManager.switchStage(ArcadeState);
+        StageManager.switchStage(ComboMenu);
 //      }
     }
     

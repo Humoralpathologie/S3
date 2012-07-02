@@ -107,6 +107,9 @@ package Level
     protected var _levelBoundaries:Rectangle;
     protected var _timeLeft:Number = 3 * 60;
     protected var _poisonEggs:int = 0;
+    protected var _maxEggs:int = 5;
+    protected var _timeExtension:Number = 3;
+    protected var _chainTime:Number = 2.5;
     
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
@@ -207,6 +210,10 @@ package Level
       
       showObjective();
     
+    }
+    
+    public function extendTime():void {
+      _timeLeft += _timeExtension;
     }
     
     protected function addParticles():void
@@ -457,7 +464,7 @@ package Level
       }
     }
     
-    protected function spawnRandomEgg():void
+    public function spawnRandomEgg():void
     {
       var egg:Eggs.Egg;
       
@@ -520,9 +527,21 @@ package Level
         }
         _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
         _eggs.removeChild(egg);
-        spawnRandomEgg();
         
-        showPoints(egg, "2");
+        var points:int = 2;
+        
+        if (egg.type == AssetRegistry.EGGGOLDEN) {
+          points = 100;
+        }
+        
+        if (egg.type == AssetRegistry.EGGSHUFFLE) {
+          _snake.shuffle();
+          points = 0;
+        }
+        
+        if(points > 0) {
+          showPoints(egg, String(points));
+        }
         
         if (_bonusTimer > 0)
         {
@@ -531,8 +550,8 @@ package Level
           showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
           _score += _bonusTimerPoints;
         }
-        _score += 2;
-        _bonusTimer = 2.5;
+        _score += points;
+        _bonusTimer = _chainTime;
       }
       else
       {
@@ -827,6 +846,11 @@ package Level
         else
         {
           updateTimers(event);
+        }
+        
+        
+        if (_eggs.eggPool.length < _maxEggs) {
+          spawnRandomEgg();
         }
         
         updateHud();
@@ -1166,6 +1190,36 @@ package Level
     public function get rottenEggs():Eggs.Eggs
     {
       return _rottenEggs;
+    }
+    
+    public function get timeExtension():Number 
+    {
+        return _timeExtension;
+    }
+    
+    public function set timeExtension(value:Number):void 
+    {
+        _timeExtension = value;
+    }
+    
+    public function get chainTime():Number 
+    {
+        return _chainTime;
+    }
+    
+    public function set chainTime(value:Number):void 
+    {
+        _chainTime = value;
+    }
+    
+    public function get eggs():Eggs 
+    {
+        return _eggs;
+    }
+    
+    public function set eggs(value:Eggs):void 
+    {
+        _eggs = value;
     }
   
   }

@@ -28,7 +28,7 @@ package Level
       _levelStage.addChild(_bg);
     }
     
-    override protected function spawnRandomEgg():void {
+    override public function spawnRandomEgg():void {
       var egg:Egg;
       var rand:int = Math.floor(Math.random() * 100);
       
@@ -67,7 +67,8 @@ package Level
       
     }
     override protected function updateHud():void {
-      super.updateHud();
+      super.updateHud();
+
       _hud.comboText = String(_combos);
       _hud.speedText = String(_snake.mps);   
     }

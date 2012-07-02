@@ -50,7 +50,19 @@ package Snake
       
       _tail = new Tail(_body[3].tileX - 1, _head.tileY, _speed);
       addChild(_tail);
-      this.mps = mps;      
+      this.mps = mps;
+    }
+    
+    public function shuffle():void
+    {
+      function randomSort(a:*, b:*):Number
+      {
+        if (Math.random() < 0.5)
+          return -1;
+        else
+          return 1;
+      }
+      _body.sort(randomSort);
     }
     
     public function faster():void
@@ -96,11 +108,15 @@ package Snake
     
     public function move():void
     {
-      if (_oneeighty != 0) {
+      if (_oneeighty != 0)
+      {
         _oneeighty--;
-        if (_oneeightyDirection == AssetRegistry.RIGHT) {
+        if (_oneeightyDirection == AssetRegistry.RIGHT)
+        {
           moveRight();
-        } else {
+        }
+        else
+        {
           moveLeft();
         }
       }
@@ -109,7 +125,11 @@ package Snake
       {
         removeChild(_tail);
         _body.push(_newPart);
-        _tail = new Tail(_newPart.tileX, _newPart.tileY, _newPart.speed);
+        _newPart.tileX = -10;
+        _newPart.tileY = -10;
+        // _tail = new Tail(_newPart.tileX, _newPart.tileY, _newPart.speed);
+        _tail.tileX = -10;
+        _tail.tileY = -10;
         addChild(_newPart);
         addChild(_tail);
         _newPart = null;
@@ -216,12 +236,14 @@ package Snake
       //_head.prevFacing = _head.facing;
     }
     
-    public function oneeightyLeft():void {
+    public function oneeightyLeft():void
+    {
       _oneeighty = 2;
       _oneeightyDirection = AssetRegistry.LEFT;
     }
     
-    public function oneeightyRight():void {
+    public function oneeightyRight():void
+    {
       _oneeighty = 2;
       _oneeightyDirection = AssetRegistry.RIGHT;
     }
@@ -281,9 +303,9 @@ package Snake
       return _speed;
     }
     
-    public function get oneeighty():int 
+    public function get oneeighty():int
     {
-        return _oneeighty;
+      return _oneeighty;
     }
   
   }

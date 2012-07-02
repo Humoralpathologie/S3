@@ -102,7 +102,7 @@ package UI
       _comboText.text = combo;
     }
     public function set speedText(speed:String):void {
-      _speedText.text = speed;
+      _speedText.text = String(int(speed) - 9);
     }
     public function set eggsText(eggs:String):void {
       _neededEggsText.text = eggs;

@@ -33,6 +33,7 @@ package Level
   import flash.utils.*;
   import com.gskinner.motion.easing.Exponential
   import UI.Radar;
+  import engine.SaveGame;
   
   /**
    * ...
@@ -52,6 +53,22 @@ package Level
       _comboSet.addCombo(new Combo.GoldenCombo);
       _comboSet.addCombo(new Combo.ExtraTimeCombo);
       
+      for (var i:int = 0; i < 3; i++) {
+        if (SaveGame.specials[i]) {
+          switch(SaveGame.specials[i].effect) {
+            case "combo-xtraspawn":
+                _comboSet.addCombo(new Combo.ExtraEggCombo(SaveGame.specials[i].combo));
+                break;
+            case "combo-leveluptime":
+                _comboSet.addCombo(new Combo.ExtendExtraTimeCombo(SaveGame.specials[i].combo));
+                break;
+            case "combo-chaintime":
+                _comboSet.addCombo(new Combo.ExtendChainTimeCombo(SaveGame.specials[i].combo));
+                break;
+          }
+        }
+      }
+      
       _startPos.x = 20;
       _startPos.y = 20;
       startAt(_startPos.x, _startPos.y);
@@ -63,7 +80,7 @@ package Level
       _levelBoundaries = new Rectangle(13, 12, 43, 38);
     }
     
-    override protected function spawnRandomEgg():void {
+    override public function spawnRandomEgg():void {
       var egg:Eggs.Egg;
       var types:Array = [AssetRegistry.EGGZERO, AssetRegistry.EGGA, AssetRegistry.EGGB, AssetRegistry.EGGC]
       var type:int = types[Math.floor(Math.random() * types.length)];

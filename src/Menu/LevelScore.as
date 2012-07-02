@@ -68,13 +68,10 @@ package Menu
       {
         _scores = {score: 1000, lives: 3, time: 200, level: 1}
       }
-      else
-      {
-        SaveGame.saveScore(_scores.level, _scores.score);
-      }
       _scores["total"] = _scores.score + (_scores.lives * 100);
       calculateTime();
       _scores.total += (_timeBonus * 5);
+      SaveGame.saveScore(_scores.level, _scores.score);
       AssetRegistry.loadScoringGraphics();
       buildMenu();
       startScoring();
@@ -158,20 +155,21 @@ package Menu
     {
       var self:LevelScore = this;
       var func:Function = function(tween:GTween):void {
-        _medalTween.setValues({x: 960});
-        if (_medal.x == 960) {
-          _medalTween.onComplete = func2;
-        }
+        _medalTween.setValues( { x: 960 } );
+        _medalTween.onComplete = func2;
+      }
+      
       var func2:Function = function(tween:GTween):void {
-        self.removeChild(_medal);
-        _medalSmall.x = 960;
-        _medalSmall.y = 0;
-        self.addChild(_medalSmall);
-        _medalTween.target = _medalSmall;
-        _medalTween.setValues({x: 320, y: 370});
-        _medalTween.onComplete = null;
+          self.removeChild(_medal);
+          _medalSmall.x = 960;
+          _medalSmall.y = 0;
+          self.addChild(_medalSmall);
+          _medalTween.target = _medalSmall;
+          _medalTween.setValues( { x: 320, y: 370 } );
+          _medalTween.onComplete = null;
+          //_medalTween.autoPlay = false;   
       }
-      }
+      
       if (_scores.total >= 400 && _scores.total < 600) {
         _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_bronze"));
         _medal.x = -800;

@@ -1,53 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:67f881153ace65e5162360a9d1d44a34$ -->
+<!-- $TexturePacker:SmartUpdate:d421beaf05046b2ec5f42960a29fc8b5$ -->
 <TextureAtlas imagePath="Menu.png">
-    <SubTexture name="abbca" x="938" y="1232" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="abcb" x="440" y="1235" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="acba" x="372" y="1235" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="bcaac" x="938" y="1218" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="bccb" x="304" y="1235" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="bgm" x="370" y="1249" width="63" height="18"/>
-    <SubTexture name="ccbba" x="938" y="1246" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="combo-boost" x="831" y="1313" width="93" height="93"/>
-    <SubTexture name="combo-brake" x="736" y="1295" width="93" height="93"/>
-    <SubTexture name="combo-chaintime" x="641" y="1201" width="93" height="93"/>
-    <SubTexture name="combo-gold" x="546" y="1201" width="93" height="93"/>
-    <SubTexture name="combo-leveluptime" x="843" y="1218" width="93" height="93"/>
-    <SubTexture name="combo-rotteneggs" x="748" y="1200" width="93" height="93"/>
-    <SubTexture name="combo-shuffle" x="883" y="1123" width="93" height="93"/>
-    <SubTexture name="combo-special" x="788" y="1105" width="93" height="93"/>
-    <SubTexture name="combo-speed" x="883" y="1028" width="93" height="93"/>
-    <SubTexture name="combo-time" x="788" y="1010" width="93" height="93"/>
-    <SubTexture name="combo-xtralife" x="922" y="732" width="93" height="93"/>
-    <SubTexture name="combo-xtraspawn" x="926" y="1388" width="88" height="88"/>
-    <SubTexture name="combo_abbca" x="895" y="961" width="105" height="65"/>
-    <SubTexture name="combo_abcb" x="788" y="943" width="105" height="65"/>
-    <SubTexture name="combo_acba" x="895" y="894" width="105" height="65"/>
-    <SubTexture name="combo_bcaac" x="788" y="876" width="105" height="65"/>
-    <SubTexture name="combo_bccb" x="895" y="827" width="105" height="65"/>
-    <SubTexture name="combo_ccbba" x="788" y="809" width="105" height="65"/>
-    <SubTexture name="controls" x="788" y="758" width="129" height="18"/>
-    <SubTexture name="graphics" x="788" y="732" width="132" height="24"/>
-    <SubTexture name="high" x="938" y="1280" width="70" height="18"/>
-    <SubTexture name="info-button" x="938" y="1300" width="66" height="66" frameX="-3" frameY="-2" frameWidth="70" frameHeight="70"/>
-    <SubTexture name="loading" x="2" y="2" width="960" height="640"/>
-    <SubTexture name="low" x="938" y="1260" width="70" height="18"/>
-    <SubTexture name="off" x="304" y="1269" width="61" height="18"/>
-    <SubTexture name="on" x="964" y="2" width="40" height="18"/>
-    <SubTexture name="pleaseswipeup" x="2" y="1201" width="300" height="100"/>
-    <SubTexture name="settings menu" x="2" y="644" width="784" height="524" frameX="-13" frameY="-13" frameWidth="810" frameHeight="550"/>
-    <SubTexture name="sfx" x="304" y="1249" width="64" height="18"/>
-    <SubTexture name="sound" x="926" y="1368" width="91" height="18"/>
-    <SubTexture name="text-arcade" x="788" y="644" width="215" height="32"/>
-    <SubTexture name="text-no" x="964" y="22" width="40" height="18"/>
-    <SubTexture name="text-purchase" x="788" y="678" width="183" height="18"/>
-    <SubTexture name="text-settings" x="304" y="1201" width="240" height="32"/>
-    <SubTexture name="text-story" x="788" y="698" width="178" height="32"/>
-    <SubTexture name="text-yes" x="367" y="1269" width="60" height="18"/>
-    <SubTexture name="text_arcade mode" x="394" y="1170" width="352" height="29"/>
-    <SubTexture name="text_leaderboards" x="2" y="1170" width="390" height="29"/>
-    <SubTexture name="text_play" x="788" y="778" width="124" height="29"/>
-    <SubTexture name="vfx" x="435" y="1249" width="63" height="18"/>
-    <SubTexture name="x" x="964" y="42" width="21" height="18"/>
+    <SubTexture name="Text-BonusTimePlus" x="1609" y="913" width="372" height="63" frameX="0" frameY="0" frameWidth="376" frameHeight="63"/>
+    <SubTexture name="Text-Boost" x="1609" y="689" width="431" height="86"/>
+    <SubTexture name="Text-Brake" x="1609" y="777" width="405" height="66"/>
+    <SubTexture name="Text-ChainTimePlus" x="1609" y="845" width="401" height="66"/>
+    <SubTexture name="Text-ExtraEgg" x="1554" y="978" width="361" height="50" frameX="0" frameY="0" frameWidth="363" frameHeight="50"/>
+    <SubTexture name="abbca" x="721" y="675" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
+    <SubTexture name="abcb" x="1825" y="670" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
+    <SubTexture name="acba" x="1757" y="670" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
+    <SubTexture name="arcade-background_iphone4" x="2" y="2" width="960" height="640"/>
+    <SubTexture name="bcaac" x="641" y="675" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
+    <SubTexture name="bccb" x="1689" y="675" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
+    <SubTexture name="bgm" x="1983" y="913" width="63" height="18"/>
+    <SubTexture name="ccbba" x="1609" y="675" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
+    <SubTexture name="combo-boost" x="788" y="1000" width="93" height="93"/>
+    <SubTexture name="combo-brake" x="883" y="980" width="93" height="93"/>
+    <SubTexture name="combo-chaintime" x="788" y="905" width="93" height="93"/>
+    <SubTexture name="combo-gold" x="883" y="885" width="93" height="93"/>
+    <SubTexture name="combo-leveluptime" x="788" y="810" width="93" height="93"/>
+    <SubTexture name="combo-rotteneggs" x="883" y="790" width="93" height="93"/>
+    <SubTexture name="combo-shuffle" x="788" y="715" width="93" height="93"/>
+    <SubTexture name="combo-special" x="919" y="695" width="93" height="93"/>
+    <SubTexture name="combo-speed" x="1926" y="594" width="93" height="93"/>
+    <SubTexture name="combo-time" x="1926" y="499" width="93" height="93"/>
+    <SubTexture name="combo-xtralife" x="1926" y="404" width="93" height="93"/>
+    <SubTexture name="combo-xtraspawn" x="1917" y="998" width="88" height="88"/>
+    <SubTexture name="combo_abbca" x="1926" y="337" width="105" height="65"/>
+    <SubTexture name="combo_abcb" x="1926" y="270" width="105" height="65"/>
+    <SubTexture name="combo_acba" x="1926" y="203" width="105" height="65"/>
+    <SubTexture name="combo_bcaac" x="1926" y="136" width="105" height="65"/>
+    <SubTexture name="combo_bccb" x="1926" y="69" width="105" height="65"/>
+    <SubTexture name="combo_ccbba" x="1926" y="2" width="105" height="65"/>
+    <SubTexture name="controls" x="788" y="695" width="129" height="18"/>
+    <SubTexture name="graphics" x="1735" y="644" width="132" height="24"/>
+    <SubTexture name="high" x="860" y="1095" width="70" height="18"/>
+    <SubTexture name="info-button" x="788" y="1115" width="66" height="66" frameX="-3" frameY="-2" frameWidth="70" frameHeight="70"/>
+    <SubTexture name="info-gold" x="2" y="1767" width="574" height="274" frameX="-13" frameY="-13" frameWidth="600" frameHeight="300"/>
+    <SubTexture name="info-rotteneggs" x="2" y="1491" width="574" height="274" frameX="-13" frameY="-13" frameWidth="600" frameHeight="300"/>
+    <SubTexture name="info-shuffle" x="2" y="1215" width="574" height="274" frameX="-13" frameY="-13" frameWidth="600" frameHeight="300"/>
+    <SubTexture name="info-speed" x="978" y="920" width="574" height="274" frameX="-13" frameY="-13" frameWidth="600" frameHeight="300"/>
+    <SubTexture name="info-time" x="1033" y="644" width="574" height="274" frameX="-13" frameY="-13" frameWidth="600" frameHeight="300"/>
+    <SubTexture name="info-xtralife" x="578" y="1215" width="574" height="274" frameX="-13" frameY="-13" frameWidth="600" frameHeight="300"/>
+    <SubTexture name="loading" x="964" y="2" width="960" height="640"/>
+    <SubTexture name="low" x="788" y="1095" width="70" height="18"/>
+    <SubTexture name="off" x="1983" y="953" width="61" height="18"/>
+    <SubTexture name="on" x="986" y="675" width="40" height="18"/>
+    <SubTexture name="pleaseswipeup" x="1554" y="1061" width="300" height="100"/>
+    <SubTexture name="right-arrow" x="1869" y="644" width="27" height="22" frameX="0" frameY="-3" frameWidth="27" frameHeight="28"/>
+    <SubTexture name="settings menu" x="2" y="689" width="784" height="524" frameX="-13" frameY="-13" frameWidth="810" frameHeight="550"/>
+    <SubTexture name="sfx" x="1917" y="978" width="64" height="18"/>
+    <SubTexture name="sound" x="883" y="1075" width="91" height="18"/>
+    <SubTexture name="text-arcade" x="244" y="644" width="215" height="32"/>
+    <SubTexture name="text-no" x="978" y="790" width="40" height="18"/>
+    <SubTexture name="text-purchase" x="801" y="675" width="183" height="18"/>
+    <SubTexture name="text-settings" x="2" y="644" width="240" height="32"/>
+    <SubTexture name="text-story" x="461" y="644" width="178" height="32"/>
+    <SubTexture name="text-yes" x="1983" y="973" width="60" height="18"/>
+    <SubTexture name="text_arcade mode" x="1554" y="1030" width="352" height="29"/>
+    <SubTexture name="text_leaderboards" x="641" y="644" width="390" height="29"/>
+    <SubTexture name="text_play" x="1609" y="644" width="124" height="29"/>
+    <SubTexture name="vfx" x="1983" y="933" width="63" height="18"/>
+    <SubTexture name="x" x="2021" y="404" width="21" height="18"/>
 </TextureAtlas>

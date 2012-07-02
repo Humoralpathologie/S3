@@ -183,7 +183,11 @@ package Menu
                       _showingInfo = false;
                       that.removeChild(_levelInfo);
                     } else {
-                      StageManager.switchStage(AssetRegistry.LEVELS[level - 1]);
+                      if (level == 1) {
+                        StageManager.switchStage(AssetRegistry.LEVELS[level - 1], null, "test.flv");
+                      } else {
+                        StageManager.switchStage(AssetRegistry.LEVELS[level - 1]);
+                      }
                     }
                   }
                 });
