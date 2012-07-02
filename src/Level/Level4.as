@@ -36,7 +36,7 @@ package Level
     }
     
     override protected function setBoundaries():void {
-      _levelBoundaries = new Rectangle(10, 7, 42, 32);
+      _levelBoundaries = new Rectangle(10, 7, 42, 33);
     }
     
     override protected function addBackground():void {
