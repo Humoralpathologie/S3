@@ -9,6 +9,10 @@ package
   import flash.display.StageAlign;
   import flash.display.StageScaleMode;
   import flash.geom.Rectangle;
+  import flash.media.StageVideo;
+  import flash.media.Video;
+  import flash.net.NetConnection;
+  import flash.net.NetStream;
   import flash.ui.Multitouch;
   import flash.ui.MultitouchInputMode;
   import Level.LevelState;
@@ -77,11 +81,11 @@ package
 
         var yy:int = (screenHeight - hheight) / 2;
         var xx:int = (screenWidth - wwidth) / 2;
-        starling = new  starling.core.Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight));
+        starling = new starling.core.Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight));
         starling.stage.stageHeight = 640;
         starling.stage.stageWidth = 960;
       }
-      
+       
       var loadingSprite:Sprite = new Sprite()
       var loadingBMP:Bitmap = new AssetRegistry.LoadingPNG();
       loadingBMP.x = Starling.current.viewPort.x;
@@ -113,6 +117,7 @@ package
        {
        starling.stop();
      });
+     
     }
     private function deactivate(e:Event):void
     {
