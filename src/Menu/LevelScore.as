@@ -77,7 +77,9 @@ package Menu
       _timeBonus = Math.max(_timeBonus, 0);
       
       _scores.total += (_timeBonus * 5);
-      SaveGame.saveScore(_scores.level, _scores.score);
+      if(!_scores.lost) {
+        SaveGame.saveScore(_scores.level, _scores.score);
+      }
       AssetRegistry.loadScoringGraphics();
       buildMenu();
       startScoring();
@@ -227,8 +229,10 @@ package Menu
       var triggerLife:Function = function(tween:GTween):void{
         _tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.lives * 100}, {ease: Exponential.easeOut, onComplete:triggerTotal}));
       }
-      var triggerTime:Function = function(tween:GTween):void{
-        _tweens.push(new GTween(self, 2, {_timeBonusCounter: _timeBonus}, {ease: Exponential.easeOut, onComplete:triggerLife}));
+      var triggerTime:Function = function(tween:GTween):void {
+        if(!_scores.lost) {
+          _tweens.push(new GTween(self, 2, { _timeBonusCounter: _timeBonus }, { ease: Exponential.easeOut, onComplete:triggerLife } ));
+        }
       }
       var triggerTotal:Function = function(tween:GTween):void{
         _tweens.push(new GTween(self, 2, {_totalCounter: _scores.total}, {ease: Exponential.easeOut, onComplete:triggerEXP}));

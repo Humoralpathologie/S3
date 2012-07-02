@@ -802,7 +802,7 @@ package Level
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
-        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake:_snake}
+        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake:_snake, lost:true}
         
         AssetRegistry.soundmanager.fadeOutMusic();
         StageManager.switchStage(LevelScore, score);
