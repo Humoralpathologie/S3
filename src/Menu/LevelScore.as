@@ -83,12 +83,12 @@ package Menu
     private function calculateTime():void
     {
       if (_scores.level == 1) {
-        _timeBonus = 180 - int(_scores.time);
+        (180 - int(_scores.time) > 0) ? _timeBonus = 180 - int(_scores.time) : _timeBonus = 0;
       } else {
-        _timeBonus = 180 - int(_scores.time);
+        (180 - int(_scores.time) > 0) ? _timeBonus = 180 - int(_scores.time) : _timeBonus = 0;
       }
       if(_scores.snake){
-        _EXP = _scores.snake.eatenEggs - _scores.snake.body.length;
+        _EXP = _scores.snake.eatenEggs - (_scores.snake.body.length - 4);
       }
     }
 
@@ -160,14 +160,17 @@ package Menu
       var func:Function = function(tween:GTween):void {
         _medalTween.setValues({x: 960});
         if (_medal.x == 960) {
-          self.removeChild(_medal);
-          _medalSmall.x = 960;
-          _medalSmall.y = 0;
-          self.addChild(_medalSmall);
-          _medalTween.target = _medalSmall;
-          _medalTween.setValues({x: 320, y: 370});
-          _medalTween.autoPlay = false;
+          _medalTween.onComplete = func2;
         }
+      var func2:Function = function(tween:GTween):void {
+        self.removeChild(_medal);
+        _medalSmall.x = 960;
+        _medalSmall.y = 0;
+        self.addChild(_medalSmall);
+        _medalTween.target = _medalSmall;
+        _medalTween.setValues({x: 320, y: 370});
+        _medalTween.onComplete = null;
+      }
       }
       if (_scores.total >= 400 && _scores.total < 600) {
         _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_bronze"));
@@ -217,11 +220,6 @@ package Menu
       }
       
       _tweens.push(new GTween(this, 2, {_scoreCounter: _scores.score}, {ease: Exponential.easeOut, onComplete:triggerTime}));
-    /*
-       var tweenScore:GTween = new GTween(_scoreCounter, 2, {i: _score}, {ease: Exponential.easeOut});
-       var tweenLive:GTween = new GTween(_lifeBonusCounter, 2, {i: _liveBonus}, {ease: Exponential.easeOut});
-       var tweenTime:GTween = new GTween(_BCounter, 2, {i: _timeBonus}, {ease: Exponential.easeOut});
-     var tweenEXP:GTween = new GTween(_EXPCounter, 2, {i: _EXP}, {ease: Exponential.easeOut});  */
     }
     
     private function updateTexts(event:EnterFrameEvent):void
