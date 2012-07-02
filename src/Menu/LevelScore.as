@@ -145,7 +145,7 @@ package Menu
         var pos:int = 0;
         for (var i:int = 0; i < data.length; i++) {
           var score:Object = data[i];
-          var text:TextField = new TextField(300, 50, "", "kroeger 06_65", 30, 0xffffff);
+          var text:TextField = new TextField(450, 50, "", "kroeger 06_65", 30, 0xffffff);
           text.hAlign = HAlign.LEFT;
           text.text = String(1 + i) + ". " + score.Player.username + ": " + String(score.Score.score);
           text.x = _leaderboard.x + 20;
