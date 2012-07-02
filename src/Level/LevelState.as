@@ -783,7 +783,7 @@ package Level
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
-        var score:Object = {score: _score, lives: _snake.lives * 100, time: _overallTimer, level: _levelNr}
+        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake:_snake}
         
         AssetRegistry.soundmanager.fadeOutMusic();
         StageManager.switchStage(LevelScore, score);
@@ -1130,7 +1130,7 @@ package Level
       touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
-        var score:Object = {score: _score, lives: _snake.lives * 100, time: _overallTimer, level: _levelNr}
+        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake:_snake}
         AssetRegistry.soundmanager.fadeOutMusic();
         StageManager.switchStage(LevelScore, score);
         SaveGame.unlockLevel(_levelNr + 1);
