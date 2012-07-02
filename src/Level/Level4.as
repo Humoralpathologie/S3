@@ -71,7 +71,7 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snakes speed up to 7 and jump!");
+      showObjectiveBox("Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snake's speed up to 7 and jump!");
     }    
     
     override protected function addHud():void {
