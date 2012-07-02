@@ -1,6 +1,6 @@
 package Menu.ComboMenuScreens
 {
-  import flash.security.SignatureStatus;
+  //import flash.security.SignatureStatus;
   import mx.core.ButtonAsset;
   import org.josht.starling.display.Image;
   import org.josht.starling.foxhole.controls.Screen;
@@ -84,7 +84,7 @@ package Menu.ComboMenuScreens
         desc.y = (Starling.current.stage.stageHeight - desc.height) / 2;
         desc.scaleWhenDown = 1;
         
-        var that = this;
+        var that:MainComboMenu = this;
         var f:Function = function(desc:Button):void
         {
           button.addEventListener(Event.TRIGGERED, function(event:Event):void
@@ -144,7 +144,7 @@ package Menu.ComboMenuScreens
     
     protected function buttonSelector(slot:int):Function
     {
-      var that = this;
+      var that:MainComboMenu = this;
       
       return function(event:Event):void
       {

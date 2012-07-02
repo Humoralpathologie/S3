@@ -68,7 +68,7 @@ package Menu.ComboMenuScreens
       timeText.y = 404;
       addChild(timeText);
       
-      var that = this;
+      var that:ComboSelect = this;
       
       boost.addEventListener(Event.TRIGGERED, function(event:Event):void {
         sharedData.effect = "combo-boost";
@@ -112,7 +112,7 @@ package Menu.ComboMenuScreens
         comboButton.x = reference.x + 50 + i * 150;
         sprite.addChild(comboButton);
         
-        var that = this;
+        var that:ComboSelect = this;
         
         var f:Function = function(combo:String):void {
           comboButton.addEventListener(Event.TRIGGERED, function():void {

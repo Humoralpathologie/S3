@@ -39,7 +39,7 @@ package Menu.ComboMenuScreens
       
       addChild(greybox);
       
-      var that = this;
+      var that:ComboSelectTwo = this;
       
       var chaintime:Button = new Button(AssetRegistry.MenuAtlas.getTexture("combo-chaintime"));
       chaintime.x = 156;
@@ -98,7 +98,7 @@ package Menu.ComboMenuScreens
         comboButton.x = reference.x + 50 + i * 150;
         sprite.addChild(comboButton);
         
-        var that = this;
+        var that:ComboSelectTwo = this;
         
         var f:Function = function(combo:String):void
         {
