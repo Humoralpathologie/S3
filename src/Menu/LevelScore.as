@@ -70,6 +70,12 @@ package Menu
       }
       _scores["total"] = _scores.score + (_scores.lives * 100);
       calculateTime();
+      
+      // No negative scores;
+      
+      _EXP = Math.max(_EXP, 0);
+      _timeBonus = Math.max(_timeBonus, 0);
+      
       _scores.total += (_timeBonus * 5);
       SaveGame.saveScore(_scores.level, _scores.score);
       AssetRegistry.loadScoringGraphics();
@@ -79,13 +85,27 @@ package Menu
     }
     private function calculateTime():void
     {
-      if (_scores.level == 1) {
-        _timeBonus = 180 - int(_scores.time);
-      } else {
-        _timeBonus = 180 - int(_scores.time);
+      
+      switch(_scores.level) {
+        case 1:
+            _timeBonus = 3 * 60 - int(_scores.time);
+            break;
+        case 2:
+            _timeBonus = 4 * 60 - int(_scores.time);
+            break;
+        case 3:
+            _timeBonus = 4 * 60 - int(_scores.time);
+            break;
+        case 4:
+            _timeBonus = 5 * 60 - int(_scores.time);
+            break;
+        default:
+            _timeBonus = 3 * 60 - int(_scores.time);  
+            break;
       }
+      
       if(_scores.snake){
-        _EXP = _scores.snake.eatenEggs - _scores.snake.body.length;
+        _EXP = _scores.snake.eatenEggs - (_scores.snake.body.length - 4);
       }
     }
 

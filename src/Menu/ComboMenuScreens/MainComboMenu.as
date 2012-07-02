@@ -1,7 +1,5 @@
 package Menu.ComboMenuScreens
 {
-  import flash.security.SignatureStatus;
-  import mx.core.ButtonAsset;
   import org.josht.starling.display.Image;
   import org.josht.starling.foxhole.controls.Screen;
   import org.osflash.signals.Signal;
