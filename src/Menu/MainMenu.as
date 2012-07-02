@@ -108,7 +108,7 @@ package Menu
       var boyStyle:Radio = new Radio();
       boyStyle.label = "Type 1";
       boyStyle.toggleGroup = controlGroup;
-      boyStyle.onPress.add(function(radio:Radio) {
+      boyStyle.onPress.add(function(radio:Radio):void {
         SaveGame.controlType = 1;
       });
       var girlStyle:Radio = new Radio();
