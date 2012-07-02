@@ -94,11 +94,6 @@ package Menu
       bg.x = (Starling.current.stage.stageWidth - bg.width) / 2;
       bg.y = (Starling.current.stage.stageHeight - bg.height) / 2;
       
-      /*var controlText:TextField = new TextField(200, 100, "Control Type", "kroeger 06_65", 30, 0xffffff);
-      controlText.hAlign = HAlign.LEFT;
-      controlText.vAlign = VAlign.TOP;
-      const*/
-      
       var controls:Image = new Image(AssetRegistry.MenuAtlas.getTexture("controls"));
       controls.x = 160;
       controls.y = 179;

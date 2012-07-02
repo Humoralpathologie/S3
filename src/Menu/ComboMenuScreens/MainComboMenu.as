@@ -43,6 +43,27 @@ package Menu.ComboMenuScreens
       addSwitchers();
       addButtons();
       addNormalCombos();
+      addInfo();
+    }
+    
+    private function addInfo():void {
+      var question:Button = new Button(AssetRegistry.MenuAtlas.getTexture("info-button"));
+      question.x = 860;
+      question.y = 30;
+      addChild(question);
+      
+      var infoDisplay:Button = new Button(AssetRegistry.MenuAtlas.getTexture("info-arcade"));
+      infoDisplay.x = (Starling.current.stage.stageWidth - infoDisplay.width) / 2;
+      infoDisplay.y = (Starling.current.stage.stageHeight - infoDisplay.height) / 2;
+      
+      question.addEventListener(Event.TRIGGERED, function(event:Event) {
+        addChild(infoDisplay);
+      });
+      
+      infoDisplay.addEventListener(Event.TRIGGERED, function(event:Event) {
+        removeChild(infoDisplay);
+      });
+      
     }
     
     private function addSwitchers():void
