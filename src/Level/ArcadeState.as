@@ -124,7 +124,7 @@ package Level
       _hud.radar.update(); 
       _hud.score = String(_score);
       _hud.lifesText = String(_snake.lives);
-      _hud.timeText = String(_timeLeft.toFixed(2)); 
+      _hud.timeText = String(Math.max(0,_timeLeft).toFixed(2)); 
       _hud.poisonText = String(_poisonEggs);
       _hud.comboText = String(_combos);
     }
