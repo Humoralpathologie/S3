@@ -79,10 +79,14 @@ package Menu
     }
     private function calculateTime():void
     {
-      if (_scores.level == 1) {
-        (180 - int(_scores.time) > 0) ? _timeBonus = 180 - int(_scores.time) : _timeBonus = 0;
-      } else {
-        (180 - int(_scores.time) > 0) ? _timeBonus = 180 - int(_scores.time) : _timeBonus = 0;
+      if (_scores.time != 0) {
+        if (_scores.level == 1) {
+          (210 - int(_scores.time) > 0) ? _timeBonus = 180 - int(_scores.time) : _timeBonus = 0;
+        } else if (_scores.level == 2) {
+          (240 - int(_scores.time) > 0) ? _timeBonus = 180 - int(_scores.time) : _timeBonus = 0;
+        } else {
+          (210 - int(_scores.time) > 0) ? _timeBonus = 180 - int(_scores.time) : _timeBonus = 0;
+        }
       }
       if(_scores.snake){
         _EXP = _scores.snake.eatenEggs - (_scores.snake.body.length - 4);
@@ -170,22 +174,22 @@ package Menu
           //_medalTween.autoPlay = false;   
       }
       
-      if (_scores.total >= 400 && _scores.total < 600) {
+      if (_scores.total >= 100 && _scores.total < 250) {
         _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_bronze"));
         _medal.x = -800;
         _medal.y = 0;
         _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
-      } else if (_scores.total >= 600 && _scores.total < 800) {
+      } else if (_scores.total >= 250 && _scores.total < 550) {
         _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_saphir"));
         _medal.x = -800;
         _medal.y = 0;
         _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("saphir_small"));
-      } else if (_scores.total >= 800 && _scores.total < 1000) {
+      } else if (_scores.total >= 550 && _scores.total < 850) {
         _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_silber"));
         _medal.x = -800;
         _medal.y = 0;
         _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("silver_small"));
-      } else if (_scores.total >= 1000) {
+      } else if (_scores.total >= 850) {
         _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_gold"));
         _medal.x = -800;
         _medal.y = 0;
