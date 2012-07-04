@@ -99,7 +99,7 @@ package Menu
             _timeBonus = 4 * 60 - int(_scores.time);
             break;
         case 4:
-            _timeBonus = 5 * 60 - int(_scores.time);
+            _timeBonus = 3 * 60 - int(_scores.time);
             break;
         default:
             _timeBonus = 3 * 60 - int(_scores.time);  
