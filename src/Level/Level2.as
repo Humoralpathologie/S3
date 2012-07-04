@@ -44,7 +44,7 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("Little Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.\n\nObjective:\nDevour 10 Blue Egg Combos!");
+      showObjectiveBox("Little Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.\n\nObjective:\nDevour 10 Blue Egg Combos!!");
     }
     
     override public function dispose():void
