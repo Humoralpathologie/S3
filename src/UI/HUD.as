@@ -2,9 +2,13 @@ package UI
 {
   import Eggs.Eggs;
   import flash.system.ImageDecodingPolicy;
+  import Level.LevelState;
+  import mx.core.ButtonAsset;
   import Snake.Snake;
+  import starling.display.Button;
   import starling.display.Image;
 	import starling.display.Sprite;
+  import starling.events.Event;
   import starling.text.TextField;
   import starling.textures.Texture;
   import engine.AssetRegistry;
@@ -13,6 +17,10 @@ package UI
   import starling.utils.Color;
   import starling.display.BlendMode;
   import starling.core.Starling;
+  import engine.SaveGame;
+  import starling.events.TouchEvent;
+  import starling.events.TouchPhase;
+  import starling.events.Touch;
 	
 	/**
      * ...
@@ -45,15 +53,66 @@ package UI
                           speed: [_speed, _speedText, {x: 108, y: 70}],
                           poison: [_poison, _poisonText, {x: 12, y: 70}]
                           };
-    public function HUD(radar:Radar, others:Array)//[lifes, eggs, time ...]; 
+                          
+    // TODO: We dont need all these parameters
+    
+    public function HUD(radar:Radar, others:Array, levelstate:LevelState )//[lifes, eggs, time ...]; 
     {
       _radar = radar;
       _scoreText = new TextField(100, 50, "0", "kroeger 06_65", 45, Color.WHITE);
       _scoreText.x = Starling.current.stage.stageWidth / 2 - _scoreText.width/2;
       _scoreText.y = 0;
       _scoreText.hAlign = HAlign.CENTER;
+      
 
-      _overlay = new Image(AssetRegistry.SnakeAtlas.getTexture("UIOverlay"));
+      if (SaveGame.controlType == 1 || SaveGame.controlType == 2) {
+        var bottom:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("ui-180-bottom"));
+        bottom.y = 190;
+        addChild(bottom);
+      }
+      
+      if (SaveGame.controlType == 4) {
+        var left:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-4way-bottom-left"));
+        left.y = 190;
+        left.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
+          if (event.getTouch(left, TouchPhase.BEGAN) && levelstate.snake.head.facing != AssetRegistry.RIGHT) {
+            levelstate.snake.head.facing = AssetRegistry.LEFT;
+          }
+        });
+        addChild(left);
+        
+        var right:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-4way-bottom-right"));
+        right.y = 190;
+        right.x = left.x + left.width;
+        right.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {        
+          if ((event.getTouch(right, TouchPhase.BEGAN)) && levelstate.snake.head.facing != AssetRegistry.LEFT) {
+            levelstate.snake.head.facing = AssetRegistry.RIGHT;
+          }
+        });
+        addChild(right);
+        
+        var up:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-4way-bottom-up"));
+        up.x = right.x + right.width;
+        up.y = 190;
+        up.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
+          if (event.getTouch(up, TouchPhase.BEGAN) && levelstate.snake.head.facing != AssetRegistry.DOWN) {
+            levelstate.snake.head.facing = AssetRegistry.UP;
+          }
+        });
+        addChild(up);
+        
+        var down:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-4way-bottom-down"));
+        down.x = up.x;
+        down.y = up.y + up.height;
+        down.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
+          if (event.getTouch(down, TouchPhase.BEGAN) && levelstate.snake.head.facing != AssetRegistry.UP) {
+            levelstate.snake.head.facing = AssetRegistry.DOWN;
+          }
+        });
+        addChild(down);              
+      }
+      
+      _overlay = new Image(AssetRegistry.SnakeAtlas.getTexture("ui-top"));
       _overlay.smoothing = TextureSmoothing.NONE;
       addChild(_overlay);
      

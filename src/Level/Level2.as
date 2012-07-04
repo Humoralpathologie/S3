@@ -62,7 +62,7 @@ package Level
     }
     
     override protected function addHud():void {
-      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "speed"]);
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "speed"], this);
       addChild(_hud);
       
     }

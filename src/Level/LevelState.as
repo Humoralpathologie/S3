@@ -273,7 +273,7 @@ package Level
     
     protected function addHud():void
     {
-      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time"]);
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time"], this);
       addChild(_hud);
     }
     
@@ -999,7 +999,7 @@ package Level
         {
           if (_snake.oneeighty == 0)
           {
-            if (touch.getLocation(this).y > 500 || SaveGame.controlType == 3)
+            if (touch.getLocation(this).y > 500 || SaveGame.controlType == 3 || SaveGame.controlType == 4)
             {
               if (SaveGame.controlType == 1)
               {

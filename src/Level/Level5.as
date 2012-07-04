@@ -44,7 +44,7 @@ package Level
       showObjectiveBox("These ghastly spikes won't hold little Snake back!\n\nObjective:\nAvoid the spikes for at least 4 Minutes. If the Rotten Eggs get in your way, try the new combo displayed in the upper right corner.");
     }        
     override protected function addHud():void {
-      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed", "poison"]);
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed", "poison"],this);
       addChild(_hud);
       
     }

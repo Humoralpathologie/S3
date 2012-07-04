@@ -44,7 +44,7 @@ package Level
       _levelStage.addChild(flowers);
     }
     override protected function addHud():void {
-      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed", "poison"]);
+      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed", "poison"],this);
       addChild(_hud);
       
     }
