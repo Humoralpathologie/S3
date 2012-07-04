@@ -38,7 +38,7 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("For Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 50 eggs & pay attention to the bonus scoring on your performance!");
+      showObjectiveBox("For Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 50 eggs & pay attention to the bonus scoring on your performance!!");
     }
     
     override public function spawnRandomEgg():void {
