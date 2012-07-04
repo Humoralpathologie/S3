@@ -134,8 +134,7 @@ package Level
       _speed = 1 / 10;
       
       this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
-      this.addEventListener(TouchEvent.TOUCH, onTouch);
-      Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+
       // Combos:
       
       _comboSet = new Combo.ComboSet();
@@ -212,7 +211,8 @@ package Level
     
     }
     
-    public function extendTime():void {
+    public function extendTime():void
+    {
       _timeLeft += _timeExtension;
     }
     
@@ -232,6 +232,8 @@ package Level
     protected function showObjective():void
     {
       unpause();
+      addEventListener(TouchEvent.TOUCH, onTouch);
+      addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);               
     }
     
     public function showMessage(message:String):void
@@ -530,16 +532,19 @@ package Level
         
         var points:int = 2;
         
-        if (egg.type == AssetRegistry.EGGGOLDEN) {
+        if (egg.type == AssetRegistry.EGGGOLDEN)
+        {
           points = 100;
         }
         
-        if (egg.type == AssetRegistry.EGGSHUFFLE) {
+        if (egg.type == AssetRegistry.EGGSHUFFLE)
+        {
           _snake.shuffle();
           points = 0;
         }
         
-        if(points > 0) {
+        if (points > 0)
+        {
           showPoints(egg, String(points));
         }
         
@@ -802,7 +807,7 @@ package Level
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
-        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake:_snake, lost:true}
+        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true}
         
         AssetRegistry.soundmanager.fadeOutMusic();
         StageManager.switchStage(LevelScore, score);
@@ -848,8 +853,8 @@ package Level
           updateTimers(event);
         }
         
-        
-        if (_eggs.eggPool.length < _maxEggs) {
+        if (_eggs.eggPool.length < _maxEggs)
+        {
           spawnRandomEgg();
         }
         
@@ -989,6 +994,94 @@ package Level
           _possibleSwipe = false;
           
         }
+        
+        if (_swipeMenu.y == Starling.current.stage.stageHeight)
+        {
+          if (_snake.oneeighty == 0)
+          {
+            if (touch.getLocation(this).y > 500 || SaveGame.controlType == 3)
+            {
+              if (SaveGame.controlType == 1)
+              {
+                if (touch.getLocation(this).x > 480)
+                {
+                  _snake.moveRight();
+                }
+                else
+                {
+                  _snake.moveLeft();
+                }
+              }
+              else if (SaveGame.controlType == 2)
+              {
+                if (touch.getLocation(this).x > 480)
+                {
+                  if (_snake.head.facing == AssetRegistry.DOWN)
+                  {
+                    _snake.moveLeft();
+                  }
+                  else
+                  {
+                    _snake.moveRight();
+                  }
+                }
+                else
+                {
+                  if (_snake.head.facing == AssetRegistry.DOWN)
+                  {
+                    _snake.moveRight();
+                  }
+                  else
+                  {
+                    _snake.moveLeft();
+                    
+                  }
+                }
+              }
+              else if (SaveGame.controlType == 3)
+              {
+                var touchpoint:Point = touch.getLocation(this);
+                var center:Point = new Point(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
+                var dx = Math.abs(touchpoint.x - center.x);
+                var dy = Math.abs(touchpoint.y - center.y);
+                ;
+                if (dx > dy)
+                {
+                  if (touchpoint.x < center.x && _snake.head.facing != AssetRegistry.RIGHT)
+                  {
+                    _snake.head.facing = AssetRegistry.LEFT;
+                  }
+                  else if (touchpoint.x > center.x && _snake.head.facing != AssetRegistry.LEFT)
+                  {
+                    _snake.head.facing = AssetRegistry.RIGHT;
+                  }
+                }
+                else
+                {
+                  if (touchpoint.y < center.y && _snake.head.facing != AssetRegistry.DOWN)
+                  {
+                    _snake.head.facing = AssetRegistry.UP;
+                  }
+                  else if (touchpoint.y > center.y && _snake.head.facing != AssetRegistry.UP)
+                  {
+                    _snake.head.facing = AssetRegistry.DOWN;
+                  }
+                }
+              }
+            }
+            else
+            {
+              if (touch.getLocation(this).x > 480)
+              {
+                _snake.oneeightyRight();
+              }
+              else
+              {
+                _snake.oneeightyLeft();
+              }
+            }
+          }
+        }
       }
       else
       {
@@ -1011,76 +1104,7 @@ package Level
           }
           else
           {
-            if (_swipeMenu.y == Starling.current.stage.stageHeight)
-            {
-              if (_snake.oneeighty == 0)
-              {
-                if (touch.getLocation(this).y > 500 || SaveGame.controlType == 3)
-                {
-                  if (SaveGame.controlType == 1)
-                  {
-                    if (touch.getLocation(this).x > 480)
-                    {
-                      _snake.moveRight();
-                    }
-                    else
-                    {
-                      _snake.moveLeft();
-                    }
-                  }
-                  else if (SaveGame.controlType == 2)
-                  {
-                    if (touch.getLocation(this).x > 480)
-                    {
-                      if (_snake.head.facing == AssetRegistry.DOWN)
-                      {
-                        _snake.moveLeft();
-                      }
-                      else
-                      {
-                        _snake.moveRight();
-                      }
-                    }
-                    else
-                    {
-                      if (_snake.head.facing == AssetRegistry.DOWN)
-                      {
-                        _snake.moveRight();
-                      }
-                      else
-                      {
-                        _snake.moveLeft();
-                        
-                      }
-                    }
-                  } else if (SaveGame.controlType == 3) {
-                    var touchpoint:Point = touch.getLocation(this);
-                    var center:Point = new Point(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
-                    var dx = Math.abs(touchpoint.x - center.x);
-                    var dy = Math.abs(touchpoint.y - center.y);;
-                    if (dx > dy) {
-                      if (touchpoint.x < center.x && _snake.head.facing != AssetRegistry.RIGHT){
-                        _snake.head.facing = AssetRegistry.LEFT;
-                      } else if (touchpoint.x > center.x && _snake.head.facing != AssetRegistry.LEFT) {
-                        _snake.head.facing = AssetRegistry.RIGHT;
-                      }
-                    } else {
-                      if (touchpoint.y < center.y && _snake.head.facing != AssetRegistry.DOWN) {
-                        _snake.head.facing = AssetRegistry.UP;
-                      } else if (touchpoint.y > center.y && _snake.head.facing != AssetRegistry.UP) {
-                        _snake.head.facing = AssetRegistry.DOWN;
-                      }
-                    }
-                  }
-                } else {
-                  if (touch.getLocation(this).x > 480) {
-                    _snake.oneeightyRight();
-                  } else {
-                    _snake.oneeightyLeft();
-                  }
-                }
-              }
-            }
+            
           }
         }
       }
@@ -1136,6 +1160,7 @@ package Level
       text.x = (960 - text.width) / 2;
       text.y = (640 - text.height) / 2;
       text.touchable = false;
+      var that = this;
       
       box.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
         {
@@ -1144,6 +1169,8 @@ package Level
           {
             removeChild(box);
             removeChild(text);
+            that.addEventListener(TouchEvent.TOUCH, onTouch);
+            that.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);            
             unpause();
           }
         });
@@ -1172,7 +1199,7 @@ package Level
       touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
-        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake:_snake}
+        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake}
         AssetRegistry.soundmanager.fadeOutMusic();
         StageManager.switchStage(LevelScore, score);
         SaveGame.unlockLevel(_levelNr + 1);
@@ -1210,34 +1237,34 @@ package Level
       return _rottenEggs;
     }
     
-    public function get timeExtension():Number 
+    public function get timeExtension():Number
     {
-        return _timeExtension;
+      return _timeExtension;
     }
     
-    public function set timeExtension(value:Number):void 
+    public function set timeExtension(value:Number):void
     {
-        _timeExtension = value;
+      _timeExtension = value;
     }
     
-    public function get chainTime():Number 
+    public function get chainTime():Number
     {
-        return _chainTime;
+      return _chainTime;
     }
     
-    public function set chainTime(value:Number):void 
+    public function set chainTime(value:Number):void
     {
-        _chainTime = value;
+      _chainTime = value;
     }
     
-    public function get eggs():Eggs 
+    public function get eggs():Eggs
     {
-        return _eggs;
+      return _eggs;
     }
     
-    public function set eggs(value:Eggs):void 
+    public function set eggs(value:Eggs):void
     {
-        _eggs = value;
+      _eggs = value;
     }
   
   }
