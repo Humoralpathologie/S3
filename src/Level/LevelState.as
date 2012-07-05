@@ -333,7 +333,7 @@ package Level
     protected function die():void
     {
       _snake.lives--;
-      _snake.mps = 10;
+      _snake.mps = SaveGame.startSpeed;
       if (_snake.lives < 0)
       {
         return;

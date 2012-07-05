@@ -25,6 +25,14 @@ package engine {
       return _sharedObject.data.startSpeed || 10;
     }
     
+    public static function get noGreenArcade():Boolean {
+      return _sharedObject.data.noGreenArcade || false ;
+    }
+    
+    public static function set noGreenArcade(value:Boolean):void {
+      _sharedObject.data.noGreenArcade = value;
+    }
+    
     public static function set startSpeed(value:int):void {
       _sharedObject.data.startSpeed = value;
     }    

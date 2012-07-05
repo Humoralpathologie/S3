@@ -82,7 +82,12 @@ package Level
     
     override public function spawnRandomEgg():void {
       var egg:Eggs.Egg;
-      var types:Array = [AssetRegistry.EGGZERO, AssetRegistry.EGGA, AssetRegistry.EGGB, AssetRegistry.EGGC]
+      var types:Array = [AssetRegistry.EGGA, AssetRegistry.EGGB, AssetRegistry.EGGC, AssetRegistry.EGGA, AssetRegistry.EGGB, AssetRegistry.EGGC];
+      
+      if (!SaveGame.noGreenArcade) {
+        types.push(AssetRegistry.EGGZERO);
+      }
+      
       var type:int = types[Math.floor(Math.random() * types.length)];
       
       egg = new Egg(0, 0, type);
