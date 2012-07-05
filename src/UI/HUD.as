@@ -161,7 +161,7 @@ package UI
       _comboText.text = combo;
     }
     public function set speedText(speed:String):void {
-      _speedText.text = String(int(speed) - 9);
+      _speedText.text = String(int(speed) - (SaveGame.startSpeed - 1));
     }
     public function set eggsText(eggs:String):void {
       _neededEggsText.text = eggs;

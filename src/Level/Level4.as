@@ -14,6 +14,7 @@ package Level
   import UI.HUD;
   import UI.Radar;
   import Eggs.Egg;
+  import engine.SaveGame;
   
   
   public class Level4 extends LevelState 
@@ -113,7 +114,7 @@ package Level
     } 
     
     override protected function checkWin():void {
-      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= 16) {
+      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= SaveGame.startSpeed + 6) {
         win();
       }
     }

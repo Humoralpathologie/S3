@@ -131,7 +131,7 @@ package Level
       
       _currentCombos = null;
       
-      _speed = 1 / 10;
+      _speed = 1 / SaveGame.startSpeed;
       
       this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
 
@@ -155,7 +155,7 @@ package Level
       addObstacles();
       setBoundaries();
       
-      _snake = new Snake(10);
+      _snake = new Snake(SaveGame.startSpeed);
       _following = _snake.head;
       _levelStage.addChild(_snake);
       
@@ -176,7 +176,7 @@ package Level
       swipeBackground.alpha = 0.3;
       
       _swipeMenu.addChild(swipeBackground);
-      _swipeMenu.y = Starling.current.stage.stageHeight;
+      _swipeMenu.y = - _swipeMenu.height;
       addChild(_swipeMenu);
       
       var back:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("text-ingame-main menu"));
@@ -983,7 +983,7 @@ package Level
       var touch:Touch = event.getTouch(this, TouchPhase.BEGAN);
       if (touch)
       {
-        if (touch.getLocation(this).y > 400)
+        if (touch.getLocation(this).y < 200)
         {
           trace("Possible swipe!");
           _possibleSwipe = true;
@@ -995,7 +995,7 @@ package Level
           
         }
         
-        if (_swipeMenu.y == Starling.current.stage.stageHeight)
+        if (_swipeMenu.y == - _swipeMenu.height)
         {
           if (_snake.oneeighty == 0)
           {
@@ -1091,20 +1091,16 @@ package Level
           if (_possibleSwipe && Math.abs((_swipeY - touch.getLocation(this).y)) > 50)
           {
             trace("Swipe!");
-            if (_swipeMenu.y == Starling.current.stage.stageHeight && _swipeY > touch.getLocation(this).y)
+            if (_swipeMenu.y == - _swipeMenu.height && _swipeY < touch.getLocation(this).y)
             {
-              new GTween(_swipeMenu, 0.2, {"y": Starling.current.stage.stageHeight - _swipeMenu.height});
+              new GTween(_swipeMenu, 0.2, {"y": 0});
               pause();
             }
-            else if (_swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height && _swipeY < touch.getLocation(this).y)
+            else if (_swipeMenu.y == 0 && _swipeY > touch.getLocation(this).y)
             {
-              new GTween(_swipeMenu, 0.2, {"y": Starling.current.stage.stageHeight});
+              new GTween(_swipeMenu, 0.2, {"y": - _swipeMenu.height});
               unpause();
             }
-          }
-          else
-          {
-            
           }
         }
       }

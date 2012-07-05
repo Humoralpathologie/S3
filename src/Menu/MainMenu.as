@@ -2,9 +2,12 @@ package Menu
 {
     import engine.ManagedStage;
     import org.josht.starling.foxhole.controls.Radio;
+    import org.josht.starling.foxhole.controls.ScreenNavigator;
+    import org.josht.starling.foxhole.controls.ScreenNavigatorItem;
     import org.josht.starling.foxhole.core.ToggleGroup;
     import org.josht.starling.foxhole.text.BitmapFontTextFormat;
     import org.josht.starling.foxhole.themes.IFoxholeTheme;
+    import org.josht.starling.foxhole.transitions.ScreenSlidingStackTransitionManager;
     import starling.events.Event;
     //import flash.events.Event;
     import flash.media.SoundChannel;
@@ -26,6 +29,7 @@ package Menu
     import org.josht.starling.foxhole.controls.TextInput;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
+    import Menu.SettingsScreens.*;
     
   
   /**
@@ -40,6 +44,8 @@ package Menu
     private var _swipeMenu:Sprite;
     private var _swipeMessage:Image;    
     private var _theme:IFoxholeTheme;
+    private var _settings:ScreenNavigator;
+    private var _transitions:ScreenSlidingStackTransitionManager;
     
     public function MainMenu()
     {
@@ -79,10 +85,44 @@ package Menu
       settingsButton.x = 701;
       settingsButton.y = arcadeButton.y;
       //settingsButton.onRelease.add(showSettingsMenu);
-      settingsButton.addEventListener(Event.TRIGGERED, showSettingsMenu);
+      settingsButton.addEventListener(Event.TRIGGERED, showSettingsNavigator);
       _swipeMenu.addChild(settingsButton);
     
       addChild(_swipeMenu);
+      
+      createSettingsNavigator();
+    }
+    
+    private function createSettingsNavigator():void {
+      const MAINSETTINGSSCREEN:String = "MAIN";
+      const BETASETTINGSSCREEN:String = "BETA";
+      
+      _settings = new ScreenNavigator();
+      _transitions = new ScreenSlidingStackTransitionManager(_settings);
+      _settings.addScreen(MAINSETTINGSSCREEN, new ScreenNavigatorItem(MainSettingsScreen, {
+        onBetaSelect: BETASETTINGSSCREEN
+      }));
+      
+      _settings.addScreen(BETASETTINGSSCREEN, new ScreenNavigatorItem(BetaSettingsScreen, {
+        onMainSelect:MAINSETTINGSSCREEN
+      }));
+      
+      _settings.defaultScreenID = MAINSETTINGSSCREEN;
+      
+    }
+    
+    private function showSettingsNavigator(event:Event):void {
+      _settings.showDefaultScreen();
+      addChild(_settings);
+      var exit:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("x"));
+      exit.scaleX = exit.scaleY = 2;
+      exit.x = Starling.current.stage.stageWidth - exit.width - 10;
+      exit.y = 10;
+      var that = this;
+      exit.addEventListener(Event.TRIGGERED, function(event:Event):void {
+        that.removeChild(_settings);
+      });
+      _settings.addChild(exit);
     }
     
     private function showSettingsMenu(event:Event):void {
@@ -118,7 +158,7 @@ package Menu
       directionStyle.toggleGroup = controlGroup;
       directionStyle.onPress.add(function(radio:Radio):void {
         SaveGame.controlType = 3;
-      });      
+      });
       
       var fourway:Radio = new Radio;
       fourway.label = "4-Way";

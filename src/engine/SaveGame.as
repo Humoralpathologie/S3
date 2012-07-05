@@ -20,6 +20,14 @@ package engine {
     public static function set controlType(value:int):void {
       _sharedObject.data.controlType = value;
     }
+    
+    public static function get startSpeed():int {
+      return _sharedObject.data.startSpeed || 10;
+    }
+    
+    public static function set startSpeed(value:int):void {
+      _sharedObject.data.startSpeed = value;
+    }    
   
     public static function initializeData():void {
       _sharedObject.data.levels = {};
