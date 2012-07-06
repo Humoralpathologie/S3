@@ -914,6 +914,8 @@ package Level
         
         updateHud();
 
+        _hud.updatePreview(_snake);  
+
         _snake.update(event.passedTime * Starling.juggler.timeFactor);
           
         _speed = _snake.speed;
