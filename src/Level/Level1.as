@@ -22,7 +22,7 @@ package Level
   {
     public function Level1()
     {
-      AssetRegistry.loadLevel1Graphics();
+      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL1]);
       _levelNr = 1;
       super();
     }
@@ -57,7 +57,6 @@ package Level
     }
     
     override public function dispose():void {
-      AssetRegistry.disposeLevel1Graphics();
       super.dispose();
     }
      

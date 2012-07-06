@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:dc225d0b8b1ce7f2e011aa6554a62c1d$ -->
+<!-- $TexturePacker:SmartUpdate:e69780a3f1562fed693b9aa019d91b6d$ -->
 <TextureAtlas imagePath="LevelSelect.png">
     <SubTexture name="back-button_705-205" x="1722" y="80" width="215" height="121"/>
     <SubTexture name="background_small" x="1307" y="772" width="480" height="560"/>

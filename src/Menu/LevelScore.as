@@ -80,7 +80,7 @@ package Menu
       if(!_scores.lost) {
         SaveGame.saveScore(_scores.level, _scores.total);
       }
-      AssetRegistry.loadScoringGraphics();
+      AssetRegistry.loadGraphics([AssetRegistry.SCORING, AssetRegistry.SNAKE]);
       buildMenu();
       startScoring();
       updateLeaderboard();
@@ -201,7 +201,7 @@ package Menu
         _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_saphir"));
         _medal.x = -800;
         _medal.y = 0;
-        _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("saphir_small"));
+        _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("saphire_small"));
       } else if (_scores.total >= 800 && _scores.total < 1000) {
         _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_silber"));
         _medal.x = -800;
@@ -380,7 +380,6 @@ package Menu
       }
       _tweens = null;
       super.dispose();
-      AssetRegistry.disposeScoringGraphics();
     }
   }
 

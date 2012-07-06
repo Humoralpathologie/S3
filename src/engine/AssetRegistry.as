@@ -8,6 +8,7 @@ package engine
   import starling.text.TextField;
   import Level.*;
   import engine.SoundManager;
+  import flash.system.System;
   
   /**
    * ...
@@ -228,10 +229,29 @@ package engine
     
     public static var soundmanager:SoundManager;
     
+    public static var loaded:Array = [];
+
+    public static const MENU:String = "Menu";
+    public static const SNAKE:String = "Snake";
+    public static const ARCADE:String = "Arcade";
+    public static const SCORING:String = "Scoring";
+    public static const LEVELSELECT:String = "LevelSelect";
+    
+    public static const LEVEL1:String = "Level 1";
+    public static const LEVEL2:String = "Level 2";
+    public static const LEVEL3:String = "Level 3";
+    public static const LEVEL4:String = "Level 4";
+    public static const LEVEL5:String = "Level 5";
+    public static const LEVEL6:String = "Level 6";
+    public static const LEVEL7:String = "Level 7";
+    public static const LEVEL8:String = "Level 8";
+   
+    
     public static function init():void
     {
       LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6, Level7, Level7, ArcadeState];
       TextField.registerBitmapFont(new BitmapFont(Texture.fromBitmap(new FontPNG), XML(new FontXML)));
+      
       
       LevelMusic1Sound = new LevelMusic1;
       LevelMusic2Sound = new LevelMusic2;
@@ -240,6 +260,59 @@ package engine
       
       registerSounds();
       registerMusic();
+      
+    }
+    
+    public static function loadGraphics(needed:Array, keep:Boolean = false):void {
+      var assets:Object = {
+        (String(MENU)): { load: loadMenuGraphics, dispose: disposeMenuGraphics },
+        (String(LEVELSELECT)): { load: loadLevelSelectGraphics, dispose: disposeLevelSelectGraphics },
+        (String(SNAKE)): { load: loadLevelGraphics, dispose: disposeLevelGraphics },
+        (String(LEVEL1)): { load: loadLevel1Graphics, dispose: disposeLevel1Graphics },
+        (String(LEVEL2)): { load: loadLevel2Graphics, dispose: disposeLevel2Graphics },
+        (String(LEVEL3)): { load: loadLevel3Graphics, dispose: disposeLevel3Graphics },
+        (String(LEVEL4)): { load: loadLevel4Graphics, dispose: disposeLevel4Graphics },
+        (String(LEVEL5)): { load: loadLevel5Graphics, dispose: disposeLevel5Graphics },
+        (String(LEVEL6)): { load: loadLevel6Graphics, dispose: disposeLevel6Graphics },
+        (String(LEVEL7)): { load: loadLevel7Graphics, dispose: disposeLevel7Graphics },
+        (String(ARCADE)): { load: loadArcadeGraphics, dispose: disposeArcadeGraphics },
+
+        (String(SCORING)): { load: loadScoringGraphics, dispose: disposeScoringGraphics}
+      };
+      
+      var toUnload:Array = [];
+      
+      // Throw out stuff we already have and mark things to unload.
+      for (var i:int = 0; i < loaded.length; i++) {
+        if (needed.indexOf(loaded[i]) != -1) {
+          needed.splice(needed.indexOf(loaded[i]), 1);
+        } else {
+          toUnload.push(loaded[i]);
+        }
+      }
+      
+      // Unload what we don't need. Don't unload if keep is true.
+      if(!keep) {
+        for (var i:int = 0;  i < toUnload.length; i++) {
+          assets[toUnload[i]].dispose();
+          trace("Unloading " + toUnload[i]);
+          loaded.splice(loaded.indexOf(toUnload[i]), 1);
+        }
+      }
+      
+      // Run GC
+      
+      System.gc();
+      trace(needed);
+      trace(loaded);
+      
+      // Load what we still need
+      for (var i:int = 0; i < needed.length; i++) {
+        assets[needed[i]].load();
+        trace("Loading " + needed[i]);
+        loaded.push(needed[i]);
+      }
+  
     }
     
     public static function registerSounds():void {

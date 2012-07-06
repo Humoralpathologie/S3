@@ -57,7 +57,7 @@ package
       SaveGame.unlockLevels();
       
       var screenWidth:int = stage.fullScreenWidth;
-      var screenHeight:int = stage.fullScreenHeight;
+      var screenHeight:int = stage.fullScreenHeight;      
       
       if (Capabilities.os.indexOf("Windows") != -1 || Capabilities.os.indexOf("Mac") != -1)
       {

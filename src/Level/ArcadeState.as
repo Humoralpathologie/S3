@@ -42,7 +42,7 @@ package Level
   public class ArcadeState extends LevelState
   {
     public function ArcadeState() {
-      AssetRegistry.loadArcadeGraphics();
+      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.ARCADE]);
       _rottenEnabled = true;
       
       super();
@@ -96,7 +96,6 @@ package Level
     }
     
     override public function dispose():void {
-      AssetRegistry.disposeArcadeGraphics();
       super.dispose();
     }
     
