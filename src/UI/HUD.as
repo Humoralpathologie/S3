@@ -219,6 +219,7 @@ package UI
     }
     
     public function updatePreviewBox():void {
+      trace(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview"));
       for (var i:int = 0; i < _previewTypes.length; i++){
         _previewBoxes[i].texture = AssetRegistry.SnakeAtlas.getTexture(_previewTypes[i]);
         _previewBoxes[i].visible;  
