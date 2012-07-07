@@ -253,7 +253,7 @@ package UI
       } else {
         for (var i:int = snake.body.length - 5; i < snake.body.length; i++) {
           if (snake.body[i]){
-            _previewBoxes[i].texture = toPreviewType(snake.body[i].type);
+            _previewBoxes[i].texture = AssetRegistry.SnakeAtlas.getTexture(toPreviewType(snake.body[i].type));
           }
         }
       }

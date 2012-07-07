@@ -557,6 +557,7 @@ package Level
         if (egg.type <= AssetRegistry.EGGROTTEN)
         {
           _snake.eat(egg.type);
+		  _hud.updatePreview(_snake); 
         }
         
         var particle:PDParticleSystem = _particles[egg.type];
@@ -701,11 +702,19 @@ package Level
             AssetRegistry.soundmanager.playSound("comboSound" + Math.min(soundCounter, 7));
             
             showParticles(egg, soundCounter);
+<<<<<<< HEAD
             
             _snake.removeBodyPart(egg);
             
             soundCounter++;
             setTimeout(func, (300 / (expoCounter * expoCounter)) + 80);
+=======
+            _snake.removeChild(egg);
+            _snake.body.splice(_snake.body.indexOf(egg), 1);
+			soundCounter++;
+            _hud.updatePreview(_snake); 
+			setTimeout(func, (300 / (expoCounter * expoCounter)) + 80);
+>>>>>>> dcadcb7... fix UIBoxFuerPreview loading problem
           }
         } else {
           _justAte = true;
@@ -912,10 +921,18 @@ package Level
           spawnRandomEgg();
         }
         
+<<<<<<< HEAD
         updateHud();
 
         _hud.updatePreview(_snake);  
 
+=======
+        updateHud(); 
+        var startTimer:Number, endTimer:Number;
+        
+        //startTimer = getTimer();
+        
+>>>>>>> dcadcb7... fix UIBoxFuerPreview loading problem
         _snake.update(event.passedTime * Starling.juggler.timeFactor);
           
         _speed = _snake.speed;
