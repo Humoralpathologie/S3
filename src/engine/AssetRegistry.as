@@ -339,7 +339,6 @@ package engine
       ArcadeBackground = Texture.fromBitmap(new ArcadeBackgroundPNG);
       //ArcadeOverlayAtlas = new TextureAtlas(Texture.fromBitmap(new ArcadeOverlayAtlasPNG), XML(new ArcadeOverlayAtlasXML));
       
-      loadLevelGraphics();
     }
     
     public static function loadMenuGraphics():void
@@ -367,32 +366,26 @@ package engine
       //UIOverlayTexture.dispose();
       ArcadeBackground.dispose();
       //ArcadeOverlayAtlas.dispose();
-      disposeLevelGraphics();
     }
     
     public static function loadLevel1Graphics():void
     {
       Level1Background = Texture.fromBitmap(new Level1BackgroundPNG);
-      loadLevelGraphics();
     }
     
     public static function disposeLevel1Graphics():void
     {
       Level1Background.dispose();
-      disposeLevelGraphics();
     }
     
     public static function loadLevel2Graphics():void
     {
       Level2Background = Texture.fromBitmap(new Level2BackgroundPNG);
-      //Level2Background = Texture.fromAtfData(new Level2BackgroundATF);
-      loadLevelGraphics();
     }
     
     public static function disposeLevel2Graphics():void
     {
       Level2Background.dispose();
-      disposeLevelGraphics();
     }
     
     public static function loadLevel3Graphics():void
@@ -400,7 +393,6 @@ package engine
       Level3Background = Texture.fromBitmap(new Level3BackgroundPNG);
       Level3Stone = Texture.fromBitmap(new Level3StonePNG);
       Level3StoneGlow = Texture.fromBitmap(new Level3StoneGlowPNG);
-      loadLevelGraphics();
     }
     
     public static function disposeLevel3Graphics():void
@@ -408,47 +400,40 @@ package engine
       Level3Background.dispose();
       Level3Stone.dispose();
       Level3StoneGlow.dispose();
-      disposeLevelGraphics();
     }
     
     public static function loadLevel4Graphics():void
     {
       //Level4Background = Texture.fromBitmap(new Level4BackgroundPNG);
       Level4Atlas = new TextureAtlas(Texture.fromBitmap(new Level4AtlasPNG), XML(new Level4AtlasXML));
-      loadLevelGraphics();
     }
     
     public static function disposeLevel4Graphics():void
     {
       //Level4Background.dispose();
       Level4Atlas.dispose();
-      disposeLevelGraphics();
     }
     
     public static function loadLevel5Graphics():void
     {
       Level5Background = Texture.fromBitmap(new Level5BackgroundPNG);
-      loadLevelGraphics();
     }
     
     public static function disposeLevel5Graphics():void
     {
       Level5Background.dispose();
-      disposeLevelGraphics();
     }
     
     public static function loadLevel6Graphics():void
     {
       //Level6Background = Texture.fromBitmap(new Level6BackgroundPNG);
       Level6Atlas = new TextureAtlas(Texture.fromBitmap(new Level6AtlasPNG), XML(new Level6AtlasXML));
-      loadLevelGraphics();
     }
     
     public static function disposeLevel6Graphics():void
     {
       //Level6Background.dispose();
       Level6Atlas.dispose();
-      disposeLevelGraphics();
     }
     
     public static function loadLevelGraphics():void
@@ -486,14 +471,12 @@ package engine
     {
       //Level6Background = Texture.fromBitmap(new Level6BackgroundPNG);
       Level7Atlas = new TextureAtlas(Texture.fromBitmap(new Level7AtlasPNG), XML(new Level7AtlasXML));
-      loadLevelGraphics();
     }
     
     public static function disposeLevel7Graphics():void
     {
       //Level6Background.dispose();
       Level7Atlas.dispose();
-      disposeLevelGraphics();
     }
     
     public static function loadLevelSelectGraphics():void
