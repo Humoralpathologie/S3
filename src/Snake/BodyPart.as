@@ -58,7 +58,7 @@ package Snake
 
     }
     
-    public function flicker(n:Number = 2, tps:int = 5):void
+    public function flicker(n:Number = 2, tps:int = 10):void
     {
       var times:int = tps * n;
       var ms:Number = n * 1000 / times;
