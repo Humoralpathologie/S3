@@ -89,7 +89,7 @@ package Snake
     
     override public function update(time:Number):void
     {
-      super.update(time);
+      super.update(time);      
       if (facing != prevFacing)
       {
         switch (facing)

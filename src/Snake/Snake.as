@@ -32,14 +32,13 @@ package Snake
     private var _oneeighty:int = 0;
     private var _oneeightyDirection:int;
     private var _bodyEggs:Sprite;
+    private var _changedDirection:Boolean;
     
     public function Snake(mps:Number)
     {
       
       _head = new Head(5, 5, _speed, mps);
       
-      
-      //_body = new Vector.<BodyPart>;
       _body = [];
       _bodyEggs = new Sprite();
       
@@ -113,6 +112,7 @@ package Snake
     
     public function move():void
     {
+      _changedDirection = false;
       if (_oneeighty != 0)
       {
         _oneeighty--;
@@ -144,6 +144,7 @@ package Snake
       //move Tail
       _tail.tileX = _body[l - 1].tileX;
       _tail.tileY = _body[l - 1].tileY;
+      _tail.prevFacing = _tail.facing;
       _tail.facing = _body[l - 1].facing;
       _tail.animateMove();
       
@@ -152,6 +153,7 @@ package Snake
         b = _body[i - 1];
         a.tileX = b.tileX;
         a.tileY = b.tileY;
+        a.prevFacing = a.facing;
         a.facing = b.facing;
         a.animateMove();
         a = b;
@@ -160,30 +162,9 @@ package Snake
       trace("facing: " + String(_tail.facing));
       a.tileX = _head.tileX;
       a.tileY = _head.tileY;
+      a.prevFacing = a.facing;
       a.facing = _head.facing;
       a.animateMove();
-      
-      /*
-         var l:int = _body.length;
-         var a:Snake.BodyPart, b:Snake.BodyPart;
-         //_body.reverse();
-      
-         a = _body[0];
-         for (var i:int = 0; i < l - 1; i++) {
-         b = _body[i + 1];
-         a.tileX = b.tileX;
-         a.tileY = b.tileY;
-         a.facing = b.facing;
-         a.animateMove();
-         a = b;
-         }
-      
-         a.tileX = _head.tileX;
-         a.tileY = _head.tileY;
-         a.facing = _head.prevFacing;
-         a.animateMove();
-      
-       //_body.reverse();*/
       
       _head.advance();
     }
@@ -198,7 +179,7 @@ package Snake
       _tail.update(time);
     }
     
-    public function removeBodyPart(part:DisplayObject) {
+    public function removeBodyPart(part:DisplayObject):void {
       _bodyEggs.removeChild(part);
       body.splice(body.indexOf(part), 1);
     }
