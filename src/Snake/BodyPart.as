@@ -2,23 +2,29 @@ package Snake
 {
   import engine.TileSprite;
   import flash.geom.Point;
+  import starling.animation.IAnimatable;
   import starling.display.Image;
   import engine.AssetRegistry;
   import starling.textures.Texture;
   import starling.textures.TextureSmoothing;
   import flash.utils.*;
+  import starling.events.Event;
+  import starling.core.Starling;
   
   /**
    * ...
    * @author
    */
-  public class BodyPart extends TileSprite
+  public class BodyPart extends TileSprite implements IAnimatable
   {
     
     private var _imageLeft:Texture;
     private var _imageDown:Texture;
     private var _type:int;
     private var _removing:Boolean = false;
+    private var _flickerRest:Number = 0;
+    private var _flickerStep:Number = 0;
+    private var _flickerCount:Number = 0;
     
     public function BodyPart(tileX:int, tileY:int, speed:Number, type:int = AssetRegistry.EGGZERO)
     {
@@ -60,31 +66,13 @@ package Snake
     
     public function flicker(n:Number = 2, tps:int = 10):void
     {
-      var times:int = tps * n;
-      var ms:Number = n * 1000 / times;
-      var count:int = 0;
-      _image.visible = false;      
-      var func:Function = function():void
-      {
-        if (count < times)
-        {
-          count++;
-          if (_image.visible)
-          {
-            _image.visible = false;
-          }
-          else
-          {
-            _image.visible = true;
-          }
-          setTimeout(func, ms);
-        }
-        else
-        {
-          _image.visible = true;
-        }
+      if(_flickerRest <= 0) {
+        Starling.juggler.add(this);
       }
-      func();
+      
+      _flickerRest = n;
+      _flickerStep = 1 / tps;
+      _flickerCount = 0;
     }
     
     override public function update(time:Number):void
@@ -119,6 +107,19 @@ package Snake
     public function set removing(value:Boolean):void
     {
       _removing = value;
+    }
+    
+    public function advanceTime(time:Number):void {
+      if (_flickerRest <= 0) {
+        _image.visible = true;
+        dispatchEventWith(Event.REMOVE_FROM_JUGGLER);
+      }
+      _flickerCount += time;
+      if (_flickerCount > _flickerStep) {
+        _image.visible = !_image.visible;
+        _flickerCount -= _flickerStep;
+        _flickerRest -= _flickerStep;
+      }
     }
   }
 
