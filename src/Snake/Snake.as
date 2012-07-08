@@ -2,6 +2,7 @@ package Snake
 {
   import engine.TileSprite;
   import starling.animation.Tween;
+  import starling.display.DisplayObject;
   import starling.display.MovieClip;
   import starling.display.Sprite;
   import engine.AssetRegistry
@@ -30,26 +31,30 @@ package Snake
     private var _lives:int = 3;
     private var _oneeighty:int = 0;
     private var _oneeightyDirection:int;
+    private var _bodyEggs:Sprite;
     
     public function Snake(mps:Number)
     {
       
       _head = new Head(5, 5, _speed, mps);
       
-      addChild(_head);
       
       //_body = new Vector.<BodyPart>;
       _body = [];
+      _bodyEggs = new Sprite();
       
       for (var i:int = 0; i < 4; i++)
       {
         var bodyPart:BodyPart = new BodyPart(_head.tileX - (i + 1), _head.tileY, _speed, AssetRegistry.EGGZERO);
         _body.push(bodyPart);
-        addChild(bodyPart);
+        _bodyEggs.addChild(bodyPart);
       }
       
       _tail = new Tail(_body[3].tileX - 1, _head.tileY, _speed);
       addChild(_tail);
+      addChild(_bodyEggs);
+      addChild(_head);
+      
       this.mps = mps;
     }
     
@@ -123,15 +128,12 @@ package Snake
       
       if (_newPart != null)
       {
-        removeChild(_tail);
         _body.push(_newPart);
         _newPart.tileX = -10;
         _newPart.tileY = -10;
-        // _tail = new Tail(_newPart.tileX, _newPart.tileY, _newPart.speed);
         _tail.tileX = -10;
         _tail.tileY = -10;
-        addChild(_newPart);
-        addChild(_tail);
+        _bodyEggs.addChild(_newPart);
         _newPart = null;
       }
       
@@ -194,6 +196,11 @@ package Snake
         _body[i].update(time);
       }
       _tail.update(time);
+    }
+    
+    public function removeBodyPart(part:DisplayObject) {
+      _bodyEggs.removeChild(part);
+      body.splice(body.indexOf(part), 1);
     }
     
     public function moveRight():void

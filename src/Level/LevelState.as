@@ -646,19 +646,19 @@ package Level
           {
             expoCounter++;
             _score += fib;
-            
-            //var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));            
-            showPoints(egg, '+' + String(fib)); //, 0x00ff00);
+                     
+            showPoints(egg, '+' + String(fib));
             
             temp = fib;
             fib += prefib;
             prefib = temp;
-            //_soundEffects[soundCounter].play();
+            
             AssetRegistry.soundmanager.playSound("comboSound" + Math.min(soundCounter, 7));
-            //AxParticleSystem.emit("combo", egg.x, egg.y);
+            
             showParticles(egg, soundCounter);
-            _snake.removeChild(egg);
-            _snake.body.splice(_snake.body.indexOf(egg), 1);
+           
+            _snake.removeBodyPart(egg);
+            
             soundCounter++;
             setTimeout(func, (300 / (expoCounter * expoCounter)) + 80);
           }
