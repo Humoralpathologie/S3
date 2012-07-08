@@ -110,6 +110,7 @@ package Level
     protected var _maxEggs:int = 5;
     protected var _timeExtension:Number = 3;
     protected var _chainTime:Number = 2.5;
+    protected var _spawnMap:Array = [];
     
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
@@ -153,6 +154,7 @@ package Level
       _tileWidth = Math.ceil(_bg.width / AssetRegistry.TILESIZE);
       
       addObstacles();
+      addSpawnMap();
       setBoundaries();
       
       _snake = new Snake(SaveGame.startSpeed);
@@ -234,6 +236,10 @@ package Level
       unpause();
       addEventListener(TouchEvent.TOUCH, onTouch);
       addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);               
+    }
+    
+    protected function addSpawnMap():void {
+      
     }
     
     public function showMessage(message:String):void
@@ -369,7 +375,7 @@ package Level
     
     protected function spawnInitialEggs():void
     {
-      for (var j:int = 0; j < 4; j++)
+      for (var j:int = 0; j < 5; j++)
       {
         spawnRandomEgg();
       }
@@ -482,13 +488,12 @@ package Level
     {
       var eggx:int;
       var eggy:int;
-      
-      const safety:int = 2;
-      
+      var pos:int;      
       do
       {
-        eggx = safety + _levelBoundaries.x + Math.floor(Math.random() * (_levelBoundaries.width - safety));
-        eggy = safety + _levelBoundaries.y + Math.floor(Math.random() * (_levelBoundaries.height - safety));
+        pos = _spawnMap[Math.floor(Math.random() * _spawnMap.length)];
+        eggy = Math.floor(pos / _tileWidth);
+        eggx = pos - (eggy * _tileWidth);
       } while (!free(eggx, eggy));
       egg.tileX = eggx;
       egg.tileY = eggy;
