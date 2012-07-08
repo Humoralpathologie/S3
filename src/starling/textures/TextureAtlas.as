@@ -58,14 +58,12 @@ package starling.textures
         private var mAtlasTexture:Texture;
         private var mTextureRegions:Dictionary;
         private var mTextureFrames:Dictionary;
-		private var mSubTextures:Dictionary; // cache all the SubTextures when we parse the atlas XML - no reason to keep creating them each time the texture is requested!
         
         /** Create a texture atlas from a texture by parsing the regions from an XML file. */
         public function TextureAtlas(texture:Texture, atlasXml:XML=null)
         {
             mTextureRegions = new Dictionary();
             mTextureFrames  = new Dictionary();
-			mSubTextures	= new Dictionary();
             mAtlasTexture   = texture;
             
             if (atlasXml)
@@ -85,11 +83,6 @@ package starling.textures
             for each (var subTexture:XML in atlasXml.SubTexture)
             {
                 var name:String        = subTexture.attribute("name");
-				
-				// trim all path information off the name, so that "bosses/boss_500" becomes "boss_500"
-				var startIndex:int = name.lastIndexOf("/");
-				name = name.substr(startIndex + 1);
-				
                 var x:Number           = parseFloat(subTexture.attribute("x")) / scale;
                 var y:Number           = parseFloat(subTexture.attribute("y")) / scale;
                 var width:Number       = parseFloat(subTexture.attribute("width")) / scale;
@@ -110,14 +103,10 @@ package starling.textures
         /** Retrieves a subtexture by name. Returns <code>null</code> if it is not found. */
         public function getTexture(name:String):Texture
         {
-            var subTexture:Texture = mSubTextures[name];
+            var region:Rectangle = mTextureRegions[name];
             
-            if (subTexture == null)
-			{
-				subTexture = initSubTexture(name);
-			}
-			
-			return subTexture;
+            if (region == null) return null;
+            else return Texture.fromTexture(mAtlasTexture, region, mTextureFrames[name]);
         }
         
         /** Returns all textures that start with a certain string, sorted alphabetically
@@ -145,18 +134,7 @@ package starling.textures
         {
             mTextureRegions[name] = region;
             if (frame) mTextureFrames[name] = frame;
-			mSubTextures[name] = initSubTexture(name);
         }
-		
-		// MARKSMITH: I modded this, be sure to keep it if upgrade to newer versions of Starling, since makes a huge difference for performance!
-		/** Retrieves a subtexture by name. Returns <code>null</code> if it is not found. */
-		private function initSubTexture(name:String):Texture
-		{
-			var region:Rectangle = mTextureRegions[name];
-			
-			if (region == null) return null;
-			else return Texture.fromTexture(mAtlasTexture, region, mTextureFrames[name]);
-		}
         
         /** Removes a region with a certain name. */
         public function removeRegion(name:String):void
