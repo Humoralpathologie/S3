@@ -1049,22 +1049,22 @@ package Level
                 {
                   if (touchpoint.x < center.x && _snake.head.facing != AssetRegistry.RIGHT)
                   {
-                    _snake.head.facing = AssetRegistry.LEFT;
+                    _snake.changeDirection(AssetRegistry.LEFT);
                   }
                   else if (touchpoint.x > center.x && _snake.head.facing != AssetRegistry.LEFT)
                   {
-                    _snake.head.facing = AssetRegistry.RIGHT;
+                    _snake.changeDirection(AssetRegistry.RIGHT);
                   }
                 }
                 else
                 {
                   if (touchpoint.y < center.y && _snake.head.facing != AssetRegistry.DOWN)
                   {
-                    _snake.head.facing = AssetRegistry.UP;
+                    _snake.changeDirection(AssetRegistry.UP);
                   }
                   else if (touchpoint.y > center.y && _snake.head.facing != AssetRegistry.UP)
                   {
-                    _snake.head.facing = AssetRegistry.DOWN;
+                    _snake.changeDirection(AssetRegistry.DOWN);
                   }
                 }
               }

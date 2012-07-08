@@ -112,7 +112,6 @@ package Snake
     
     public function move():void
     {
-      _changedDirection = false;
       if (_oneeighty != 0)
       {
         _oneeighty--;
@@ -167,6 +166,8 @@ package Snake
       a.animateMove();
       
       _head.advance();
+      _changedDirection = false;
+      
     }
     
     public function update(time:Number):void
@@ -179,6 +180,13 @@ package Snake
       _tail.update(time);
     }
     
+    public function changeDirection(newDirection:int) {
+      if(!_changedDirection){
+        _head.facing = newDirection;
+        _changedDirection = true;
+      }
+    }
+    
     public function removeBodyPart(part:DisplayObject):void {
       _bodyEggs.removeChild(part);
       body.splice(body.indexOf(part), 1);
@@ -189,19 +197,18 @@ package Snake
       switch (_head.facing)
       {
         case AssetRegistry.UP: 
-          _head.facing = AssetRegistry.RIGHT;
+          changeDirection(AssetRegistry.RIGHT);
           break;
         case AssetRegistry.LEFT: 
-          _head.facing = AssetRegistry.UP;
+          changeDirection(AssetRegistry.UP);
           break;
         case AssetRegistry.DOWN: 
-          _head.facing = AssetRegistry.LEFT;
+          changeDirection(AssetRegistry.LEFT);
           break;
         case AssetRegistry.RIGHT: 
-          _head.facing = AssetRegistry.DOWN;
+          changeDirection(AssetRegistry.DOWN);
           break;
       }
-      //_head.prevFacing = _head.facing;
     }
     
     public function moveLeft():void
@@ -209,19 +216,18 @@ package Snake
       switch (_head.facing)
       {
         case AssetRegistry.UP: 
-          _head.facing = AssetRegistry.LEFT;
+          changeDirection(AssetRegistry.LEFT);
           break;
         case AssetRegistry.LEFT: 
-          _head.facing = AssetRegistry.DOWN;
+          changeDirection(AssetRegistry.DOWN);
           break;
         case AssetRegistry.DOWN: 
-          _head.facing = AssetRegistry.RIGHT;
+          changeDirection(AssetRegistry.RIGHT);
           break;
         case AssetRegistry.RIGHT: 
-          _head.facing = AssetRegistry.UP;
+          changeDirection(AssetRegistry.UP);
           break;
       }
-      //_head.prevFacing = _head.facing;
     }
     
     public function oneeightyLeft():void

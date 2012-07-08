@@ -76,7 +76,7 @@ package UI
         left.y = 190;
         left.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
           if (event.getTouch(left, TouchPhase.BEGAN) && levelstate.snake.head.facing != AssetRegistry.RIGHT) {
-            levelstate.snake.head.facing = AssetRegistry.LEFT;
+            levelstate.snake.changeDirection(AssetRegistry.LEFT);
           }
         });
         addChild(left);
@@ -86,7 +86,7 @@ package UI
         right.x = left.x + left.width;
         right.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {        
           if ((event.getTouch(right, TouchPhase.BEGAN)) && levelstate.snake.head.facing != AssetRegistry.LEFT) {
-            levelstate.snake.head.facing = AssetRegistry.RIGHT;
+            levelstate.snake.changeDirection(AssetRegistry.RIGHT);
           }
         });
         addChild(right);
@@ -96,7 +96,7 @@ package UI
         up.y = 190;
         up.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
           if (event.getTouch(up, TouchPhase.BEGAN) && levelstate.snake.head.facing != AssetRegistry.DOWN) {
-            levelstate.snake.head.facing = AssetRegistry.UP;
+            levelstate.snake.changeDirection(AssetRegistry.UP);
           }
         });
         addChild(up);
@@ -106,7 +106,7 @@ package UI
         down.y = up.y + up.height;
         down.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
           if (event.getTouch(down, TouchPhase.BEGAN) && levelstate.snake.head.facing != AssetRegistry.UP) {
-            levelstate.snake.head.facing = AssetRegistry.DOWN;
+            levelstate.snake.changeDirection(AssetRegistry.DOWN);
           }
         });
         addChild(down);              
