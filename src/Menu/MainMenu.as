@@ -49,7 +49,7 @@ package Menu
     
     public function MainMenu()
     {
-      AssetRegistry.loadMenuGraphics();
+      AssetRegistry.loadGraphics([AssetRegistry.MENU]);
       
       _theme = new MinimalTheme(Starling.current.stage, false);
       this.addEventListener(TouchEvent.TOUCH, onTouch);
@@ -268,7 +268,6 @@ package Menu
     
     override public function dispose():void {
       super.dispose();
-      AssetRegistry.disposeMenuGraphics();
     }
   }
 

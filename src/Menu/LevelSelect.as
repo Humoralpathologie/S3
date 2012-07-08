@@ -54,7 +54,7 @@ package Menu
     public function LevelSelect()
     {
       
-      AssetRegistry.loadLevelSelectGraphics();
+      AssetRegistry.loadGraphics([AssetRegistry.LEVELSELECT]);
       
       _scrollable = new Sprite();
       _scrollable.addEventListener(TouchEvent.TOUCH, onTouch);
@@ -227,7 +227,6 @@ package Menu
 
     
     override public function dispose():void {
-      AssetRegistry.disposeLevelSelectGraphics();
       super.dispose();
     }
   
