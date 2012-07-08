@@ -158,7 +158,6 @@ package Snake
         a = b;
       }
       
-      trace("facing: " + String(_tail.facing));
       a.tileX = _head.tileX;
       a.tileY = _head.tileY;
       a.prevFacing = a.facing;

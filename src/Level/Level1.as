@@ -50,11 +50,11 @@ package Level
       var rand:int = Math.floor(Math.random() * 100);
       
       if (rand < 20) {
-        egg = new Egg(0, 0, AssetRegistry.EGGA);
+        egg = _eggs.recycleEgg(0, 0, AssetRegistry.EGGA);
       } else if (rand < 50) {
-        egg = new Egg(0, 0, AssetRegistry.EGGROTTEN);
+        egg = _eggs.recycleEgg(0, 0, AssetRegistry.EGGROTTEN);
       } else {
-        egg = new Egg(0, 0, AssetRegistry.EGGZERO);
+        egg = _eggs.recycleEgg(0, 0, AssetRegistry.EGGZERO);
       }
       
       placeEgg(egg);

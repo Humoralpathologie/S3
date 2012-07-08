@@ -112,6 +112,8 @@ package Level
     protected var _chainTime:Number = 2.5;
     protected var _spawnMap:Array = [];
     
+    protected var _textFieldPool:Vector.<TextField>;
+    
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
     private static const WINDOW:Number = 100;
@@ -124,6 +126,15 @@ package Level
     public function LevelState()
     {
       super();
+      
+      // Initialize and fill the TextField pool
+      _textFieldPool = new Vector.<TextField>;
+      for (var i:int = 0; i < 15; i++) {
+        var temp:TextField = new TextField(100, 100, "", "kroeger 06_65");
+        temp.visible = false;
+        _textFieldPool.push(temp);
+      }
+      
       
       sfx = AssetRegistry.LevelMusic1Sound;
       
@@ -255,13 +266,46 @@ package Level
       tween.onComplete = function():void
       {
         removeChild(field);
+        field.visible = false;
       }
       Starling.current.juggler.add(tween);
     }
     
-    private function recycleText():TextField
+    private function recycleText(width:int = -1, height:int = -1, text:String = null, size:int = -1):TextField
     {
-      return new TextField(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight, "", "kroeger 06_65", 90, Color.WHITE);
+      var length:int = _textFieldPool.length;
+      var field:TextField;
+      
+      width = (width == -1) ? Starling.current.stage.stageWidth : width;
+      height = (height == -1) ? Starling.current.stage.stageHeight : height;
+      size = (size == -1) ? 90 : size;
+      
+      // First, try to find a TextField that is not visible anymore.
+      for (var i:int = 0; i < length; i++) { 
+        field = _textFieldPool[i];
+        if (!field.visible) {
+          field.visible = true;
+          
+          // Some resetting
+          field.x = 0;
+          field.y = 0;
+          field.width = width;
+          field.height = height;
+          field.text = text || "";
+          field.fontSize = size;
+          field.scaleX = field.scaleY = 1;
+          field.rotation = 0;
+          field.alpha = 1;
+          trace("Recycling old Textfield");
+          return field;
+        }
+      }
+      
+      // If we reached this part we need a new TextField.
+      trace("Building new Textfield");
+      field = new TextField(width, height , text || "", "kroeger 06_65", size, Color.WHITE);
+      _textFieldPool.push(field);
+      return field;
     }
     
     protected function setBoundaries():void
@@ -285,29 +329,19 @@ package Level
     
     private function eggCollide():void
     {
-      var eggs:Vector.<Egg> = _eggs.eggPool;
-      var head:Snake.Head = _snake.head;
+      var egg:Eggs.Egg;
       
-      for (var i:int = 0; i < eggs.length; i++)
-      {
-        if (head.tileX == eggs[i].tileX && head.tileY == eggs[i].tileY)
-        {
-          eatEgg(eggs[i]);
-          _justAte = true;
-            //peggle();
-        }
+      egg = _eggs.overlapEgg(_snake.head);
+      if (egg) {
+        eatEgg(egg);
+        _justAte = true;
       }
       
-      eggs = _rottenEggs.eggPool;
-      for (var i:int = 0; i < eggs.length; i++)
-      {
-        if (head.tileX == eggs[i].tileX && head.tileY == eggs[i].tileY)
-        {
-          eatEgg(eggs[i]);
-            //_justAte = true;
-            //peggle();
-        }
+      egg = _rottenEggs.overlapEgg(_snake.head);
+      if (egg) {
+        eatEgg(egg);
       }
+      
     }
     
     protected function addAboveSnake():void
@@ -475,12 +509,11 @@ package Level
     public function spawnRandomEgg():void
     {
       var egg:Eggs.Egg;
+      var types:Array = [AssetRegistry.EGGA, AssetRegistry.EGGB, AssetRegistry.EGGC];
       
-      do
-      {
-        egg = new Eggs.Egg(0, 0, Math.floor(Math.random() * 7));
-      } while (_rottenEggs && egg.type == AssetRegistry.EGGROTTEN);
       
+      egg = _eggs.recycleEgg(0, 0, types[Math.floor(Math.random() * types.length)]);
+
       placeEgg(egg);
     }
     
@@ -497,15 +530,6 @@ package Level
       } while (!free(eggx, eggy));
       egg.tileX = eggx;
       egg.tileY = eggy;
-      
-      if (!rotten)
-      {
-        _eggs.addEgg(egg);
-      }
-      else
-      {
-        _rottenEggs.addEgg(egg);
-      }
     
     }
     
@@ -532,8 +556,7 @@ package Level
           particle.y = egg.y + 13;
           particle.start(0.5);
         }
-        _eggs.eggPool.splice(_eggs.eggPool.indexOf(egg), 1);
-        _eggs.removeChild(egg);
+        _eggs.removeEgg(egg);
         
         var points:int = 2;
         
@@ -575,8 +598,7 @@ package Level
           particle.y = egg.y + 13;
           particle.start(0.5);
         }
-        _rottenEggs.eggPool.splice(_rottenEggs.eggPool.indexOf(egg), 1);
-        _rottenEggs.removeChild(egg);
+        _rottenEggs.removeEgg(egg);
         _bonusTimer = 0;
       }
     }
@@ -598,7 +620,6 @@ package Level
       _bonusBar.y = _snake.head.y - 10;
       _bonusBack.x = _bonusBar.x - 1;
       _bonusBack.y = _bonusBar.y - 1;
-      trace(_bonusTimer)
       if (_bonusTimer > 0.5)
       {
         _bonusBack.alpha = 0.3;
@@ -675,7 +696,7 @@ package Level
     
     private function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void
     {
-      var text:TextField = new TextField(120, 120, points, "kroeger 06_65", 60);
+      var text:TextField = recycleText(120, 120, points, 60);// new TextField(120, 120, points, "kroeger 06_65", 60);
       text.color = color;
       text.autoScale = true;
       text.hAlign = HAlign.CENTER;
@@ -694,6 +715,7 @@ package Level
       
       tween.onComplete = function():void
       {
+        text.visible = false;
         removeChild(text);
       }
       
@@ -858,7 +880,7 @@ package Level
           updateTimers(event);
         }
         
-        if (_eggs.eggPool.length < _maxEggs)
+        if (_eggs.length < _maxEggs)
         {
           spawnRandomEgg();
         }
@@ -910,7 +932,7 @@ package Level
       if (_rottenTimer < 0)
       {
         _rottenTimer = 20;
-        var rotten:Eggs.Egg = new Eggs.Egg(0, 0, AssetRegistry.EGGROTTEN);
+        var rotten:Eggs.Egg = _rottenEggs.recycleEgg(0, 0, AssetRegistry.EGGROTTEN);
         placeEgg(rotten, true);
       }
     }

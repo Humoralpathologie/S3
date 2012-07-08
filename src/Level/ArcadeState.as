@@ -90,7 +90,7 @@ package Level
       
       var type:int = types[Math.floor(Math.random() * types.length)];
       
-      egg = new Egg(0, 0, type);
+      egg = _eggs.recycleEgg(0, 0, type);
       
       placeEgg(egg);     
     }
