@@ -129,12 +129,12 @@ package Level
       
       // Initialize and fill the TextField pool
       _textFieldPool = new Vector.<TextField>;
-      for (var i:int = 0; i < 15; i++) {
+      for (var i:int = 0; i < 15; i++)
+      {
         var temp:TextField = new TextField(100, 100, "", "kroeger 06_65");
         temp.visible = false;
         _textFieldPool.push(temp);
       }
-      
       
       sfx = AssetRegistry.LevelMusic1Sound;
       
@@ -146,7 +146,7 @@ package Level
       _speed = 1 / SaveGame.startSpeed;
       
       this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
-
+      
       // Combos:
       
       _comboSet = new Combo.ComboSet();
@@ -180,33 +180,10 @@ package Level
       _levelStage.addChild(_eggs);
       _levelStage.addChild(_rottenEggs);
       addAboveSnake();
-      
-      addHud();
       addParticles();
-      
-      _swipeMenu = new Sprite();
-      var swipeBackground:Quad = new Quad(Starling.current.stage.stageWidth, 100, 0x000000);
-      swipeBackground.alpha = 0.3;
-      
-      _swipeMenu.addChild(swipeBackground);
-      _swipeMenu.y = - _swipeMenu.height;
-      addChild(_swipeMenu);
-      
-      var back:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("text-ingame-main menu"));
-      back.x = 20;
-      back.y = (_swipeMenu.height - back.height) / 2;
-      
-      back.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
-        {
-          var touch:Touch = event.getTouch(back, TouchPhase.ENDED);
-          if (touch)
-          {
-            AssetRegistry.soundmanager.fadeOutMusic();
-            StageManager.switchStage(MainMenu);
-          }
-        });
-      _swipeMenu.addChild(back);
-      
+     
+      addHud();
+           
       //create bonusbar
       _bonusBar = new Quad(1, 8, 0xffffff);
       _bonusBack = new Quad(27, 10, 0x000000);
@@ -245,12 +222,12 @@ package Level
     protected function showObjective():void
     {
       unpause();
-      addEventListener(TouchEvent.TOUCH, onTouch);
-      addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);               
+      addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
     }
     
-    protected function addSpawnMap():void {
-      
+    protected function addSpawnMap():void
+    {
+    
     }
     
     public function showMessage(message:String):void
@@ -281,9 +258,11 @@ package Level
       size = (size == -1) ? 90 : size;
       
       // First, try to find a TextField that is not visible anymore.
-      for (var i:int = 0; i < length; i++) { 
+      for (var i:int = 0; i < length; i++)
+      {
         field = _textFieldPool[i];
-        if (!field.visible) {
+        if (!field.visible)
+        {
           field.visible = true;
           
           // Some resetting
@@ -303,7 +282,7 @@ package Level
       
       // If we reached this part we need a new TextField.
       trace("Building new Textfield");
-      field = new TextField(width, height , text || "", "kroeger 06_65", size, Color.WHITE);
+      field = new TextField(width, height, text || "", "kroeger 06_65", size, Color.WHITE);
       _textFieldPool.push(field);
       return field;
     }
@@ -332,16 +311,18 @@ package Level
       var egg:Eggs.Egg;
       
       egg = _eggs.overlapEgg(_snake.head);
-      if (egg) {
+      if (egg)
+      {
         eatEgg(egg);
         _justAte = true;
       }
       
       egg = _rottenEggs.overlapEgg(_snake.head);
-      if (egg) {
+      if (egg)
+      {
         eatEgg(egg);
       }
-      
+    
     }
     
     protected function addAboveSnake():void
@@ -395,7 +376,6 @@ package Level
       new GTween(_sadSnake, 2, {y: Starling.current.stage.stageHeight - _sadSnake.height});
       new GTween(_sadText, 2, {y: 0});
       
-      removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
       var registerTouchHandler:Function = function():void
@@ -460,7 +440,6 @@ package Level
         removeChild(_sadText);
         
         removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
-        addEventListener(TouchEvent.TOUCH, onTouch);
         addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
         resetSnake();
         unpause();
@@ -511,9 +490,8 @@ package Level
       var egg:Eggs.Egg;
       var types:Array = [AssetRegistry.EGGA, AssetRegistry.EGGB, AssetRegistry.EGGC];
       
-      
       egg = _eggs.recycleEgg(0, 0, types[Math.floor(Math.random() * types.length)]);
-
+      
       placeEgg(egg);
     }
     
@@ -521,7 +499,7 @@ package Level
     {
       var eggx:int;
       var eggy:int;
-      var pos:int;      
+      var pos:int;
       do
       {
         pos = _spawnMap[Math.floor(Math.random() * _spawnMap.length)];
@@ -672,7 +650,7 @@ package Level
           {
             expoCounter++;
             _score += fib;
-                     
+            
             showPoints(egg, '+' + String(fib));
             
             temp = fib;
@@ -682,7 +660,7 @@ package Level
             AssetRegistry.soundmanager.playSound("comboSound" + Math.min(soundCounter, 7));
             
             showParticles(egg, soundCounter);
-           
+            
             _snake.removeBodyPart(egg);
             
             soundCounter++;
@@ -696,7 +674,7 @@ package Level
     
     private function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void
     {
-      var text:TextField = recycleText(120, 120, points, 60);// new TextField(120, 120, points, "kroeger 06_65", 60);
+      var text:TextField = recycleText(120, 120, points, 60); // new TextField(120, 120, points, "kroeger 06_65", 60);
       text.color = color;
       text.autoScale = true;
       text.hAlign = HAlign.CENTER;
@@ -817,7 +795,6 @@ package Level
       
       // Use a GTween, as the Starling tweens are paused.
       new GTween(image, 2, {y: Starling.current.stage.stageHeight - image.height});
-      removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
       var registerTouchHandler:Function = function():void
@@ -1004,132 +981,11 @@ package Level
       Starling.juggler.paused = false;
     }
     
-    // TODO: This is crazy and should be cleaned up.
-    private function onTouch(event:TouchEvent):void
-    {
-      var touch:Touch = event.getTouch(this, TouchPhase.BEGAN);
-      if (touch)
-      {
-        if (touch.getLocation(this).y < 200)
-        {
-          trace("Possible swipe!");
-          _possibleSwipe = true;
-          _swipeY = touch.getLocation(this).y;
-        }
-        else
-        {
-          _possibleSwipe = false;
-          
-        }
-        
-        if (_swipeMenu.y == - _swipeMenu.height)
-        {
-          if (_snake.oneeighty == 0)
-          {
-            if (touch.getLocation(this).y > 500 || SaveGame.controlType == 3 || SaveGame.controlType == 4)
-            {
-              if (SaveGame.controlType == 1)
-              {
-                if (touch.getLocation(this).x > 480)
-                {
-                  _snake.moveRight();
-                }
-                else
-                {
-                  _snake.moveLeft();
-                }
-              }
-              else if (SaveGame.controlType == 2)
-              {
-                if (touch.getLocation(this).x > 480)
-                {
-                  if (_snake.head.facing == AssetRegistry.DOWN)
-                  {
-                    _snake.moveLeft();
-                  }
-                  else
-                  {
-                    _snake.moveRight();
-                  }
-                }
-                else
-                {
-                  if (_snake.head.facing == AssetRegistry.DOWN)
-                  {
-                    _snake.moveRight();
-                  }
-                  else
-                  {
-                    _snake.moveLeft();
-                    
-                  }
-                }
-              }
-              else if (SaveGame.controlType == 3)
-              {
-                var touchpoint:Point = touch.getLocation(this);
-                var center:Point = new Point(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
-                var dx = Math.abs(touchpoint.x - center.x);
-                var dy = Math.abs(touchpoint.y - center.y);
-                ;
-                if (dx > dy)
-                {
-                  if (touchpoint.x < center.x && _snake.head.facing != AssetRegistry.RIGHT)
-                  {
-                    _snake.changeDirection(AssetRegistry.LEFT);
-                  }
-                  else if (touchpoint.x > center.x && _snake.head.facing != AssetRegistry.LEFT)
-                  {
-                    _snake.changeDirection(AssetRegistry.RIGHT);
-                  }
-                }
-                else
-                {
-                  if (touchpoint.y < center.y && _snake.head.facing != AssetRegistry.DOWN)
-                  {
-                    _snake.changeDirection(AssetRegistry.UP);
-                  }
-                  else if (touchpoint.y > center.y && _snake.head.facing != AssetRegistry.UP)
-                  {
-                    _snake.changeDirection(AssetRegistry.DOWN);
-                  }
-                }
-              }
-            }
-            else
-            {
-              if (touch.getLocation(this).x > 480)
-              {
-                _snake.oneeightyRight();
-              }
-              else
-              {
-                _snake.oneeightyLeft();
-              }
-            }
-          }
-        }
-      }
-      else
-      {
-        touch = event.getTouch(this, TouchPhase.ENDED);
-        if (touch)
-        {
-          if (_possibleSwipe && Math.abs((_swipeY - touch.getLocation(this).y)) > 50)
-          {
-            trace("Swipe!");
-            if (_swipeMenu.y == - _swipeMenu.height && _swipeY < touch.getLocation(this).y)
-            {
-              new GTween(_swipeMenu, 0.2, {"y": 0});
-              pause();
-            }
-            else if (_swipeMenu.y == 0 && _swipeY > touch.getLocation(this).y)
-            {
-              new GTween(_swipeMenu, 0.2, {"y": - _swipeMenu.height});
-              unpause();
-            }
-          }
-        }
+    public function togglePause():void {
+      if (_paused) {
+        unpause();
+      } else {
+        pause();
       }
     }
     
@@ -1157,7 +1013,6 @@ package Level
       new GTween(_evilSnake, 2, {y: Starling.current.stage.stageHeight - _evilSnake.height});
       new GTween(_evilText, 2, {y: 0});
       
-      removeEventListener(TouchEvent.TOUCH, onTouch);
       removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
       var registerTouchHandler:Function = function():void
@@ -1192,8 +1047,7 @@ package Level
           {
             removeChild(box);
             removeChild(text);
-            that.addEventListener(TouchEvent.TOUCH, onTouch);
-            that.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);            
+            that.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
             unpause();
           }
         });

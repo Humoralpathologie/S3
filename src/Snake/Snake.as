@@ -212,6 +212,7 @@ package Snake
     
     public function moveLeft():void
     {
+      
       switch (_head.facing)
       {
         case AssetRegistry.UP: 
@@ -231,14 +232,21 @@ package Snake
     
     public function oneeightyLeft():void
     {
+      if (_oneeighty > 0) {
+        return;
+      }
       _oneeighty = 2;
       _oneeightyDirection = AssetRegistry.LEFT;
     }
     
     public function oneeightyRight():void
     {
+      if (_oneeighty > 0) {
+        return;
+      }
       _oneeighty = 2;
       _oneeightyDirection = AssetRegistry.RIGHT;
+      
     }
     
     public function get head():Snake.Head

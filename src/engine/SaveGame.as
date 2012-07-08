@@ -14,7 +14,10 @@ package engine {
     } 
     
     public static function get controlType():int {
-      return _sharedObject.data.controlType || 1;
+      if (_sharedObject.data.controlType && (_sharedObject.data.controlType == 3 || _sharedObject.data.controlType == 4)) {
+        controlType = 2;
+      } 
+      return _sharedObject.data.controlType || 2;
     }
     
     public static function set controlType(value:int):void {

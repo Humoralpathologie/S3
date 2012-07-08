@@ -38,11 +38,6 @@ package Menu.SettingsScreens
     public function MainSettingsScreen()
     {
       super();
-    }
-    
-    override protected function initialize():void
-    {
-      
       _greyBox = new Quad(710, 450, Color.BLACK);
       _greyBox.alpha = 0.7;
       _greyBox.x = 65 + 60;
@@ -69,7 +64,13 @@ package Menu.SettingsScreens
       addChild(_betaButton);
       
       addControlSwitches();
-      addUserName();
+      addUserName();      
+    }
+    
+    override protected function initialize():void
+    {
+      
+
       
       //addSwitchers();
       //addButtons();
@@ -113,44 +114,23 @@ package Menu.SettingsScreens
       boyStyle.onPress.add(function(radio:Radio):void {
         SaveGame.controlType = 1;
       });
-      var girlStyle:Radio = new Radio();
-      girlStyle.label = "S. View Alt.";
-      girlStyle.toggleGroup = controlGroup;
-      girlStyle.onPress.add(function(radio:Radio):void {
-        SaveGame.controlType = 2;
-      });
-      
-      var directionStyle:Radio = new Radio();
-      directionStyle.label = "Absolute";
-      directionStyle.toggleGroup = controlGroup;
-      directionStyle.onPress.add(function(radio:Radio):void {
-        SaveGame.controlType = 3;
-      });      
       
       var fourway:Radio = new Radio;
       fourway.label = "4-Way";
       fourway.toggleGroup = controlGroup;
       fourway.onPress.add(function(radio:Radio):void {
-        SaveGame.controlType = 4;
+        SaveGame.controlType = 2;
       });
       
       controlGroup.selectedIndex = SaveGame.controlType - 1;
       
-      boyStyle.x = girlStyle.x = directionStyle.x = fourway.x = 160;
-      boyStyle.scaleX = boyStyle.scaleY = girlStyle.scaleX = girlStyle.scaleY = 1;
-      
-      //boyStyle.scaleX = boyStyle.scaleY = girlStyle.scaleX = girlStyle.scaleY = 3;
-      
-      //boyStyle.validate();
+      boyStyle.x = fourway.x = 160;
       
       boyStyle.y = _controlsHeading.y + _controlsHeading.height;
-      girlStyle.y = boyStyle.y + 70;
-      directionStyle.y = girlStyle.y + 70;
-      fourway.y = directionStyle.y + 70;
+      fourway.y = boyStyle.y + 70;
+
       
       addChild(boyStyle);
-      addChild(girlStyle);
-      addChild(directionStyle);
       addChild(fourway);
     }
     
