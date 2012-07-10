@@ -50,7 +50,7 @@ package Menu.SettingsScreens
       _heading.y = _greyBox.y;
       addChild(_heading);
       
-      _betaButton = new Button(AssetRegistry.MenuAtlas.getTexture("arrow_reduced"));
+      _betaButton = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("arrow_reduced"));
       _betaButton.scaleX = -1;
       _betaButton.x = _greyBox.x + _greyBox.width + _betaButton.width;
       _betaButton.y = _greyBox.y;

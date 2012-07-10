@@ -30,7 +30,7 @@ package Menu
 
       AssetRegistry.loadGraphics([AssetRegistry.MENU]);
          
-      var bg:Image = new Image(AssetRegistry.MenuAtlas.getTexture("arcade-background_iphone4"));
+      var bg:Image = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("arcade-background_iphone4"));
       addChild(bg);
       
       _navigator = new ScreenNavigator();

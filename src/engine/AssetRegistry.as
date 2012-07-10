@@ -9,6 +9,7 @@ package engine
   import Level.*;
   import engine.SoundManager;
   import flash.system.System;
+  import Languages.*;
   
   /**
    * ...
@@ -16,6 +17,19 @@ package engine
    */
   public class AssetRegistry
   {
+    
+    // Menu Graphics
+    [Embed(source = "../../assets/Menus/MenuAlpha.png")]
+    static private const MenuAlphaPNG:Class;
+    [Embed(source = "../../assets/Menus/MenuAlpha.xml", mimeType = "application/octet-stream")]
+    static private const MenuAlphaXML:Class;
+    [Embed(source = "../../assets/Menus/MenuOpaque.atf", mimeType = "application/octet-stream")]
+    static private const MenuOpaqueATF:Class;
+    [Embed(source = "../../assets/Menus/MenuOpaque.xml", mimeType = "application/octet-stream")]
+    static private const MenuOpaqueXML:Class;
+    public static var MenuAtlasOpaque:TextureAtlas;
+    public static var MenuAtlasAlpha:TextureAtlas;    
+    
     [Embed(source="../../assets/Snake/Snake.png")]
     static private const SnakeTexturePNG:Class;
     [Embed(source = "../../assets/Snake/Snake.atf", mimeType = "application/octet-stream")]
@@ -92,11 +106,6 @@ package engine
     [Embed(source="../../assets/Levels/arcadeoverlaytexture.png")]
     static private const ArcadeOverlayAtlasPNG:Class;
     
-    [Embed(source="../../assets/Menus/Menu.xml",mimeType="application/octet-stream")]
-    static private const MenuXML:Class;
-    [Embed(source="../../assets/Menus/Menu.png")]
-    static private const MenuPNG:Class;
-    
     [Embed(source="../../assets/Levels/Scoring/Scoring.xml",mimeType="application/octet-stream")]
     static private const ScoringXML:Class;
     [Embed(source="../../assets/Levels/Scoring/Scoring.png")]
@@ -172,7 +181,6 @@ package engine
     static public const Taileggsplosion4:Class;
     
     public static var SnakeAtlas:TextureAtlas;
-    public static var MenuAtlas:TextureAtlas;
     public static var ArcadeOverlayAtlas:TextureAtlas;
     public static var LevelSelectAtlas:TextureAtlas;
     public static var ScoringAtlas:TextureAtlas;
@@ -252,6 +260,8 @@ package engine
     public static const LEVEL6:String = "Level 6";
     public static const LEVEL7:String = "Level 7";
     public static const LEVEL8:String = "Level 8";
+    
+    public static var Strings:Class;
    
     
     public static function init():void
@@ -264,6 +274,8 @@ package engine
       LevelMusic2Sound = new LevelMusic2;
       
       soundmanager = new SoundManager();
+      
+      Strings = English;
       
       registerSounds();
       registerMusic();
@@ -349,12 +361,14 @@ package engine
     
     public static function loadMenuGraphics():void
     {
-      MenuAtlas = new TextureAtlas(Texture.fromBitmap(new MenuPNG), XML(new MenuXML));
+      MenuAtlasAlpha = new TextureAtlas(Texture.fromBitmap(new MenuAlphaPNG), XML(new MenuAlphaXML));
+      MenuAtlasOpaque = new TextureAtlas(Texture.fromAtfData(new MenuOpaqueATF, 0.7), XML(new MenuOpaqueXML));
     }
     
     public static function disposeMenuGraphics():void
     {
-      MenuAtlas.dispose();
+      MenuAtlasAlpha.dispose();
+      MenuAtlasOpaque.dispose();
     }
     
     public static function loadScoringGraphics():void

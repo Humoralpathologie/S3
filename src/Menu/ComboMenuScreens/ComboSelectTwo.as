@@ -41,26 +41,27 @@ package Menu.ComboMenuScreens
       
       var that = this;
       
-      var chaintime:Button = new Button(AssetRegistry.MenuAtlas.getTexture("combo-chaintime"));
+      var chaintime:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-chaintime"));
       chaintime.x = 156;
       chaintime.y = 152;
       addChild(chaintime);
       
-      var chaintimeText:Image = new Image(AssetRegistry.MenuAtlas.getTexture("Text-ChainTimePlus"));
+      /*var chaintimeText:Image = new Image(AssetRegistry.MenuAtlas.getTexture("Text-ChainTimePlus"));
       chaintimeText.x = 264;
       chaintimeText.y = 165;
-      addChild(chaintimeText);
+      addChild(chaintimeText);*/
       
-      var xtraspawn:Button = new Button(AssetRegistry.MenuAtlas.getTexture("combo-xtraspawn"));
+      var xtraspawn:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtraspawn"));
       xtraspawn.x = 156;
       xtraspawn.y = 280;
       addChild(xtraspawn);
       
-      var xtraspawnText:Image = new Image(AssetRegistry.MenuAtlas.getTexture("Text-ExtraEgg"));
+      /*var xtraspawnText:Image = new Image(AssetRegistry.MenuAtlas.getTexture("Text-ExtraEgg"));
       xtraspawnText.x = 264;
       xtraspawnText.y = 280;
-      addChild(xtraspawnText);
+      addChild(xtraspawnText);*/
       
+      /*
       chaintime.addEventListener(Event.TRIGGERED, function(event:Event):void {
         sharedData.effect = "combo-chaintime";
         showComboOptions(chaintimeText);
@@ -70,8 +71,9 @@ package Menu.ComboMenuScreens
         sharedData.effect = "combo-xtraspawn";
         showComboOptions(xtraspawnText);
       });
+      */
       
-      var prev:Button = new Button(AssetRegistry.MenuAtlas.getTexture("right-arrow"));
+      var prev:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("right-arrow"));
       prev.x = greybox.x + greybox.width - 100;
       prev.x += prev.width * 2;
       prev.y = greybox.y + greybox.height - 100;
@@ -93,7 +95,7 @@ package Menu.ComboMenuScreens
       
       for (var i:int = 0; i < combos.length; i++)
       {
-        var comboButton:Button = new Button(AssetRegistry.MenuAtlas.getTexture(combos[i]));
+        var comboButton:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture(combos[i]));
         comboButton.y = reference.y;
         comboButton.x = reference.x + 50 + i * 150;
         sprite.addChild(comboButton);

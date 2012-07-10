@@ -49,7 +49,7 @@ package Menu.SettingsScreens
       _heading.y = _greyBox.y;
       addChild(_heading);
       
-      _mainButton = new Button(AssetRegistry.MenuAtlas.getTexture("arrow_reduced"));
+      _mainButton = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("arrow_reduced"));
       _mainButton.x = _greyBox.x - _mainButton.width;
       _mainButton.y = _greyBox.y;
       var that = this;
