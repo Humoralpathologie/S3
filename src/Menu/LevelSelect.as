@@ -184,7 +184,7 @@ package Menu
                       that.removeChild(_levelInfo);
                     } else {
                       if (level == 1) {
-                        StageManager.switchStage(AssetRegistry.LEVELS[level - 1], null, "test.flv");
+                        StageManager.switchStage(AssetRegistry.LEVELS[level - 1]);// , null, "test.flv");
                       } else {
                         StageManager.switchStage(AssetRegistry.LEVELS[level - 1]);
                       }
