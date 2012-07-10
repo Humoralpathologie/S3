@@ -17,7 +17,8 @@ package Eggs
   {
     private var _type:int = 0;
     
-    public function Egg(tileX:int = 0, tileY:int = 0, type:int = AssetRegistry.EGGZERO) 
+    // Strange bug. AssetRegistry.EGGZERO
+    public function Egg(tileX:int = 0, tileY:int = 0, type:int = 0) 
     {
       super(tileX, tileY, null, 1000);   
       this.type = type;

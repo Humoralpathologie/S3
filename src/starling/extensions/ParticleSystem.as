@@ -89,6 +89,7 @@ package starling.extensions
             
             // handle a lost device context
             Starling.current.addEventListener(Event.CONTEXT3D_CREATE, onContextCreated);
+            touchable = false;
         }
         
         public override function dispose():void
@@ -375,6 +376,7 @@ package starling.extensions
                 
                 var fragmentProgramCode:String =
                     "tex ft1, v1, fs0 <" + textureOptions + "> \n" + // sample texture 0
+                    //"mov oc, ft1"
                     "mul oc, ft1, v0";                               // multiply color with texel color
                 
                 var vertexProgramAssembler:AGALMiniAssembler = new AGALMiniAssembler();

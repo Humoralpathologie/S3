@@ -26,7 +26,7 @@ package Snake
     private var _flickerStep:Number = 0;
     private var _flickerCount:Number = 0;
     
-    public function BodyPart(tileX:int, tileY:int, speed:Number, type:int = AssetRegistry.EGGZERO)
+    public function BodyPart(tileX:int, tileY:int, speed:Number, type:int = 0)// AssetRegistry.EGGZERO)
     {
       _type = type;
       makeImages();

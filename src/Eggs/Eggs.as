@@ -26,8 +26,8 @@ package Eggs
       addChild(egg);
     }
     */
-    
-    public function recycleEgg(tileX:int = 0, tileY:int = 0, type:int = AssetRegistry.EGGZERO ):Eggs.Egg {
+    // Strange bug. AssetRegistry.EGGZERO 
+    public function recycleEgg(tileX:int = 0, tileY:int = 0, type:int = 0):Eggs.Egg {
       var length:int;
       var egg:Eggs.Egg;
       length = _eggPool.length;

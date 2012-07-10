@@ -1,11 +1,12 @@
 package Level
 {
+  import engine.AssetRegistry;
   import com.gskinner.motion.GTween;
   import Eggs.Egg;
   import Eggs.Eggs;
   import flash.geom.Point;
   import flash.geom.Rectangle;
-  import fr.kouma.starling.utils.Stats;
+  import org.josht.starling.foxhole.controls.*;
   import Snake.Snake;
   import starling.animation.Tween;
   import starling.core.Starling;
@@ -39,13 +40,20 @@ package Level
   import flash.events.GestureEvent;
   import flash.events.TransformGestureEvent;
   import flash.media.Sound;
-  import flash.events.Event;
   import flash.media.SoundTransform;
   import engine.ManagedStage;
   import engine.StageManager;
   import Menu.MainMenu;
   import Menu.LevelScore;
   import engine.SaveGame;
+  import org.josht.starling.foxhole.controls.Screen;
+  import org.josht.starling.foxhole.controls.ToggleSwitch;
+  import org.osflash.signals.ISignal;
+  import starling.display.Button;
+  import starling.display.Quad;
+  import engine.AssetRegistry;
+  import flash.events.Event;
+  import Menu.PauseMenuScreens.*;
   
   /**
    * ...
@@ -111,6 +119,10 @@ package Level
     protected var _timeExtension:Number = 3;
     protected var _chainTime:Number = 2.5;
     protected var _spawnMap:Array = [];
+    protected var _textLevel:Sprite;
+    
+    // Pause Menu
+    protected var _pauseMenu:ScreenNavigator;
     
     protected var _textFieldPool:Vector.<TextField>;
     
@@ -129,13 +141,15 @@ package Level
       
       // Initialize and fill the TextField pool
       _textFieldPool = new Vector.<TextField>;
+      _textLevel = new Sprite;
       for (var i:int = 0; i < 15; i++)
       {
         var temp:TextField = new TextField(100, 100, "", "kroeger 06_65");
         temp.visible = false;
+        _textLevel.addChild(temp);
         _textFieldPool.push(temp);
       }
-      
+                 
       sfx = AssetRegistry.LevelMusic1Sound;
       
       // Fix for laggy sound
@@ -181,6 +195,8 @@ package Level
       _levelStage.addChild(_rottenEggs);
       addAboveSnake();
       addParticles();
+      
+      addChild(_textLevel);
      
       addHud();
            
@@ -198,7 +214,8 @@ package Level
       pause();
       
       showObjective();
-    
+      createPauseMenu();
+   
     }
     
     public function extendTime():void
@@ -234,7 +251,7 @@ package Level
     {
       var field:TextField = recycleText();
       field.text = message;
-      addChild(field);
+      field.touchable = false;
       var tween:Tween = new Tween(field, 3);
       tween.animate("y", -field.height);
       //tween.animate("scaleX", 3);
@@ -242,7 +259,6 @@ package Level
       tween.animate("alpha", 0);
       tween.onComplete = function():void
       {
-        removeChild(field);
         field.visible = false;
       }
       Starling.current.juggler.add(tween);
@@ -283,6 +299,7 @@ package Level
       // If we reached this part we need a new TextField.
       trace("Building new Textfield");
       field = new TextField(width, height, text || "", "kroeger 06_65", size, Color.WHITE);
+      _textLevel.addChild(field);
       _textFieldPool.push(field);
       return field;
     }
@@ -459,20 +476,9 @@ package Level
       pd = _particles["combo" + String(Math.min(4, particle))];
       pd.x = egg.x + 5 + egg.width / 2;
       pd.y = egg.y + 5 + egg.height / 2;
+      pd.maxCapacity = Math.min(50, pd.maxCapacity);
+      pd.touchable = false;
       pd.start(0.5);
-    /*
-       var pd:ParticleSystem;
-       for (var i:int = 0; i < _particlePool.length; i++)
-       {
-    
-       }
-       pd = _particlePool[0];
-       pd.x = egg.x;
-       pd.y = egg.y;
-    
-       pd.start(1);
-       Starling.juggler.add(pd);
-     */
     }
     
     private function peggle():void
@@ -682,7 +688,6 @@ package Level
       p = _levelStage.localToGlobal(p);
       text.x = p.x + egg.width / 2 - text.width / 2 + offset;
       text.y = p.y + egg.height / 2 - text.height / 2 + offset; //egg.y + (egg.height / 2) - text.height / 2);
-      addChild(text);
       var tween:Tween = new Tween(text, 2, "easeIn");
       tween.animate("y", offset);
       tween.animate("scaleX", 3);
@@ -694,7 +699,6 @@ package Level
       tween.onComplete = function():void
       {
         text.visible = false;
-        removeChild(text);
       }
       
       Starling.juggler.add(tween);
@@ -922,7 +926,7 @@ package Level
       }
     }
     
-    protected function updateCamera():void
+    public function updateCamera():void
     {
       
       var a:Number, b:Number;
@@ -984,14 +988,50 @@ package Level
     public function togglePause():void {
       if (_paused) {
         unpause();
+        hidePauseMenu();
       } else {
         pause();
+        showPauseMenu();
       }
+    }
+    
+    private function createPauseMenu():void {
+      
+      _pauseMenu = new ScreenNavigator();
+     
+      const PAUSEMAIN:String = "MAIN";
+      
+      _pauseMenu.addScreen(PAUSEMAIN, new ScreenNavigatorItem(new PauseMainScreen(this)));
+      _pauseMenu.defaultScreenID = PAUSEMAIN;
+      _pauseMenu.showDefaultScreen();
+      _pauseMenu.x = -Starling.current.stage.stageWidth;
+      addChild(_pauseMenu);
+      /*
+      _zoomSlider = new Slider();
+      _zoomSlider.value = _zoom;
+      _zoomSlider.minimum = 0.5;
+      _zoomSlider.maximum = 5;
+      _zoomSlider.onChange.add(function(slider:Slider) {
+        zoom = slider.value;
+      });*/
+      
+    }
+    
+    private function showPauseMenu():void {
+      _pauseMenu.validate();
+      
+      _pauseMenu.x = -_pauseMenu.width;
+      new GTween(_pauseMenu, 0.3, { x:0 } );
+    }
+    
+    private function hidePauseMenu():void {
+        
+    new GTween(_pauseMenu, 0.3, { x: -_pauseMenu.width }, { onComplete: function(tween:GTween) } );//{removeChild(_pauseMenu)}} );
     }
     
     protected function checkWin():void
     {
-    
+
     }
     
     protected function win():void

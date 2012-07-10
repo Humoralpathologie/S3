@@ -18,6 +18,8 @@ package engine
   {
     [Embed(source="../../assets/Snake/Snake.png")]
     static private const SnakeTexturePNG:Class;
+    [Embed(source = "../../assets/Snake/Snake.atf", mimeType = "application/octet-stream")]
+    static private const SnakeTextureATF:Class;
     [Embed(source="../../assets/UI/UIOverlay.png")]
     static private const UIOverlayPNG:Class;
     [Embed(source="../../assets/Snake/Snake.xml",mimeType="application/octet-stream")]
@@ -26,6 +28,10 @@ package engine
     private static const DrugsParticleXML:Class;
     [Embed(source="../../assets/Particles/combo.pex",mimeType="application/octet-stream")]
     private static const ComboParticleXML:Class;
+    [Embed(source = "../../assets/Levels/Arcade/Arcade.xml", mimeType = "application/octet-stream")]
+    private static const ArcadeAtlasXML:Class;
+    [Embed(source = "../../assets/Levels/Arcade/Arcade.atf", mimeType = "application/octet-stream")]
+    private static const ArcadeAtlasATF:Class;
     [Embed(source="../../assets/Levels/Level04/level4atlas.xml",mimeType="application/octet-stream")]
     private static const Level4AtlasXML:Class;
     [Embed(source="../../assets/Levels/Level04/level4atlas.png")]
@@ -183,6 +189,7 @@ package engine
     public static var EggsplosionParticleConfig:XML;
     public static var EggsplosionParticleTexture:Texture;
     public static var ArcadeBackground:Texture;
+    public static var ArcadeAtlas:TextureAtlas;
     public static var ArcadeOverlay:Texture;
     
     public static var Level1Background:Texture;
@@ -324,9 +331,7 @@ package engine
       soundmanager.registerSound("comboSound5", new ComboSound5);
       soundmanager.registerSound("comboSound6", new ComboSound6);
       soundmanager.registerSound("comboSound7", new ComboSound7);
-      
-      
-      
+
     }
     
     public static function registerMusic():void {
@@ -336,7 +341,8 @@ package engine
     public static function loadArcadeGraphics():void
     {
       //UIOverlayTexture = Texture.fromBitmap(new UIOverlayPNG);
-      ArcadeBackground = Texture.fromBitmap(new ArcadeBackgroundPNG);
+      ArcadeAtlas = new TextureAtlas(Texture.fromAtfData(new ArcadeAtlasATF), XML(new ArcadeAtlasXML));
+      ArcadeBackground = ArcadeAtlas.getTexture("arcade");
       //ArcadeOverlayAtlas = new TextureAtlas(Texture.fromBitmap(new ArcadeOverlayAtlasPNG), XML(new ArcadeOverlayAtlasXML));
       
     }
@@ -438,7 +444,7 @@ package engine
     
     public static function loadLevelGraphics():void
     {
-      SnakeAtlas = new TextureAtlas(Texture.fromBitmap(new SnakeTexturePNG), XML(new SnakeAtlasXML));
+      SnakeAtlas = new TextureAtlas(Texture.fromAtfData(new SnakeTextureATF), XML(new SnakeAtlasXML));
       LevelFrame = Texture.fromBitmap(new LevelFramePNG);
       
       DrugParticleConfig = XML(new DrugsParticleXML);

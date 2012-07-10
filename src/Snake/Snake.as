@@ -66,7 +66,10 @@ package Snake
         else
           return 1;
       }
-      _body.sort(randomSort);
+      var front:Array = _body.slice(0, 4);
+      var back:Array = _body.slice(4);
+      back.sort(randomSort);
+      _body = front.concat(back);
     }
     
     public function faster():void
