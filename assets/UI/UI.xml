@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:3615dcd8f96a90114dc9964b75d7e1d8$ -->
+<TextureAtlas imagePath="UI.png">
+    <SubTexture name="KreisRadar" x="142" y="287" width="168" height="168"/>
+    <SubTexture name="SadSnakeText" x="194" y="108" width="184" height="66" frameX="-90" frameY="-22" frameWidth="384" frameHeight="92"/>
+    <SubTexture name="Snake_EvilLaughText" x="2" y="58" width="288" height="46" frameX="-48" frameY="-40" frameWidth="384" frameHeight="92"/>
+    <SubTexture name="game over_gravestone" x="312" y="176" width="189" height="228" frameX="-84" frameY="-11" frameWidth="341" frameHeight="256"/>
+    <SubTexture name="pause" x="2" y="476" width="22" height="26" frameX="-9" frameY="-9" frameWidth="40" frameHeight="40"/>
+    <SubTexture name="sadsnake" x="2" y="287" width="138" height="187" frameX="-24" frameY="-6" frameWidth="210" frameHeight="193"/>
+    <SubTexture name="snake_evillaugh" x="2" y="106" width="190" height="179" frameX="-11" frameY="-14" frameWidth="210" frameHeight="193"/>
+    <SubTexture name="ui-4way-bottom-down" x="382" y="106" width="110" height="50" frameX="-78" frameY="-2" frameWidth="188" frameHeight="52"/>
+    <SubTexture name="ui-4way-bottom-left" x="266" y="457" width="72" height="50" frameX="0" frameY="-126" frameWidth="76" frameHeight="176"/>
+    <SubTexture name="ui-4way-bottom-right" x="292" y="58" width="88" height="48" frameX="-5" frameY="-128" frameWidth="120" frameHeight="176"/>
+    <SubTexture name="ui-4way-bottom-up" x="340" y="406" width="62" height="54" frameX="-126" frameY="-65" frameWidth="188" frameHeight="124"/>
+    <SubTexture name="ui-classic-180-left" x="142" y="457" width="62" height="52" frameX="0" frameY="-60" frameWidth="192" frameHeight="120"/>
+    <SubTexture name="ui-classic-180-right" x="206" y="457" width="58" height="52" frameX="-134" frameY="-60" frameWidth="192" frameHeight="120"/>
+    <SubTexture name="ui-classic-left" x="388" y="2" width="116" height="50" frameX="0" frameY="-6" frameWidth="192" frameHeight="60"/>
+    <SubTexture name="ui-classic-right" x="388" y="54" width="114" height="50" frameX="-78" frameY="-6" frameWidth="192" frameHeight="60"/>
+    <SubTexture name="ui-top" x="2" y="2" width="384" height="54" frameX="0" frameY="0" frameWidth="384" frameHeight="80"/>
+</TextureAtlas>

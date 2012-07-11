@@ -74,10 +74,9 @@ package Menu.ComboMenuScreens
       play.x = 65 + 60;
       play.y = 540;
       addChild(play);
-      play.addEventListener(Event.TRIGGERED, function(event:Event):void
-        {
-          StageManager.switchStage(ArcadeState);
-        });
+      play.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void {
+        StageManager.switchStage(ArcadeState);
+      });
     }
     
     private function addNormalCombos():void

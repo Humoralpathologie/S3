@@ -311,10 +311,12 @@ package Level
     
     public function addFrame():void
     {
+      /*
       var frame:Image = new Image(AssetRegistry.LevelFrame);
       frame.x = -200;
       frame.y = -150;
       _levelStage.addChild(frame);
+      */
     }
     
     protected function addHud():void
@@ -378,11 +380,11 @@ package Level
       }
       pause();
       
-      _sadSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("sadsnake"));
+      _sadSnake = new Image(AssetRegistry.UIAtlas.getTexture("sadsnake"));
       _sadSnake.x = (Starling.current.stage.stageWidth - _sadSnake.width) / 2;
       _sadSnake.y = Starling.current.stage.stageHeight;
       
-      _sadText = new Image(AssetRegistry.SnakeAtlas.getTexture("SadSnakeText"));
+      _sadText = new Image(AssetRegistry.UIAtlas.getTexture("SadSnakeText"));
       _sadText.x = (Starling.current.stage.stageWidth - _sadText.width) / 2;
       _sadText.y = -_sadText.height;
       
@@ -792,7 +794,7 @@ package Level
       _lost = true;
       pause();
       var image:Image;
-      image = new Image(AssetRegistry.SnakeAtlas.getTexture("game over_gravestone"));
+      image = new Image(AssetRegistry.UIAtlas.getTexture("game over_gravestone"));
       image.x = (Starling.current.stage.stageWidth - image.width) / 2;
       image.y = Starling.current.stage.stageHeight;
       addChild(image);
@@ -1039,12 +1041,12 @@ package Level
       _won = true;
       pause();
       
-      _evilSnake = new Image(AssetRegistry.SnakeAtlas.getTexture("snake_evillaugh"));
+      _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
       _evilSnake.x = (Starling.current.stage.stageWidth - _evilSnake.width) / 2;
       _evilSnake.y = Starling.current.stage.stageHeight;
       addChild(_evilSnake);
       
-      _evilText = new Image(AssetRegistry.SnakeAtlas.getTexture("Snake_EvilLaughText"));
+      _evilText = new Image(AssetRegistry.UIAtlas.getTexture("Snake_EvilLaughText"));
       _evilText.x = (Starling.current.stage.stageWidth - _evilText.width) / 2;
       _evilText.y = 0;
       addChild(_evilText);

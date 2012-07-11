@@ -30,6 +30,27 @@ package engine
     public static var MenuAtlasOpaque:TextureAtlas;
     public static var MenuAtlasAlpha:TextureAtlas;    
     
+    // Level BG Graphics
+    [Embed(source = "../../assets/Levels/ATF/Levels.atf", mimeType = "application/octet-stream")]
+    static private const LevelAtlasATF:Class;
+    [Embed(source = "../../assets/Levels/ATF/Levels.xml", mimeType = "application/octet-stream")]
+    static private const LevelAtlasXML:Class;
+    public static var LevelAtlas:TextureAtlas;
+    
+    // UI Graphics
+    [Embed(source = "../../assets/UI/UI.png")]
+    static private const UIAtlasPNG:Class;
+    [Embed(source = "../../assets/UI/UI.xml", mimeType = "application/octet-stream")]
+    static private const UIAtlasXML:Class;
+    public static var UIAtlas:TextureAtlas;
+    
+    // Scoring Graphics
+    [Embed(source = "../../assets/Levels/Scoring/ScoringScalable.png")]
+    static private const ScoringScalableAtlasPNG:Class;
+    [Embed(source = "../../assets/Levels/Scoring/ScoringScalable.xml", mimeType = "application/octet-stream")]
+    static private const ScoringScalableAtlasXML:Class;
+    public static var ScoringScalableAtlas:TextureAtlas;
+    
     [Embed(source="../../assets/Snake/Snake.png")]
     static private const SnakeTexturePNG:Class;
     [Embed(source = "../../assets/Snake/Snake.atf", mimeType = "application/octet-stream")]
@@ -353,8 +374,8 @@ package engine
     public static function loadArcadeGraphics():void
     {
       //UIOverlayTexture = Texture.fromBitmap(new UIOverlayPNG);
-      ArcadeAtlas = new TextureAtlas(Texture.fromAtfData(new ArcadeAtlasATF), XML(new ArcadeAtlasXML));
-      ArcadeBackground = ArcadeAtlas.getTexture("arcade");
+      //ArcadeAtlas = new TextureAtlas(Texture.fromAtfData(new ArcadeAtlasATF), XML(new ArcadeAtlasXML));
+      //ArcadeBackground = ArcadeAtlas.getTexture("arcade");
       //ArcadeOverlayAtlas = new TextureAtlas(Texture.fromBitmap(new ArcadeOverlayAtlasPNG), XML(new ArcadeOverlayAtlasXML));
       
     }
@@ -362,7 +383,7 @@ package engine
     public static function loadMenuGraphics():void
     {
       MenuAtlasAlpha = new TextureAtlas(Texture.fromBitmap(new MenuAlphaPNG), XML(new MenuAlphaXML));
-      MenuAtlasOpaque = new TextureAtlas(Texture.fromAtfData(new MenuOpaqueATF, 0.7), XML(new MenuOpaqueXML));
+      MenuAtlasOpaque = new TextureAtlas(Texture.fromAtfData(new MenuOpaqueATF), XML(new MenuOpaqueXML));
     }
     
     public static function disposeMenuGraphics():void
@@ -374,50 +395,52 @@ package engine
     public static function loadScoringGraphics():void
     {
       ScoringAtlas = new TextureAtlas(Texture.fromBitmap(new ScoringPNG), XML(new ScoringXML));
+      ScoringScalableAtlas = new TextureAtlas(Texture.fromBitmap(new ScoringScalableAtlasPNG, true, false, 0.42), XML(new ScoringScalableAtlasXML));
     }
     
     public static function disposeScoringGraphics():void
     {
       ScoringAtlas.dispose();
+      ScoringScalableAtlas.dispose();
     }
     
     public static function disposeArcadeGraphics():void
     {
       //UIOverlayTexture.dispose();
-      ArcadeBackground.dispose();
+      //ArcadeBackground.dispose();
       //ArcadeOverlayAtlas.dispose();
     }
     
     public static function loadLevel1Graphics():void
     {
-      Level1Background = Texture.fromBitmap(new Level1BackgroundPNG);
+      //Level1Background = Texture.fromBitmap(new Level1BackgroundPNG);
     }
     
     public static function disposeLevel1Graphics():void
     {
-      Level1Background.dispose();
+      //Level1Background.dispose();
     }
     
     public static function loadLevel2Graphics():void
     {
-      Level2Background = Texture.fromBitmap(new Level2BackgroundPNG);
+      //Level2Background = Texture.fromBitmap(new Level2BackgroundPNG);
     }
     
     public static function disposeLevel2Graphics():void
     {
-      Level2Background.dispose();
+      //Level2Background.dispose();
     }
     
     public static function loadLevel3Graphics():void
     {
-      Level3Background = Texture.fromBitmap(new Level3BackgroundPNG);
+      //Level3Background = Texture.fromBitmap(new Level3BackgroundPNG);
       Level3Stone = Texture.fromBitmap(new Level3StonePNG);
       Level3StoneGlow = Texture.fromBitmap(new Level3StoneGlowPNG);
     }
     
     public static function disposeLevel3Graphics():void
     {
-      Level3Background.dispose();
+      //Level3Background.dispose();
       Level3Stone.dispose();
       Level3StoneGlow.dispose();
     }
@@ -458,8 +481,10 @@ package engine
     
     public static function loadLevelGraphics():void
     {
-      SnakeAtlas = new TextureAtlas(Texture.fromAtfData(new SnakeTextureATF), XML(new SnakeAtlasXML));
-      LevelFrame = Texture.fromBitmap(new LevelFramePNG);
+      SnakeAtlas = new TextureAtlas(Texture.fromBitmap(new SnakeTexturePNG), XML(new SnakeAtlasXML));
+      LevelAtlas = new TextureAtlas(Texture.fromAtfData(new LevelAtlasATF), XML(new LevelAtlasXML));
+      UIAtlas = new TextureAtlas(Texture.fromBitmap(new UIAtlasPNG, true, false, 0.4), XML(new UIAtlasXML));
+      // LevelFrame = Texture.fromBitmap(new LevelFramePNG);
       
       DrugParticleConfig = XML(new DrugsParticleXML);
       DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);
@@ -475,7 +500,9 @@ package engine
     public static function disposeLevelGraphics():void
     {
       SnakeAtlas.dispose();
-      LevelFrame.dispose();
+      LevelAtlas.dispose();
+      UIAtlas.dispose();
+      //LevelFrame.dispose();
       
       DrugParticleConfig = null;
       DrugParticleTexture.dispose();

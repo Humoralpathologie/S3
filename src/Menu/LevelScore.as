@@ -62,6 +62,8 @@ package Menu
     
     public function LevelScore(scores:Object = null)
     {
+      AssetRegistry.loadGraphics([AssetRegistry.SCORING, AssetRegistry.SNAKE, AssetRegistry.MENU]);
+      
       _tweens = new Vector.<GTween>;
       _scores = scores;
       if (_scores == null)
@@ -80,7 +82,6 @@ package Menu
       if(!_scores.lost) {
         SaveGame.saveScore(_scores.level, _scores.total);
       }
-      AssetRegistry.loadGraphics([AssetRegistry.SCORING, AssetRegistry.SNAKE]);
       buildMenu();
       startScoring();
       updateLeaderboard();
@@ -193,22 +194,22 @@ package Menu
       }
       
       if (_scores.total >= 400 && _scores.total < 600) {
-        _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_bronze"));
+        _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture("medaille_bronze"));
         _medal.x = -800;
         _medal.y = 0;
         _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
       } else if (_scores.total >= 600 && _scores.total < 800) {
-        _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_saphir"));
+        _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture("medaille_saphir"));
         _medal.x = -800;
         _medal.y = 0;
         _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("saphire_small"));
       } else if (_scores.total >= 800 && _scores.total < 1000) {
-        _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_silber"));
+        _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture("medaille_silber"));
         _medal.x = -800;
         _medal.y = 0;
         _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("silver_small"));
       } else if (_scores.total >= 1000) {
-        _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_gold"));
+        _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture("medaille_gold"));
         _medal.x = -800;
         _medal.y = 0;
         _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("gold_small"));
@@ -339,38 +340,42 @@ package Menu
     
     private function addBackground():void
     {
-      _bg = new Image(AssetRegistry.ScoringAtlas.getTexture("menu_iphone_background"));
+      _bg = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("menu_iphone_background"));
       addChild(_bg);
     }
     
     private function addBoards():void
     {
-      _scoreboard = new Image(AssetRegistry.ScoringAtlas.getTexture("score board"));
+      
+      _scoreboard = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
       _scoreboard.x = 70;
       _scoreboard.y = 30;
       
-      _leaderboard = new Image(AssetRegistry.ScoringAtlas.getTexture("leaderboard"));
+      _leaderboard = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
       _leaderboard.x = _scoreboard.width + 140;
       _leaderboard.y = _scoreboard.y;
       
-      _scorePic = new Image(AssetRegistry.ScoringAtlas.getTexture("score"));
+      _scorePic = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
       _scorePic.x = _scoreboard.x + 20;
       _scorePic.y = _scoreboard.y + 80;
       
-      _timeBonusPic = new Image(AssetRegistry.ScoringAtlas.getTexture("time bonus"));
+      _timeBonusPic = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
       _timeBonusPic.x = _scorePic.x;
       _timeBonusPic.y = _scorePic.y + _scorePic.height + 20;
       
-      _lifeBonusPic = new Image(AssetRegistry.ScoringAtlas.getTexture("life bonus"));
+      _lifeBonusPic = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
       _lifeBonusPic.x = _timeBonusPic.x;
       _lifeBonusPic.y = _timeBonusPic.y + _timeBonusPic.height + 20;
       
+      /*
       addChild(_scoreboard);
       addChild(_leaderboard);
       
       addChild(_scorePic);
       addChild(_timeBonusPic);
       addChild(_lifeBonusPic);
+      */
+      
     }
     
     override public function dispose():void

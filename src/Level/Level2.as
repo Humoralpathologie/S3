@@ -4,7 +4,7 @@ package Level
    * ...
    * @author
    */
-  import engine.AssetRegistry
+  import engine.AssetRegistry;
   import starling.display.Image;
   import starling.display.BlendMode;
   import Eggs.Egg;
@@ -15,7 +15,7 @@ package Level
   {
     public function Level2()
     {
-      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL2]);
+      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       
       _levelNr = 2;
       super();
@@ -27,7 +27,7 @@ package Level
     
     override protected function addBackground():void
     {
-      _bgTexture = AssetRegistry.Level2Background;
+      _bgTexture = AssetRegistry.LevelAtlas.getTexture("level02bg");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);

@@ -49,7 +49,7 @@ package Menu
     
     public function MainMenu()
     {
-      AssetRegistry.loadGraphics([AssetRegistry.MENU]);
+      AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE]);
       
       _theme = new MinimalTheme(Starling.current.stage, false);
       

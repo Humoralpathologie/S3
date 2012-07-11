@@ -22,7 +22,7 @@ package Level
   {
     public function Level1()
     {
-      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL1]);
+      AssetRegistry.loadGraphics([AssetRegistry.SNAKE]);
       _levelNr = 1;
       super();
     }
@@ -33,7 +33,7 @@ package Level
     
     override protected function addBackground():void
     {
-      _bgTexture = AssetRegistry.Level1Background;
+      _bgTexture = AssetRegistry.LevelAtlas.getTexture("level01bg");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _bg.smoothing = TextureSmoothing.NONE;

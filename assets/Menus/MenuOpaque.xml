@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:4ccfacfc3964ff1127c760c1b38c0022$ -->
+<!-- $TexturePacker:SmartUpdate:c687ce23b1cb15153be2ff3921b8099e$ -->
 <TextureAtlas imagePath="MenuOpaque.png">
-    <SubTexture name="arcade-background_iphone4" x="2" y="452" width="672" height="448"/>
-    <SubTexture name="combo-chaintime" x="538" y="902" width="65" height="65"/>
-    <SubTexture name="combo-gold" x="471" y="902" width="65" height="65"/>
-    <SubTexture name="combo-leveluptime" x="404" y="902" width="65" height="65"/>
-    <SubTexture name="combo-rotteneggs" x="337" y="902" width="65" height="65"/>
-    <SubTexture name="combo-shuffle" x="270" y="902" width="65" height="65"/>
-    <SubTexture name="combo-special" x="203" y="902" width="65" height="65"/>
-    <SubTexture name="combo-speed" x="136" y="902" width="65" height="65"/>
-    <SubTexture name="combo-time" x="69" y="902" width="65" height="65"/>
-    <SubTexture name="combo-xtralife" x="2" y="902" width="65" height="65"/>
-    <SubTexture name="combo-xtraspawn" x="605" y="902" width="62" height="62"/>
-    <SubTexture name="combo_abbca" x="382" y="969" width="74" height="46"/>
-    <SubTexture name="combo_abcb" x="306" y="969" width="74" height="46"/>
-    <SubTexture name="combo_acba" x="230" y="969" width="74" height="46"/>
-    <SubTexture name="combo_bcaac" x="154" y="969" width="74" height="46"/>
-    <SubTexture name="combo_bccb" x="78" y="969" width="74" height="46"/>
-    <SubTexture name="combo_ccbba" x="2" y="969" width="74" height="46"/>
-    <SubTexture name="loading" x="2" y="2" width="672" height="448"/>
+    <SubTexture name="arcade-background_iphone4" x="2" y="689" width="960" height="640"/>
+    <SubTexture name="combo-chaintime" x="2" y="1806" width="93" height="93"/>
+    <SubTexture name="combo-gold" x="2" y="1711" width="93" height="93"/>
+    <SubTexture name="combo-leveluptime" x="2" y="1616" width="93" height="93"/>
+    <SubTexture name="combo-rotteneggs" x="2" y="1521" width="93" height="93"/>
+    <SubTexture name="combo-shuffle" x="2" y="1426" width="93" height="93"/>
+    <SubTexture name="combo-special" x="2" y="1331" width="93" height="93"/>
+    <SubTexture name="combo-speed" x="1926" y="594" width="93" height="93"/>
+    <SubTexture name="combo-time" x="1926" y="499" width="93" height="93"/>
+    <SubTexture name="combo-xtralife" x="1926" y="404" width="93" height="93"/>
+    <SubTexture name="combo-xtraspawn" x="2" y="1901" width="88" height="88"/>
+    <SubTexture name="combo_abbca" x="1926" y="337" width="105" height="65"/>
+    <SubTexture name="combo_abcb" x="1926" y="270" width="105" height="65"/>
+    <SubTexture name="combo_acba" x="1926" y="203" width="105" height="65"/>
+    <SubTexture name="combo_bcaac" x="1926" y="136" width="105" height="65"/>
+    <SubTexture name="combo_bccb" x="1926" y="69" width="105" height="65"/>
+    <SubTexture name="combo_ccbba" x="1926" y="2" width="105" height="65"/>
+    <SubTexture name="loading" x="964" y="2" width="960" height="640"/>
+    <SubTexture name="menu_iphone_background" x="2" y="2" width="960" height="640"/>
 </TextureAtlas>

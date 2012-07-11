@@ -42,7 +42,7 @@ package Level
   public class ArcadeState extends LevelState
   {
     public function ArcadeState() {
-      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.ARCADE]);
+      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       _rottenEnabled = true;
       
       super();
@@ -146,7 +146,7 @@ package Level
     
     override protected function addBackground():void
     {
-      _bgTexture = AssetRegistry.ArcadeBackground;
+      _bgTexture = AssetRegistry.LevelAtlas.getTexture("arcade");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);

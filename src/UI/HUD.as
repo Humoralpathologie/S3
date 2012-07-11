@@ -38,7 +38,7 @@ package UI
     private var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
     private var _speed:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-speed"));
     private var _poison:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-poison"));
-    private var _pause:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("pause"));
+    private var _pause:Button = new Button(AssetRegistry.UIAtlas.getTexture("pause"));
 
     private var _lifesText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _neededEggsText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
@@ -66,7 +66,7 @@ package UI
       _scoreText.hAlign = HAlign.CENTER;
       
       if (SaveGame.controlType == 1) {
-        var left180:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-classic-180-left"));
+        var left180:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-classic-180-left"));
         left180.y = 190;
         left180.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
           if (event.getTouch(left180, TouchPhase.BEGAN)) {
@@ -75,7 +75,7 @@ package UI
         });
         addChild(left180);
         
-        var right180:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-classic-180-right"));
+        var right180:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-classic-180-right"));
         right180.y = 190;
         right180.x = left180.x + left180.width;
         right180.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
@@ -86,7 +86,7 @@ package UI
         
         addChild(right180);
         
-        var left:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-classic-left"));
+        var left:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-classic-left"));
         left.y = left180.y + left180.height;
         left.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
           if(event.getTouch(left, TouchPhase.BEGAN)) {
@@ -95,7 +95,7 @@ package UI
         });
         addChild(left);
         
-        var right:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-classic-right"));
+        var right:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-classic-right"));
         right.x = left.x + left.width;
         right.y = left.y;
         right.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
@@ -108,7 +108,7 @@ package UI
       }
       
       if (SaveGame.controlType == 2) {
-        var left:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-4way-bottom-left"));
+        var left:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-4way-bottom-left"));
         left.y = 190;
         left.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
           if (event.getTouch(left, TouchPhase.BEGAN) && levelstate.snake.head.facing != AssetRegistry.RIGHT) {
@@ -117,7 +117,7 @@ package UI
         });
         addChild(left);
         
-        var right:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-4way-bottom-right"));
+        var right:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-4way-bottom-right"));
         right.y = 190;
         right.x = left.x + left.width;
         right.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {        
@@ -127,7 +127,7 @@ package UI
         });
         addChild(right);
         
-        var up:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-4way-bottom-up"));
+        var up:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-4way-bottom-up"));
         up.x = right.x + right.width;
         up.y = 190;
         up.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
@@ -137,7 +137,7 @@ package UI
         });
         addChild(up);
         
-        var down:Button = new Button(AssetRegistry.SnakeAtlas.getTexture("ui-4way-bottom-down"));
+        var down:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-4way-bottom-down"));
         down.x = up.x;
         down.y = up.y + up.height;
         down.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
@@ -148,7 +148,7 @@ package UI
         addChild(down);              
       }
       
-      _overlay = new Image(AssetRegistry.SnakeAtlas.getTexture("ui-top"));
+      _overlay = new Image(AssetRegistry.UIAtlas.getTexture("ui-top"));
       _overlay.smoothing = TextureSmoothing.NONE;
       addChild(_overlay);
      
