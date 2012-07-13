@@ -40,7 +40,6 @@ package Menu
   public class MainMenu extends ManagedStage
   {
     private var _bg:Image;
-    private var _theme:IFoxholeTheme;
     private var _settings:ScreenNavigator;
     private var _transitions:ScreenSlidingStackTransitionManager;
     private var _arcadeButton:Button;
@@ -50,9 +49,7 @@ package Menu
     public function MainMenu()
     {
       AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE]);
-      
-      _theme = new MinimalTheme(Starling.current.stage, false);
-      
+            
       _bg = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("loading"));
       addChild(_bg);    
       
@@ -92,18 +89,7 @@ package Menu
       _levelSelectButton.onRelease.add(function(button:Button):void {
         StageManager.switchStage(LevelSelect);
       });
-      
-      var _scoringButton:Button = new Button();
-      _scoringButton.label = "Scoring Test";
-      _scoringButton.width = 300;
-      _scoringButton.height = 80;
-      _scoringButton.x = _settingsButton.x;
-      _scoringButton.y = _levelSelectButton.y - 100;
-      _scoringButton.onRelease.add(function(button:Button):void {
-        StageManager.switchStage(LevelScore);
-      });
-     
-      addChild(_scoringButton);
+          
       addChild(_settingsButton);
       addChild(_arcadeButton);
       addChild(_levelSelectButton);

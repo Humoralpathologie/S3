@@ -16,6 +16,7 @@ package
   import flash.ui.Multitouch;
   import flash.ui.MultitouchInputMode;
   import Level.LevelState;
+  import org.josht.starling.foxhole.themes.IFoxholeTheme;
   import starling.core.Starling;
   import fr.kouma.starling.utils.Stats;
   import Level.*;
@@ -23,6 +24,7 @@ package
   import engine.SaveGame;
   //import com.demonsters.debugger.MonsterDebugger;
   import flash.system.Capabilities;
+  import org.josht.starling.foxhole.themes.MinimalTheme;
   
   /**
    * ...
@@ -35,6 +37,8 @@ package
     
     private var starling:Starling;
     private var assets:AssetRegistry;
+    private var _theme:IFoxholeTheme;
+    
     
     public function Main():void
     {
@@ -89,6 +93,7 @@ package
         starling = new starling.core.Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight));
         starling.stage.stageHeight = 640;
         starling.stage.stageWidth = 960;
+        
       }
       
       var loadingSprite:Sprite = new Sprite()
@@ -97,6 +102,7 @@ package
       loadingBMP.y = Starling.current.viewPort.y;
       loadingBMP.scaleX = loadingBMP.scaleY = AssetRegistry.SCALE;
       loadingSprite.addChild(loadingBMP);
+      
       
       addChild(loadingSprite);
       
@@ -108,6 +114,8 @@ package
           // Starling is ready! We remove the startup image and start the game.
           removeChild(loadingSprite);
           starling.start();
+          _theme = new MinimalTheme(starling.stage, false);
+          
         });
       
       // When the game becomes inactive, we pause Starling; otherwise, the enter frame event

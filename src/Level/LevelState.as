@@ -7,6 +7,8 @@ package Level
   import flash.geom.Point;
   import flash.geom.Rectangle;
   import org.josht.starling.foxhole.controls.*;
+  import org.josht.starling.foxhole.themes.IFoxholeTheme;
+  import org.josht.starling.foxhole.transitions.ScreenFadeTransitionManager;
   import Snake.Snake;
   import starling.animation.Tween;
   import starling.core.Starling;
@@ -54,7 +56,8 @@ package Level
   import engine.AssetRegistry;
   import flash.events.Event;
   import Menu.PauseMenuScreens.*;
-  
+  import org.josht.starling.foxhole.themes.MinimalTheme;
+ 
   /**
    * ...
    * @author
@@ -125,6 +128,7 @@ package Level
     protected var _spawnMap:Array = [];
     protected var _textLevel:Sprite;
     
+    
     // Pause Menu
     protected var _pauseMenu:ScreenNavigator;
     
@@ -133,6 +137,8 @@ package Level
     private static const SilentSoundTransform:SoundTransform = new SoundTransform(0);
     
     private static const WINDOW:Number = 100;
+    
+    static const PAUSEMAIN:String = "MAIN";
     
     private static function playSoundSilentlyEndlessly(evt:Event = null):void
     {
@@ -215,13 +221,14 @@ package Level
       
       startAt(_startPos.x, _startPos.y);
       
-      pause();
       
-      showObjective();
       createPauseMenu();
       
       _mchammer = new Quad(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
       _mchammer.alpha = 0;
+      pause();
+      showObjective();
+      
       
     }
     
@@ -397,7 +404,6 @@ package Level
       _sadText.y = -_sadText.height;
       _sadText.touchable = false;
       
-      addChild(_mchammer);
       addChild(_sadSnake);
       addChild(_sadText);
       
@@ -409,7 +415,7 @@ package Level
       
       var registerTouchHandler:Function = function():void
       {
-        _mchammer.addEventListener(TouchEvent.TOUCH, dieScreenTouch);
+        addEventListener(TouchEvent.TOUCH, dieScreenTouch);
       }
       
       new GTween(null, 1, null, {paused: false, onComplete: registerTouchHandler});
@@ -465,11 +471,10 @@ package Level
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
-        removeChild(_mchammer);
         removeChild(_sadSnake);
         removeChild(_sadText);
         
-        _mchammer.removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
+        removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
         addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
         resetSnake();
         unpause();
@@ -989,13 +994,15 @@ package Level
     public function pause():void
     {
       _paused = true;
-      Starling.juggler.paused = true;
+      //Starling.juggler.paused = true;
+      //addChild(_mchammer);
     }
     
     public function unpause():void
     {
+      //removeChild(_mchammer);
       _paused = false;
-      Starling.juggler.paused = false;
+      //Starling.juggler.paused = false;
     }
     
     public function togglePause():void {
@@ -1011,13 +1018,10 @@ package Level
     private function createPauseMenu():void {
       
       _pauseMenu = new ScreenNavigator();
-     
-      const PAUSEMAIN:String = "MAIN";
-      
+      var trans:ScreenFadeTransitionManager = new ScreenFadeTransitionManager(_pauseMenu);
+           
       _pauseMenu.addScreen(PAUSEMAIN, new ScreenNavigatorItem(new PauseMainScreen(this)));
       _pauseMenu.defaultScreenID = PAUSEMAIN;
-      _pauseMenu.showDefaultScreen();
-      _pauseMenu.x = -Starling.current.stage.stageWidth;
       addChild(_pauseMenu);
       /*
       _zoomSlider = new Slider();
@@ -1031,15 +1035,11 @@ package Level
     }
     
     private function showPauseMenu():void {
-      _pauseMenu.validate();
-      
-      _pauseMenu.x = -_pauseMenu.width;
-      new GTween(_pauseMenu, 0.3, { x:0 } );
+      _pauseMenu.showScreen(PAUSEMAIN);
     }
     
     private function hidePauseMenu():void {
-        
-    new GTween(_pauseMenu, 0.3, { x: -_pauseMenu.width }, { onComplete: function(tween:GTween) } );//{removeChild(_pauseMenu)}} );
+      _pauseMenu.clearScreen();
     }
     
     protected function checkWin():void
@@ -1195,6 +1195,14 @@ package Level
     public function set eggs(value:Eggs):void
     {
       _eggs = value;
+    }
+    
+    override public function dispose():void {
+      trace("disposing");
+      _pauseMenu.clearScreen();
+      _pauseMenu.dispose();
+      super.dispose();
+      
     }
   
   }

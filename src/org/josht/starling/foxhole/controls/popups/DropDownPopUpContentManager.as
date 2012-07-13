@@ -26,7 +26,10 @@ package org.josht.starling.foxhole.controls.popups
 {
 	import flash.errors.IllegalOperationError;
 	import flash.events.KeyboardEvent;
+	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
+
+	import org.josht.starling.display.ScrollRectManager;
 
 	import org.josht.starling.foxhole.core.FoxholeControl;
 	import org.josht.starling.foxhole.core.PopUpManager;
@@ -41,42 +44,16 @@ package org.josht.starling.foxhole.controls.popups
 	import starling.events.TouchPhase;
 
 	/**
-	 * Displays a pop-up at the center of the stage, filling the vertical space.
-	 * The content will be sized horizontally so that it is no larger than the
-	 * the width or height of the stage (whichever is smaller).
+	 * Displays pop-up content as a desktop-style drop-down.
 	 */
-	public class VerticalCenteredPopUpContentManager implements IPopUpContentManager
+	public class DropDownPopUpContentManager implements IPopUpContentManager
 	{
 		/**
 		 * Constructor.
 		 */
-		public function VerticalCenteredPopUpContentManager()
+		public function DropDownPopUpContentManager()
 		{
 		}
-
-		/**
-		 * The minimum space, in pixels, between the top edge of the content and
-		 * the top edge of the stage.
-		 */
-		public var marginTop:Number = 0;
-
-		/**
-		 * The minimum space, in pixels, between the right edge of the content
-		 * and the right edge of the stage.
-		 */
-		public var marginRight:Number = 0;
-
-		/**
-		 * The minimum space, in pixels, between the bottom edge of the content
-		 * and the bottom edge of the stage.
-		 */
-		public var marginBottom:Number = 0;
-
-		/**
-		 * The minimum space, in pixels, between the left edge of the content
-		 * and the left edge of the stage.
-		 */
-		public var marginLeft:Number = 0;
 
 		/**
 		 * @private
@@ -86,12 +63,17 @@ package org.josht.starling.foxhole.controls.popups
 		/**
 		 * @private
 		 */
-		protected var touchPointID:int = -1;
+		protected var source:DisplayObject;
 
 		/**
 		 * @private
 		 */
-		private var _onClose:Signal = new Signal(VerticalCenteredPopUpContentManager);
+		protected var _touchPointID:int = -1;
+
+		/**
+		 * @private
+		 */
+		private var _onClose:Signal = new Signal(DropDownPopUpContentManager);
 
 		/**
 		 * @inheritDoc
@@ -112,7 +94,8 @@ package org.josht.starling.foxhole.controls.popups
 			}
 
 			this.content = content;
-			PopUpManager.addPopUp(this.content, true, false);
+			this.source = source;
+			PopUpManager.addPopUp(this.content, false, false);
 			if(this.content is FoxholeControl)
 			{
 				const foxholeContent:FoxholeControl = FoxholeControl(this.content);
@@ -121,7 +104,7 @@ package org.josht.starling.foxhole.controls.popups
 			this.layout();
 			Starling.current.stage.addEventListener(TouchEvent.TOUCH, stage_touchHandler);
 			Starling.current.stage.addEventListener(ResizeEvent.RESIZE, stage_resizeHandler);
-			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler, false, int.MAX_VALUE, true);
+			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler, false, 0, true);
 		}
 
 		/**
@@ -142,6 +125,7 @@ package org.josht.starling.foxhole.controls.popups
 			}
 			PopUpManager.removePopUp(this.content);
 			this.content = null;
+			this.source = null;
 			this._onClose.dispatch(this);
 		}
 
@@ -159,32 +143,69 @@ package org.josht.starling.foxhole.controls.popups
 		 */
 		protected function layout():void
 		{
-			const maxWidth:Number = Math.min(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight) - this.marginLeft - this.marginRight;
-			const maxHeight:Number = Starling.current.stage.stageHeight - this.marginTop - this.marginBottom;
+			const globalOrigin:Rectangle = ScrollRectManager.getBounds(this.source, Starling.current.stage);
+
+			if(this.source is FoxholeControl)
+			{
+				FoxholeControl(this.source).validate();
+			}
 			if(this.content is FoxholeControl)
 			{
 				const foxholeContent:FoxholeControl = FoxholeControl(this.content);
-				foxholeContent.minWidth = foxholeContent.maxWidth = maxWidth;
-				foxholeContent.maxHeight = maxHeight;
+				foxholeContent.minWidth = Math.max(foxholeContent.minWidth, this.source.width);
 				foxholeContent.validate();
 			}
+			else
+			{
+				this.content.width = Math.max(this.content.width, this.source.width);
+			}
 
-			//if it's a foxhole control that is able to auto-size, the above
-			//section will ensure that the control stays within the required
-			//bounds.
-			//if it's not a foxhole control, or if the control's explicit width
-			//and height values are greater than our maximum bounds, then we
-			//will enforce the maximum bounds the hard way.
-			if(this.content.width > maxWidth)
+			const downSpace:Number = (Starling.current.stage.stageHeight - this.content.height) - (globalOrigin.y + globalOrigin.height);
+			if(downSpace >= 0)
 			{
-				this.content.width = maxWidth;
+				layoutBelow(globalOrigin);
+				return;
 			}
-			if(this.content.height > maxHeight)
+
+			const upSpace:Number = globalOrigin.y - this.content.height;
+			if(upSpace >= 0)
 			{
-				this.content.height = maxHeight;
+				layoutAbove(globalOrigin);
+				return;
 			}
-			this.content.x = (Starling.current.stage.stageWidth - this.content.width) / 2;
-			this.content.y = (Starling.current.stage.stageHeight - this.content.height) / 2;
+
+			//worst case: pick the side that has the most available space
+			if(upSpace >= downSpace)
+			{
+				layoutAbove(globalOrigin);
+			}
+			else
+			{
+				layoutBelow(globalOrigin);
+			}
+
+		}
+
+		/**
+		 * @private
+		 */
+		protected function layoutAbove(globalOrigin:Rectangle):void
+		{
+			const idealXPosition:Number = globalOrigin.x + (globalOrigin.width - this.content.width) / 2;
+			const xPosition:Number = Math.max(0, Math.min(Starling.current.stage.stageWidth - this.content.width, idealXPosition));
+			this.content.x = xPosition;
+			this.content.y = globalOrigin.y - this.content.height;
+		}
+
+		/**
+		 * @private
+		 */
+		protected function layoutBelow(globalOrigin:Rectangle):void
+		{
+			const idealXPosition:Number = globalOrigin.x;
+			const xPosition:Number = Math.max(0, Math.min(Starling.current.stage.stageWidth - this.content.width, idealXPosition));
+			this.content.x = xPosition;
+			this.content.y = globalOrigin.y + globalOrigin.height;
 		}
 
 		/**
@@ -228,24 +249,12 @@ package org.josht.starling.foxhole.controls.popups
 			{
 				return;
 			}
-			const touch:Touch = event.getTouch(Starling.current.stage);
-			if(!touch || (touch.phase == TouchPhase.BEGAN && this.touchPointID >= 0) ||
-				(touch.phase != TouchPhase.BEGAN && this.touchPointID != touch.id))
+			const touch:Touch = event.getTouch(Starling.current.stage, TouchPhase.BEGAN);
+			if(!touch)
 			{
 				return;
 			}
-
-			if(touch.phase == TouchPhase.BEGAN)
-			{
-				this.touchPointID = touch.id;
-			}
-			else if(touch.phase == TouchPhase.ENDED)
-			{
-				this.touchPointID = -1;
-				this.close();
-			}
+			this.close();
 		}
-
-
 	}
 }
