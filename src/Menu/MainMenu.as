@@ -92,7 +92,18 @@ package Menu
       _levelSelectButton.onRelease.add(function(button:Button):void {
         StageManager.switchStage(LevelSelect);
       });
+      
+      var _scoringButton:Button = new Button();
+      _scoringButton.label = "Scoring Test";
+      _scoringButton.width = 300;
+      _scoringButton.height = 80;
+      _scoringButton.x = _settingsButton.x;
+      _scoringButton.y = _levelSelectButton.y - 100;
+      _scoringButton.onRelease.add(function(button:Button):void {
+        StageManager.switchStage(LevelScore);
+      });
      
+      addChild(_scoringButton);
       addChild(_settingsButton);
       addChild(_arcadeButton);
       addChild(_levelSelectButton);

@@ -364,7 +364,6 @@ package engine
       soundmanager.registerSound("comboSound5", new ComboSound5);
       soundmanager.registerSound("comboSound6", new ComboSound6);
       soundmanager.registerSound("comboSound7", new ComboSound7);
-
     }
     
     public static function registerMusic():void {
