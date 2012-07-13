@@ -88,8 +88,12 @@ package Level
     private var _firstFrame:Boolean = true;
     private var _frameCounter:int = 0;
     private var _particlePool:Vector.<PDParticleSystem>;
+    
+    // Death screen
     private var _sadSnake:Image;
     private var _sadText:Image;
+    private var _mchammer:Quad;
+    
     private var _evilSnake:Image;
     private var _evilText:Image;
     protected var _levelNr:int = 0;
@@ -215,7 +219,10 @@ package Level
       
       showObjective();
       createPauseMenu();
-   
+      
+      _mchammer = new Quad(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
+      _mchammer.alpha = 0;
+      
     }
     
     public function extendTime():void
@@ -383,11 +390,14 @@ package Level
       _sadSnake = new Image(AssetRegistry.UIAtlas.getTexture("sadsnake"));
       _sadSnake.x = (Starling.current.stage.stageWidth - _sadSnake.width) / 2;
       _sadSnake.y = Starling.current.stage.stageHeight;
+      _sadSnake.touchable = false;
       
       _sadText = new Image(AssetRegistry.UIAtlas.getTexture("SadSnakeText"));
       _sadText.x = (Starling.current.stage.stageWidth - _sadText.width) / 2;
       _sadText.y = -_sadText.height;
+      _sadText.touchable = false;
       
+      addChild(_mchammer);
       addChild(_sadSnake);
       addChild(_sadText);
       
@@ -399,10 +409,10 @@ package Level
       
       var registerTouchHandler:Function = function():void
       {
-        addEventListener(TouchEvent.TOUCH, dieScreenTouch);
+        _mchammer.addEventListener(TouchEvent.TOUCH, dieScreenTouch);
       }
       
-      new GTween(null, 2, null, {paused: false, onComplete: registerTouchHandler});
+      new GTween(null, 1, null, {paused: false, onComplete: registerTouchHandler});
     
     }
     
@@ -455,10 +465,11 @@ package Level
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
+        removeChild(_mchammer);
         removeChild(_sadSnake);
         removeChild(_sadText);
         
-        removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
+        _mchammer.removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
         addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
         resetSnake();
         unpause();
