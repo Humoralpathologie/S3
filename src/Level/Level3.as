@@ -16,7 +16,7 @@ package Level
   {
     public function Level3() 
     {
-      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL3]);
+      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL3, AssetRegistry.SCORING]);
       _levelNr = 3;
       _rottenEnabled = true;
       super();
@@ -27,7 +27,7 @@ package Level
     }
     
     override protected function addBackground():void {
-      _bgTexture = AssetRegistry.Level3Background;
+      _bgTexture = AssetRegistry.LevelAtlas.getTexture("level03");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);

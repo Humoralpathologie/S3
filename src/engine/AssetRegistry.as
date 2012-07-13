@@ -458,12 +458,10 @@ package engine
     
     public static function loadLevel5Graphics():void
     {
-      Level5Background = Texture.fromBitmap(new Level5BackgroundPNG);
     }
     
     public static function disposeLevel5Graphics():void
     {
-      Level5Background.dispose();
     }
     
     public static function loadLevel6Graphics():void

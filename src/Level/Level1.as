@@ -22,7 +22,7 @@ package Level
   {
     public function Level1()
     {
-      AssetRegistry.loadGraphics([AssetRegistry.SNAKE]);
+      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       _levelNr = 1;
       super();
     }

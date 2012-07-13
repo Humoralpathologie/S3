@@ -119,7 +119,7 @@ package Menu
       for (var i:int = 0; i < 8; i++) {
         var textureStr:String;
         var level:Image;
-        if(SaveGame.levelUnlocked(i + 1)) {
+        if(i < 4 && SaveGame.levelUnlocked(i + 1)) {
           textureStr = "tile-level" + String(i + 1) + "_" + String(_unlockedPositions[i][0]) + "-" + String(_unlockedPositions[i][1]);
           level = new Image(AssetRegistry.LevelSelectAtlas.getTexture(textureStr));
           level.x = _unlockedPositions[i][0];

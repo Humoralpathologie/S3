@@ -15,7 +15,7 @@ package Level
   {
     public function Level5() 
     {
-      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL5]);
+      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL5, AssetRegistry.SCORING]);
       _levelNr = 5;
       super();
     }

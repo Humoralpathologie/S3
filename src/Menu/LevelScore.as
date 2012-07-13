@@ -383,7 +383,6 @@ package Menu
       _leaderboard.y = _scoreboard.y;
       addChild(_leaderboard);
       
-
       _leaderboardText = new TextField(200, 35, "Leaderboard", "kroeger 06_65", 35, Color.WHITE);
       _leaderboardText.vAlign = VAlign.TOP;
       _leaderboardText.hAlign = HAlign.LEFT;

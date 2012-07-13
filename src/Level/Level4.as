@@ -23,7 +23,7 @@ package Level
     
     public function Level4() 
     {
-      AssetRegistry.loadGraphics([AssetRegistry.LEVEL4, AssetRegistry.SNAKE]);
+      AssetRegistry.loadGraphics([AssetRegistry.LEVEL4, AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       _levelNr = 4;
       _rottenEnabled = true;
       _winningPositions = [2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428];
@@ -43,7 +43,7 @@ package Level
     }
     
     override protected function addBackground():void {
-      _bgTexture = AssetRegistry.Level4Atlas.getTexture("Level4mitRahmen");
+      _bgTexture = AssetRegistry.LevelAtlas.getTexture("Level4mitRahmen");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
