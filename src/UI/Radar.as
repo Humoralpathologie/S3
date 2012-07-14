@@ -30,7 +30,7 @@ package UI
       _eggs = eggs.eggPool;
       _snake = snake;
 
-      var radarCircle:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("KreisRadar"));    
+      var radarCircle:Image = new Image(AssetRegistry.UIAtlas.getTexture("KreisRadar"));    
       _center = new Point(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
       radarCircle.x = _center.x - radarCircle.width / 2;
       radarCircle.y = _center.y - radarCircle.height / 2;

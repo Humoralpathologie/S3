@@ -47,12 +47,12 @@ package Menu.ComboMenuScreens
     }
     
     private function addInfo():void {
-      var question:Button = new Button(AssetRegistry.MenuAtlas.getTexture("info-button"));
+      var question:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("info-button"));
       question.x = 860;
       question.y = 30;
       addChild(question);
       
-      var infoDisplay:Button = new Button(AssetRegistry.MenuAtlas.getTexture("info-arcade"));
+      /*var infoDisplay:Button = new Button(AssetRegistry.MenuAtlas.getTexture("info-arcade"));
       infoDisplay.x = (Starling.current.stage.stageWidth - infoDisplay.width) / 2;
       infoDisplay.y = (Starling.current.stage.stageHeight - infoDisplay.height) / 2;
       
@@ -63,19 +63,20 @@ package Menu.ComboMenuScreens
       infoDisplay.addEventListener(Event.TRIGGERED, function(event:Event) {
         removeChild(infoDisplay);
       });
-      
+      */
     }
     
     private function addSwitchers():void
     {
-      var play:Button = new Button(AssetRegistry.MenuAtlas.getTexture("text_play"));
+      //var play:Button = new Button(AssetRegistry.MenuAtlas.getTexture("text_play"));
+      var play:org.josht.starling.foxhole.controls.Button = new org.josht.starling.foxhole.controls.Button();
+      play.label = AssetRegistry.Strings.PLAY;
       play.x = 65 + 60;
       play.y = 540;
       addChild(play);
-      play.addEventListener(Event.TRIGGERED, function(event:Event):void
-        {
-          StageManager.switchStage(ArcadeState);
-        });
+      play.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void {
+        StageManager.switchStage(ArcadeState);
+      });
     }
     
     private function addNormalCombos():void
@@ -89,7 +90,7 @@ package Menu.ComboMenuScreens
          var _comboXtralifeSprite:AxSprite = new MenuButton(96 + 60 + (5 * 112), 352 + 30,0, _comboXtralife, showScreen("InfoBoxXtralife"));
        */
       
-      var buttons:Array = [[AssetRegistry.MenuAtlas.getTexture("combo-speed"), AssetRegistry.MenuAtlas.getTexture("info-speed")], [AssetRegistry.MenuAtlas.getTexture("combo-time"), AssetRegistry.MenuAtlas.getTexture("info-time")], [AssetRegistry.MenuAtlas.getTexture("combo-rotteneggs"), AssetRegistry.MenuAtlas.getTexture("info-rotteneggs")], [AssetRegistry.MenuAtlas.getTexture("combo-shuffle"), AssetRegistry.MenuAtlas.getTexture("info-shuffle")], [AssetRegistry.MenuAtlas.getTexture("combo-gold"), AssetRegistry.MenuAtlas.getTexture("info-gold")], [AssetRegistry.MenuAtlas.getTexture("combo-xtralife"), AssetRegistry.MenuAtlas.getTexture("info-xtralife")]];
+      var buttons:Array = [[AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("info-speed")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"), AssetRegistry.MenuAtlasOpaque.getTexture("info-time")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs"), AssetRegistry.MenuAtlasOpaque.getTexture("info-rotteneggs")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-shuffle"), AssetRegistry.MenuAtlasOpaque.getTexture("info-shuffle")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-gold"), AssetRegistry.MenuAtlasOpaque.getTexture("info-gold")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtralife"), AssetRegistry.MenuAtlasOpaque.getTexture("info-xtralife")]];
       
       for (var i:int = 0; i < buttons.length; i++)
       {
@@ -97,13 +98,15 @@ package Menu.ComboMenuScreens
         button.x = 96 + 60 + 112 * i;
         button.y = 382;
         addChild(button);
-        
+        /*
         var desc:Button = new Button(buttons[i][1]);
         desc.x = (Starling.current.stage.stageWidth - desc.width) / 2;
         desc.y = (Starling.current.stage.stageHeight - desc.height) / 2;
         desc.scaleWhenDown = 1;
+        */
         
         var that = this;
+        /*
         var f:Function = function(desc:Button):void
         {
           button.addEventListener(Event.TRIGGERED, function(event:Event):void
@@ -117,6 +120,7 @@ package Menu.ComboMenuScreens
             });
         };
         f(desc);
+        */
       }
     /*
        var comboSpeed:Button = new Button(AssetRegistry.MenuAtlas.getTexture("combo-speed"));
@@ -135,15 +139,15 @@ package Menu.ComboMenuScreens
       for (var i:int = 0; i < 3; i++)
       {
         var slot:Button;
-        
+        SaveGame.specials = { };
         if (SaveGame.specials[i])
         {
-          slot = new Button(AssetRegistry.MenuAtlas.getTexture(SaveGame.specials[i].effect));
+          slot = new Button(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[i].effect));
           if (SaveGame.specials[i].combo)
           {
             trace(SaveGame.specials[i].combo);
             
-            var combo:Image = new Image(AssetRegistry.MenuAtlas.getTexture(SaveGame.specials[i].combo));
+            var combo:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(SaveGame.specials[i].combo));
             combo.x = 0;
             combo.y = 0;
             slot.addChild(combo);
@@ -151,7 +155,7 @@ package Menu.ComboMenuScreens
         }
         else
         {
-          slot = new Button(AssetRegistry.MenuAtlas.getTexture("combo-special"));         
+          slot = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-special"));         
         }
         addChild(slot);
        

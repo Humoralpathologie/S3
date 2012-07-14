@@ -54,7 +54,7 @@ package Menu
     public function LevelSelect()
     {
       
-      AssetRegistry.loadLevelSelectGraphics();
+      AssetRegistry.loadGraphics([AssetRegistry.LEVELSELECT]);
       
       _scrollable = new Sprite();
       _scrollable.addEventListener(TouchEvent.TOUCH, onTouch);
@@ -119,7 +119,7 @@ package Menu
       for (var i:int = 0; i < 8; i++) {
         var textureStr:String;
         var level:Image;
-        if(SaveGame.levelUnlocked(i + 1)) {
+        if(i < 4 && SaveGame.levelUnlocked(i + 1)) {
           textureStr = "tile-level" + String(i + 1) + "_" + String(_unlockedPositions[i][0]) + "-" + String(_unlockedPositions[i][1]);
           level = new Image(AssetRegistry.LevelSelectAtlas.getTexture(textureStr));
           level.x = _unlockedPositions[i][0];
@@ -184,7 +184,7 @@ package Menu
                       that.removeChild(_levelInfo);
                     } else {
                       if (level == 1) {
-                        StageManager.switchStage(AssetRegistry.LEVELS[level - 1], null, "test.flv");
+                        StageManager.switchStage(AssetRegistry.LEVELS[level - 1]);// , null, "test.flv");
                       } else {
                         StageManager.switchStage(AssetRegistry.LEVELS[level - 1]);
                       }
@@ -227,7 +227,6 @@ package Menu
 
     
     override public function dispose():void {
-      AssetRegistry.disposeLevelSelectGraphics();
       super.dispose();
     }
   

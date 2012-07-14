@@ -27,10 +27,10 @@ package Menu
     public function ComboMenu()
     {
       super();
-      // TODO: Don't reload the Menu Graphics.
-      AssetRegistry.loadMenuGraphics();
+
+      AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE]);
          
-      var bg:Image = new Image(AssetRegistry.MenuAtlas.getTexture("arcade-background_iphone4"));
+      var bg:Image = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("arcade-background_iphone4"));
       addChild(bg);
       
       _navigator = new ScreenNavigator();
@@ -63,7 +63,6 @@ package Menu
     
     override public function dispose():void {
       super.dispose();
-      AssetRegistry.disposeMenuGraphics();
     }
   
   }

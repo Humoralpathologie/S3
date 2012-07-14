@@ -14,6 +14,8 @@ package starling.display
     import flash.geom.Point;
     import flash.geom.Rectangle;
     import flash.system.Capabilities;
+    import flash.ui.Mouse;
+    import flash.ui.MouseCursor;
     import flash.utils.getQualifiedClassName;
     
     import starling.core.RenderSupport;
@@ -22,6 +24,7 @@ package starling.display
     import starling.events.Event;
     import starling.events.EventDispatcher;
     import starling.events.TouchEvent;
+    import starling.utils.MatrixUtil;
     
     /** Dispatched when an object is added to a parent. */
     [Event(name="added", type="starling.events.Event")]
@@ -120,6 +123,7 @@ package starling.display
         private var mTouchable:Boolean;
         private var mBlendMode:String;
         private var mName:String;
+        private var mUseHandCursor:Boolean;
         private var mLastTouchTimestamp:Number;
         private var mParent:DisplayObjectContainer;  
         private var mTransformationMatrix:Matrix;
@@ -145,7 +149,7 @@ package starling.display
             mLastTouchTimestamp = -1;
             mBlendMode = BlendMode.AUTO;
             mTransformationMatrix = new Matrix();
-            mOrientationChanged = false;
+            mOrientationChanged = mUseHandCursor = false;
         }
         
         /** Disposes all resources of the display object. 
@@ -158,8 +162,7 @@ package starling.display
         /** Removes the object from its parent, if it has one. */
         public function removeFromParent(dispose:Boolean=false):void
         {
-            if (mParent) mParent.removeChild(this);
-            if (dispose) this.dispose();
+            if (mParent) mParent.removeChild(this, dispose);
         }
         
         /** Creates a matrix that represents the transformation from the local coordinate system 
@@ -277,19 +280,23 @@ package starling.display
             else return null;
         }
         
-        /** Transforms a point from the local coordinate system to global (stage) coordinates. */
-        public function localToGlobal(localPoint:Point):Point
+        /** Transforms a point from the local coordinate system to global (stage) coordinates.
+         *  If you pass a 'resultPoint', the result will be stored in this point instead of 
+         *  creating a new object. */
+        public function localToGlobal(localPoint:Point, resultPoint:Point=null):Point
         {
             getTransformationMatrix(base, sHelperMatrix);
-            return sHelperMatrix.transformPoint(localPoint);
+            return MatrixUtil.transformCoords(sHelperMatrix, localPoint.x, localPoint.y, resultPoint);
         }
         
-        /** Transforms a point from global (stage) coordinates to the local coordinate system. */
-        public function globalToLocal(globalPoint:Point):Point
+        /** Transforms a point from global (stage) coordinates to the local coordinate system.
+         *  If you pass a 'resultPoint', the result will be stored in this point instead of 
+         *  creating a new object. */
+        public function globalToLocal(globalPoint:Point, resultPoint:Point=null):Point
         {
             getTransformationMatrix(base, sHelperMatrix);
             sHelperMatrix.invert();
-            return sHelperMatrix.transformPoint(globalPoint);
+            return MatrixUtil.transformCoords(sHelperMatrix, globalPoint.x, globalPoint.y, resultPoint);
         }
         
         /** Renders the display object with the help of a support object. Never call this method
@@ -351,6 +358,25 @@ package starling.display
             }
             
             return mTransformationMatrix; 
+        }
+        
+        /** Indicates if the mouse cursor should transform into a hand while it's over the sprite. 
+         *  @default false */
+        public function get useHandCursor():Boolean { return mUseHandCursor; }
+        public function set useHandCursor(value:Boolean):void
+        {
+            if (value == mUseHandCursor) return;
+            mUseHandCursor = value;
+            
+            if (mUseHandCursor)
+                addEventListener(TouchEvent.TOUCH, onTouch);
+            else
+                removeEventListener(TouchEvent.TOUCH, onTouch);
+        }
+        
+        private function onTouch(event:TouchEvent):void
+        {
+            Mouse.cursor = event.interactsWith(this) ? MouseCursor.BUTTON : MouseCursor.AUTO;
         }
         
         /** The bounds of the object relative to the local coordinates of the parent. */

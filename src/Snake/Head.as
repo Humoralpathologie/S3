@@ -150,33 +150,6 @@ package Snake
           break;
       }
     }
-  /*
-     public function set facing(value:int):void
-     {
-     super.facing = value;
-     if(_image) {
-     removeChild(_image);
-     Starling.juggler.remove(_image as MovieClip);
-     }
-  
-     switch(facing) {
-     case AssetRegistry.UP:
-     _image = _headUp;
-     break;
-     case AssetRegistry.DOWN:
-     _image = _headDown;
-     break;
-     case AssetRegistry.RIGHT:
-     _image = _headRight;
-     break;
-     case AssetRegistry.LEFT:
-     _image = _headLeft;
-     break;
-     }
-  
-     addChild(_image);
-     Starling.juggler.add(_image as MovieClip);
-   }*/
   }
 
 }

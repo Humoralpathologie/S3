@@ -17,15 +17,22 @@ package Eggs
   {
     private var _type:int = 0;
     
-    public function Egg(tileX:int = 0, tileY:int = 0, type:int = AssetRegistry.EGGZERO) 
+    // Strange bug. AssetRegistry.EGGZERO
+    public function Egg(tileX:int = 0, tileY:int = 0, type:int = 0) 
     {
-      _type = type;
-      super(tileX, tileY, null, 1000);      
-      makeImage();      
+      super(tileX, tileY, null, 1000);   
+      this.type = type;
       frameOffset = new Point(1, 6);
     }
+         
     
-    private function makeImage():void {
+    public function get type():int 
+    {
+        return _type;
+    }
+    
+    public function set type(value:int):void {
+      _type = value;
       var frames:Vector.<Texture> = new Vector.<Texture>;
       
       switch(_type) {
@@ -59,15 +66,15 @@ package Eggs
             break;                
       }
          
+      if (_image) {
+        removeChild(_image);
+        Starling.juggler.remove(_image as MovieClip);
+        _image.dispose();
+      }
       _image = new MovieClip(frames, 2);
       _image.smoothing = TextureSmoothing.NONE;
       addChild(_image);
-      Starling.juggler.add(_image as MovieClip );
-    }            
-    
-    public function get type():int 
-    {
-        return _type;
+      Starling.juggler.add(_image as MovieClip );      
     }
   }
 

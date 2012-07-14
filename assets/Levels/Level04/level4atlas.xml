@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:3466a04e9ab31b918cd602b07ab5b19e$ -->
+<!-- $TexturePacker:SmartUpdate:696cc9928bb6930fde2236426c6da24e$ -->
 <TextureAtlas imagePath="level4atlas.png">
-    <SubTexture name="Level4mitRahmen" x="2" y="2" width="940" height="960"/>
-    <SubTexture name="level4_palme_blätter" x="2" y="964" width="156" height="163"/>
-    <SubTexture name="level4_palme_stamm" x="160" y="964" width="156" height="163"/>
+    <SubTexture name="level4_palme_blätter" x="2" y="2" width="124" height="147" frameX="-16" frameY="-7" frameWidth="156" frameHeight="163"/>
+    <SubTexture name="level4_palme_stamm" x="2" y="151" width="106" height="77" frameX="-24" frameY="-86" frameWidth="156" frameHeight="163"/>
 </TextureAtlas>

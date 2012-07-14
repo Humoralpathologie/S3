@@ -14,12 +14,31 @@ package engine {
     } 
     
     public static function get controlType():int {
-      return _sharedObject.data.controlType || 1;
+      if (_sharedObject.data.controlType && (_sharedObject.data.controlType == 3 || _sharedObject.data.controlType == 4)) {
+        controlType = 2;
+      } 
+      return _sharedObject.data.controlType || 2;
     }
     
     public static function set controlType(value:int):void {
       _sharedObject.data.controlType = value;
     }
+    
+    public static function get startSpeed():int {
+      return _sharedObject.data.startSpeed || 10;
+    }
+    
+    public static function get noGreenArcade():Boolean {
+      return _sharedObject.data.noGreenArcade || false ;
+    }
+    
+    public static function set noGreenArcade(value:Boolean):void {
+      _sharedObject.data.noGreenArcade = value;
+    }
+    
+    public static function set startSpeed(value:int):void {
+      _sharedObject.data.startSpeed = value;
+    }    
   
     public static function initializeData():void {
       _sharedObject.data.levels = {};

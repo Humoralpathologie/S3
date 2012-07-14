@@ -24,7 +24,9 @@
  */
 package org.josht.starling.foxhole.controls
 {
+	import flash.events.TimerEvent;
 	import flash.geom.Point;
+	import flash.utils.Timer;
 
 	import org.josht.starling.foxhole.core.FoxholeControl;
 	import org.josht.starling.foxhole.core.PropertyProxy;
@@ -45,12 +47,12 @@ package org.josht.starling.foxhole.controls
 	public class SimpleScrollBar extends FoxholeControl implements IScrollBar
 	{
 		/**
-		 * The scrollbar's thumb may be dragged horizontally (on the x-axis).
+		 * The scroll bar's thumb may be dragged horizontally (on the x-axis).
 		 */
 		public static const DIRECTION_HORIZONTAL:String = "horizontal";
 
 		/**
-		 * The scrollbar's thumb may be dragged vertically (on the y-axis).
+		 * The scroll bar's thumb may be dragged vertically (on the y-axis).
 		 */
 		public static const DIRECTION_VERTICAL:String = "vertical";
 
@@ -139,10 +141,6 @@ package org.josht.starling.foxhole.controls
 		 */
 		public function set value(newValue:Number):void
 		{
-			if(this._step != 0)
-			{
-				newValue = roundToNearest(newValue, this._step);
-			}
 			if(this.clampToRange)
 			{
 				newValue = clamp(newValue, this._minimum, this._maximum);
@@ -229,10 +227,6 @@ package org.josht.starling.foxhole.controls
 		 */
 		public function set step(value:Number):void
 		{
-			if(this._step == value)
-			{
-				return;
-			}
 			this._step = value;
 		}
 
@@ -369,6 +363,43 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
+		protected var currentRepeatAction:Function;
+
+		/**
+		 * @private
+		 */
+		protected var _repeatDelay:Number = 0.05;
+
+		/**
+		 * @private
+		 */
+		protected var _repeatTimer:Timer;
+
+		/**
+		 * The time, in seconds, before actions are repeated. The first repeat
+		 * happens five times longer than the others.
+		 */
+		public function get repeatDelay():Number
+		{
+			return this._repeatDelay;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set repeatDelay(value:Number):void
+		{
+			if(this._repeatDelay == value)
+			{
+				return;
+			}
+			this._repeatDelay = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
 		protected var isDragging:Boolean = false;
 
 		/**
@@ -476,6 +507,7 @@ package org.josht.starling.foxhole.controls
 		private var _touchStartY:Number = NaN;
 		private var _thumbStartX:Number = NaN;
 		private var _thumbStartY:Number = NaN;
+		private var _touchValue:Number;
 
 		/**
 		 * @inheritDoc
@@ -529,7 +561,7 @@ package org.josht.starling.foxhole.controls
 
 			if(stateInvalid)
 			{
-				this.thumb.isEnabled = isEnabled;
+				this.thumb.isEnabled = this._isEnabled;
 			}
 
 			sizeInvalid = this.autoSizeIfNeeded() || sizeInvalid;
@@ -652,15 +684,17 @@ package org.josht.starling.foxhole.controls
 			}
 			if(this._direction == DIRECTION_VERTICAL)
 			{
+				const thumbMinHeight:Number = this.thumb.minHeight > 0 ? this.thumb.minHeight : this.thumbOriginalHeight;
 				this.thumb.width = this.thumbOriginalWidth;
-				this.thumb.height = Math.max(this.thumbOriginalHeight, contentHeight * adjustedPageStep / (adjustedRange + adjustedPageStep));
+				this.thumb.height = Math.max(thumbMinHeight, contentHeight * adjustedPageStep / (adjustedRange + adjustedPageStep));
 				const trackScrollableHeight:Number = contentHeight - this.thumb.height;
 				this.thumb.x = (this.actualWidth - this.thumb.width) / 2;
 				this.thumb.y = this._paddingTop + Math.max(0, Math.min(trackScrollableHeight, trackScrollableHeight * (this._value - this._minimum) / range));
 			}
 			else //horizontal
 			{
-				this.thumb.width = Math.max(this.thumbOriginalWidth, contentWidth * adjustedPageStep / (adjustedRange + adjustedPageStep));
+				const thumbMinWidth:Number = this.thumb.minWidth > 0 ? this.thumb.minWidth : this.thumbOriginalWidth;
+				this.thumb.width = Math.max(thumbMinWidth, contentWidth * adjustedPageStep / (adjustedRange + adjustedPageStep));
 				this.thumb.height = this.thumbOriginalHeight;
 				const trackScrollableWidth:Number = contentWidth - this.thumb.width;
 				this.thumb.x = this._paddingLeft + Math.max(0, Math.min(trackScrollableWidth, trackScrollableWidth * (this._value - this._minimum) / range));
@@ -695,6 +729,53 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
+		protected function adjustPage():void
+		{
+			if(this._touchValue < this._value)
+			{
+				var newValue:Number = Math.max(this._touchValue, this._value - this._page);
+				if(this._step != 0)
+				{
+					newValue = roundToNearest(newValue, this._step);
+				}
+				this.value = newValue;
+			}
+			else if(this._touchValue > this._value)
+			{
+				newValue = Math.min(this._touchValue, this._value + this._page);
+				if(this._step != 0)
+				{
+					newValue = roundToNearest(newValue, this._step);
+				}
+				this.value = newValue;
+			}
+		}
+
+		/**
+		 * @private
+		 */
+		protected function startRepeatTimer(action:Function):void
+		{
+			this.currentRepeatAction = action;
+			if(this._repeatDelay > 0)
+			{
+				if(!this._repeatTimer)
+				{
+					this._repeatTimer = new Timer(this._repeatDelay * 1000);
+					this._repeatTimer.addEventListener(TimerEvent.TIMER, repeatTimer_timerHandler);
+				}
+				else
+				{
+					this._repeatTimer.reset();
+					this._repeatTimer.delay = this._repeatDelay * 1000;
+				}
+				this._repeatTimer.start();
+			}
+		}
+
+		/**
+		 * @private
+		 */
 		protected function thumbProperties_onChange(proxy:PropertyProxy, name:Object):void
 		{
 			this.invalidate(INVALIDATION_FLAG_STYLES);
@@ -722,19 +803,14 @@ package org.josht.starling.foxhole.controls
 				this._touchStartY = location.y;
 				this._thumbStartX = location.x;
 				this._thumbStartY = location.y;
-				const touchValue:Number = this.locationToValue(location);
-				if(touchValue < this._value)
-				{
-					this.value = Math.max(touchValue, this._value - this._page);
-				}
-				else if(touchValue > this._value)
-				{
-					this.value = Math.min(touchValue, this._value + this._page);
-				}
+				this._touchValue = this.locationToValue(location);
+				this.adjustPage();
+				this.startRepeatTimer(this.adjustPage);
 			}
 			else if(touch.phase == TouchPhase.ENDED)
 			{
 				this._touchPointID = -1;
+				this._repeatTimer.stop();
 			}
 		}
 
@@ -765,7 +841,12 @@ package org.josht.starling.foxhole.controls
 			}
 			else if(touch.phase == TouchPhase.MOVED)
 			{
-				this.value = this.locationToValue(location);
+				var newValue:Number = this.locationToValue(location);
+				if(this._step != 0)
+				{
+					newValue = roundToNearest(newValue, this._step);
+				}
+				this.value = newValue;
 			}
 			else if(touch.phase == TouchPhase.ENDED)
 			{
@@ -777,6 +858,18 @@ package org.josht.starling.foxhole.controls
 				}
 				this._onDragEnd.dispatch(this);
 			}
+		}
+
+		/**
+		 * @private
+		 */
+		protected function repeatTimer_timerHandler(event:TimerEvent):void
+		{
+			if(this._repeatTimer.currentCount < 5)
+			{
+				return;
+			}
+			this.currentRepeatAction();
 		}
 	}
 }

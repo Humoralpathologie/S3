@@ -37,39 +37,48 @@ package Menu.ComboMenuScreens
       greybox.y = 40 + 30;
       
       addChild(greybox);      
-      
-      var boost:Button = new Button(AssetRegistry.MenuAtlas.getTexture("combo-boost"));
+      /*
+      var boost:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-boost"));
       boost.x = 156;
       boost.y = 152;
       addChild(boost);
+      */
       
+      /*
       var boostText:Image = new Image(AssetRegistry.MenuAtlas.getTexture("Text-Boost"));
       boostText.x = 263;
       boostText.y = 154;
       addChild(boostText);
-      
-      var brake:Button = new Button(AssetRegistry.MenuAtlas.getTexture("combo-brake"));
+      */
+      /*
+      var brake:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-brake"));
       brake.x = 156;
       brake.y = 285,
       addChild(brake);
+      */
       
+      /*
       var brakeText:Image = new Image(AssetRegistry.MenuAtlas.getTexture("Text-Brake"));
       brakeText.x = 264;
       brakeText.y = 299;
       addChild(brakeText);
+      */
       
-      var time:Button = new Button(AssetRegistry.MenuAtlas.getTexture("combo-leveluptime"));
+      var time:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-leveluptime"));
       time.x = 156;
       time.y = 389;
       addChild(time);
       
+      /*
       var timeText:Image = new Image(AssetRegistry.MenuAtlas.getTexture("Text-BonusTimePlus"));
       timeText.x = 263;
       timeText.y = 404;
       addChild(timeText);
+      */
       
       var that = this;
       
+      /*
       boost.addEventListener(Event.TRIGGERED, function(event:Event):void {
         sharedData.effect = "combo-boost";
         SaveGame.saveSpecial(sharedData.selected, { effect: sharedData.effect, combo: null } );
@@ -85,8 +94,9 @@ package Menu.ComboMenuScreens
         sharedData.effect = "combo-brake";
         showComboOptions(brakeText);
       });
+      */
      
-      var next:Button = new Button(AssetRegistry.MenuAtlas.getTexture("right-arrow"));
+      var next:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("right-arrow"));
       next.x = greybox.x + greybox.width - 100;
       next.y = greybox.y + greybox.height - 100;
       next.scaleX = next.scaleY = 2;
@@ -107,7 +117,7 @@ package Menu.ComboMenuScreens
       var sprite:Sprite = new Sprite();
       
       for (var i:int = 0; i < combos.length; i++) {
-        var comboButton:Button = new Button(AssetRegistry.MenuAtlas.getTexture(combos[i]));
+        var comboButton:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture(combos[i]));
         comboButton.y = reference.y;
         comboButton.x = reference.x + 50 + i * 150;
         sprite.addChild(comboButton);

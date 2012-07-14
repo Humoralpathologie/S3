@@ -1,3 +1,27 @@
+/*
+ Copyright (c) 2012 Josh Tynjala
+
+ Permission is hereby granted, free of charge, to any person
+ obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without
+ restriction, including without limitation the rights to use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following
+ conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+ */
 package org.josht.starling.foxhole.controls.popups
 {
 	import flash.errors.IllegalOperationError;
@@ -12,6 +36,9 @@ package org.josht.starling.foxhole.controls.popups
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.events.ResizeEvent;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 
 	/**
 	 * Displays a pop-up at the center of the stage, filling the vertical space.
@@ -59,6 +86,11 @@ package org.josht.starling.foxhole.controls.popups
 		/**
 		 * @private
 		 */
+		protected var touchPointID:int = -1;
+
+		/**
+		 * @private
+		 */
 		private var _onClose:Signal = new Signal(VerticalCenteredPopUpContentManager);
 
 		/**
@@ -87,6 +119,7 @@ package org.josht.starling.foxhole.controls.popups
 				FoxholeControl(this.content).onResize.add(content_resizeHandler);
 			}
 			this.layout();
+			Starling.current.stage.addEventListener(TouchEvent.TOUCH, stage_touchHandler);
 			Starling.current.stage.addEventListener(ResizeEvent.RESIZE, stage_resizeHandler);
 			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler, false, int.MAX_VALUE, true);
 		}
@@ -100,6 +133,7 @@ package org.josht.starling.foxhole.controls.popups
 			{
 				return;
 			}
+			Starling.current.stage.removeEventListener(TouchEvent.TOUCH, stage_touchHandler);
 			Starling.current.stage.removeEventListener(ResizeEvent.RESIZE, stage_resizeHandler);
 			Starling.current.nativeStage.removeEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler);
 			if(this.content is FoxholeControl)
@@ -184,6 +218,34 @@ package org.josht.starling.foxhole.controls.popups
 		{
 			this.layout();
 		}
+
+		/**
+		 * @private
+		 */
+		protected function stage_touchHandler(event:TouchEvent):void
+		{
+			if(event.interactsWith(this.content))
+			{
+				return;
+			}
+			const touch:Touch = event.getTouch(Starling.current.stage);
+			if(!touch || (touch.phase == TouchPhase.BEGAN && this.touchPointID >= 0) ||
+				(touch.phase != TouchPhase.BEGAN && this.touchPointID != touch.id))
+			{
+				return;
+			}
+
+			if(touch.phase == TouchPhase.BEGAN)
+			{
+				this.touchPointID = touch.id;
+			}
+			else if(touch.phase == TouchPhase.ENDED)
+			{
+				this.touchPointID = -1;
+				this.close();
+			}
+		}
+
 
 	}
 }

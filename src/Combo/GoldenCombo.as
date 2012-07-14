@@ -13,7 +13,7 @@ package Combo
     }
     
     override public function effect(state:LevelState):void {
-      var goldEgg:Egg = new Egg(0,0, AssetRegistry.EGGGOLDEN)
+      var goldEgg:Egg = state.eggs.recycleEgg(0, 0, AssetRegistry.EGGGOLDEN);
       state.placeEgg(goldEgg);
       Starling.juggler.delayCall(function():void {
         if (state.eggs.eggPool.indexOf(goldEgg) != -1) {
