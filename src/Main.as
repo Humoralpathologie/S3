@@ -136,7 +136,10 @@ package
     private function deactivate(e:Event):void
     {
       // auto-close
-      NativeApplication.nativeApplication.exit();
+      if (!(Capabilities.os.indexOf("Windows") != -1 || Capabilities.os.indexOf("Mac") != -1))
+      {      
+        NativeApplication.nativeApplication.exit();
+      }
     }
   }
 
