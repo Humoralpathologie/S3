@@ -30,12 +30,14 @@ package starling.core
         
         private var mFrameCount:int = 0;
         private var mTotalTime:Number = 0;
+        private var mAdditionalStats:Object;
         
         /** Creates a new Statistics Box. */
         public function StatsDisplay()
         {
-            mBackground = new Quad(49, 18, 0x0);
-            mTextField = new TextField(60, 18, "", BitmapFont.MINI, BitmapFont.NATIVE_SIZE, 0xffffff);
+            mBackground = new Quad(49, 100, 0x0);
+            mAdditionalStats = {"test":5 };
+            mTextField = new TextField(60, 100, "", BitmapFont.MINI, BitmapFont.NATIVE_SIZE, 0xffffff);
             mTextField.x = 2;
             mTextField.hAlign = HAlign.LEFT;
             mTextField.vAlign = VAlign.TOP;
@@ -44,19 +46,29 @@ package starling.core
             addChild(mTextField);
             
             addEventListener(Event.ENTER_FRAME, onEnterFrame);
-            updateText(0, getMemory());
+            updateText(0, getMemory(), getFreeMemory());
             blendMode = BlendMode.NONE;
         }
         
-        private function updateText(fps:Number, memory:Number):void
+        private function updateText(fps:Number, memory:Number, freeMemory:Number):void
         {
-            mTextField.text = "FPS: " + fps.toFixed(1) + "\nMEM: " + memory.toFixed(1);
+            mTextField.text = "FPS: " + fps.toFixed(1) + "\nMEM: " + memory.toFixed(1) + "\nFree: " + freeMemory.toFixed(1);
+           
+            for (var stat in mAdditionalStats) {
+              mTextField.text += "\n" + String(stat) + ": " + mAdditionalStats[stat];
+            }
+            
             mBackground.width  = (fps >= 100 || memory >= 100) ? 55 : 49; 
         }
         
         private function getMemory():Number
         {
             return System.totalMemory * 0.000000954; // 1 / (1024*1024) to convert to MB
+        }
+        
+        private function getFreeMemory():Number
+        {
+          return System.freeMemory * 0.000000954;
         }
         
         private function onEnterFrame(event:EnterFrameEvent):void
@@ -66,9 +78,19 @@ package starling.core
             
             if (mTotalTime > 1.0)
             {
-                updateText(mFrameCount / mTotalTime, getMemory());
+                updateText(mFrameCount / mTotalTime, getMemory(), getFreeMemory());
                 mFrameCount = mTotalTime = 0;
             }
+        }
+        
+        public function get additionalStats():Object 
+        {
+            return mAdditionalStats;
+        }
+        
+        public function set additionalStats(value:Object):void 
+        {
+            mAdditionalStats = value;
         }
     }
 }

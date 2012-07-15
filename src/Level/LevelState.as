@@ -128,6 +128,8 @@ package Level
     protected var _spawnMap:Array = [];
     protected var _textLevel:Sprite;
     
+    private var _updateTimer:Number;
+    
     
     // Pause Menu
     protected var _pauseMenu:ScreenNavigator;
@@ -264,12 +266,11 @@ package Level
     public function showMessage(message:String):void
     {
       var field:TextField = recycleText();
+      field.color = Color.WHITE;
       field.text = message;
       field.touchable = false;
       var tween:Tween = new Tween(field, 3);
       tween.animate("y", -field.height);
-      //tween.animate("scaleX", 3);
-      //tween.animate("scaleY", 3);
       tween.animate("alpha", 0);
       tween.onComplete = function():void
       {
@@ -852,9 +853,8 @@ package Level
     
     private function onEnterFrame(event:EnterFrameEvent):void
     {
-      var bodyArray:Array;
-      var comboArray:Array;
       
+      _updateTimer = getTimer();
       if (!_won)
       {
         checkWin();
@@ -885,26 +885,14 @@ package Level
         }
         
         updateHud();
-        
-        var startTimer:Number, endTimer:Number;
-        
-        //startTimer = getTimer();
-        
+
         _snake.update(event.passedTime * Starling.juggler.timeFactor);
-        
-        //endTimer = getTimer();
-        
-        //Starling.current.mCombo = endTimer - startTimer;        
-        
+          
         _speed = _snake.speed;
         if (_timer >= _speed)
         {
-          //startTimer = getTimer();
           _snake.move();
-          //endTimer = getTimer();
-          
-          //Starling.current.mMove = endTimer - startTimer;
-          
+   
           doCombos();
           
           eggCollide();
@@ -923,6 +911,8 @@ package Level
         }
         
       }
+      
+      //Starling.current.statsDisplay.additionalStats["TU"] = getTimer() - _updateTimer;
     
     }
     
@@ -1201,6 +1191,16 @@ package Level
       trace("disposing");
       _pauseMenu.clearScreen();
       _pauseMenu.dispose();
+      
+      var i:int;
+      
+      for (i = 0; i < _textFieldPool.length; i++) {
+        _textFieldPool[i].dispose();
+      }
+      _eggs.dispose();
+      _rottenEggs.dispose();
+      _snake.dispose();
+      
       super.dispose();
       
     }

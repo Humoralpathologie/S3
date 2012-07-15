@@ -149,7 +149,7 @@ package UI
       }
       
       _overlay = new Image(AssetRegistry.UIAtlas.getTexture("ui-top"));
-      _overlay.smoothing = TextureSmoothing.NONE;
+      //_overlay.smoothing = TextureSmoothing.NONE;
       addChild(_overlay);
      
       for (var i:int; i < others.length; i++) {

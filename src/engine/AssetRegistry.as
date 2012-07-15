@@ -51,6 +51,19 @@ package engine
     static private const ScoringScalableAtlasXML:Class;
     public static var ScoringScalableAtlas:TextureAtlas;
     
+    // Level Selection Screen Graphics
+    // .25 size
+    [Embed(source = "../../assets/Levels/LevelSelect/LevelSelectAlpha.png")]
+    static private const LevelSelectAtlasAlphaPNG:Class;
+    [Embed(source = "../../assets/Levels/LevelSelect/LevelSelectAlpha.xml", mimeType = "application/octet-stream")]
+    static private const LevelSelectAtlasAlphaXML:Class;
+    [Embed(source="../../assets/Levels/LevelSelect/LevelSelectOpaque.atf", mimeType="application/octet-stream")]
+    static private const LevelSelectAtlasOpaqueATF:Class;
+    [Embed(source = "../../assets/Levels/LevelSelect/LevelSelectOpaque.xml", mimeType = "application/octet-stream")]
+    static private const LevelSelectAtlasOpaqueXML:Class;
+    public static var LevelSelectAtlasOpaque:TextureAtlas;
+    public static var LevelSelectAtlasAlpha:TextureAtlas;
+    
     [Embed(source="../../assets/Snake/Snake.png")]
     static private const SnakeTexturePNG:Class;
     [Embed(source = "../../assets/Snake/Snake.atf", mimeType = "application/octet-stream")]
@@ -132,10 +145,7 @@ package engine
     [Embed(source="../../assets/Levels/Scoring/Scoring.png")]
     static private const ScoringPNG:Class;
     
-    [Embed(source="../../assets/Levels/LevelSelect/LevelSelect.xml",mimeType="application/octet-stream")]
-    static private const LevelSelectXML:Class;
-    [Embed(source="../../assets/Levels/LevelSelect/LevelSelect.png")]
-    static private const LevelSelectPNG:Class;
+
     //[Embed(source = "../../assets/Levels/LevelSelect/LevelSelect.atf", mimeType = "application/octet-stream")] static private const LevelSelectATF:Class;
     //[Embed(source="../../assets/Levels/LevelSelect/background.png")]
    // static private const LevelSelectBGPNG:Class;
@@ -525,17 +535,15 @@ package engine
     
     public static function loadLevelSelectGraphics():void
     {
-      LevelSelectAtlas = new TextureAtlas(Texture.fromBitmap(new LevelSelectPNG), XML(new LevelSelectXML));
-      //LevelSelectAtlas = new TextureAtlas(Texture.fromAtfData(new LevelSelectATF as ByteArray), XML(new LevelSelectXML));
-      //LevelSelectBGTexture = Texture.fromBitmap(new LevelSelectBGPNG);
-      //LevelSelectBossLocked = Texture.fromBitmap(new LevelSelectBossLockedPNG);
+      LevelSelectAtlasOpaque = new TextureAtlas(Texture.fromAtfData(new LevelSelectAtlasOpaqueATF), XML(new LevelSelectAtlasOpaqueXML));
+      LevelSelectAtlasAlpha = new TextureAtlas(Texture.fromBitmap(new LevelSelectAtlasAlphaPNG, true, false, 0.25), XML(new LevelSelectAtlasAlphaXML));
+      
     }
     
     public static function disposeLevelSelectGraphics():void
     {
-      LevelSelectAtlas.dispose();
-      //LevelSelectBGTexture.dispose();
-      //LevelSelectBossLocked.dispose();
+      LevelSelectAtlasOpaque.dispose();
+      LevelSelectAtlasAlpha.dispose();
     }
   
   }

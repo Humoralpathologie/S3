@@ -709,5 +709,10 @@ package starling.core
             else
                 sHandleLostContext = value;
         }
+        
+        public function get statsDisplay():StatsDisplay 
+        {
+            return mStatsDisplay;
+        }
     }
 }
