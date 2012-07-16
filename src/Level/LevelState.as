@@ -222,11 +222,8 @@ package Level
       _levelStage.addChild(_bonusBar);
       
       startAt(_startPos.x, _startPos.y);
-      
-      
-      
+         
       _mchammer = new Quad(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
-      _mchammer.y = 100;
       _mchammer.alpha = 0;
       
       addChild(_mchammer);
@@ -1031,10 +1028,12 @@ package Level
     }
     
     private function showPauseMenu():void {
+      _mchammer.y = 100; // Keep pause button.
       _pauseMenu.showScreen(PAUSEMAIN);
     }
     
     private function hidePauseMenu():void {
+      _mchammer.y = 0;
       _pauseMenu.clearScreen();
     }
     
