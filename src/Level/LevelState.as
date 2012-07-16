@@ -224,10 +224,14 @@ package Level
       startAt(_startPos.x, _startPos.y);
       
       
-      createPauseMenu();
       
       _mchammer = new Quad(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
+      _mchammer.y = 100;
       _mchammer.alpha = 0;
+      
+      addChild(_mchammer);
+      createPauseMenu();
+      
       pause();
       showObjective();
       
@@ -986,12 +990,14 @@ package Level
       _paused = true;
       //Starling.juggler.paused = true;
       //addChild(_mchammer);
+      _mchammer.touchable = true;
     }
     
     public function unpause():void
     {
       //removeChild(_mchammer);
       _paused = false;
+      _mchammer.touchable = false;
       //Starling.juggler.paused = false;
     }
     
