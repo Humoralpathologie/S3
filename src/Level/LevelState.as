@@ -923,6 +923,7 @@ package Level
       {
         _rottenTimer = 20;
         var rotten:Eggs.Egg = _rottenEggs.recycleEgg(0, 0, AssetRegistry.EGGROTTEN);
+        rotten.pinkify();
         placeEgg(rotten, true);
       }
     }
