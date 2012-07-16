@@ -104,6 +104,7 @@ package Level
     }
     
     override public function dispose():void {
+      AssetRegistry.soundmanager.fadeOutMusic();
       super.dispose();
     }
     

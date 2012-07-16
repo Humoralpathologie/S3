@@ -1016,6 +1016,7 @@ package Level
       _pauseMenu.addScreen(PAUSEMAIN, new ScreenNavigatorItem(new PauseMainScreen(this)));
       _pauseMenu.defaultScreenID = PAUSEMAIN;
       addChild(_pauseMenu);
+      
       /*
       _zoomSlider = new Slider();
       _zoomSlider.value = _zoom;
