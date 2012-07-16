@@ -23,7 +23,7 @@ package
   import engine.StageManager;
   import engine.SaveGame;
   import com.demonsters.debugger.MonsterDebugger;
-  import flash.system.Capabilities;
+  //import flash.system.Capabilities;
   import org.josht.starling.foxhole.themes.MinimalTheme;
   
   /**
@@ -49,7 +49,7 @@ package
       
       //Starling.handleLostContext = true;
       
-      MonsterDebugger.initialize(this);
+      //MonsterDebugger.initialize(this);
       //MonsterDebugger.trace(this, "Hello World");
       //stage.addChild(new TheMiner());
       
