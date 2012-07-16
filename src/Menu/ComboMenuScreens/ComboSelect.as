@@ -114,7 +114,7 @@ package Menu.ComboMenuScreens
       });
       _scrollable.addChild(shuffle);
       
-      var shuffleText:TextField = new TextField(timeText.width, timeText.height, AssetRegistry.Strings.SHUFFLEDESC, "kroeger 06_65", 30, Color.WHITE);
+      var shuffleText:TextField = new TextField(timeText.width, timeText.height + 20, AssetRegistry.Strings.SHUFFLEDESC, "kroeger 06_65", 30, Color.WHITE);
       shuffleText.hAlign = HAlign.LEFT;
       shuffleText.vAlign = VAlign.TOP;
       shuffleText.x = timeText.x;
