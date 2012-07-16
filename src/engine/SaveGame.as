@@ -86,7 +86,7 @@ package engine {
     
     public static function saveSpecial(slot:int, special:Object):void {
       for (var i in specials) {
-        if (specials[i] && (specials[i].effect == special.effect || specials[i].combo == special.combo)) {
+        if (specials[i] && (specials[i].effect == special.effect)) {
           specials[i] = null;
         }
       }

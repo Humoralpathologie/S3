@@ -22,7 +22,8 @@ package Menu.ComboMenuScreens
   {
     
     protected var _onComboSelect:Signal = new Signal(MainComboMenu);
-    protected var _sharedData:Object = {};
+    protected var _sharedData:Object = { };
+    protected var _greybox:Quad;
     
     public function MainComboMenu()
     {
@@ -33,12 +34,12 @@ package Menu.ComboMenuScreens
     {
       
       //var greybox:Image = new Image(AssetRegistry.MenuAtlas.getTexture("arcade-box-710"));
-      var greybox:Quad = new Quad(710, 450, Color.BLACK);
-      greybox.alpha = 0.3;
-      greybox.x = 65 + 60;
-      greybox.y = 40 + 30;
+      _greybox = new Quad(710, 450, Color.BLACK);
+      _greybox.alpha = 0.3;
+      _greybox.x = 65 + 60;
+      _greybox.y = 40 + 30;
       
-      addChild(greybox);
+      addChild(_greybox);
       
       addSwitchers();
       addButtons();
@@ -71,6 +72,8 @@ package Menu.ComboMenuScreens
       //var play:Button = new Button(AssetRegistry.MenuAtlas.getTexture("text_play"));
       var play:org.josht.starling.foxhole.controls.Button = new org.josht.starling.foxhole.controls.Button();
       play.label = AssetRegistry.Strings.PLAY;
+      play.height = 80;
+      play.width = 300;
       play.x = 65 + 60;
       play.y = 540;
       addChild(play);
@@ -81,21 +84,14 @@ package Menu.ComboMenuScreens
     
     private function addNormalCombos():void
     {
-      /*
-         var _comboSpeedSprite:AxSprite = new MenuButton(96 + 60, 352 + 30, 0, _comboSpeed, showScreen("InfoBoxSpeed"));
-         var _comboTimeSprite:AxSprite = new MenuButton(96 + 60 + 112, 352 + 30,0, _comboTime, showScreen("InfoBoxTime"));
-         var _comboFouleggsSprite:AxSprite = new MenuButton(96 + 60 + (2 * 112), 352 + 30,0, _comboFouleggs, showScreen("InfoBoxRotten"));
-         var _comboShuffleSprite:AxSprite = new MenuButton(96 + 60 + (3 * 112), 352 + 30, 0,_comboShuffle,showScreen("InfoBoxShuffle"));
-         var _comboGoldSprite:AxSprite = new  MenuButton(96 + 60 + (4 * 112), 352 + 30,0, _comboGold,showScreen("InfoBoxGold"));
-         var _comboXtralifeSprite:AxSprite = new MenuButton(96 + 60 + (5 * 112), 352 + 30,0, _comboXtralife, showScreen("InfoBoxXtralife"));
-       */
       
-      var buttons:Array = [[AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("info-speed")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"), AssetRegistry.MenuAtlasOpaque.getTexture("info-time")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs"), AssetRegistry.MenuAtlasOpaque.getTexture("info-rotteneggs")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-shuffle"), AssetRegistry.MenuAtlasOpaque.getTexture("info-shuffle")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-gold"), AssetRegistry.MenuAtlasOpaque.getTexture("info-gold")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtralife"), AssetRegistry.MenuAtlasOpaque.getTexture("info-xtralife")]];
+      var buttons:Array = [[AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("info-speed")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"), AssetRegistry.MenuAtlasOpaque.getTexture("info-time")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs"), AssetRegistry.MenuAtlasOpaque.getTexture("info-rotteneggs")]]//, [AssetRegistry.MenuAtlasOpaque.getTexture("combo-shuffle"), AssetRegistry.MenuAtlasOpaque.getTexture("info-shuffle")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-gold"), AssetRegistry.MenuAtlasOpaque.getTexture("info-gold")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtralife"), AssetRegistry.MenuAtlasOpaque.getTexture("info-xtralife")]];
       
+      var space:int = 80;
       for (var i:int = 0; i < buttons.length; i++)
       {
         var button:Button = new Button(buttons[i][0]);
-        button.x = 96 + 60 + 112 * i;
+        button.x = (_greybox.x + (_greybox.width - (buttons.length * button.width + (buttons.length - 1) * space)) / 2) + i * (button.width + space);        
         button.y = 382;
         addChild(button);
         /*
@@ -136,30 +132,31 @@ package Menu.ComboMenuScreens
     
     private function addButtons():void
     {
-      for (var i:int = 0; i < 3; i++)
+      var buttonCount:int = 4;
+      var space:int = 60;
+      
+      var combos:Array = ["abcb", "acba", "bccb", "abbca", "bcaac", "ccbba"];
+      
+      for (var i:int = 0; i < buttonCount; i++)
       {
         var slot:Button;
-        SaveGame.specials = { };
+        //SaveGame.specials = { };
         if (SaveGame.specials[i])
         {
           slot = new Button(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[i].effect));
-          if (SaveGame.specials[i].combo)
-          {
-            trace(SaveGame.specials[i].combo);
-            
-            var combo:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(SaveGame.specials[i].combo));
-            combo.x = 0;
-            combo.y = 0;
-            slot.addChild(combo);
-          }
         }
         else
         {
           slot = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-special"));         
         }
         addChild(slot);
-       
-        slot.x = 165 + 60 + i * 202;
+        
+        var combo:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[i]));
+        combo.x = 0;
+        combo.y = 0;
+        slot.addChild(combo);
+        
+        slot.x = (_greybox.x + (_greybox.width - (buttonCount * slot.width + (buttonCount - 1) * space)) / 2) + i * (slot.width + space);
         slot.y = 112 + 30;
         slot.addEventListener(Event.TRIGGERED, buttonSelector(i));
       }

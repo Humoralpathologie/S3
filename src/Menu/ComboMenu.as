@@ -44,19 +44,11 @@ package Menu
       }));
       
       _navigator.addScreen(SELECTCOMBO, new ScreenNavigatorItem(ComboSelect, {
-        onComboSelectTwo:SELECTCOMBOTWO,
         onMainComboMenu:BASEMENU
       }, {
         sharedData: this._sharedData
       }));
-      
-      _navigator.addScreen(SELECTCOMBOTWO, new ScreenNavigatorItem(ComboSelectTwo, {
-        onComboSelect:SELECTCOMBO,
-        onMainComboMenu:BASEMENU
-      }, {
-        sharedData: this._sharedData       
-      }));
-      
+            
       _navigator.showScreen(BASEMENU);
       
     }

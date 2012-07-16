@@ -6,10 +6,11 @@ package Combo
   import starling.core.Starling;
   
   public class GoldenCombo extends Combo {
-    public function GoldenCombo() {
+    
+    public function GoldenCombo(trigger:String) {
       super();
       repeat = false;
-      trigger = [AssetRegistry.EGGB, AssetRegistry.EGGA, AssetRegistry.EGGC, AssetRegistry.EGGA, AssetRegistry.EGGC];
+      triggerString = trigger;
     }
     
     override public function effect(state:LevelState):void {

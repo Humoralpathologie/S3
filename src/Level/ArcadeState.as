@@ -45,26 +45,34 @@ package Level
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       _rottenEnabled = true;
       
+      var combos:Array = ["abcb", "acba", "bccb", "abbca", "bcaac", "ccbba"];      
+      
       super();
       
-      _comboSet.addCombo(new Combo.ExtraLifeCombo);
       _comboSet.addCombo(new Combo.NoRottenCombo);
-      _comboSet.addCombo(new Combo.ShuffleCombo);
-      _comboSet.addCombo(new Combo.GoldenCombo);
       _comboSet.addCombo(new Combo.ExtraTimeCombo);
       
-      for (var i:int = 0; i < 3; i++) {
+      for (var i:int = 0; i < 4; i++) {
         if (SaveGame.specials[i]) {
           switch(SaveGame.specials[i].effect) {
             case "combo-xtraspawn":
-                _comboSet.addCombo(new Combo.ExtraEggCombo(SaveGame.specials[i].combo));
+                _comboSet.addCombo(new Combo.ExtraEggCombo(combos[i]));
                 break;
             case "combo-leveluptime":
-                _comboSet.addCombo(new Combo.ExtendExtraTimeCombo(SaveGame.specials[i].combo));
+                _comboSet.addCombo(new Combo.ExtendExtraTimeCombo(combos[i]));
                 break;
             case "combo-chaintime":
-                _comboSet.addCombo(new Combo.ExtendChainTimeCombo(SaveGame.specials[i].combo));
+                _comboSet.addCombo(new Combo.ExtendChainTimeCombo(combos[i]));
                 break;
+            case "combo-shuffle":
+                _comboSet.addCombo(new Combo.ShuffleCombo(combos[i]));
+                break;  
+            case "combo-xtralife":
+                _comboSet.addCombo(new Combo.ExtraLifeCombo(combos[i]));
+                break;  
+            case "combo-gold":
+                _comboSet.addCombo(new Combo.GoldenCombo(combos[i]));
+                break;                  
           }
         }
       }
