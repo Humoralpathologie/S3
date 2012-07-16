@@ -45,6 +45,7 @@ package Menu
     private var _arcadeButton:Button;
     private var _settingsButton:Button;
     private var _levelSelectButton:Button;
+	private var _extrasButton:Button;
     
     public function MainMenu()
     {
@@ -62,37 +63,45 @@ package Menu
      
       _settingsButton = new Button();
       _settingsButton.label = AssetRegistry.Strings.SETTINGS;
-      _settingsButton.width = 300;
+      _settingsButton.width = 240;
       _settingsButton.height = 80;
-      _settingsButton.x = (Starling.current.stage.stageWidth - _settingsButton.width) / 2;
-      _settingsButton.y = 640 - _settingsButton.height - 50;
+      _settingsButton.x = Starling.current.stage.stageWidth - _settingsButton.width;
+      _settingsButton.y = Starling.current.stage.stageHeight - _settingsButton.height;
       _settingsButton.onRelease.add(function(button:Button) {
         showSettingsNavigator();
       });
       
       _arcadeButton = new Button();
       _arcadeButton.label = AssetRegistry.Strings.ARCADE;
-      _arcadeButton.width = 300;
+      _arcadeButton.width = 240;
       _arcadeButton.height = 80;      
-      _arcadeButton.x = _settingsButton.x;
-      _arcadeButton.y = _settingsButton.y - 100;
+      _arcadeButton.x = (Starling.current.stage.stageWidth - _settingsButton.width) / 3;
+      _arcadeButton.y = Starling.current.stage.stageHeight - _arcadeButton.height;
       _arcadeButton.onRelease.add(function(button:Button):void {
         StageManager.switchStage(ComboMenu);
       });
       
       _levelSelectButton = new Button();
       _levelSelectButton.label = AssetRegistry.Strings.STORY;
-      _levelSelectButton.width = 300;
+      _levelSelectButton.width = 240;
       _levelSelectButton.height = 80;
-      _levelSelectButton.x = _settingsButton.x;
-      _levelSelectButton.y = _arcadeButton.y - 100;
+      _levelSelectButton.x = 0;
+      _levelSelectButton.y = Starling.current.stage.stageHeight - _levelSelectButton.height;
       _levelSelectButton.onRelease.add(function(button:Button):void {
         StageManager.switchStage(LevelSelect);
       });
-          
+	  
+	  _extrasButton = new Button();
+	  _extrasButton.label = AssetRegistry.Strings.EXTRAS;
+	  _extrasButton.width = 240;
+	  _extrasButton.height = 80;
+	  _extrasButton.x = Starling.current.stage.stageWidth / 2;
+	  _extrasButton.y = Starling.current.stage.stageHeight - _extrasButton.height;
+	  
       addChild(_settingsButton);
       addChild(_arcadeButton);
       addChild(_levelSelectButton);
+	  addChild(_extrasButton);
     }
     
     private function createSettingsNavigator():void {
@@ -134,6 +143,7 @@ package Menu
       _settingsButton.dispose();
       _arcadeButton.dispose();
       _levelSelectButton.dispose();
+	  _extrasButton.dispose();
     }
   }
 

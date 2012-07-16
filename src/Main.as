@@ -22,8 +22,8 @@ package
   import Level.*;
   import engine.StageManager;
   import engine.SaveGame;
-  import com.demonsters.debugger.MonsterDebugger;
-  //import flash.system.Capabilities;
+  //import com.demonsters.debugger.MonsterDebugger;
+  import flash.system.Capabilities;
   import org.josht.starling.foxhole.themes.MinimalTheme;
   
   /**
