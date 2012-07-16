@@ -132,10 +132,10 @@ package Menu.ComboMenuScreens
     
     private function addButtons():void
     {
-      var buttonCount:int = 4;
-      var space:int = 60;
+      var buttonCount:int = 3;
+      var space:int = 80;
       
-      var combos:Array = ["abcb", "acba", "bccb", "abbca", "bcaac", "ccbba"];
+      var combos:Array = ["acba", "ccbba", "bcaac", "abbca", "abcb", "bccb"];
       
       for (var i:int = 0; i < buttonCount; i++)
       {
