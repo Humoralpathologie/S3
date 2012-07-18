@@ -689,6 +689,8 @@ package Level
             soundCounter++;
             setTimeout(func, (300 / (expoCounter * expoCounter)) + 80);
           }
+        } else {
+          _justAte = true;
         }
       }
       
@@ -1199,11 +1201,7 @@ package Level
         _textFieldPool[i].dispose();
       }
       
-      if(_currentCombos != null) {
-        for (i = 0; i < _currentCombos.length; i++) {
-          _currentCombos[i].dispose();
-        }
-      }
+      _currentCombos = null;
       
       this.removeEventListeners(EnterFrameEvent.ENTER_FRAME);
       this.removeEventListeners(KeyboardEvent.KEY_DOWN);

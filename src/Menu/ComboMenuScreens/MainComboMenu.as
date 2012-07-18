@@ -135,7 +135,7 @@ package Menu.ComboMenuScreens
       var buttonCount:int = 3;
       var space:int = 80;
       
-      var combos:Array = ["acba", "ccbba", "bcaac", "abbca", "abcb", "bccb"];
+      var combos:Array = AssetRegistry.COMBO_TRIGGERS;
       
       for (var i:int = 0; i < buttonCount; i++)
       {

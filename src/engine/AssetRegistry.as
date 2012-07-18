@@ -292,7 +292,10 @@ package engine
     public static const LEVEL7:String = "Level 7";
     public static const LEVEL8:String = "Level 8";
     
+    public static const COMBO_TRIGGERS:Array = ["acba", "ccbba", "bcaac", "abbca", "abcb", "bccb"];
+    
     public static var Strings:Class;
+    
    
     
     public static function init():void

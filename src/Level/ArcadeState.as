@@ -45,7 +45,7 @@ package Level
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       _rottenEnabled = true;
       
-      var combos:Array = ["abcb", "acba", "bccb", "abbca", "bcaac", "ccbba"];      
+      var combos:Array = AssetRegistry.COMBO_TRIGGERS;
       
       super();
       

@@ -96,10 +96,8 @@ package Eggs
     
     public function clear():void {
       for (var i:int = 0; i < _eggPool.length; i++) {
-        removeChild(_eggPool[i]);
-        _eggPool[i].dispose();
+        removeEgg(_eggPool[i]);
       }
-      _eggPool.length = 0;
     }
   
     public function hit(x:int, y:int):Boolean {

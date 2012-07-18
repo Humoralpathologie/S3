@@ -28,7 +28,7 @@ package Snake
     
     public function BodyPart(tileX:int, tileY:int, speed:Number, type:int = 0) // AssetRegistry.EGGZERO)
     {
-      this.type = type;
+      this.type = type;      
       _image = new Image(_imageDown);
       _image.smoothing = TextureSmoothing.NONE;
       super(tileX, tileY, _image, speed);
@@ -52,17 +52,25 @@ package Snake
       super.update(time);
       if (facing != prevFacing)
       {
-        switch (facing)
-        {
-          case AssetRegistry.UP: 
-          case AssetRegistry.DOWN: 
-            _image.texture = _imageLeft;
-            break;
-          case AssetRegistry.RIGHT: 
-          case AssetRegistry.LEFT: 
-            _image.texture = _imageDown;
-            break;
-        }
+        setImage();
+      }
+    }
+    
+    private function setImage():void
+    {
+      if (_image == null) {
+        _image = new Image(_imageLeft);
+      }
+      switch (facing)
+      {
+        case AssetRegistry.UP: 
+        case AssetRegistry.DOWN: 
+          _image.texture = _imageLeft;
+          break;
+        case AssetRegistry.RIGHT: 
+        case AssetRegistry.LEFT: 
+          _image.texture = _imageDown;
+          break;
       }
     }
     
@@ -107,7 +115,7 @@ package Snake
           _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_4");
           break;
       }
-    
+      setImage();
     }
     
     public function advanceTime(time:Number):void
