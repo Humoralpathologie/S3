@@ -364,6 +364,15 @@ package org.josht.starling.foxhole.controls
 		{
 			this._onChange.removeAll();
 			this._onClear.removeAll();
+      if (this._activeScreen) { 
+        this._activeScreen.dispose;
+        this._activeScreen = null;
+      }
+      if (this._previousScreenInTransition) {
+        this._previousScreenInTransition.dispose();
+        this._previousScreenInTransition = null;
+      }
+        
 			super.dispose();
 		}
 

@@ -1,6 +1,7 @@
 package Level
 {
   import engine.AssetRegistry;
+  //import com.demonsters.debugger.MonsterDebugger;
   import com.gskinner.motion.GTween;
   import Eggs.Egg;
   import Eggs.Eggs;
@@ -1192,10 +1193,12 @@ package Level
     }
     
     override public function dispose():void {
-      
       var i:int = 0;
       
+      removeChildren();
+      
       _textLevel.dispose();
+      _textLevel = null;
       
       for (i = 0; i < _textFieldPool.length; i++) {
         _textFieldPool[i].dispose();
@@ -1208,28 +1211,37 @@ package Level
       this.removeEventListeners(TouchEvent.TOUCH);
       
       _comboSet.dispose();
+      _comboSet = null;
+      _levelStage.removeChildren();      
       _levelStage.dispose();
+      _levelStage = null;
       _bg.dispose();
+      _bg = null;
+      _bgTexture = null;
       _obstacles = null;
       _spawnMap = null;
       _snake.dispose();
+      _snake = null;
       _eggs.dispose();
+      _eggs = null;
       _rottenEggs.dispose();
+      _rottenEggs = null;
       _hud.dispose();
+      _hud = null; 
       _bonusBar.dispose();
+      _bonusBar = null;
       _bonusBack.dispose();
+      _bonusBack = null;
       _mchammer.dispose();
+      _mchammer = null;
       _pauseMenu.dispose();
+      _pauseMenu = null;
       
       for each(var particle:PDParticleSystem in _particles) {
         particle.dispose();
       }
       _particles = null;
-      /*
-       *      // Initialize and fill the TextField pool
 
-      addParticles();
-      */
       super.dispose();
       
     }

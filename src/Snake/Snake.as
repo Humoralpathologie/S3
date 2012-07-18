@@ -340,7 +340,10 @@ package Snake
     override public function dispose():void {
       var i:int = 0;
       
+      removeChildren();
+      
       _head.dispose();
+      _head = null;
       
      
       for (i = 0; i < _body.length; i++) {
@@ -350,10 +353,14 @@ package Snake
       for ( i = 0; i < _freeBodyParts.length; i++) {
         _freeBodyParts[i].dispose();
       }
+      _body = null;
+      _freeBodyParts = null;
       
       _newPart = null;
       _tail.dispose();
+      _tail = null;
       _bodyEggs.dispose();
+      _bodyEggs = null;
 
       super.dispose();
     }
