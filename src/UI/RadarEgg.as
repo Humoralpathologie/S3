@@ -47,6 +47,10 @@ package UI
       smoothing = TextureSmoothing.NONE;
     }
     
+    override public function dispose():void {
+      super.dispose();
+    }
+    
   }
 
 }

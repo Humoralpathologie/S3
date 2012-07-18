@@ -150,6 +150,14 @@ package Snake
           break;
       }
     }
+    
+    override public function dispose():void {
+      _headDown.dispose();
+      _headRight.dispose();
+      _headUp.dispose();
+      _headDown.dispose();
+      super.dispose();
+    }
   }
 
 }

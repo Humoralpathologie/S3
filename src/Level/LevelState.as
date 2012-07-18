@@ -90,7 +90,6 @@ package Level
     private var _paused:Boolean = false;
     private var _firstFrame:Boolean = true;
     private var _frameCounter:int = 0;
-    private var _particlePool:Vector.<PDParticleSystem>;
     
     // Death screen
     private var _sadSnake:Image;
@@ -142,14 +141,11 @@ package Level
     
     static const PAUSEMAIN:String = "MAIN";
     
-    private static function playSoundSilentlyEndlessly(evt:Event = null):void
-    {
-      sfx.play(0, 1000, SilentSoundTransform).addEventListener(Event.SOUND_COMPLETE, playSoundSilentlyEndlessly, false, 0, true); // plays the sound with volume 0 endlessly
-    }
-    
     public function LevelState()
     {
       super();
+      addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+
       
       // Initialize and fill the TextField pool
       _textFieldPool = new Vector.<TextField>;
@@ -163,10 +159,7 @@ package Level
       }
                  
       sfx = AssetRegistry.LevelMusic1Sound;
-      
-      // Fix for laggy sound
-      playSoundSilentlyEndlessly();
-      
+            
       _currentCombos = null;
       
       _speed = 1 / SaveGame.startSpeed;
@@ -256,7 +249,6 @@ package Level
     protected function showObjective():void
     {
       unpause();
-      addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
     }
     
     protected function addSpawnMap():void
@@ -412,9 +404,7 @@ package Level
       // Use a GTween, as the Starling tweens are paused.
       new GTween(_sadSnake, 2, {y: Starling.current.stage.stageHeight - _sadSnake.height});
       new GTween(_sadText, 2, {y: 0});
-      
-      removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-      
+            
       var registerTouchHandler:Function = function():void
       {
         addEventListener(TouchEvent.TOUCH, dieScreenTouch);
@@ -439,28 +429,28 @@ package Level
         case 40: //DOWN
           if (_snake.head.facing == AssetRegistry.RIGHT || _snake.head.facing == AssetRegistry.LEFT)
           {
-            _snake.head.facing = AssetRegistry.DOWN;
+            _snake.changeDirection(AssetRegistry.DOWN);
           }
           break;
         
         case 38: //UP
           if (_snake.head.facing == AssetRegistry.RIGHT || _snake.head.facing == AssetRegistry.LEFT)
           {
-            _snake.head.facing = AssetRegistry.UP;
+            _snake.changeDirection(AssetRegistry.UP);
           }
           break;
         
         case 39: //RIGHT
           if (_snake.head.facing == AssetRegistry.UP || _snake.head.facing == AssetRegistry.DOWN)
           {
-            _snake.head.facing = AssetRegistry.RIGHT;
+            _snake.changeDirection(AssetRegistry.RIGHT);
           }
           break;
         
         case 37: //LEFT
           if (_snake.head.facing == AssetRegistry.UP || _snake.head.facing == AssetRegistry.DOWN)
           {
-            _snake.head.facing = AssetRegistry.LEFT;
+            _snake.changeDirection(AssetRegistry.LEFT);
           }
           break;
       
@@ -477,7 +467,6 @@ package Level
         removeChild(_sadText);
         
         removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
-        addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
         resetSnake();
         unpause();
       }
@@ -513,12 +502,14 @@ package Level
     
     public function spawnRandomEgg():void
     {
+      
       var egg:Eggs.Egg;
       var types:Array = [AssetRegistry.EGGA, AssetRegistry.EGGB, AssetRegistry.EGGC];
       
       egg = _eggs.recycleEgg(0, 0, types[Math.floor(Math.random() * types.length)]);
       
       placeEgg(egg);
+      
     }
     
     public function placeEgg(egg:Eggs.Egg, rotten:Boolean = false):void
@@ -528,13 +519,13 @@ package Level
       var pos:int;
       do
       {
-        pos = _spawnMap[Math.floor(Math.random() * _spawnMap.length)];
+        pos = _spawnMap[int(Math.floor(Math.random() * _spawnMap.length))];
         eggy = Math.floor(pos / _tileWidth);
         eggx = pos - (eggy * _tileWidth);
       } while (!free(eggx, eggy));
       egg.tileX = eggx;
       egg.tileY = eggy;
-    
+      
     }
     
     private function free(x:int, y:int):Boolean
@@ -544,7 +535,8 @@ package Level
     
     private function eatEgg(egg:Egg):void
     {
-      AssetRegistry.BiteSound.play();
+      
+       AssetRegistry.BiteSound.play();
       
       if (!_rottenEnabled && egg.type == AssetRegistry.EGGROTTEN || egg.type != AssetRegistry.EGGROTTEN) // || egg.type < AssetRegistry.EGGROTTEN)
       {
@@ -560,6 +552,7 @@ package Level
           particle.y = egg.y + 13;
           particle.start(0.5);
         }
+        
         _eggs.removeEgg(egg);
         
         var points:int = 2;
@@ -589,6 +582,7 @@ package Level
         }
         _score += points;
         _bonusTimer = _chainTime;
+        
       }
       else
       {
@@ -602,8 +596,11 @@ package Level
           particle.y = egg.y + 13;
           particle.start(0.5);
         }
+        
         _rottenEggs.removeEgg(egg);
+        
         _bonusTimer = 0;
+        
       }
     }
     
@@ -700,6 +697,7 @@ package Level
     
     private function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void
     {
+      
       var text:TextField = recycleText(120, 120, points, 60); // new TextField(120, 120, points, "kroeger 06_65", 60);
       text.color = color;
       text.autoScale = true;
@@ -722,6 +720,7 @@ package Level
       }
       
       Starling.juggler.add(tween);
+      
     }
     
     protected function doCombos():void
@@ -819,7 +818,6 @@ package Level
       
       // Use a GTween, as the Starling tweens are paused.
       new GTween(image, 2, {y: Starling.current.stage.stageHeight - image.height});
-      removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
       var registerTouchHandler:Function = function():void
       {
@@ -1062,9 +1060,7 @@ package Level
       // Use a GTween, as the Starling tweens are paused.
       new GTween(_evilSnake, 2, {y: Starling.current.stage.stageHeight - _evilSnake.height});
       new GTween(_evilText, 2, {y: 0});
-      
-      removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-      
+            
       var registerTouchHandler:Function = function():void
       {
         addEventListener(TouchEvent.TOUCH, winScreenTouch);
@@ -1097,7 +1093,6 @@ package Level
           {
             removeChild(box);
             removeChild(text);
-            that.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
             unpause();
           }
         });
@@ -1195,19 +1190,48 @@ package Level
     }
     
     override public function dispose():void {
-      trace("disposing");
-      _pauseMenu.clearScreen();
-      _pauseMenu.dispose();
       
-      var i:int;
+      var i:int = 0;
+      
+      _textLevel.dispose();
       
       for (i = 0; i < _textFieldPool.length; i++) {
         _textFieldPool[i].dispose();
       }
+      
+      if(_currentCombos != null) {
+        for (i = 0; i < _currentCombos.length; i++) {
+          _currentCombos[i].dispose();
+        }
+      }
+      
+      this.removeEventListeners(EnterFrameEvent.ENTER_FRAME);
+      this.removeEventListeners(KeyboardEvent.KEY_DOWN);
+      this.removeEventListeners(TouchEvent.TOUCH);
+      
+      _comboSet.dispose();
+      _levelStage.dispose();
+      _bg.dispose();
+      _obstacles = null;
+      _spawnMap = null;
+      _snake.dispose();
       _eggs.dispose();
       _rottenEggs.dispose();
-      _snake.dispose();
+      _hud.dispose();
+      _bonusBar.dispose();
+      _bonusBack.dispose();
+      _mchammer.dispose();
+      _pauseMenu.dispose();
       
+      for each(var particle:PDParticleSystem in _particles) {
+        particle.dispose();
+      }
+      _particles = null;
+      /*
+       *      // Initialize and fill the TextField pool
+
+      addParticles();
+      */
       super.dispose();
       
     }

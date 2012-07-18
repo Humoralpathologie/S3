@@ -26,47 +26,19 @@ package Snake
     private var _flickerStep:Number = 0;
     private var _flickerCount:Number = 0;
     
-    public function BodyPart(tileX:int, tileY:int, speed:Number, type:int = 0)// AssetRegistry.EGGZERO)
+    public function BodyPart(tileX:int, tileY:int, speed:Number, type:int = 0) // AssetRegistry.EGGZERO)
     {
-      _type = type;
-      makeImages();
+      this.type = type;
       _image = new Image(_imageDown);
       _image.smoothing = TextureSmoothing.NONE;
       super(tileX, tileY, _image, speed);
       frameOffset = new Point(15, 15);
     }
     
-    private function makeImages():void
-    {
-      switch (_type)
-      {
-        case AssetRegistry.EGGZERO: 
-          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_1");
-          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_0");
-          break;
-        case AssetRegistry.EGGA: 
-          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_3");
-          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_2");
-          break;
-        case AssetRegistry.EGGB: 
-          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_7");
-          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_6");
-          break;
-        case AssetRegistry.EGGC: 
-          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_9");
-          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_8");
-          break;
-        case AssetRegistry.EGGROTTEN: 
-          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_5");
-          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_4");
-          break;          
-      }
-
-    }
-    
     public function flicker(n:Number = 2, tps:int = 10):void
     {
-      if(_flickerRest <= 0) {
+      if (_flickerRest <= 0)
+      {
         Starling.juggler.add(this);
       }
       
@@ -77,7 +49,7 @@ package Snake
     
     override public function update(time:Number):void
     {
-      super.update(time);      
+      super.update(time);
       if (facing != prevFacing)
       {
         switch (facing)
@@ -109,17 +81,57 @@ package Snake
       _removing = value;
     }
     
-    public function advanceTime(time:Number):void {
-      if (_flickerRest <= 0) {
+    public function set type(value:int):void
+    {
+      _type = value;
+      switch (_type)
+      {
+        case AssetRegistry.EGGZERO: 
+          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_1");
+          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_0");
+          break;
+        case AssetRegistry.EGGA: 
+          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_3");
+          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_2");
+          break;
+        case AssetRegistry.EGGB: 
+          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_7");
+          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_6");
+          break;
+        case AssetRegistry.EGGC: 
+          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_9");
+          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_8");
+          break;
+        case AssetRegistry.EGGROTTEN: 
+          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_5");
+          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_4");
+          break;
+      }
+    
+    }
+    
+    public function advanceTime(time:Number):void
+    {
+      if (_flickerRest <= 0)
+      {
         _image.visible = true;
         dispatchEventWith(Event.REMOVE_FROM_JUGGLER);
       }
       _flickerCount += time;
-      if (_flickerCount > _flickerStep) {
+      if (_flickerCount > _flickerStep)
+      {
         _image.visible = !_image.visible;
         _flickerCount -= _flickerStep;
         _flickerRest -= _flickerStep;
       }
+    }
+    
+    override public function dispose():void
+    {
+      _imageDown.dispose();
+      _imageLeft.dispose();
+      _image.dispose();
+      super.dispose();
     }
   }
 

@@ -33,20 +33,27 @@ package Snake
     private var _oneeightyDirection:int;
     private var _bodyEggs:Sprite;
     private var _changedDirection:Boolean;
+    private var _freeBodyParts:Vector.<Snake.BodyPart>;
     
     public function Snake(mps:Number)
     {
-      
+      var i:int = 0;
       _head = new Head(5, 5, _speed, mps);
       
       _body = [];
       _bodyEggs = new Sprite();
       
-      for (var i:int = 0; i < 4; i++)
+      
+      _freeBodyParts = new Vector.<Snake.BodyPart>;
+      for (i = 0; i < 200; i++) {
+        _freeBodyParts.push(new Snake.BodyPart( -1, -1, _speed, 0));
+      }
+      
+      for ( i = 0; i < 4; i++)
       {
-        var bodyPart:BodyPart = new BodyPart(_head.tileX - (i + 1), _head.tileY, _speed, AssetRegistry.EGGZERO);
+        var bodyPart:BodyPart = recycleBodyPart(_head.tileX - (i + 1), _head.tileY, _speed, AssetRegistry.EGGZERO);
         _body.push(bodyPart);
-        _bodyEggs.addChild(bodyPart);
+        _bodyEggs.addChild(bodyPart);        
       }
       
       _tail = new Tail(_body[3].tileX - 1, _head.tileY, _speed);
@@ -80,7 +87,23 @@ package Snake
     public function eat(eggType:int):void
     {
       _eatenEggs++;
-      _newPart = new BodyPart(-1, -1, _speed, eggType);
+      _newPart = recycleBodyPart(-1, -1, _speed, eggType);
+    }
+    
+    private function recycleBodyPart(tileX:int, tileY:int, speed:Number, type:int = 0):Snake.BodyPart {
+      var bp:Snake.BodyPart;
+      trace("Free bodyparts: " + _freeBodyParts.length);
+      if (_freeBodyParts.length > 0) {
+        bp = _freeBodyParts.pop();
+        bp.tileX = tileX;
+        bp.tileY = tileY;
+        bp.speed = speed;
+        bp.type = type;
+      } else {
+        bp = new Snake.BodyPart(tileX, tileY, speed, type);
+      }
+     
+      return bp;
     }
     
     public function selfCollide():Boolean
@@ -189,9 +212,11 @@ package Snake
       }
     }
     
-    public function removeBodyPart(part:DisplayObject):void {
+    public function removeBodyPart(part:Snake.BodyPart):void {
       _bodyEggs.removeChild(part);
       body.splice(body.indexOf(part), 1);
+      part.removing = false;
+      _freeBodyParts.push(part);
     }
     
     public function moveRight():void
@@ -310,6 +335,27 @@ package Snake
     public function get oneeighty():int
     {
       return _oneeighty;
+    }
+    
+    override public function dispose():void {
+      var i:int = 0;
+      
+      _head.dispose();
+      
+     
+      for (i = 0; i < _body.length; i++) {
+        _body[i].dispose();
+      }
+      
+      for ( i = 0; i < _freeBodyParts.length; i++) {
+        _freeBodyParts[i].dispose();
+      }
+      
+      _newPart = null;
+      _tail.dispose();
+      _bodyEggs.dispose();
+
+      super.dispose();
     }
   
   }

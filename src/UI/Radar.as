@@ -37,6 +37,7 @@ package UI
       addChild(radarCircle);
       
       fillPool();
+      touchable = false;
     }
     
     private function fillPool():void {
@@ -97,6 +98,16 @@ package UI
       }
     }
         
+    override public function dispose():void {
+      var i:int = 0;
+      if(_radarEggPool != null) {
+        for (i = 0; i < _radarEggPool.length; i++) {
+          _radarEggPool[i].dispose();
+        }
+        _radarEggPool = null;
+      } 
+      super.dispose();
+    }
   }
 
 }

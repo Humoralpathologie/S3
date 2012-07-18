@@ -1,6 +1,6 @@
 package
 {
-//  import com.sociodox.theminer.TheMiner;
+  //import com.sociodox.theminer.TheMiner;
   import engine.AssetRegistry;
   import flash.desktop.NativeApplication;
   import flash.display.Bitmap;
@@ -42,6 +42,7 @@ package
     
     public function Main():void
     {
+      
       stage.scaleMode = StageScaleMode.NO_SCALE;
       stage.align = StageAlign.TOP_LEFT;
       
@@ -107,7 +108,7 @@ package
       addChild(loadingSprite);
       
       // For debugging. 
-      // Starling.current.showStats = true;
+      Starling.current.showStats = true;
       
       starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE, function(e:Event):void
         {

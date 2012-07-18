@@ -46,6 +46,7 @@ package UI
     private var _comboText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _speedText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _poisonText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+    private var _controls:Vector.<Button>;
  
     private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 12, y: 12}],
                           combo: [_combo, _comboText, {x: 12, y: 70}],
@@ -54,6 +55,8 @@ package UI
                           speed: [_speed, _speedText, {x: 108, y: 70}],
                           poison: [_poison, _poisonText, {x: 12, y: 70}]
                           };
+                          
+                          
                           
     // TODO: We dont need all these parameters
     
@@ -65,6 +68,8 @@ package UI
       _scoreText.y = 0;
       _scoreText.hAlign = HAlign.CENTER;
       
+      _controls = new Vector.<Button>;
+      
       if (SaveGame.controlType == 1) {
         var left180:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-classic-180-left"));
         left180.y = 190;
@@ -74,6 +79,7 @@ package UI
           }
         });
         addChild(left180);
+        _controls.push(left180);
         
         var right180:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-classic-180-right"));
         right180.y = 190;
@@ -85,6 +91,7 @@ package UI
         });
         
         addChild(right180);
+        _controls.push(right180);
         
         var left:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-classic-left"));
         left.y = left180.y + left180.height;
@@ -94,6 +101,7 @@ package UI
           }
         });
         addChild(left);
+        _controls.push(left);
         
         var right:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-classic-right"));
         right.x = left.x + left.width;
@@ -104,6 +112,7 @@ package UI
           }
         });
         addChild(right);
+        _controls.push(right);
         
       }
       
@@ -116,6 +125,7 @@ package UI
           }
         });
         addChild(left);
+        _controls.push(left);
         
         var right:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-4way-bottom-right"));
         right.y = 190;
@@ -126,6 +136,7 @@ package UI
           }
         });
         addChild(right);
+        _controls.push(right);
         
         var up:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-4way-bottom-up"));
         up.x = right.x + right.width;
@@ -136,6 +147,7 @@ package UI
           }
         });
         addChild(up);
+        _controls.push(up);
         
         var down:Button = new Button(AssetRegistry.UIAtlas.getTexture("ui-4way-bottom-down"));
         down.x = up.x;
@@ -145,7 +157,8 @@ package UI
             levelstate.snake.changeDirection(AssetRegistry.DOWN);
           }
         });
-        addChild(down);              
+        addChild(down);           
+        _controls.push(down);
       }
       
       _overlay = new Image(AssetRegistry.UIAtlas.getTexture("ui-top"));
@@ -181,7 +194,8 @@ package UI
       _pause.addEventListener(Event.TRIGGERED, function(event:Event):void {
         levelstate.togglePause();
       });
-      addChild(_pause);      
+      addChild(_pause);     
+      _controls.push(_pause);
     }
     
     public function get radar():Radar {
@@ -215,5 +229,36 @@ package UI
       _scoreText.text = score;
     }
    
+    override public function dispose():void {
+      var i:int = 0;
+      
+      _radar.dispose();
+      _overlay.dispose();
+      _scoreText.dispose();
+      _lifes.dispose();
+      _time.dispose();
+      _combo.dispose();
+      _neededEggs.dispose();
+      _speed.dispose();
+      _poison.dispose();
+      _pause.dispose();
+      _lifesText.dispose();
+      _neededEggsText.dispose();
+      _timeText.dispose();
+      _comboText.dispose();
+      _speedText.dispose();
+      _poisonText.dispose();
+      
+      _icons = null;
+      
+      for (var i:int = 0; i < _controls.length; i++) {
+        _controls[i].removeEventListeners(Event.TRIGGERED);
+        _controls[i].removeEventListeners(TouchEvent.TOUCH);
+        _controls[i].dispose();
+      }
+      
+      super.dispose();
+    }
+    
   }
 }

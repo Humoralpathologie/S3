@@ -34,6 +34,7 @@ package Level
     }
     
     override public function spawnRandomEgg():void {
+      
       var egg:Egg;
       var rand:int = Math.floor(Math.random() * 100);
       
@@ -45,6 +46,7 @@ package Level
         egg =  _eggs.recycleEgg(0, 0, AssetRegistry.EGGZERO);
       }      
       placeEgg(egg);
+      
     }    
     
     override protected function showObjective():void

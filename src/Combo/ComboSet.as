@@ -3,6 +3,14 @@ package Combo {
     
     private var _combos:Array;
     
+    public function dispose() {
+      var i:int = 0;
+      for (i = 0; i < _combos.length; i++) {
+        _combos[i].dispose();
+      }
+      _combos = null;
+    }
+    
     public function ComboSet() {
       _combos = [];
     }

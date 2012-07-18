@@ -18,6 +18,7 @@ package Eggs
     {
       super();
       _eggPool = new Vector.<Egg>;
+      touchable = false;
     }
     
     /*
@@ -31,6 +32,19 @@ package Eggs
       var length:int;
       var egg:Eggs.Egg;
       length = _eggPool.length;
+      // First try to find one with the right type.
+      for (var i:int = 0; i < length; i++) {
+        egg = _eggPool[i];
+        if (!egg.visible && egg.type == type) {
+          trace("Recycling Egg with right type.");
+          egg.visible = true;
+          egg.tileX = tileX;
+          egg.tileY = tileY;
+          addChild(egg);
+          _length++;
+          return(egg);
+        }       
+      }
       for (var i:int = 0; i < length; i++) {
         egg = _eggPool[i];
         if (!egg.visible) {
@@ -83,6 +97,7 @@ package Eggs
     public function clear():void {
       for (var i:int = 0; i < _eggPool.length; i++) {
         removeChild(_eggPool[i]);
+        _eggPool[i].dispose();
       }
       _eggPool.length = 0;
     }
@@ -95,6 +110,21 @@ package Eggs
       }
       return false;
     }
+    
+    override public function dispose():void {
+      var i:int = 0;
+      
+      if(_eggPool != null) {
+        for (i = 0; i < _eggPool.length; i++) {
+          _eggPool[i].dispose();
+        }
+        _eggPool = null;
+
+      }
+      
+      super.dispose();
+    }
+    
   }
 
 }

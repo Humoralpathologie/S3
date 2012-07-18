@@ -62,6 +62,14 @@ package Snake
     public function get image():Image {
       return _image;
     }     
+    
+    override public function dispose():void {
+      _imageLeft.dispose();
+      _imageRight.dispose();
+      _imageUp.dispose();
+      _imageDown.dispose();
+      super.dispose();
+    }
 
   }
 }

@@ -90,6 +90,8 @@ package engine
           _currentSprite.dispose();
           _currentSprite = null;
           System.gc(); // clean up;
+          System.gc(); // clean up;
+          
         }
         _currentSprite = _argument ? new _nextStage(_argument) : new _nextStage();
         Starling.juggler.paused = false;

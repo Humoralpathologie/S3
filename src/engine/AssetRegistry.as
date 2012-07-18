@@ -353,6 +353,7 @@ package engine
       // Run GC
       
       System.gc();
+      System.gc();
       trace(needed);
       trace(loaded);
       
@@ -398,7 +399,9 @@ package engine
     public static function disposeMenuGraphics():void
     {
       MenuAtlasAlpha.dispose();
+      MenuAtlasAlpha = null;
       MenuAtlasOpaque.dispose();
+      MenuAtlasOpaque = null;
     }
     
     public static function loadScoringGraphics():void
@@ -410,7 +413,9 @@ package engine
     public static function disposeScoringGraphics():void
     {
       ScoringAtlas.dispose();
+      ScoringAtlas = null;
       ScoringScalableAtlas.dispose();
+      ScoringScalableAtlas = null;
     }
     
     public static function disposeArcadeGraphics():void
@@ -511,11 +516,12 @@ package engine
       UIAtlas.dispose();
       //LevelFrame.dispose();
       
-      DrugParticleConfig = null;
+      System.disposeXML(DrugParticleConfig)
       DrugParticleTexture.dispose();
-      ComboParticleConfig = null;
       
-      EggsplosionParticleConfig = null;
+      System.disposeXML(ComboParticleConfig);
+      
+      System.disposeXML(EggsplosionParticleConfig);
       EggsplosionParticleTexture.dispose();
     
       //WinMusicSound = null;        
@@ -543,7 +549,9 @@ package engine
     public static function disposeLevelSelectGraphics():void
     {
       LevelSelectAtlasOpaque.dispose();
+      LevelSelectAtlasOpaque = null;
       LevelSelectAtlasAlpha.dispose();
+      LevelSelectAtlasAlpha = null;
     }
   
   }

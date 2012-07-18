@@ -145,7 +145,7 @@ package Menu
     }
     
     override public function dispose():void {
-      super.dispose();
+      _scrollable.removeEventListeners(TouchEvent.TOUCH);
       _scrollable.dispose();
       _levelSelectBottom.dispose();
       _levelSelectTop.dispose();
@@ -154,7 +154,8 @@ package Menu
         _locks[i].dispose();
       }
       _locks = null;
-     
+      super.dispose();
+
     }
   
   }

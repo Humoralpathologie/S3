@@ -151,6 +151,8 @@ package Menu
       var loaderCompleteHandler:Function = function(event:flash.events.Event):void {
         trace(event.target.data);
         removeChild(loading);
+        loading.dispose();
+       
         var result:Object = JSON.parse(event.target.data);
         if (result.error) {
           return;
@@ -167,6 +169,7 @@ package Menu
           text.y = _leaderboard.y + 50 + i * 30;
           addChild(text);
         }
+
       }
       
       
@@ -453,7 +456,39 @@ package Menu
       for each(var tween:GTween in _tweens) {
         tween.end();
       }
+      
+      removeEventListeners(EnterFrameEvent.ENTER_FRAME);
+      
       _tweens = null;
+      _bg.dispose();
+      _scoreboard.dispose();
+      _replayButton.removeEventListeners(starling.events.Event.TRIGGERED);
+      _replayButton.dispose();
+      _nextLevelButton.removeEventListeners(starling.events.Event.TRIGGERED);
+      _nextLevelButton.dispose();
+      _backToMenuButton.removeEventListeners(starling.events.Event.TRIGGERED);
+      _backToMenuButton.dispose();
+      
+      _scoreText.dispose();
+      _timeBonusText.dispose();
+      _lifeBonusText.dispose();
+      _totalText.dispose();
+      
+      if(_medal != null)
+        _medal.dispose();
+        
+      _medalTween = null;
+      
+      if(_medalSmall != null)
+        _medalSmall.dispose();
+      
+      _leaderboardText.dispose();
+      _scoreboardText.dispose();
+      _scoreHeading.dispose();
+      _timeBonusHeading.dispose();
+      _lifeBonusHeading.dispose();
+      _totalHeading.dispose();
+      
       super.dispose();
     }
   }

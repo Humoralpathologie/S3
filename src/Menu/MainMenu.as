@@ -45,7 +45,7 @@ package Menu
     private var _arcadeButton:Button;
     private var _settingsButton:Button;
     private var _levelSelectButton:Button;
-	private var _extrasButton:Button;
+	  private var _extrasButton:Button;
     
     public function MainMenu()
     {
@@ -143,7 +143,7 @@ package Menu
       _settingsButton.dispose();
       _arcadeButton.dispose();
       _levelSelectButton.dispose();
-	  _extrasButton.dispose();
+	    _extrasButton.dispose();
     }
   }
 
