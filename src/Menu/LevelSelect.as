@@ -116,7 +116,13 @@ package Menu
       
       box = [new Point(266, 742), new Point(472, 639), new Point(688, 742), new Point(480, 848)];
       _boxes["level4"] = { box:box, callback:function() { StageManager.switchStage(Level4) }};
-      
+	  
+	  box = [new Point(15, 871), new Point(226, 764), new Point(439, 871), new Point(226, 976)];
+      _boxes["level5"] = { box:box, callback:function() { StageManager.switchStage(Level5) }};
+	  
+	  box = [new Point(265, 997), new Point(477, 980), new Point(689, 997), new Point(477, 1104)];
+      _boxes["level7"] = { box:box, callback:function() { StageManager.switchStage(Level7) }};
+	  
       box = [new Point(718, 286), new Point(893, 212), new Point(887, 306), new Point(729, 306)];
       _boxes["backtomenu"] = { box:box, callback:function() { StageManager.switchStage(MainMenu) }};
       
@@ -132,7 +138,7 @@ package Menu
       var textureName:String;
       
       for (var i:int = 2; i < 7; i++) {
-        if (i > 4 || !SaveGame.levelUnlocked(i)) {
+        if (i > 6 || !SaveGame.levelUnlocked(i)) {
           x = _lockedPositions[i - 1][0];
           y = _lockedPositions[i - 1][1];
           textureName = "tile-level" + String(i) + "_" + String(x) + "-" + String(y);
