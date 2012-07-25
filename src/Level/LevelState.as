@@ -110,7 +110,8 @@ package Level
     
     private static var sfx:Sound;
     private var _bonusTimer:Number = 0;
-    private var _bonusTimerPoints:Number = 0;
+    protected var _bonusTimerPoints:Number = 0;
+	
     private var _bonusBar:Quad;
     private var _bonusBack:Quad;
     
@@ -534,7 +535,7 @@ package Level
       return !(_obstacles[y * _tileWidth + x]) && !(_snake.hit(x, y)) && !(_eggs.hit(x, y)) && !(_rottenEggs.hit(x, y));
     }
     
-    private function eatEgg(egg:Egg):void
+    protected function eatEgg(egg:Egg):void
     {
       
        AssetRegistry.BiteSound.play();
@@ -581,6 +582,7 @@ package Level
           showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
           _score += _bonusTimerPoints;
         }
+		
         _score += points;
         _bonusTimer = _chainTime;
         
