@@ -63,7 +63,7 @@ package UI
     public function HUD(radar:Radar, others:Array, levelstate:LevelState )//[lifes, eggs, time ...]; 
     {
       _radar = radar;
-      _scoreText = new TextField(100, 50, "0", "kroeger 06_65", 45, Color.WHITE);
+      _scoreText = new TextField(Starling.current.stage.stageWidth, 100, "0", "kroeger 06_65", 80, Color.WHITE);
       _scoreText.x = Starling.current.stage.stageWidth / 2 - _scoreText.width/2;
       _scoreText.y = 0;
       _scoreText.hAlign = HAlign.CENTER;

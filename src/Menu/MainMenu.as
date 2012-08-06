@@ -31,7 +31,7 @@ package Menu
     import starling.utils.VAlign;
     import Menu.SettingsScreens.*;
     import starling.textures.TextureSmoothing;
-    
+    import engine.NotificationScroller;
   
   /**
    * ...
@@ -46,13 +46,18 @@ package Menu
     private var _settingsButton:Button;
     private var _levelSelectButton:Button;
 	  private var _extrasButton:Button;
+    private var _notificationScroller:NotificationScroller;
     
     public function MainMenu()
     {
       AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE]);
             
       _bg = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("loading"));
-      addChild(_bg);    
+      addChild(_bg);
+      
+      _notificationScroller = new NotificationScroller();
+      addChild(_notificationScroller);
+      Starling.juggler.add(_notificationScroller);
       
       makeButtons();
 
@@ -144,6 +149,7 @@ package Menu
       _arcadeButton.dispose();
       _levelSelectButton.dispose();
 	    _extrasButton.dispose();
+      _notificationScroller.dispose();
     }
   }
 
