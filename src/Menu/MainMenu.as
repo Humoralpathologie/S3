@@ -57,7 +57,6 @@ package Menu
       
       _notificationScroller = new NotificationScroller();
       addChild(_notificationScroller);
-      Starling.juggler.add(_notificationScroller);
       
       makeButtons();
 
