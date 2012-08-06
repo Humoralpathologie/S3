@@ -202,7 +202,7 @@ package UI
         xPos += _previewBoxes[k].width;
         addChild(_previewBoxes[k]);
       }
-      flatten();
+      unflatten();
       addChild(_scoreText);
       addChild(_radar);      
     
@@ -217,7 +217,7 @@ package UI
     
     public function updatePreviewBox():void {
       trace(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview"));
-      for (var i:int = 0; i < _previewTypes.length; i++){
+      for (var i:int = 0; i < _previewBoxes.length; i++){
         if (_previewTypes[i]){
           _previewBoxes[i].texture = AssetRegistry.SnakeAtlas.getTexture(_previewTypes[i]);
         }  
@@ -246,9 +246,11 @@ package UI
       return type;
     }
     public function updatePreview(snake:Snake):void {
-        for (var i:int = snake.body.length - 4; i < snake.body.length; i++) {
+		var j:int = 0;
+        for (var i:int = snake.body.length - 3; i < snake.body.length; i++) {
           if (snake.body[i]){
-            _previewBoxes[i].texture = AssetRegistry.SnakeAtlas.getTexture(toPreviewType(snake.body[i].type));
+            _previewBoxes[j].texture = AssetRegistry.SnakeAtlas.getTexture(toPreviewType(snake.body[i].type));
+			j++; 
           }
         }
     }
