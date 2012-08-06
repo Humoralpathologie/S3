@@ -51,7 +51,7 @@ package UI
     private var _previewBoxes:Array = [new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
                                       new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
                                       new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
-                                      new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
+                //                      new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
                                       new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview"))];
 
  
@@ -199,7 +199,6 @@ package UI
       for (var k:int; k < _previewBoxes.length; k++){
         _previewBoxes[k].x = xPos;
         _previewBoxes[k].y = yPos;
-        _previewBoxes[k].visible = false;
         xPos += _previewBoxes[k].width;
         addChild(_previewBoxes[k]);
       }
@@ -219,8 +218,9 @@ package UI
     public function updatePreviewBox():void {
       trace(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview"));
       for (var i:int = 0; i < _previewTypes.length; i++){
-        _previewBoxes[i].texture = AssetRegistry.SnakeAtlas.getTexture(_previewTypes[i]);
-        _previewBoxes[i].visible;  
+        if (_previewTypes[i]){
+          _previewBoxes[i].texture = AssetRegistry.SnakeAtlas.getTexture(_previewTypes[i]);
+        }  
       }
     
     }
@@ -246,16 +246,11 @@ package UI
       return type;
     }
     public function updatePreview(snake:Snake):void {
-      if (snake.body.length > 4 && snake.body.length < 10){
-        _previewTypes.push(toPreviewType(snake.body[snake.body.length - 1].type));
-      } else {
-        for (var i:int = snake.body.length - 5; i < snake.body.length; i++) {
+        for (var i:int = snake.body.length - 4; i < snake.body.length; i++) {
           if (snake.body[i]){
             _previewBoxes[i].texture = AssetRegistry.SnakeAtlas.getTexture(toPreviewType(snake.body[i].type));
           }
         }
-      }
-      updatePreviewBox();
     }
 
     public function get radar():Radar {
