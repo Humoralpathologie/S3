@@ -51,11 +51,10 @@ package UI
     private var _previewBoxes:Array = [new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
                                       new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
                                       new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
-                //                      new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
+                                      new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
                                       new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview"))];
 
  
-    private var _previewTypes:Array = [];
     private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 12, y: 12}],
                           combo: [_combo, _comboText, {x: 12, y: 70}],
                           eggs: [_neededEggs, _neededEggsText, {x: 12, y: 70}],
@@ -215,15 +214,6 @@ package UI
       _controls.push(_pause);
     }
     
-    public function updatePreviewBox():void {
-      trace(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview"));
-      for (var i:int = 0; i < _previewBoxes.length; i++){
-        if (_previewTypes[i]){
-          _previewBoxes[i].texture = AssetRegistry.SnakeAtlas.getTexture(_previewTypes[i]);
-        }  
-      }
-    
-    }
     private function toPreviewType(eggType:int):String {
       var type:String;
       switch (eggType){
@@ -245,12 +235,23 @@ package UI
       } 
       return type;
     }
+
+    public function addPreview(eggType:int):void {
+      for (var i:int = 0; i < _previewBoxes.length; i++){
+        if (i == _previewBoxes.length - 1) {
+          _previewBoxes[i].texture = AssetRegistry.SnakeAtlas.getTexture(toPreviewType(eggType));
+        } else {
+          _previewBoxes[i].texture = _previewBoxes[i + 1].texture;
+        }
+      }
+    }
+
     public function updatePreview(snake:Snake):void {
-		var j:int = 0;
-        for (var i:int = snake.body.length - 3; i < snake.body.length; i++) {
-          if (snake.body[i]){
+		    var j:int = 0;
+        for (var i:int = snake.body.length - 5; i < snake.body.length; i++) {
+          if (i >= 0){
             _previewBoxes[j].texture = AssetRegistry.SnakeAtlas.getTexture(toPreviewType(snake.body[i].type));
-			j++; 
+			      j++; 
           }
         }
     }
