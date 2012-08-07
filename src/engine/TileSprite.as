@@ -86,41 +86,25 @@ package engine
     }    
     
     public function animateMove():void {
-      /*
-      if(_starlingTween == null) {
-        _starlingTween = new Tween(this, _speed);
-      } else {
-        Starling.juggler.remove(_starlingTween);
-        _starlingTween.reset(this, _speed);
-      }*/
-      
+
       switch(facing) {
          case AssetRegistry.UP:
-            //_tween.setValue("y", y - AssetRegistry.TILESIZE);
-            //_starlingTween.animate("y", y - AssetRegistry.TILESIZE);
             _velocity.x = 0;
             _velocity.y = -15;
             break;
         case AssetRegistry.DOWN:
-            //_tween.setValue("y", y + AssetRegistry.TILESIZE);
-            //_starlingTween.animate("y", y + AssetRegistry.TILESIZE);
             _velocity.x = 0;
             _velocity.y = 15;
             break;
         case AssetRegistry.RIGHT:
-            //_tween.setValue("x", x + AssetRegistry.TILESIZE);
-            //_starlingTween.animate("x", x + AssetRegistry.TILESIZE);
             _velocity.x = 15;
             _velocity.y = 0;
             break;
         case AssetRegistry.LEFT:
-            //_tween.setValue("x", x - AssetRegistry.TILESIZE);
-            //_starlingTween.animate("x", x - AssetRegistry.TILESIZE);
             _velocity.x = -15;
             _velocity.y = 0;
             break;       
       } 
-      //Starling.juggler.add(_starlingTween);
       
     }
     

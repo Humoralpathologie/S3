@@ -13,7 +13,7 @@ package UI
   {
     private var _type:int;
     
-    public function RadarEgg(type:int = AssetRegistry.EGGZERO)
+    public function RadarEgg(type:int = 0)//AssetRegistry.EGGZERO)
     {
       super(AssetRegistry.SnakeAtlas.getTexture("radar_green"));      
       this.type = type;              
@@ -45,6 +45,10 @@ package UI
             break;                   
       }
       smoothing = TextureSmoothing.NONE;
+    }
+    
+    override public function dispose():void {
+      super.dispose();
     }
     
   }

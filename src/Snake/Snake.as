@@ -2,6 +2,7 @@ package Snake
 {
   import engine.TileSprite;
   import starling.animation.Tween;
+  import starling.display.DisplayObject;
   import starling.display.MovieClip;
   import starling.display.Sprite;
   import engine.AssetRegistry
@@ -30,26 +31,36 @@ package Snake
     private var _lives:int = 3;
     private var _oneeighty:int = 0;
     private var _oneeightyDirection:int;
+    private var _bodyEggs:Sprite;
+    private var _changedDirection:Boolean;
+    private var _freeBodyParts:Vector.<Snake.BodyPart>;
     
     public function Snake(mps:Number)
     {
-      
+      var i:int = 0;
       _head = new Head(5, 5, _speed, mps);
       
-      addChild(_head);
-      
-      //_body = new Vector.<BodyPart>;
       _body = [];
+      _bodyEggs = new Sprite();
       
-      for (var i:int = 0; i < 4; i++)
+      
+      _freeBodyParts = new Vector.<Snake.BodyPart>;
+      for (i = 0; i < 200; i++) {
+        _freeBodyParts.push(new Snake.BodyPart( -1, -1, _speed, 0));
+      }
+      
+      for ( i = 0; i < 4; i++)
       {
-        var bodyPart:BodyPart = new BodyPart(_head.tileX - (i + 1), _head.tileY, _speed, AssetRegistry.EGGZERO);
+        var bodyPart:BodyPart = recycleBodyPart(_head.tileX - (i + 1), _head.tileY, _speed, AssetRegistry.EGGZERO);
         _body.push(bodyPart);
-        addChild(bodyPart);
+        _bodyEggs.addChild(bodyPart);        
       }
       
       _tail = new Tail(_body[3].tileX - 1, _head.tileY, _speed);
       addChild(_tail);
+      addChild(_bodyEggs);
+      addChild(_head);
+      
       this.mps = mps;
     }
     
@@ -62,7 +73,10 @@ package Snake
         else
           return 1;
       }
-      _body.sort(randomSort);
+      var front:Array = _body.slice(0, 4);
+      var back:Array = _body.slice(4);
+      back.sort(randomSort);
+      _body = front.concat(back);
     }
     
     public function faster():void
@@ -73,7 +87,23 @@ package Snake
     public function eat(eggType:int):void
     {
       _eatenEggs++;
-      _newPart = new BodyPart(-1, -1, _speed, eggType);
+      _newPart = recycleBodyPart(-1, -1, _speed, eggType);
+    }
+    
+    private function recycleBodyPart(tileX:int, tileY:int, speed:Number, type:int = 0):Snake.BodyPart {
+      var bp:Snake.BodyPart;
+      trace("Free bodyparts: " + _freeBodyParts.length);
+      if (_freeBodyParts.length > 0) {
+        bp = _freeBodyParts.pop();
+        bp.tileX = tileX;
+        bp.tileY = tileY;
+        bp.speed = speed;
+        bp.type = type;
+      } else {
+        bp = new Snake.BodyPart(tileX, tileY, speed, type);
+      }
+     
+      return bp;
     }
     
     public function selfCollide():Boolean
@@ -123,15 +153,12 @@ package Snake
       
       if (_newPart != null)
       {
-        removeChild(_tail);
         _body.push(_newPart);
         _newPart.tileX = -10;
         _newPart.tileY = -10;
-        // _tail = new Tail(_newPart.tileX, _newPart.tileY, _newPart.speed);
         _tail.tileX = -10;
         _tail.tileY = -10;
-        addChild(_newPart);
-        addChild(_tail);
+        _bodyEggs.addChild(_newPart);
         _newPart = null;
       }
       
@@ -142,6 +169,7 @@ package Snake
       //move Tail
       _tail.tileX = _body[l - 1].tileX;
       _tail.tileY = _body[l - 1].tileY;
+      _tail.prevFacing = _tail.facing;
       _tail.facing = _body[l - 1].facing;
       _tail.animateMove();
       
@@ -150,40 +178,21 @@ package Snake
         b = _body[i - 1];
         a.tileX = b.tileX;
         a.tileY = b.tileY;
+        a.prevFacing = a.facing;
         a.facing = b.facing;
         a.animateMove();
         a = b;
       }
       
-      trace("facing: " + String(_tail.facing));
       a.tileX = _head.tileX;
       a.tileY = _head.tileY;
+      a.prevFacing = a.facing;
       a.facing = _head.facing;
       a.animateMove();
       
-      /*
-         var l:int = _body.length;
-         var a:Snake.BodyPart, b:Snake.BodyPart;
-         //_body.reverse();
-      
-         a = _body[0];
-         for (var i:int = 0; i < l - 1; i++) {
-         b = _body[i + 1];
-         a.tileX = b.tileX;
-         a.tileY = b.tileY;
-         a.facing = b.facing;
-         a.animateMove();
-         a = b;
-         }
-      
-         a.tileX = _head.tileX;
-         a.tileY = _head.tileY;
-         a.facing = _head.prevFacing;
-         a.animateMove();
-      
-       //_body.reverse();*/
-      
       _head.advance();
+      _changedDirection = false;
+      
     }
     
     public function update(time:Number):void
@@ -196,56 +205,76 @@ package Snake
       _tail.update(time);
     }
     
+    public function changeDirection(newDirection:int) {
+      if(!_changedDirection){
+        _head.facing = newDirection;
+        _changedDirection = true;
+      }
+    }
+    
+    public function removeBodyPart(part:Snake.BodyPart):void {
+      _bodyEggs.removeChild(part);
+      body.splice(body.indexOf(part), 1);
+      part.removing = false;
+      _freeBodyParts.push(part);
+    }
+    
     public function moveRight():void
     {
       switch (_head.facing)
       {
         case AssetRegistry.UP: 
-          _head.facing = AssetRegistry.RIGHT;
+          changeDirection(AssetRegistry.RIGHT);
           break;
         case AssetRegistry.LEFT: 
-          _head.facing = AssetRegistry.UP;
+          changeDirection(AssetRegistry.UP);
           break;
         case AssetRegistry.DOWN: 
-          _head.facing = AssetRegistry.LEFT;
+          changeDirection(AssetRegistry.LEFT);
           break;
         case AssetRegistry.RIGHT: 
-          _head.facing = AssetRegistry.DOWN;
+          changeDirection(AssetRegistry.DOWN);
           break;
       }
-      //_head.prevFacing = _head.facing;
     }
     
     public function moveLeft():void
     {
+      
       switch (_head.facing)
       {
         case AssetRegistry.UP: 
-          _head.facing = AssetRegistry.LEFT;
+          changeDirection(AssetRegistry.LEFT);
           break;
         case AssetRegistry.LEFT: 
-          _head.facing = AssetRegistry.DOWN;
+          changeDirection(AssetRegistry.DOWN);
           break;
         case AssetRegistry.DOWN: 
-          _head.facing = AssetRegistry.RIGHT;
+          changeDirection(AssetRegistry.RIGHT);
           break;
         case AssetRegistry.RIGHT: 
-          _head.facing = AssetRegistry.UP;
+          changeDirection(AssetRegistry.UP);
           break;
       }
-      //_head.prevFacing = _head.facing;
     }
     
     public function oneeightyLeft():void
     {
+      if (_oneeighty > 0) {
+        return;
+      }
       _oneeighty = 2;
       _oneeightyDirection = AssetRegistry.LEFT;
     }
     
     public function oneeightyRight():void
     {
+      if (_oneeighty > 0) {
+        return;
+      }
       _oneeighty = 2;
       _oneeightyDirection = AssetRegistry.RIGHT;
+      
     }
     
     public function get head():Snake.Head
@@ -306,6 +335,34 @@ package Snake
     public function get oneeighty():int
     {
       return _oneeighty;
+    }
+    
+    override public function dispose():void {
+      var i:int = 0;
+      
+      removeChildren();
+      
+      _head.dispose();
+      _head = null;
+      
+     
+      for (i = 0; i < _body.length; i++) {
+        _body[i].dispose();
+      }
+      
+      for ( i = 0; i < _freeBodyParts.length; i++) {
+        _freeBodyParts[i].dispose();
+      }
+      _body = null;
+      _freeBodyParts = null;
+      
+      _newPart = null;
+      _tail.dispose();
+      _tail = null;
+      _bodyEggs.dispose();
+      _bodyEggs = null;
+
+      super.dispose();
     }
   
   }

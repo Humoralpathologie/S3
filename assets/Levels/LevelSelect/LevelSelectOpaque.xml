@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:0fc81b8cdfdb5953075ce0706f9e2b24$ -->
+<TextureAtlas imagePath="LevelSelectOpaque.png">
+    <SubTexture name="levelauswahl_oben" x="2" y="2" width="960" height="1126"/>
+    <SubTexture name="levelauswahl_unten_1126" x="964" y="2" width="960" height="874"/>
+    <SubTexture name="levelauswahl_unten_1126_locked" x="2" y="1130" width="960" height="874"/>
+</TextureAtlas>

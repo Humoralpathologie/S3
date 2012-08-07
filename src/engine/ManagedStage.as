@@ -6,6 +6,7 @@ package engine
    * ...
    * @author
    */
+  // This class was a stupid idea.
   public class ManagedStage extends Sprite
   {
     

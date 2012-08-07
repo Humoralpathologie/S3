@@ -2,36 +2,96 @@ package Snake
 {
   import engine.TileSprite;
   import flash.geom.Point;
+  import starling.animation.IAnimatable;
   import starling.display.Image;
   import engine.AssetRegistry;
   import starling.textures.Texture;
   import starling.textures.TextureSmoothing;
   import flash.utils.*;
+  import starling.events.Event;
+  import starling.core.Starling;
   
   /**
    * ...
    * @author
    */
-  public class BodyPart extends TileSprite
+  public class BodyPart extends TileSprite implements IAnimatable
   {
     
     private var _imageLeft:Texture;
     private var _imageDown:Texture;
     private var _type:int;
     private var _removing:Boolean = false;
+    private var _flickerRest:Number = 0;
+    private var _flickerStep:Number = 0;
+    private var _flickerCount:Number = 0;
     
-    public function BodyPart(tileX:int, tileY:int, speed:Number, type:int = AssetRegistry.EGGZERO)
+    public function BodyPart(tileX:int, tileY:int, speed:Number, type:int = 0) // AssetRegistry.EGGZERO)
     {
-      _type = type;
-      makeImages();
+      this.type = type;      
       _image = new Image(_imageDown);
       _image.smoothing = TextureSmoothing.NONE;
       super(tileX, tileY, _image, speed);
       frameOffset = new Point(15, 15);
     }
     
-    private function makeImages():void
+    public function flicker(n:Number = 2, tps:int = 10):void
     {
+      if (_flickerRest <= 0)
+      {
+        Starling.juggler.add(this);
+      }
+      
+      _flickerRest = n;
+      _flickerStep = 1 / tps;
+      _flickerCount = 0;
+    }
+    
+    override public function update(time:Number):void
+    {
+      super.update(time);
+      if (facing != prevFacing)
+      {
+        setImage();
+      }
+    }
+    
+    private function setImage():void
+    {
+      if (_image == null) {
+        _image = new Image(_imageLeft);
+      }
+      switch (facing)
+      {
+        case AssetRegistry.UP: 
+        case AssetRegistry.DOWN: 
+          _image.texture = _imageLeft;
+          break;
+        case AssetRegistry.RIGHT: 
+        case AssetRegistry.LEFT: 
+          _image.texture = _imageDown;
+          break;
+      }
+    }
+    
+    public function get type():int
+    {
+      return _type;
+    }
+    
+    public function get removing():Boolean
+    {
+      return _removing;
+    }
+    
+    public function set removing(value:Boolean):void
+    {
+      _removing = value;
+    }
+    
+    public function set type(value:int):void
+    {
+      _type = value;
       switch (_type)
       {
         case AssetRegistry.EGGZERO: 
@@ -53,72 +113,33 @@ package Snake
         case AssetRegistry.EGGROTTEN: 
           _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_5");
           _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_4");
-          break;          
+          break;
       }
-
+      setImage();
     }
     
-    public function flicker(n:Number = 2, tps:int = 5):void
+    public function advanceTime(time:Number):void
     {
-      var times:int = tps * n;
-      var ms:Number = n * 1000 / times;
-      var count:int = 0;
-      _image.visible = false;      
-      var func:Function = function():void
+      if (_flickerRest <= 0)
       {
-        if (count < times)
-        {
-          count++;
-          if (_image.visible)
-          {
-            _image.visible = false;
-          }
-          else
-          {
-            _image.visible = true;
-          }
-          setTimeout(func, ms);
-        }
-        else
-        {
-          _image.visible = true;
-        }
+        _image.visible = true;
+        dispatchEventWith(Event.REMOVE_FROM_JUGGLER);
       }
-      func();
-    }
-    
-    override public function update(time:Number):void
-    {
-      super.update(time);
-      if (facing != prevFacing)
+      _flickerCount += time;
+      if (_flickerCount > _flickerStep)
       {
-        switch (facing)
-        {
-          case AssetRegistry.UP: 
-          case AssetRegistry.DOWN: 
-            _image.texture = _imageLeft;
-            break;
-          case AssetRegistry.RIGHT: 
-          case AssetRegistry.LEFT: 
-            _image.texture = _imageDown;
-            break;
-        }
+        _image.visible = !_image.visible;
+        _flickerCount -= _flickerStep;
+        _flickerRest -= _flickerStep;
       }
     }
     
-    public function get type():int
+    override public function dispose():void
     {
-      return _type;
-    }
-    
-    public function get removing():Boolean
-    {
-      return _removing;
-    }
-    
-    public function set removing(value:Boolean):void
-    {
-      _removing = value;
+      _imageDown.dispose();
+      _imageLeft.dispose();
+      _image.dispose();
+      super.dispose();
     }
   }
 

@@ -95,6 +95,7 @@ package starling.extensions
         {
             if (mVertexBuffer) mVertexBuffer.dispose();
             if (mIndexBuffer)  mIndexBuffer.dispose();
+            mParticles = null;
             
             Starling.current.removeEventListener(Event.CONTEXT3D_CREATE, onContextCreated);
             
@@ -202,8 +203,6 @@ package starling.extensions
         
         public function advanceTime(passedTime:Number):void
         {
-            passedTime = Math.min(0.2, passedTime);
-            
             var particleIndex:int = 0;
             var particle:Particle;
             

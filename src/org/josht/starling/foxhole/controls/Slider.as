@@ -58,8 +58,9 @@ package org.josht.starling.foxhole.controls
 
 		/**
 		 * The slider has only one track, stretching to fill the full length of
-		 * the slider. In this layout mode, the minimum track is displayed, but
-		 * the maximum track is hidden.
+		 * the slider. In this layout mode, the minimum track is displayed and
+		 * fills the entire length of the slider. The maximum track will not
+		 * exist.
 		 */
 		public static const TRACK_LAYOUT_MODE_SINGLE:String = "single";
 
@@ -358,6 +359,62 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
+		protected var _minimumPadding:Number = 0;
+
+		/**
+		 * The space, in pixels, between the minimum position of the thumb and
+		 * the minimum edge of the track. May be negative to extend the range of
+		 * the thumb.
+		 */
+		public function get minimumPadding():Number
+		{
+			return this._minimumPadding;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set minimumPadding(value:Number):void
+		{
+			if(this._minimumPadding == value)
+			{
+				return;
+			}
+			this._minimumPadding = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		protected var _maximumPadding:Number = 0;
+
+		/**
+		 * The space, in pixels, between the maximum position of the thumb and
+		 * the maximum edge of the track. May be negative to extend the range
+		 * of the thumb.
+		 */
+		public function get maximumPadding():Number
+		{
+			return this._maximumPadding;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set maximumPadding(value:Number):void
+		{
+			if(this._maximumPadding == value)
+			{
+				return;
+			}
+			this._maximumPadding = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
 		protected var _trackLayoutMode:String = TRACK_LAYOUT_MODE_SINGLE;
 
 		/**
@@ -610,7 +667,7 @@ package org.josht.starling.foxhole.controls
 			
 			if(stateInvalid)
 			{
-				this.thumb.isEnabled = this.minimumTrack.isEnabled = isEnabled;
+				this.thumb.isEnabled = this.minimumTrack.isEnabled = this._isEnabled;
 				if(this.maximumTrack)
 				{
 					this.maximumTrack.isEnabled = this._isEnabled;
@@ -781,14 +838,14 @@ package org.josht.starling.foxhole.controls
 
 			if(this._direction == DIRECTION_VERTICAL)
 			{
-				const trackScrollableHeight:Number = this.actualHeight - this.thumb.height;
+				const trackScrollableHeight:Number = this.actualHeight - this.thumb.height - this._minimumPadding - this._maximumPadding;
 				this.thumb.x = (this.actualWidth - this.thumb.width) / 2;
-				this.thumb.y = trackScrollableHeight * (1 - (this._value - this._minimum) / (this._maximum - this._minimum));
+				this.thumb.y = this._minimumPadding + trackScrollableHeight * (1 - (this._value - this._minimum) / (this._maximum - this._minimum));
 			}
 			else
 			{
-				const trackScrollableWidth:Number = this.actualWidth - this.thumb.width;
-				this.thumb.x = (trackScrollableWidth * (this._value - this._minimum) / (this._maximum - this._minimum));
+				const trackScrollableWidth:Number = this.actualWidth - this.thumb.width - this._minimumPadding - this._maximumPadding;
+				this.thumb.x = this._minimumPadding + (trackScrollableWidth * (this._value - this._minimum) / (this._maximum - this._minimum));
 				this.thumb.y = (this.actualHeight - this.thumb.height) / 2;
 			}
 		}
@@ -1018,7 +1075,6 @@ package org.josht.starling.foxhole.controls
 				return;
 			}
 
-			event.stopPropagation();
 			if(touch.phase == TouchPhase.BEGAN || touch.phase == TouchPhase.MOVED)
 			{
 				const location:Point = touch.getLocation(this);
@@ -1068,7 +1124,6 @@ package org.josht.starling.foxhole.controls
 			{
 				return;
 			}
-			event.stopPropagation();
 			const location:Point = touch.getLocation(this);
 			if(touch.phase == TouchPhase.BEGAN)
 			{

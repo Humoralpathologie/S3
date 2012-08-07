@@ -2,9 +2,12 @@ package Menu
 {
     import engine.ManagedStage;
     import org.josht.starling.foxhole.controls.Radio;
+    import org.josht.starling.foxhole.controls.ScreenNavigator;
+    import org.josht.starling.foxhole.controls.ScreenNavigatorItem;
     import org.josht.starling.foxhole.core.ToggleGroup;
     import org.josht.starling.foxhole.text.BitmapFontTextFormat;
     import org.josht.starling.foxhole.themes.IFoxholeTheme;
+    import org.josht.starling.foxhole.transitions.ScreenSlidingStackTransitionManager;
     import starling.events.Event;
     //import flash.events.Event;
     import flash.media.SoundChannel;
@@ -26,7 +29,9 @@ package Menu
     import org.josht.starling.foxhole.controls.TextInput;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
-    
+    import Menu.SettingsScreens.*;
+    import starling.textures.TextureSmoothing;
+    import engine.NotificationScroller;
   
   /**
    * ...
@@ -35,187 +40,115 @@ package Menu
   public class MainMenu extends ManagedStage
   {
     private var _bg:Image;
-    private var _possibleSwipe:Boolean = false;
-    private var _swipeY:int = 0;
-    private var _swipeMenu:Sprite;
-    private var _swipeMessage:Image;    
-    private var _theme:IFoxholeTheme;
+    private var _settings:ScreenNavigator;
+    private var _transitions:ScreenSlidingStackTransitionManager;
+    private var _arcadeButton:Button;
+    private var _settingsButton:Button;
+    private var _levelSelectButton:Button;
+	  private var _extrasButton:Button;
+    private var _notificationScroller:NotificationScroller;
     
     public function MainMenu()
     {
-      AssetRegistry.loadMenuGraphics();
-      
-      _theme = new MinimalTheme(Starling.current.stage, false);
-      this.addEventListener(TouchEvent.TOUCH, onTouch);
-      
-      _bg = new Image(AssetRegistry.MenuAtlas.getTexture("loading"));
+      AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE]);
+            
+      _bg = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("loading"));
       addChild(_bg);
       
-      _swipeMenu = new Sprite();
+      _notificationScroller = new NotificationScroller();
+      addChild(_notificationScroller);
       
-      var menuBG:Quad = new Quad(Starling.current.stage.stageWidth, 100, 0x000000);
-      menuBG.alpha = 0.3;
-      _swipeMenu.addChild(menuBG);
-      
-      _swipeMenu.y = Starling.current.stage.stageHeight - _swipeMenu.height;
-      
-      var arcadeButton:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("text-arcade"));
-      arcadeButton.x = 22;
-      arcadeButton.y = (_swipeMenu.height - arcadeButton.height) / 2;
-      
-      arcadeButton.addEventListener(Event.TRIGGERED, startArcade);
-      _swipeMenu.addChild(arcadeButton);
+      makeButtons();
 
-      
-      var levelSelectButton:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("text-story"));
-      levelSelectButton.x = 389;
-      levelSelectButton.y = arcadeButton.y;
-      
-      levelSelectButton.addEventListener(Event.TRIGGERED, startLevelSelect);
-      _swipeMenu.addChild(levelSelectButton);
-      
-      var settingsButton:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("text-settings"));
-      
-      settingsButton.x = 701;
-      settingsButton.y = arcadeButton.y;
-      //settingsButton.onRelease.add(showSettingsMenu);
-      settingsButton.addEventListener(Event.TRIGGERED, showSettingsMenu);
-      _swipeMenu.addChild(settingsButton);
-    
-      addChild(_swipeMenu);
+      createSettingsNavigator();
     }
     
-    private function showSettingsMenu(event:Event):void {
-      var settingsMenu:Sprite;
-      settingsMenu = new Sprite();
-      
-      var bg:Image = new Image(AssetRegistry.MenuAtlas.getTexture("settings menu"));
-      settingsMenu.addChild(bg);
-      bg.x = (Starling.current.stage.stageWidth - bg.width) / 2;
-      bg.y = (Starling.current.stage.stageHeight - bg.height) / 2;
-      
-      /*var controlText:TextField = new TextField(200, 100, "Control Type", "kroeger 06_65", 30, 0xffffff);
-      controlText.hAlign = HAlign.LEFT;
-      controlText.vAlign = VAlign.TOP;
-      const*/
-      
-      var controls:Image = new Image(AssetRegistry.MenuAtlas.getTexture("controls"));
-      controls.x = 160;
-      controls.y = 179;
-      settingsMenu.addChild(controls);
-      
-      var controlGroup:ToggleGroup = new ToggleGroup;
-      var boyStyle:Radio = new Radio();
-      boyStyle.label = "Type 1";
-      boyStyle.toggleGroup = controlGroup;
-      boyStyle.onPress.add(function(radio:Radio):void {
-        SaveGame.controlType = 1;
-      });
-      var girlStyle:Radio = new Radio();
-      girlStyle.label = "Type 2";
-      girlStyle.toggleGroup = controlGroup;
-      girlStyle.onPress.add(function(radio:Radio):void {
-        SaveGame.controlType = 2;
-      });
-      
-      controlGroup.selectedIndex = SaveGame.controlType - 1;
-      
-      boyStyle.x = girlStyle.x = 160;
-      boyStyle.scaleX = boyStyle.scaleY = girlStyle.scaleX = girlStyle.scaleY = 1;
-      
-      //boyStyle.scaleX = boyStyle.scaleY = girlStyle.scaleX = girlStyle.scaleY = 3;
-      
-      //boyStyle.validate();
-      
-      boyStyle.y = 220;
-      girlStyle.y = boyStyle.y + 70;
-      
-      settingsMenu.addChild(boyStyle);
-      settingsMenu.addChild(girlStyle);
-      
-      
-      // Name for leaderboards.
-       
-      var input:TextInput = new TextInput();
-      input.text = SaveGame.userName;
-      
-      input.x = 400;
-      input.y = 220;
-      
-      input.onChange.add(function(input:TextInput):void {
-        SaveGame.userName = input.text;
-      });
-      
-      settingsMenu.addChild(input);
-           
-      addChild(settingsMenu);
-      
-      var close:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlas.getTexture("x"));
-      settingsMenu.addChild(close);
-      close.x = 787 - close.width;
-      close.y = 115;
-      close.scaleX = close.scaleY = 2;
-      
-      close.addEventListener(Event.TRIGGERED, function(event:Event):void {
-        removeChild(settingsMenu);
-      });
-      
-    }
-    
-    private function startArcade(event:Event):void {
-//      var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
-//      if (touch && _swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height) {
-        StageManager.switchStage(ComboMenu);
-//      }
-    }
-    
-    private function startLevelSelect(event:Event):void {
-//    var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
-//      if (touch && _swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height) {
-        StageManager.switchStage(LevelSelect);
-//      }     
-    }
+    private function makeButtons():void {
      
-    private function onTouch(event:TouchEvent):void
-    {
-      var touch:Touch = event.getTouch(this, TouchPhase.BEGAN);
-      if (touch)
-      {
-        if (touch.getLocation(this).y > 400)
-        {
-          trace("Possible swipe!");
-          _possibleSwipe = true;
-          _swipeY = touch.getLocation(this).y;
-        }
-        else
-        {
-          _possibleSwipe = false;          
-        }
-      }
-      else
-      {
-        touch = event.getTouch(this, TouchPhase.ENDED);
-        if (touch)
-        {
-          if (_possibleSwipe && Math.abs((_swipeY - touch.getLocation(this).y)) > 50)
-          {
-            trace("Swipe!");
-            if (_swipeMenu.y == Starling.current.stage.stageHeight && _swipeY > touch.getLocation(this).y)
-            {
-              new GTween(_swipeMenu, 0.2, {"y": Starling.current.stage.stageHeight - _swipeMenu.height});
-            }
-            else if (_swipeMenu.y == Starling.current.stage.stageHeight - _swipeMenu.height && _swipeY < touch.getLocation(this).y)
-            {
-              new GTween(_swipeMenu, 0.2, {"y": Starling.current.stage.stageHeight});
-            }
-          }
-        }
-      }
+      _settingsButton = new Button();
+      _settingsButton.label = AssetRegistry.Strings.SETTINGS;
+      _settingsButton.width = 240;
+      _settingsButton.height = 80;
+      _settingsButton.x = Starling.current.stage.stageWidth - _settingsButton.width;
+      _settingsButton.y = Starling.current.stage.stageHeight - _settingsButton.height;
+      _settingsButton.onRelease.add(function(button:Button) {
+        showSettingsNavigator();
+      });
+      
+      _arcadeButton = new Button();
+      _arcadeButton.label = AssetRegistry.Strings.ARCADE;
+      _arcadeButton.width = 240;
+      _arcadeButton.height = 80;      
+      _arcadeButton.x = (Starling.current.stage.stageWidth - _settingsButton.width) / 3;
+      _arcadeButton.y = Starling.current.stage.stageHeight - _arcadeButton.height;
+      _arcadeButton.onRelease.add(function(button:Button):void {
+        StageManager.switchStage(ComboMenu);
+      });
+      
+      _levelSelectButton = new Button();
+      _levelSelectButton.label = AssetRegistry.Strings.STORY;
+      _levelSelectButton.width = 240;
+      _levelSelectButton.height = 80;
+      _levelSelectButton.x = 0;
+      _levelSelectButton.y = Starling.current.stage.stageHeight - _levelSelectButton.height;
+      _levelSelectButton.onRelease.add(function(button:Button):void {
+        StageManager.switchStage(LevelSelect);
+      });
+	  
+	  _extrasButton = new Button();
+	  _extrasButton.label = AssetRegistry.Strings.EXTRAS;
+	  _extrasButton.width = 240;
+	  _extrasButton.height = 80;
+	  _extrasButton.x = Starling.current.stage.stageWidth / 2;
+	  _extrasButton.y = Starling.current.stage.stageHeight - _extrasButton.height;
+	  
+      addChild(_settingsButton);
+      addChild(_arcadeButton);
+      addChild(_levelSelectButton);
+	  addChild(_extrasButton);
     }
     
+    private function createSettingsNavigator():void {
+      const MAINSETTINGSSCREEN:String = "MAIN";
+      const BETASETTINGSSCREEN:String = "BETA";
+      
+      _settings = new ScreenNavigator();
+      _transitions = new ScreenSlidingStackTransitionManager(_settings);
+      _settings.addScreen(MAINSETTINGSSCREEN, new ScreenNavigatorItem(MainSettingsScreen, {
+        onBetaSelect: BETASETTINGSSCREEN
+      }));
+      
+      _settings.addScreen(BETASETTINGSSCREEN, new ScreenNavigatorItem(BetaSettingsScreen, {
+        onMainSelect:MAINSETTINGSSCREEN
+      }));
+      
+      _settings.defaultScreenID = MAINSETTINGSSCREEN;
+      
+    }
+    
+    private function showSettingsNavigator():void {
+      _settings.showDefaultScreen();
+      addChild(_settings);
+      var exit:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+      exit.scaleX = exit.scaleY = 2;
+      exit.x = Starling.current.stage.stageWidth - exit.width - 10;
+      exit.y = 10;
+      var that = this;
+      exit.addEventListener(Event.TRIGGERED, function(event:Event):void {
+        that.removeChild(_settings);
+      });
+      _settings.addChild(exit);
+    }
+        
     override public function dispose():void {
       super.dispose();
-      AssetRegistry.disposeMenuGraphics();
+      _bg.dispose();
+      _settings.dispose();
+      _settingsButton.dispose();
+      _arcadeButton.dispose();
+      _levelSelectButton.dispose();
+	    _extrasButton.dispose();
+      _notificationScroller.dispose();
     }
   }
 

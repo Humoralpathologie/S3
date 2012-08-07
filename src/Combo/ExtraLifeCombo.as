@@ -11,11 +11,11 @@ package Combo
   public class ExtraLifeCombo extends Combo
   {
     
-    public function ExtraLifeCombo()
+    public function ExtraLifeCombo(trigger:String)
     {
       super();
       repeat = false;
-      trigger = [AssetRegistry.EGGC, AssetRegistry.EGGA, AssetRegistry.EGGA, AssetRegistry.EGGB];
+      triggerString = trigger;
     }
     
     override public function effect(state:LevelState):void

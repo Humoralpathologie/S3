@@ -51,10 +51,10 @@ package org.josht.starling.foxhole.themes
 		protected static const TAB_SCALE_9_GRID:Rectangle = new Rectangle(25, 25, 2, 2);
 		protected static const CHECK_SCALE_9_GRID:Rectangle = new Rectangle(13, 13, 2, 2);
 
-		protected static const BACKGROUND_COLOR:uint = 0x222222;
-		protected static const PRIMARY_TEXT_COLOR:uint = 0x999999;
-		protected static const SELECTED_TEXT_COLOR:uint = 0xffffff;
-		protected static const INSET_TEXT_COLOR:uint = 0xffffff;
+		protected static const BACKGROUND_COLOR:uint = 0;
+		protected static const PRIMARY_TEXT_COLOR:uint = 0xdddddd;
+		protected static const SELECTED_TEXT_COLOR:uint = 0x666666;
+		protected static const INSET_TEXT_COLOR:uint = 0x666666;
 
 		protected static const ORIGINAL_DPI_IPHONE_RETINA:int = 326;
 		protected static const ORIGINAL_DPI_IPAD_RETINA:int = 264;
@@ -115,7 +115,8 @@ package org.josht.starling.foxhole.themes
 			{
 				root.addEventListener(Event.ADDED_TO_STAGE, root_addedToStageHandler);
 			}
-			this.initialize(scaleToDPI);
+			this._scaleToDPI = scaleToDPI;
+			this.initialize();
 		}
 
 		protected var _originalDPI:int;
@@ -124,13 +125,20 @@ package org.josht.starling.foxhole.themes
 		{
 			return this._originalDPI;
 		}
+
+		protected var _scaleToDPI:Boolean;
+
+		public function get scaleToDPI():Boolean
+		{
+			return this._scaleToDPI;
+		}
 		
 		protected var _scale:Number;
 		protected var _fontSize:int;
 		
-		protected function initialize(scaleToDPI:Boolean):void
+		protected function initialize():void
 		{
-			if(scaleToDPI)
+			if(this._scaleToDPI)
 			{
 				//special case for ipad. should be same pixel size as iphone
 				if(Capabilities.screenDPI % (ORIGINAL_DPI_IPAD_RETINA / 2) == 0)

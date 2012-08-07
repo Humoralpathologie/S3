@@ -65,7 +65,7 @@ package engine
         ns.play(video);
         Starling.current.stop();
         
-        ns.addEventListener(NetStatusEvent.NET_STATUS, function(event:NetStatusEvent) {
+        ns.addEventListener(NetStatusEvent.NET_STATUS, function(event:NetStatusEvent):void {
           if (event.info.code == "NetStream.Play.Stop") {
             Starling.current.nativeStage.removeChild(_video);
             Starling.current.start();
@@ -90,6 +90,8 @@ package engine
           _currentSprite.dispose();
           _currentSprite = null;
           System.gc(); // clean up;
+          System.gc(); // clean up;
+          
         }
         _currentSprite = _argument ? new _nextStage(_argument) : new _nextStage();
         Starling.juggler.paused = false;

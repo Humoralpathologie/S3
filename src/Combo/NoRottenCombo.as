@@ -12,7 +12,6 @@ package Combo
     }
     
     override public function effect(state:LevelState):void {
-      //state.rottenEggs.clear();
       state.rottenEggs.clear();
       state.showMessage("No Rotten Eggs!");
     }

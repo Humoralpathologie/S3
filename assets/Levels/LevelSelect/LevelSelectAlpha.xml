@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:07a1027258d9dfcfd88da2ad2f98c903$ -->
+<TextureAtlas imagePath="LevelSelectAlpha.png">
+    <SubTexture name="tile-level2_261-377" x="112" y="99" width="108" height="62"/>
+    <SubTexture name="tile-level3_514-509" x="2" y="133" width="108" height="61"/>
+    <SubTexture name="tile-level4_261-626" x="115" y="2" width="108" height="95"/>
+    <SubTexture name="tile-level5_11-743" x="2" y="66" width="108" height="65"/>
+    <SubTexture name="tile-level6_261-881" x="2" y="2" width="111" height="62"/>
+</TextureAtlas>

@@ -65,6 +65,11 @@ package Combo
       return results;
     }
     
+    public function dispose():void {
+      _trigger = null;
+      _triggerRegexp = null;
+    }
+    
   }
 
 }
