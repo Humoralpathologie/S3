@@ -37,6 +37,11 @@ package engine
     static private const LevelAtlasXML:Class;
     public static var LevelAtlas:TextureAtlas;
     
+    // Level Frame
+    [Embed(source = "../../assets/Levels/HalfFrame@1.png")]
+    static private const HalfFramePNG:Class;
+    public static var HalfFrameTexture:Texture;
+    
     // UI Graphics
     [Embed(source = "../../assets/UI/UI.png")]
     static private const UIAtlasPNG:Class;
@@ -158,9 +163,7 @@ package engine
     static private const LevelMusic2:Class;
     [Embed(source="../../assets/Music/eile_arcade1.mp3")]
     static public const ArcadeMusic:Class;
-    
-    [Embed(source="../../assets/Levels/LevelFrame640x480.png")]
-    static private const LevelFramePNG:Class;
+   
     
     // Sounds
     [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt1.mp3")]
@@ -499,7 +502,7 @@ package engine
       SnakeAtlas = new TextureAtlas(Texture.fromBitmap(new SnakeTexturePNG), XML(new SnakeAtlasXML));
       LevelAtlas = new TextureAtlas(Texture.fromAtfData(new LevelAtlasATF), XML(new LevelAtlasXML));
       UIAtlas = new TextureAtlas(Texture.fromBitmap(new UIAtlasPNG, true, false, 0.4), XML(new UIAtlasXML));
-      // LevelFrame = Texture.fromBitmap(new LevelFramePNG);
+      HalfFrameTexture = Texture.fromBitmap(new HalfFramePNG);//,true,false,0.5);
       
       DrugParticleConfig = XML(new DrugsParticleXML);
       DrugParticleTexture = Texture.fromBitmap(new DrugsParticlePNG);
@@ -517,7 +520,7 @@ package engine
       SnakeAtlas.dispose();
       LevelAtlas.dispose();
       UIAtlas.dispose();
-      //LevelFrame.dispose();
+      HalfFrameTexture.dispose();
       
       System.disposeXML(DrugParticleConfig)
       DrugParticleTexture.dispose();

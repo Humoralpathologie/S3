@@ -320,13 +320,18 @@ package Level
     }
     
     public function addFrame():void
-    {
-      /*
-      var frame:Image = new Image(AssetRegistry.LevelFrame);
-      frame.x = -200;
-      frame.y = -150;
+    {      
+      var frame:Image = new Image(AssetRegistry.HalfFrameTexture);
+      var rightFrame:Image = new Image(AssetRegistry.HalfFrameTexture);
+      frame.x = -186; 
+      frame.y = -161;
+      rightFrame.scaleX = -1;
+      rightFrame.scaleY = -1;
+      rightFrame.x = frame.x + frame.width + frame.width;
+      rightFrame.y = -161;
+      
       _levelStage.addChild(frame);
-      */
+      _levelStage.addChild(rightFrame);
     }
     
     protected function addHud():void
