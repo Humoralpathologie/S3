@@ -210,25 +210,6 @@ package Menu
           //_medalTween.autoPlay = false;   
       }
       
-<<<<<<< HEAD
-      if (_scores.total >= 100 && _scores.total < 250) {
-        _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_bronze"));
-        _medal.x = -800;
-        _medal.y = 0;
-        _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
-      } else if (_scores.total >= 250 && _scores.total < 550) {
-        _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_saphir"));
-        _medal.x = -800;
-        _medal.y = 0;
-        _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("saphir_small"));
-      } else if (_scores.total >= 550 && _scores.total < 850) {
-        _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_silber"));
-        _medal.x = -800;
-        _medal.y = 0;
-        _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("silver_small"));
-      } else if (_scores.total >= 850) {
-        _medal = new Image(AssetRegistry.ScoringAtlas.getTexture("medaille_gold"));
-=======
       if (_scores.total >= 400 && _scores.total < 600) {
         _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture("medaille_bronze"));
         _medal.x = -800;
@@ -246,7 +227,6 @@ package Menu
         _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("silver_small"));
       } else if (_scores.total >= 1000) {
         _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture("medaille_gold"));
->>>>>>> b7a44cf28c6ed1a8417e79ff79a77f117eccf577
         _medal.x = -800;
         _medal.y = 0;
         _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("gold_small"));

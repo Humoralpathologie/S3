@@ -2,7 +2,7 @@ package
 {
   //import com.sociodox.theminer.TheMiner;
   import engine.AssetRegistry;
-//  import flash.desktop.NativeApplication;
+  import flash.desktop.NativeApplication;
   import flash.display.Bitmap;
   import flash.events.Event;
   import flash.display.Sprite;
