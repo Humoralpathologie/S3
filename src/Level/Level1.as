@@ -42,7 +42,8 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("Lorem Snake SOMMMMMMM\nsnkesnakeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeksadjhfakhrfkahfahrealhfsakehfralwfehlaihfealwiehfliwahfalihfeliwahfliwahfla\n Hallooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo!!!!For Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 50 eggs & pay attention to the bonus scoring on your performance!!");
+      var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+      showObjectiveBox("Lorem Snake SOMMMMMMM\nsnkesnakeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeksadjhfakhrfkahfahrealhfsakehfralwfehlaihfealwiehfliwahfalihfeliwahfliwahfla\n Hallooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo!!!!For Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 50 eggs & pay attention to the bonus scoring on your performance!!", {pic1: [_neededEggs, 50]});
     }
     
     override public function spawnRandomEgg():void {

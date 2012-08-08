@@ -1074,16 +1074,32 @@ package Level
       new GTween(null, 2, null, {paused: false, onComplete: registerTouchHandler});
     }
     
-    protected function showObjectiveBox(desc:String, fontSize:int = 50):void
+    protected function showObjectiveBox(desc:String, goals:Object, fontSize:int = 50):void
     {
-	  
-	  var _scrollable:Sprite = new Sprite();
-      
       var box:Quad = new Quad(800, 600, 0);
       box.alpha = 0x44 / 0xff;
       box.x = (960 - box.width) / 2;
       box.y = (640 - box.height) / 2;
       addChild(box);
+      
+      var _goals:Sprite = new Sprite();
+      var xPos:int = box.x;
+      var yPos:int = box.y;
+      for (var x in _goals){
+        var img:Image = _goals[x][0];
+        var txt:TextField = new TextField(80, 50, _goals[x][1], "kroeger 06_65", 45, Color.WHITE);
+        img.x = xPos;
+        img.y = yPos;
+        txt.x = img.x + img.width + 10;
+        xPos = txt.x + txt.width + 10;
+        addChild(img);
+        addChild(txt);
+      }
+      _goals.x = (box.width - _goals.width) / 2;	  
+      _goals.y = box.y;
+      _scrollable.addChild(_goals);
+
+	    var _scrollable:Sprite = new Sprite();
       
       var _scroller:Scroller = new Scroller();
       _scroller.setSize(box.width, box.height - 100);
@@ -1095,7 +1111,7 @@ package Level
 	  
       var text:TextField = new TextField(700, 800, "", "kroeger 06_65", fontSize, Color.WHITE);
       text.text = desc;	  
-	  text.x = (box.width - text.width) / 2;
+	    text.x = (box.width - text.width) / 2;
 	  
 	  _scrollable.addChild(text);
       
