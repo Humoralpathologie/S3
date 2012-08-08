@@ -4,6 +4,7 @@ package Snake
   import starling.animation.Tween;
   import starling.display.DisplayObject;
   import starling.display.MovieClip;
+  import starling.display.QuadBatch;
   import starling.display.Sprite;
   import engine.AssetRegistry
   import starling.textures.Texture;
@@ -34,6 +35,7 @@ package Snake
     private var _bodyEggs:Sprite;
     private var _changedDirection:Boolean;
     private var _freeBodyParts:Vector.<Snake.BodyPart>;
+    private var _bodyBatch:QuadBatch;
     
     public function Snake(mps:Number)
     {
@@ -41,11 +43,11 @@ package Snake
       _head = new Head(5, 5, _speed, mps);
       
       _body = [];
-      _bodyEggs = new Sprite();
+      //_bodyEggs = new Sprite();
       
       
       _freeBodyParts = new Vector.<Snake.BodyPart>;
-      for (i = 0; i < 200; i++) {
+      for (i = 0; i < 300; i++) {
         _freeBodyParts.push(new Snake.BodyPart( -1, -1, _speed, 0));
       }
       
@@ -53,12 +55,14 @@ package Snake
       {
         var bodyPart:BodyPart = recycleBodyPart(_head.tileX - (i + 1), _head.tileY, _speed, AssetRegistry.EGGZERO);
         _body.push(bodyPart);
-        _bodyEggs.addChild(bodyPart);        
+        //_bodyEggs.addChild(bodyPart);        
       }
+      
+      _bodyBatch = new QuadBatch();
       
       _tail = new Tail(_body[3].tileX - 1, _head.tileY, _speed);
       addChild(_tail);
-      addChild(_bodyEggs);
+      addChild(_bodyBatch);
       addChild(_head);
       
       this.mps = mps;
@@ -158,7 +162,7 @@ package Snake
         _newPart.tileY = -10;
         _tail.tileX = -10;
         _tail.tileY = -10;
-        _bodyEggs.addChild(_newPart);
+        //_bodyEggs.addChild(_newPart);
         _newPart = null;
       }
       
@@ -198,9 +202,11 @@ package Snake
     public function update(time:Number):void
     {
       _head.update(time);
+      _bodyBatch.reset();
       for (var i:int = 0; i < _body.length; i++)
       {
         _body[i].update(time);
+        _bodyBatch.addImage(_body[i].img);
       }
       _tail.update(time);
     }
@@ -213,7 +219,7 @@ package Snake
     }
     
     public function removeBodyPart(part:Snake.BodyPart):void {
-      _bodyEggs.removeChild(part);
+      //_bodyEggs.removeChild(part);
       body.splice(body.indexOf(part), 1);
       part.removing = false;
       _freeBodyParts.push(part);
@@ -359,8 +365,8 @@ package Snake
       _newPart = null;
       _tail.dispose();
       _tail = null;
-      _bodyEggs.dispose();
-      _bodyEggs = null;
+      //_bodyEggs.dispose();
+      //_bodyEggs = null;
 
       super.dispose();
     }
