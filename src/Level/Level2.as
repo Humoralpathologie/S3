@@ -51,7 +51,9 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("Little Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.\n\nObjective:\nDevour 10 Blue Egg Combos!!");
+	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  var _testGoal:Object = { pic1: [_neededEggs, 50] };
+      showObjectiveBox("Little Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.\n\nObjective:\nDevour 10 Blue Egg Combos!!", _testGoal);
     }
     
     override public function dispose():void

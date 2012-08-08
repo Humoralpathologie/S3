@@ -34,7 +34,9 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("Addiction\n\nObjective:\nEat two chains of at least ten eggs & don't stop eating for longer than 5 seconds.");
+	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  var _testGoal:Object = { pic1: [_neededEggs, 50] };
+      showObjectiveBox("Addiction\n\nObjective:\nEat two chains of at least ten eggs & don't stop eating for longer than 5 seconds.",_testGoal);
     }            
     
     override public function dispose():void {

@@ -73,7 +73,9 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snake's speed up to 7 and jump!");
+	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  var _testGoal:Object = { pic1: [_neededEggs, 50] };
+      showObjectiveBox("Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snake's speed up to 7 and jump!", _testGoal);
     }    
     
     override protected function addHud():void {

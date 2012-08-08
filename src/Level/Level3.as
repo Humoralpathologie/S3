@@ -72,7 +72,9 @@ package Level
     
     override protected function showObjective():void
     {  
-      showObjectiveBox("On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 4 minutes or by getting 10 combos. And eating more than 4 gray eggs will kill you from now on!!", 38);
+	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  var _testGoal:Object = { pic1: [_neededEggs, 50] };
+      showObjectiveBox("On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 4 minutes or by getting 10 combos. And eating more than 4 gray eggs will kill you from now on!!",_testGoal,38);
     }    
 
     override protected function addHud():void {

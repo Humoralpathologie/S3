@@ -1076,6 +1076,8 @@ package Level
     
     protected function showObjectiveBox(desc:String, goals:Object, fontSize:int = 50):void
     {
+	  var _scrollable:Sprite = new Sprite();
+	  
       var box:Quad = new Quad(800, 600, 0);
       box.alpha = 0x44 / 0xff;
       box.x = (960 - box.width) / 2;
@@ -1083,23 +1085,24 @@ package Level
       addChild(box);
       
       var _goals:Sprite = new Sprite();
+	  
       var xPos:int = box.x;
       var yPos:int = box.y;
-      for (var x in _goals){
-        var img:Image = _goals[x][0];
-        var txt:TextField = new TextField(80, 50, _goals[x][1], "kroeger 06_65", 45, Color.WHITE);
+      for (var x in goals){
+        var img:Image = goals[x][0];
+        var txt:TextField = new TextField(80, 50, goals[x][1], "kroeger 06_65", 45, Color.WHITE);
         img.x = xPos;
         img.y = yPos;
+		img.scaleX = img.scaleY = 3;
+		txt.scaleX = txt.scaleY = 1.5;
         txt.x = img.x + img.width + 10;
+		txt.y = img.y - 5;
         xPos = txt.x + txt.width + 10;
-        addChild(img);
-        addChild(txt);
-      }
-      _goals.x = (box.width - _goals.width) / 2;	  
-      _goals.y = box.y;
+        _goals.addChild(img);
+        _goals.addChild(txt);
+      }	  
+      _goals.x = (box.x - _goals.x) / 2;
       _scrollable.addChild(_goals);
-
-	    var _scrollable:Sprite = new Sprite();
       
       var _scroller:Scroller = new Scroller();
       _scroller.setSize(box.width, box.height - 100);
@@ -1111,7 +1114,8 @@ package Level
 	  
       var text:TextField = new TextField(700, 800, "", "kroeger 06_65", fontSize, Color.WHITE);
       text.text = desc;	  
-	    text.x = (box.width - text.width) / 2;
+	  text.x = (box.width - text.width) / 2;
+	  text.y = box.y + 80; 
 	  
 	  _scrollable.addChild(text);
       

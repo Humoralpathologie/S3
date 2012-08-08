@@ -34,7 +34,9 @@ package Level
  
     override protected function showObjective():void
     {     
-      showObjectiveBox("Terror Triceratops has hidden 4 eggs especially well. Maybe they contain his heirs. Little Snake cannot afford to pass on these eggs.\n\nObjective:\nEat the 4 special eggs. If you have a problem getting into the tight spots, perform () to slow down time.", 40);
+	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  var _testGoal:Object = { pic1: [_neededEggs, 50] };
+      showObjectiveBox("Terror Triceratops has hidden 4 eggs especially well. Maybe they contain his heirs. Little Snake cannot afford to pass on these eggs.\n\nObjective:\nEat the 4 special eggs. If you have a problem getting into the tight spots, perform () to slow down time.",_testGoal,40);
     }        
     
     override public function dispose():void {
