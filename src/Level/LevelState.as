@@ -618,7 +618,7 @@ package Level
       }
     }
     
-    private function updateTimers(event:EnterFrameEvent):void
+    protected function updateTimers(event:EnterFrameEvent):void
     {
       var passedTime:Number = event.passedTime * Starling.juggler.timeFactor;
       _timer += passedTime;
