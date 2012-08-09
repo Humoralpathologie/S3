@@ -75,7 +75,7 @@ package Level
     private var _timer:Number = 0;
     protected var _snake:Snake;
     private var _speed:Number = 0.3;
-	private var _startSpeed:Number;
+	protected var _startSpeed:Number;
     protected var _levelStage:Sprite;
     protected var _eggs:Eggs;
     private var _rottenEggs:Eggs.Eggs;

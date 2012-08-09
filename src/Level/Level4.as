@@ -20,6 +20,7 @@ package Level
   public class Level4 extends LevelState 
   {
     private var _winningPositions:Array;
+	private var _winCondition:int;
     
     public function Level4() 
     {
@@ -27,7 +28,12 @@ package Level
       _levelNr = 4;
       _rottenEnabled = true;
       _winningPositions = [2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428];
-      
+      if (SaveGame.difficulty == 1) {
+	    _winCondition = 7;
+	  } else {
+		_winCondition = 6;
+	  }
+
       super();
       _startPos.x = 20;
       _startPos.y = 20;
@@ -120,7 +126,7 @@ package Level
     } 
     
     override protected function checkWin():void {
-      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= SaveGame.startSpeed + 6) {
+      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= _startSpeed + _winCondition) {
         win();
       }
     }

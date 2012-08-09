@@ -15,11 +15,20 @@ package Level
 
   public class Level3 extends LevelState 
   {
+	private var _winConditionA:int;
+	private var _winConditionB:int;
     public function Level3() 
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL3, AssetRegistry.SCORING]);
       _levelNr = 3;
       _rottenEnabled = true;
+	  if (SaveGame.difficulty == 1) {
+	    _winConditionA = 7;
+		_winConditionB = 4 * 60;
+	  } else {
+		_winConditionA = 10;
+		_winConditionB = 4 * 60;
+	  }
       super();
     }
     
@@ -66,7 +75,7 @@ package Level
     }
     
     override protected function checkWin():void {
-      if (_combos == 10 || _overallTimer >= 4 * 60) {
+      if (_combos == _winConditionA || _overallTimer >= _winConditionB) {
         win();
       }
     }

@@ -21,10 +21,16 @@ package Level
   
   public class Level1 extends LevelState
   {
+	private var _winCondition:int;
     public function Level1()
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       _levelNr = 1;
+	  if (SaveGame.difficulty == 1) {
+	    _winCondition = 30;
+	  } else {
+		_winCondition = 50;
+	  }
       super();
     }
     
@@ -71,7 +77,7 @@ package Level
     }
      
     override protected function checkWin():void {
-      if (_snake.eatenEggs == 50) {
+      if (_snake.eatenEggs == _winCondition) {
         win();
       }
     }

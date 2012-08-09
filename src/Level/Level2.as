@@ -15,11 +15,17 @@ package Level
   
   public class Level2 extends LevelState
   {
+	private var _winCondition:int;
     public function Level2()
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       
       _levelNr = 2;
+	  if (SaveGame.difficulty == 1) {
+	    _winCondition = 7;
+	  } else {
+		_winCondition = 10;
+	  }
       super();
     }
     
@@ -68,7 +74,7 @@ package Level
     
     override protected function checkWin():void
     {
-      if (_combos == 10)
+      if (_combos == _winCondition)
       {
         win();
       }
