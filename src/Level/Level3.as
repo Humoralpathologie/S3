@@ -11,7 +11,8 @@ package Level
   import Eggs.Egg;
   import UI.HUD;
   import UI.Radar;
-  
+  import engine.SaveGame;
+
   public class Level3 extends LevelState 
   {
     public function Level3() 
@@ -73,8 +74,11 @@ package Level
     override protected function showObjective():void
     {  
 	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
-	  var _testGoal:Object = { pic1: [_neededEggs, 50] };
-      showObjectiveBox("On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 4 minutes or by getting 10 combos. And eating more than 4 gray eggs will kill you from now on!!",_testGoal,38);
+	  if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL3A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL3B, [[_neededEggs, 50] ] );
+	  }
     }    
 
     override protected function addHud():void {

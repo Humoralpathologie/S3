@@ -74,8 +74,11 @@ package Level
     override protected function showObjective():void
     {     
 	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
-	  var _testGoal:Object = { pic1: [_neededEggs, 50] };
-      showObjectiveBox("Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snake's speed up to 7 and jump!", _testGoal);
+	  if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL4A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL4B, [[_neededEggs, 50] ] );
+	  }
     }    
     
     override protected function addHud():void {

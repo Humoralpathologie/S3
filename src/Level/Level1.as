@@ -16,6 +16,7 @@ package Level
   import starling.textures.TextureSmoothing;
   import UI.HUD;
   import UI.Radar;
+  import engine.SaveGame;
   import starling.utils.Color;
   
   public class Level1 extends LevelState
@@ -43,7 +44,11 @@ package Level
     override protected function showObjective():void
     {     
       var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
-      showObjectiveBox("Lorem Snake SOMMMMMMM\nsnkesnakeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeksadjhfakhrfkahfahrealhfsakehfralwfehlaihfealwiehfliwahfalihfeliwahfliwahfla\n Hallooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo!!!!For Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 50 eggs & pay attention to the bonus scoring on your performance!!", {pic1: [_neededEggs, 50], pic2: [_neededEggs, 30]});
+	  if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL1A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL1B, [[_neededEggs, 50] ] );
+	  }
     }
     
     override public function spawnRandomEgg():void {

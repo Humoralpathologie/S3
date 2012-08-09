@@ -10,6 +10,8 @@ package Level
   import Eggs.Egg;
   import UI.HUD;
   import UI.Radar;
+  import engine.SaveGame;
+
   
   public class Level2 extends LevelState
   {
@@ -52,8 +54,11 @@ package Level
     override protected function showObjective():void
     {     
 	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
-	  var _testGoal:Object = { pic1: [_neededEggs, 50] };
-      showObjectiveBox("Little Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.\n\nObjective:\nDevour 10 Blue Egg Combos!!", _testGoal);
+	   if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL2A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL2B, [[_neededEggs, 50] ] );
+	  }
     }
     
     override public function dispose():void

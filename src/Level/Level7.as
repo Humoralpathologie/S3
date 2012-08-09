@@ -10,6 +10,8 @@ package Level
   import starling.textures.TextureSmoothing;
   import UI.HUD;
   import UI.Radar;
+  import engine.SaveGame;
+
   
   public class Level7 extends LevelState 
   {
@@ -35,8 +37,11 @@ package Level
     override protected function showObjective():void
     {     
 	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
-	  var _testGoal:Object = { pic1: [_neededEggs, 50] };
-      showObjectiveBox("Addiction\n\nObjective:\nEat two chains of at least ten eggs & don't stop eating for longer than 5 seconds.",_testGoal);
+	  if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL7A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL7B, [[_neededEggs, 50] ] );
+	  }
     }            
     
     override public function dispose():void {

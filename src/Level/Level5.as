@@ -10,6 +10,8 @@ package Level
   import starling.textures.TextureSmoothing;
   import UI.HUD;
   import UI.Radar;
+  import engine.SaveGame;
+
   
   public class Level5 extends LevelState 
   {
@@ -45,8 +47,11 @@ package Level
     override protected function showObjective():void
     {    
 	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
-	  var _testGoal:Object = { pic1: [_neededEggs, 50] };
-      showObjectiveBox("These ghastly spikes won't hold little Snake back!\n\nObjective:\nAvoid the spikes for at least 4 Minutes. If the Rotten Eggs get in your way, try the new combo displayed in the upper right corner.", _testGoal);
+	  if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL5A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL5B, [[_neededEggs, 50] ] );
+	  }
     }        
     override protected function addHud():void {
       _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed", "poison"],this);

@@ -75,6 +75,7 @@ package Level
     private var _timer:Number = 0;
     protected var _snake:Snake;
     private var _speed:Number = 0.3;
+	private var _startSpeed:Number;
     protected var _levelStage:Sprite;
     protected var _eggs:Eggs;
     private var _rottenEggs:Eggs.Eggs;
@@ -149,8 +150,11 @@ package Level
       super();
       addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
 
-      trace(SaveGame.difficulty);
-	  trace(SaveGame.language);
+	  if (SaveGame.difficulty == 1) {
+		_startSpeed = 7;  
+	  } else {
+		_startSpeed = 10;
+	  }
       // Initialize and fill the TextField pool
       _textFieldPool = new Vector.<TextField>;
       _textLevel = new Sprite;
@@ -165,8 +169,8 @@ package Level
       sfx = AssetRegistry.LevelMusic1Sound;
             
       _currentCombos = null;
-      
-      _speed = 1 / SaveGame.startSpeed;
+     
+      _speed = 1 / _startSpeed;
       
       this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
       
@@ -190,8 +194,8 @@ package Level
       addObstacles();
       addSpawnMap();
       setBoundaries();
-      
-      _snake = new Snake(SaveGame.startSpeed);
+	  _snake = new Snake(_startSpeed);
+	  
       _following = _snake.head;
       _levelStage.addChild(_snake);
       
@@ -385,7 +389,7 @@ package Level
     protected function die():void
     {
       _snake.lives--;
-      _snake.mps = SaveGame.startSpeed;
+      _snake.mps = _startSpeed;
       if (_snake.lives < 0)
       {
         return;
@@ -1075,7 +1079,7 @@ package Level
       new GTween(null, 2, null, {paused: false, onComplete: registerTouchHandler});
     }
     
-    protected function showObjectiveBox(desc:String, goals:Object, fontSize:int = 50):void
+    protected function showObjectiveBox(desc:String, goals:Array, fontSize:int = 50):void
     {
 	  var _scrollable:Sprite = new Sprite();
 	  
@@ -1088,13 +1092,18 @@ package Level
       var _goals:Sprite = new Sprite();
 	  
       var xPos:int = box.x;
-      var yPos:int = box.y;
-      for (var x in goals){
-        var img:Image = goals[x][0];
+      var yPos:int = box.y + 80;
+	  
+      for (var i:int = 0; i < goals.length; i++) {
+        var img:Image = goals[i][0];
         var txt:TextField = new TextField(80, 50, goals[x][1], "kroeger 06_65", 45, Color.WHITE);
         img.x = xPos;
         img.y = yPos;
 		img.scaleX = img.scaleY = 3;
+		trace("goals.length = " + String(goals.length));
+		if (goals.length == 1) {
+		  img.x = (box.width - img.width) / 2 - 80;   
+	    }
 		txt.scaleX = txt.scaleY = 1.5;
         txt.x = img.x + img.width + 10;
 		txt.y = img.y - 5;
@@ -1116,7 +1125,7 @@ package Level
       var text:TextField = new TextField(700, 800, "", "kroeger 06_65", fontSize, Color.WHITE);
       text.text = desc;	  
 	  text.x = (box.width - text.width) / 2;
-	  text.y = box.y + 80; 
+	  text.y = box.y + 50; 
 	  
 	  _scrollable.addChild(text);
       
