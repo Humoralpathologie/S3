@@ -326,7 +326,6 @@ package Level
       frame.x = -186; 
       frame.y = -161;
       rightFrame.scaleX = -1;
-      rightFrame.scaleY = -1;
       rightFrame.x = frame.x + frame.width + frame.width;
       rightFrame.y = -161;
       

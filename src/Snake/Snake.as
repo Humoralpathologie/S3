@@ -1,6 +1,7 @@
 package Snake
 {
   import engine.TileSprite;
+  import flash.geom.Point;
   import starling.animation.Tween;
   import starling.display.DisplayObject;
   import starling.display.MovieClip;
@@ -12,6 +13,7 @@ package Snake
   import Snake.Head;
   import Snake.BodyPart;
   import Snake.Tail;
+  import starling.core.RenderSupport;
   
   /**
    * ...
@@ -62,7 +64,7 @@ package Snake
       
       _tail = new Tail(_body[3].tileX - 1, _head.tileY, _speed);
       addChild(_tail);
-      addChild(_bodyBatch);
+      //addChild(_bodyBatch);
       addChild(_head);
       
       this.mps = mps;
@@ -81,6 +83,17 @@ package Snake
       var back:Array = _body.slice(4);
       back.sort(randomSort);
       _body = front.concat(back);
+    }
+    
+    public override function render(support:RenderSupport, parentAlpha:Number):void
+    {    
+      super.render(support, parentAlpha);
+      _bodyBatch.reset();
+      for (var i:int = 0; i < _body.length; i++)
+      {        
+        _bodyBatch.addImage(_body[i].img);
+      }
+      _bodyBatch.renderCustom(support.mvpMatrix,1.0, "normal");
     }
     
     public function faster():void
@@ -200,18 +213,16 @@ package Snake
     }
     
     public function update(time:Number):void
-    {
+    { 
       _head.update(time);
-      _bodyBatch.reset();
       for (var i:int = 0; i < _body.length; i++)
-      {
+      {        
         _body[i].update(time);
-        _bodyBatch.addImage(_body[i].img);
       }
       _tail.update(time);
     }
     
-    public function changeDirection(newDirection:int) {
+    public function changeDirection(newDirection:int):void {
       if(!_changedDirection){
         _head.facing = newDirection;
         _changedDirection = true;
