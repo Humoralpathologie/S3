@@ -24,6 +24,28 @@ package engine {
       _sharedObject.data.controlType = value;
     }
     
+	public static function set difficulty(value:int):void {
+	  _sharedObject.data.difficulty = value;
+	}
+	
+	public static function get difficulty():int {
+	  if (!_sharedObject.data.difficulty) {
+		_sharedObject.data.difficulty = 1;
+	  }
+	  return _sharedObject.data.difficulty;
+	}
+	
+	public static function set language(value:int):void {
+	  _sharedObject.data.language = value;
+	}
+	
+	public static function get language():int {
+	  if (!_sharedObject.data.language) {
+		_sharedObject.data.language = 1;
+	  }
+	  return _sharedObject.data.language;
+	}
+	
     public static function get startSpeed():int {
       return _sharedObject.data.startSpeed || 10;
     }

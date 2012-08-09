@@ -149,7 +149,8 @@ package Level
       super();
       addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
 
-      
+      trace(SaveGame.difficulty);
+	  trace(SaveGame.language);
       // Initialize and fill the TextField pool
       _textFieldPool = new Vector.<TextField>;
       _textLevel = new Sprite;
