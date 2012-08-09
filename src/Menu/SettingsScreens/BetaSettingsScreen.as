@@ -28,9 +28,6 @@ package Menu.SettingsScreens
     private var _snakeSpeedHeading:TextField;
     private var _currentSpeed:TextField;
     
-    private var _noGreenArcadeHeading:TextField;
-    private var _noGreenArcadeToggleSwitch:ToggleSwitch;
-    
     public function BetaSettingsScreen()
     {
       super();
@@ -59,26 +56,8 @@ package Menu.SettingsScreens
       addChild(_mainButton);
       
       addSlider();
-      addToggle();
     }
     
-    private function addToggle():void {
-      _noGreenArcadeHeading = new TextField(_greyBox.width, 50, "No Green Eggs in Arcade Mode", "kroeger 06_65", 40, Color.WHITE);
-      _noGreenArcadeHeading.x = _greyBox.x;
-      _noGreenArcadeHeading.y = _currentSpeed.y + 100;
-      addChild(_noGreenArcadeHeading);
-      
-      _noGreenArcadeToggleSwitch = new ToggleSwitch();
-      _noGreenArcadeToggleSwitch.isSelected = SaveGame.noGreenArcade;
-      _noGreenArcadeToggleSwitch.x = _greyBox.x + (_greyBox.width - 100) / 2;
-      _noGreenArcadeToggleSwitch.y = _noGreenArcadeHeading.y + _noGreenArcadeHeading.height;
-      
-      _noGreenArcadeToggleSwitch.onChange.add(function(tswitch:ToggleSwitch):void {
-        SaveGame.noGreenArcade = tswitch.isSelected;
-      });
-      
-      addChild(_noGreenArcadeToggleSwitch);
-    }
     
     private function addSlider():void {
       _snakeSpeedHeading = new TextField(_greyBox.width, 50, "Snake Default Speed","kroeger 06_65", 40, Color.WHITE);

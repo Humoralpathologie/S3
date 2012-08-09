@@ -92,10 +92,6 @@ package Level
       var egg:Eggs.Egg;
       var types:Array = [AssetRegistry.EGGA, AssetRegistry.EGGB, AssetRegistry.EGGC, AssetRegistry.EGGA, AssetRegistry.EGGB, AssetRegistry.EGGC];
       
-      if (!SaveGame.noGreenArcade) {
-        types.push(AssetRegistry.EGGZERO);
-      }
-      
       var type:int = types[Math.floor(Math.random() * types.length)];
       
       egg = _eggs.recycleEgg(0, 0, type);

@@ -13,7 +13,6 @@ package starling.display
     import flash.geom.Matrix;
     
     import starling.core.RenderSupport;
-    import starling.core.Starling;
     import starling.events.Event;
 
     /** Dispatched on all children when the object is flattened. */
@@ -90,11 +89,12 @@ package starling.display
         {
             if (mFlattenedContents)
             {
-                support.finishQuadBatch();
-                
                 var alpha:Number = parentAlpha * this.alpha;
                 var numBatches:int = mFlattenedContents.length;
                 var mvpMatrix:Matrix = support.mvpMatrix;
+                
+                support.finishQuadBatch();
+                support.raiseDrawCount(numBatches);
                 
                 for (var i:int=0; i<numBatches; ++i)
                 {

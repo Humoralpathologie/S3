@@ -141,6 +141,12 @@ package Snake
       _image.dispose();
       super.dispose();
     }
+    
+    public function get img():Image {
+      _image.x = x;
+      _image.y = y;
+      return _image;
+    }
   }
 
 }

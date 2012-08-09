@@ -100,7 +100,7 @@ package
       addChild(loadingSprite);
       
       // For debugging. 
-      // Starling.current.showStats = true;
+      Starling.current.showStats = true;
       
       starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE, function(e:Event):void
         {

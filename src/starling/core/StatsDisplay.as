@@ -22,22 +22,22 @@ package starling.core
     import starling.utils.HAlign;
     import starling.utils.VAlign;
     
-    /** A small, lightweight box that displays the current framerate and memory consumption. */
+    /** A small, lightweight box that displays the current framerate, memory consumption and
+     *  the number of draw calls per frame. */
     internal class StatsDisplay extends Sprite
     {
         private var mBackground:Quad;
         private var mTextField:TextField;
         
         private var mFrameCount:int = 0;
+        private var mDrawCount:int  = 0;
         private var mTotalTime:Number = 0;
-        private var mAdditionalStats:Object;
         
         /** Creates a new Statistics Box. */
         public function StatsDisplay()
         {
-            mBackground = new Quad(49, 100, 0x0);
-            mAdditionalStats = {"test":5 };
-            mTextField = new TextField(60, 100, "", BitmapFont.MINI, BitmapFont.NATIVE_SIZE, 0xffffff);
+            mBackground = new Quad(50, 25, 0x0);
+            mTextField = new TextField(48, 25, "", BitmapFont.MINI, BitmapFont.NATIVE_SIZE, 0xffffff);
             mTextField.x = 2;
             mTextField.hAlign = HAlign.LEFT;
             mTextField.vAlign = VAlign.TOP;
@@ -46,29 +46,20 @@ package starling.core
             addChild(mTextField);
             
             addEventListener(Event.ENTER_FRAME, onEnterFrame);
-            updateText(0, getMemory(), getFreeMemory());
+            updateText(0, getMemory(), 0);
             blendMode = BlendMode.NONE;
         }
         
-        private function updateText(fps:Number, memory:Number, freeMemory:Number):void
+        private function updateText(fps:Number, memory:Number, drawCount:int):void
         {
-            mTextField.text = "FPS: " + fps.toFixed(1) + "\nMEM: " + memory.toFixed(1) + "\nFree: " + freeMemory.toFixed(1);
-           
-            for (var stat in mAdditionalStats) {
-              mTextField.text += "\n" + String(stat) + ": " + mAdditionalStats[stat];
-            }
-            
-            mBackground.width  = (fps >= 100 || memory >= 100) ? 55 : 49; 
+            mTextField.text = "FPS: " + fps.toFixed(fps < 100 ? 1 : 0) + 
+                            "\nMEM: " + memory.toFixed(memory < 100 ? 1 : 0) +
+                            "\nDRW: " + drawCount; 
         }
         
         private function getMemory():Number
         {
             return System.totalMemory * 0.000000954; // 1 / (1024*1024) to convert to MB
-        }
-        
-        private function getFreeMemory():Number
-        {
-          return System.freeMemory * 0.000000954;
         }
         
         private function onEnterFrame(event:EnterFrameEvent):void
@@ -78,19 +69,13 @@ package starling.core
             
             if (mTotalTime > 1.0)
             {
-                updateText(mFrameCount / mTotalTime, getMemory(), getFreeMemory());
+                updateText(mFrameCount / mTotalTime, getMemory(), mDrawCount-2); // DRW: ignore self
                 mFrameCount = mTotalTime = 0;
             }
         }
         
-        public function get additionalStats():Object 
-        {
-            return mAdditionalStats;
-        }
-        
-        public function set additionalStats(value:Object):void 
-        {
-            mAdditionalStats = value;
-        }
+        /** The number of Stage3D draw calls per second. */
+        public function get drawCount():int { return mDrawCount; }
+        public function set drawCount(value:int):void { mDrawCount = value; }
     }
 }
