@@ -75,7 +75,6 @@ package Level
     private var _timer:Number = 0;
     protected var _snake:Snake;
     private var _speed:Number = 0.3;
-	protected var _startSpeed:Number;
     protected var _levelStage:Sprite;
     protected var _eggs:Eggs;
     private var _rottenEggs:Eggs.Eggs;
@@ -152,9 +151,9 @@ package Level
       addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
 
 	  if (SaveGame.difficulty == 1) {
-		_startSpeed = 7;  
+		SaveGame.startSpeed = 7;  
 	  } else {
-		_startSpeed = 10;
+		SaveGame.startSpeed = 10;
 	  }
       // Initialize and fill the TextField pool
       _textFieldPool = new Vector.<TextField>;
@@ -171,7 +170,7 @@ package Level
             
       _currentCombos = null;
      
-      _speed = 1 / _startSpeed;
+      _speed = 1 / SaveGame.startSpeed;
       
       this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
       
@@ -195,7 +194,7 @@ package Level
       addObstacles();
       addSpawnMap();
       setBoundaries();
-	  _snake = new Snake(_startSpeed);
+	  _snake = new Snake(SaveGame.startSpeed);
 	  
       _following = _snake.head;
       _levelStage.addChild(_snake);
@@ -394,7 +393,7 @@ package Level
     protected function die():void
     {
       _snake.lives--;
-      _snake.mps = _startSpeed;
+      _snake.mps = SaveGame.startSpeed;
       if (_snake.lives < 0)
       {
         return;

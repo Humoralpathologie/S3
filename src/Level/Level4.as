@@ -126,7 +126,7 @@ package Level
     } 
     
     override protected function checkWin():void {
-      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= _startSpeed + _winCondition) {
+      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= SaveGame.startSpeed + _winCondition) {
         win();
       }
     }

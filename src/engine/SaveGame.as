@@ -59,7 +59,11 @@ package engine {
     }
     
     public static function set startSpeed(value:int):void {
-      _sharedObject.data.startSpeed = value;
+	  if (difficulty == 2){
+        _sharedObject.data.startSpeed = 10;
+	  } else {
+	    _sharedObject.data.startSpeed = 7;
+	  }
     }    
   
     public static function initializeData():void {
