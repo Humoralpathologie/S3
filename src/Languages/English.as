@@ -13,6 +13,19 @@ package Languages
     public static const STORY:String = "Story";
 	public static const EXTRAS:String = "Extras";
     
+	// Settings Menu
+	public static const MAINSETTINGS:String = "Main Settings";
+	public static const USERNAME:String = "User Name";
+	public static const CONTROLTYPE:String = "Control Type";
+	public static const LANGUAGE:String = "Language";
+	public static const DIFFICULTY:String = "Level Difficulty";
+	
+	public static const SNAKEVIEW:String = "Snake View";
+	public static const FOURWAY:String = "4-Way";
+	public static const CASUAL:String = "Casual";
+	public static const COMPETETIVE:String = "Competetive";
+	
+	
     // Combo Menu
     public static const PLAY:String = "Play";
    
