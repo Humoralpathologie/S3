@@ -82,6 +82,7 @@ package Level
       startAt(_startPos.x, _startPos.y);
       AssetRegistry.soundmanager.playMusic("arcadeMusic");
       _levelNr = 9;
+      unpause();
     }
     
     override protected function setBoundaries():void {
