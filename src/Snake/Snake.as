@@ -4,6 +4,7 @@ package Snake
   import flash.geom.Point;
   import starling.animation.Tween;
   import starling.display.DisplayObject;
+  import starling.display.Image;
   import starling.display.MovieClip;
   import starling.display.QuadBatch;
   import starling.display.Sprite;
@@ -89,9 +90,13 @@ package Snake
     {    
       super.render(support, parentAlpha);
       _bodyBatch.reset();
+      var img:Image;
       for (var i:int = 0; i < _body.length; i++)
       {        
-        _bodyBatch.addImage(_body[i].img);
+        img = _body[i].img;
+        if (img.visible) {          
+          _bodyBatch.addImage(img);
+        }
       }
       _bodyBatch.renderCustom(support.mvpMatrix,1.0, "normal");
     }
