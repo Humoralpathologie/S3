@@ -35,6 +35,17 @@ package engine {
 	  return _sharedObject.data.difficulty;
 	}
 	
+	public static function set arcadeModi(value:Boolean):void {
+	  _sharedObject.data.arcadeModi = value;
+	}
+	
+	public static function get arcadeModi():Boolean {
+	  if (!_sharedObject.data.arcadeModi) {
+		_sharedObject.data.arcadeModi = false;
+	  }
+	  return _sharedObject.data.arcadeModi;
+	}
+	
 	public static function set language(value:int):void {
 	  _sharedObject.data.language = value;
 	}

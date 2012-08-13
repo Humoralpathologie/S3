@@ -34,6 +34,8 @@ package Level
   import com.gskinner.motion.easing.Exponential
   import UI.Radar;
   import engine.SaveGame;
+  import engine.StageManager;
+  import Menu.LevelScore;
   
   /**
    * ...
@@ -46,12 +48,23 @@ package Level
       _rottenEnabled = true;
       
       var combos:Array = AssetRegistry.COMBO_TRIGGERS;
-      
+	
+	  SaveGame.difficulty = 2;
       super();
       
       _comboSet.addCombo(new Combo.NoRottenCombo);
-      _comboSet.addCombo(new Combo.ExtraTimeCombo);
+	  //_comboSet.addCombo(new Combo.ExtraTimeCombo);
+	  //trace("ArcadeMode: " + String(SaveGame.arcadeModi));
+	  
+	  
+	  if (SaveGame.arcadeModi == false) {
+		_comboSet.addCombo(new Combo.SlowerCombo);
+	  } else {
+		_comboSet.addCombo(new Combo.ExtraTimeCombo);
+	  }
+    
       
+	  
       for (var i:int = 0; i < 4; i++) {
         if (SaveGame.specials[i]) {
           switch(SaveGame.specials[i].effect) {
@@ -82,6 +95,9 @@ package Level
       startAt(_startPos.x, _startPos.y);
       AssetRegistry.soundmanager.playMusic("arcadeMusic");
       _levelNr = 9;
+	  
+	  unpause();
+	  
     }
     
     override protected function setBoundaries():void {
@@ -120,24 +136,47 @@ package Level
     }
     
     override protected function checkWin():void {
-      if (_timeLeft <= 0) {
+      if (_timeLeft <= 0 && SaveGame.arcadeModi) {
         win();
       }
     }
-    
+	
+    override protected function onLoseHandler(event:TouchEvent):void {
+	  var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
+      if (touch)
+      {
+		if (SaveGame.arcadeModi){
+          var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true}
+        } else {
+		  var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: false}
+		}
+        AssetRegistry.soundmanager.fadeOutMusic();
+        StageManager.switchStage(LevelScore, score);
+      }
+	}
+	
     override protected function addHud():void {
-      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "poison"], this);
+	  if (SaveGame.arcadeModi){
+        _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "poison"], this);
+	  } else {
+	    _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "combo", "speed", "poison"], this);
+	  }
       addChild(_hud);
       _hud.poison.x = 108;
-      _hud.poison.y = 70;
-      _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;  
+      _hud.poison.y = 12;
+      _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;
+	  _hud.poisonTextField.y = _hud.poison.y;
     }    
     
     override protected function updateHud():void {
       _hud.radar.update(); 
       _hud.score = String(_score);
       _hud.lifesText = String(_snake.lives);
-      _hud.timeText = String(Math.max(0,_timeLeft).toFixed(2)); 
+	  if (SaveGame.arcadeModi){
+        _hud.timeText = String(Math.max(0, _timeLeft).toFixed(2)); 
+	  } else {
+		_hud.speedText = String(_snake.mps);
+	  }
       _hud.poisonText = String(_poisonEggs);
       _hud.comboText = String(_combos);
     }

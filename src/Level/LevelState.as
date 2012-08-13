@@ -104,7 +104,7 @@ package Level
     private var _evilText:Image;
     protected var _levelNr:int = 0;
     private var _won:Boolean = false;
-    private var _lost:Boolean = false;
+    protected var _lost:Boolean = false;
     protected var _obstacles:Object = {};
     protected var _tileWidth:int = 0;
     protected var _tileHeight:int = 0;
@@ -149,7 +149,8 @@ package Level
     {
       super();
       addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-
+	  trace("Language: " + String(SaveGame.language));
+	  trace(AssetRegistry.Strings);
 	  if (SaveGame.difficulty == 1) {
 		SaveGame.startSpeed = 7;  
 	  } else {

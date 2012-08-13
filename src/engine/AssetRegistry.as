@@ -312,12 +312,8 @@ package engine
       
       soundmanager = new SoundManager();
       
-	  if (SaveGame.language == 2){
-		//Strings = Deutsch;
-		Strings = English;
-	  } else {
-		Strings = English;
-	  }
+	  
+	  Strings = English;
       
       registerSounds();
       registerMusic();
