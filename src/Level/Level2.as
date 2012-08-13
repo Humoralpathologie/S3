@@ -10,14 +10,22 @@ package Level
   import Eggs.Egg;
   import UI.HUD;
   import UI.Radar;
+  import engine.SaveGame;
+
   
   public class Level2 extends LevelState
   {
+	private var _winCondition:int;
     public function Level2()
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       
       _levelNr = 2;
+	  if (SaveGame.difficulty == 1) {
+	    _winCondition = 7;
+	  } else {
+		_winCondition = 10;
+	  }
       super();
     }
     
@@ -51,7 +59,12 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("Little Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.\n\nObjective:\nDevour 10 Blue Egg Combos!!");
+	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	   if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL2A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL2B, [[_neededEggs, 50] ] );
+	  }
     }
     
     override public function dispose():void
@@ -61,7 +74,7 @@ package Level
     
     override protected function checkWin():void
     {
-      if (_combos == 10)
+      if (_combos == _winCondition)
       {
         win();
       }

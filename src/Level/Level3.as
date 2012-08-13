@@ -11,14 +11,24 @@ package Level
   import Eggs.Egg;
   import UI.HUD;
   import UI.Radar;
-  
+  import engine.SaveGame;
+
   public class Level3 extends LevelState 
   {
+	private var _winConditionA:int;
+	private var _winConditionB:int;
     public function Level3() 
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL3, AssetRegistry.SCORING]);
       _levelNr = 3;
       _rottenEnabled = true;
+	  if (SaveGame.difficulty == 1) {
+	    _winConditionA = 7;
+		_winConditionB = 4 * 60;
+	  } else {
+		_winConditionA = 10;
+		_winConditionB = 4 * 60;
+	  }
       super();
     }
     
@@ -65,14 +75,19 @@ package Level
     }
     
     override protected function checkWin():void {
-      if (_combos == 10 || _overallTimer >= 4 * 60) {
+      if (_combos == _winConditionA || _overallTimer >= _winConditionB) {
         win();
       }
     }
     
     override protected function showObjective():void
-    {     
-      showObjectiveBox("On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 4 minutes or by getting 10 combos. And eating more than 4 gray eggs will kill you from now on!!", 38);
+    {  
+	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL3A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL3B, [[_neededEggs, 50] ] );
+	  }
     }    
 
     override protected function addHud():void {

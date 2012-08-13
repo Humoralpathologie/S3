@@ -51,8 +51,11 @@ package Level
   import engine.SaveGame;
   import org.josht.starling.foxhole.controls.Screen;
   import org.josht.starling.foxhole.controls.ToggleSwitch;
+  import org.josht.starling.foxhole.controls.Button;
+  import org.josht.starling.foxhole.controls.Scroller;
+  import org.josht.starling.foxhole.controls.ScrollBar;
   import org.osflash.signals.ISignal;
-  import starling.display.Button;
+  //import starling.display.Button;
   import starling.display.Quad;
   import engine.AssetRegistry;
   import flash.events.Event;
@@ -130,8 +133,7 @@ package Level
     protected var _textLevel:Sprite;
     
     private var _updateTimer:Number;
-    
-    
+	
     // Pause Menu
     protected var _pauseMenu:ScreenNavigator;
     
@@ -148,7 +150,11 @@ package Level
       super();
       addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
 
-      
+	  if (SaveGame.difficulty == 1) {
+		SaveGame.startSpeed = 7;  
+	  } else {
+		SaveGame.startSpeed = 10;
+	  }
       // Initialize and fill the TextField pool
       _textFieldPool = new Vector.<TextField>;
       _textLevel = new Sprite;
@@ -163,7 +169,7 @@ package Level
       sfx = AssetRegistry.LevelMusic1Sound;
             
       _currentCombos = null;
-      
+     
       _speed = 1 / SaveGame.startSpeed;
       
       this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
@@ -188,8 +194,8 @@ package Level
       addObstacles();
       addSpawnMap();
       setBoundaries();
-      
-      _snake = new Snake(SaveGame.startSpeed);
+	  _snake = new Snake(SaveGame.startSpeed);
+	  
       _following = _snake.head;
       _levelStage.addChild(_snake);
       
@@ -250,7 +256,7 @@ package Level
     
     protected function showObjective():void
     {
-      unpause();
+	  
     }
     
     protected function addSpawnMap():void
@@ -614,7 +620,7 @@ package Level
       
     }
     
-    private function updateTimers(event:EnterFrameEvent):void
+    protected function updateTimers(event:EnterFrameEvent):void
     {
       var passedTime:Number = event.passedTime * Starling.juggler.timeFactor;
       _timer += passedTime;
@@ -1081,33 +1087,78 @@ package Level
       new GTween(null, 2, null, {paused: false, onComplete: registerTouchHandler});
     }
     
-    protected function showObjectiveBox(desc:String, fontSize:int = 50):void
+    protected function showObjectiveBox(desc:String, goals:Array, fontSize:int = 50):void
     {
+	  var _scrollable:Sprite = new Sprite();
+	  
       var box:Quad = new Quad(800, 600, 0);
       box.alpha = 0x44 / 0xff;
       box.x = (960 - box.width) / 2;
       box.y = (640 - box.height) / 2;
       addChild(box);
       
-      var text:TextField = new TextField(700, 500, "", "kroeger 06_65", fontSize, Color.WHITE);
-      text.text = desc;
+      var _goals:Sprite = new Sprite();
+	  
+      var xPos:int = box.x;
+      var yPos:int = box.y + 80;
+	  
+      for (var i:int = 0; i < goals.length; i++) {
+        var img:Image = goals[i][0];
+        var txt:TextField = new TextField(80, 50, goals[x][1], "kroeger 06_65", 45, Color.WHITE);
+        img.x = xPos;
+        img.y = yPos;
+		img.scaleX = img.scaleY = 3;
+		trace("goals.length = " + String(goals.length));
+		if (goals.length == 1) {
+		  img.x = (box.width - img.width) / 2 - 80;   
+	    }
+		txt.scaleX = txt.scaleY = 1.5;
+        txt.x = img.x + img.width + 10;
+		txt.y = img.y - 5;
+        xPos = txt.x + txt.width + 10;
+        _goals.addChild(img);
+        _goals.addChild(txt);
+      }	  
+      _goals.x = (box.x - _goals.x) / 2;
+      _scrollable.addChild(_goals);
       
-      addChild(text);
-      text.x = (960 - text.width) / 2;
-      text.y = (640 - text.height) / 2;
-      text.touchable = false;
+      var _scroller:Scroller = new Scroller();
+      _scroller.setSize(box.width, box.height - 100);
+      _scroller.x = box.x;
+      _scroller.y = box.y;
+      _scroller.viewPort = _scrollable;
+      
+      addChild(_scroller);
+	  
+      var text:TextField = new TextField(700, 800, "", "kroeger 06_65", fontSize, Color.WHITE);
+      text.text = desc;	  
+	  text.x = (box.width - text.width) / 2;
+	  text.y = box.y + 50; 
+	  
+	  _scrollable.addChild(text);
+      
+      _scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
+	  
+      //text.touchable = false;
       var that = this;
       
-      box.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
-        {
-          var touch:Touch = event.getTouch(box, TouchPhase.ENDED);
-          if (touch)
-          {
-            removeChild(box);
-            removeChild(text);
-            unpause();
-          }
-        });
+	  var _goButton:Button = new Button();
+	  _goButton.label = "GO!";
+	  _goButton.width = 800;
+	  _goButton.height = 80;
+	  _goButton.x = (Starling.current.stage.stageWidth - 800) / 2;
+	  _goButton.y = Starling.current.stage.stageHeight - 80;
+	 
+	  var that:LevelState = this;
+	  addChild(_goButton);
+	  _goButton.onRelease.add(function(button:Button) {
+		that.removeChild(_goButton);
+		that.removeChild(box);
+		that.removeChild(_scrollable);
+		that.removeChild(_scroller);
+		unpause();
+      });
+	  
     }
     
     protected function startAt(x:int, y:int):void

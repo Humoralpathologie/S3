@@ -54,7 +54,7 @@ package Menu.ComboMenuScreens
       
       addChild(_scroller);
       
-      var that = this;
+      var that:ComboSelect = this;
             
       var time:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-leveluptime"));
       time.x = 40;
@@ -161,7 +161,6 @@ package Menu.ComboMenuScreens
       _scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
       
     }
-   
     
     public function get onMainComboMenu():Signal 
     {

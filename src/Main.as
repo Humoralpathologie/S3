@@ -9,10 +9,6 @@ package
   import flash.display.StageAlign;
   import flash.display.StageScaleMode;
   import flash.geom.Rectangle;
-  import flash.media.StageVideo;
-  import flash.media.Video;
-  import flash.net.NetConnection;
-  import flash.net.NetStream;
   import flash.ui.Multitouch;
   import flash.ui.MultitouchInputMode;
   import Level.LevelState;
@@ -25,6 +21,7 @@ package
   //import com.demonsters.debugger.MonsterDebugger;
   import flash.system.Capabilities;
   import org.josht.starling.foxhole.themes.MinimalTheme;
+  
   
   /**
    * ...
@@ -70,28 +67,23 @@ package
         starling.stage.stageHeight = 640;
         starling.stage.stageWidth = 960;
         AssetRegistry.SCALE = 1;
-      }
-      else
-      {
+      } else {
         var wwidth:int;
         var hheight:int;
         
-        if (AssetRegistry.ASPECT_RATIO < screenWidth / screenHeight)
-        {
+        if (AssetRegistry.ASPECT_RATIO < screenWidth / screenHeight) { 
           wwidth = int(screenHeight * (960 / 640));
           hheight = screenHeight;
-        }
-        else
-        {
+        } else {
           wwidth = screenWidth;
           hheight = int(screenWidth / (960 / 640));
         }
         
         AssetRegistry.SCALE = wwidth / 960;
-        
+
         var yy:int = (screenHeight - hheight) / 2;
         var xx:int = (screenWidth - wwidth) / 2;
-        starling = new starling.core.Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight));
+        starling = new  starling.core.Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight));
         starling.stage.stageHeight = 640;
         starling.stage.stageWidth = 960;
         
@@ -118,22 +110,21 @@ package
           _theme = new MinimalTheme(starling.stage, false);
           
         });
-      
+    
       // When the game becomes inactive, we pause Starling; otherwise, the enter frame event
       // would report a very long 'passedTime' when the app is reactivated. 
-      
-      NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, function(e:Event):void
-        {
-          starling.start();
-        });
-      
-      NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, function(e:Event):void
-        {
-          starling.stop();
-        });
+  /*  
+       NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, function(e:Event):void
+       {
+       starling.start();
+       });
     
+       NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, function(e:Event):void
+       {
+       starling.stop();
+     });
+  */
     }
-    
     private function deactivate(e:Event):void
     {
       // auto-close

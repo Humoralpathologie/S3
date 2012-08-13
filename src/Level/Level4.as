@@ -20,6 +20,7 @@ package Level
   public class Level4 extends LevelState 
   {
     private var _winningPositions:Array;
+	private var _winCondition:int;
     
     public function Level4() 
     {
@@ -27,7 +28,12 @@ package Level
       _levelNr = 4;
       _rottenEnabled = true;
       _winningPositions = [2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428];
-      
+      if (SaveGame.difficulty == 1) {
+	    _winCondition = 7;
+	  } else {
+		_winCondition = 6;
+	  }
+
       super();
       _startPos.x = 20;
       _startPos.y = 20;
@@ -73,7 +79,12 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snake's speed up to 7 and jump!");
+	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL4A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL4B, [[_neededEggs, 50] ] );
+	  }
     }    
     
     override protected function addHud():void {
@@ -115,7 +126,7 @@ package Level
     } 
     
     override protected function checkWin():void {
-      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= SaveGame.startSpeed + 6) {
+      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= SaveGame.startSpeed + _winCondition) {
         win();
       }
     }

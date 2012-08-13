@@ -16,16 +16,23 @@ package Level
   import starling.textures.TextureSmoothing;
   import UI.HUD;
   import UI.Radar;
+  import engine.SaveGame;
   import starling.utils.Color;
   
   public class Level1 extends LevelState
   {
+	private var _winCondition:int;
     public function Level1()
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       AssetRegistry.soundmanager.levelMusic();
       
       _levelNr = 1;
+	  if (SaveGame.difficulty == 1) {
+	    _winCondition = 30;
+	  } else {
+		_winCondition = 50;
+	  }
       super();
     }
     
@@ -44,7 +51,12 @@ package Level
     
     override protected function showObjective():void
     {     
-      showObjectiveBox("For Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 50 eggs & pay attention to the bonus scoring on your performance!!");
+      var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL1A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL1B, [[_neededEggs, 50] ] );
+	  }
     }
     
     override public function spawnRandomEgg():void {
@@ -67,7 +79,7 @@ package Level
     }
      
     override protected function checkWin():void {
-      if (_snake.eatenEggs == 50) {
+      if (_snake.eatenEggs == _winCondition) {
         win();
       }
     }

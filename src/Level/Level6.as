@@ -10,6 +10,8 @@ package Level
   import starling.textures.TextureSmoothing;
   import UI.HUD;
   import UI.Radar;
+  import engine.SaveGame;
+
   
   public class Level6 extends LevelState 
   {
@@ -34,7 +36,12 @@ package Level
  
     override protected function showObjective():void
     {     
-      showObjectiveBox("Terror Triceratops has hidden 4 eggs especially well. Maybe they contain his heirs. Little Snake cannot afford to pass on these eggs.\n\nObjective:\nEat the 4 special eggs. If you have a problem getting into the tight spots, perform () to slow down time.", 40);
+	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL6A, [[_neededEggs, 30] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL6B, [[_neededEggs, 50] ] );
+	  }
     }        
     
     override public function dispose():void {

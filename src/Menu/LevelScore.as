@@ -262,11 +262,6 @@ package Menu
       */
       
       _tweens.push(new GTween(this, 2, {_scoreCounter: _scores.score}, {ease: Exponential.easeOut, onComplete:triggerTime}));
-    /*
-       var tweenScore:GTween = new GTween(_scoreCounter, 2, {i: _score}, {ease: Exponential.easeOut});
-       var tweenLive:GTween = new GTween(_lifeBonusCounter, 2, {i: _liveBonus}, {ease: Exponential.easeOut});
-       var tweenTime:GTween = new GTween(_BCounter, 2, {i: _timeBonus}, {ease: Exponential.easeOut});
-     var tweenEXP:GTween = new GTween(_EXPCounter, 2, {i: _EXP}, {ease: Exponential.easeOut});  */
     }
     
     private function updateTexts(event:EnterFrameEvent):void

@@ -101,7 +101,7 @@ package Menu.ComboMenuScreens
         desc.scaleWhenDown = 1;
         */
         
-        var that = this;
+        var that:MainComboMenu = this;
         /*
         var f:Function = function(desc:Button):void
         {
@@ -164,7 +164,7 @@ package Menu.ComboMenuScreens
     
     protected function buttonSelector(slot:int):Function
     {
-      var that = this;
+      var that:MainComboMenu = this;
       
       return function(event:Event):void
       {
