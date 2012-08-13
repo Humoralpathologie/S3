@@ -609,6 +609,9 @@ package Level
         _bonusTimer = 0;
         
       }
+      
+       AssetRegistry.soundmanager.level = Math.floor(_snake.eatenEggs / 10);
+      
     }
     
     private function updateTimers(event:EnterFrameEvent):void

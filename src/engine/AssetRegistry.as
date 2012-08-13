@@ -161,10 +161,13 @@ package engine
     static private const LevelMusic1:Class;
     [Embed(source="../../assets/Music/LevelMusikStufe2.mp3")]
     static private const LevelMusic2:Class;
+    [Embed(source="../../assets/Music/LevelMusikStufe3.mp3")]
+    static private const LevelMusic3:Class;
+    [Embed(source="../../assets/Music/LevelMusikStufe4.mp3")]
+    static private const LevelMusic4:Class;    
     [Embed(source="../../assets/Music/eile_arcade1.mp3")]
     static public const ArcadeMusic:Class;
    
-    
     // Sounds
     [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt1.mp3")]
     static private const ComboSound0:Class;
@@ -182,9 +185,6 @@ package engine
     static private const ComboSound6:Class;
     [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt8.mp3")]
     static private const ComboSound7:Class;
-  
-    
-    
     
     // Particles
     [Embed(source="../../assets/Particles/EggsplosionA.pex",mimeType="application/octet-stream")]
@@ -251,7 +251,9 @@ package engine
     
     public static var LevelMusic1Sound:Sound;
     public static var LevelMusic2Sound:Sound;
-    
+    public static var LevelMusic3Sound:Sound;
+    public static var LevelMusic4Sound:Sound;
+   
     public static const TILESIZE:int = 15;
     
     public static const DOWN:int = 0;
@@ -309,6 +311,8 @@ package engine
       
       LevelMusic1Sound = new LevelMusic1;
       LevelMusic2Sound = new LevelMusic2;
+      LevelMusic3Sound = new LevelMusic3;
+      LevelMusic4Sound = new LevelMusic4;
       
       soundmanager = new SoundManager();
       

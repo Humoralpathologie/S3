@@ -23,6 +23,8 @@ package Level
     public function Level1()
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
+      AssetRegistry.soundmanager.levelMusic();
+      
       _levelNr = 1;
       super();
     }
