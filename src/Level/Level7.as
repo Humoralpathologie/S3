@@ -90,7 +90,7 @@ package Level
       if (_poisonEggs > 4) {
         lose();
       }
-	  if (int(_timeLimit) == 10) {
+	  if (int(_timeLimit) >= 10) {
 		die();
 	  }
       super.checkLost();

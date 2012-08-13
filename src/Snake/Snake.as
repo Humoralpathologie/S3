@@ -106,6 +106,13 @@ package Snake
       this.mps += 1;
     }
     
+	public function slower():void
+	{
+	  if (this.mps >= 2){
+        this.mps -= 1;
+	  }
+	}
+	
     public function eat(eggType:int):void
     {
       _eatenEggs++;

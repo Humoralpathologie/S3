@@ -2,6 +2,7 @@ package Menu.ComboMenuScreens
 {
   import org.josht.starling.display.Image;
   import org.josht.starling.foxhole.controls.Screen;
+  import org.josht.starling.foxhole.controls.ToggleSwitch;
   import org.osflash.signals.Signal;
   import starling.display.Button;
   import engine.AssetRegistry;
@@ -13,6 +14,7 @@ package Menu.ComboMenuScreens
   import engine.StageManager;
   import Level.ArcadeState;
   import engine.SaveGame;
+  import starling.text.TextField;
   
   /**
    * ...
@@ -24,6 +26,8 @@ package Menu.ComboMenuScreens
     protected var _onComboSelect:Signal = new Signal(MainComboMenu);
     protected var _sharedData:Object = { };
     protected var _greybox:Quad;
+	protected var _arcadeModiHeading:TextField;
+	protected var _arcadeModiToggleSwitch:ToggleSwitch;
     
     public function MainComboMenu()
     {
@@ -45,6 +49,7 @@ package Menu.ComboMenuScreens
       addButtons();
       addNormalCombos();
       addInfo();
+	  addToggle();
     }
     
     private function addInfo():void {
@@ -66,7 +71,25 @@ package Menu.ComboMenuScreens
       });
       */
     }
-    
+	
+    private function addToggle():void {
+      _arcadeModiHeading = new TextField(_greybox.width, 50, "4 Mins / Endless", "kroeger 06_65", 40, Color.WHITE);
+      _arcadeModiHeading.x = (Starling.current.stage.stageWidth - _arcadeModiHeading.width) / 2;
+      _arcadeModiHeading.y = _greybox.y + 20;
+      addChild(_arcadeModiHeading);
+      
+      _arcadeModiToggleSwitch = new ToggleSwitch();
+      _arcadeModiToggleSwitch.isSelected = SaveGame.arcadeModi;
+      _arcadeModiToggleSwitch.x = Starling.current.stage.stageWidth / 2;
+      _arcadeModiToggleSwitch.y = _arcadeModiHeading.y + _arcadeModiHeading.height;
+      
+      _arcadeModiToggleSwitch.onChange.add(function(tswitch:ToggleSwitch):void {
+        SaveGame.arcadeModi = tswitch.isSelected;
+      });
+      
+      addChild(_arcadeModiToggleSwitch);
+    }
+	
     private function addSwitchers():void
     {
       //var play:Button = new Button(AssetRegistry.MenuAtlas.getTexture("text_play"));

@@ -21,6 +21,8 @@ package Menu.SettingsScreens
   import org.josht.starling.foxhole.controls.Radio;
   import org.josht.starling.foxhole.core.ToggleGroup;
   import starling.text.TextField;
+  import Languages.*;
+  import Menu.MainMenu;
   
   /**
    * ...
@@ -200,6 +202,8 @@ package Menu.SettingsScreens
       eng.toggleGroup = langGroup;
       eng.onPress.add(function(radio:Radio):void {
         SaveGame.language = 1;
+		AssetRegistry.Strings = English;
+		StageManager.switchStage(MainMenu);
       });
       
       var ger:Radio = new Radio;
@@ -207,6 +211,9 @@ package Menu.SettingsScreens
       ger.toggleGroup = langGroup;
       ger.onPress.add(function(radio:Radio):void {
         SaveGame.language = 2;
+		AssetRegistry.Strings = Deutsch;
+		StageManager.switchStage(MainMenu);
+
       });
       
       langGroup.selectedIndex = SaveGame.language - 1;
