@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:10fbde891bb7d6fdc0000f9443200782$ -->
+<!-- $TexturePacker:SmartUpdate:a3aa4925c9e7531ec04f6de90e700cd8$ -->
 <TextureAtlas imagePath="MenuOpaque.png">
     <SubTexture name="arcade-background_iphone4" x="2" y="644" width="960" height="640"/>
     <SubTexture name="combo-chaintime" x="2" y="1826" width="88" height="88"/>
@@ -19,6 +19,7 @@
     <SubTexture name="combo_bcaac" x="1926" y="126" width="100" height="60"/>
     <SubTexture name="combo_bccb" x="1926" y="64" width="100" height="60"/>
     <SubTexture name="combo_ccbba" x="1926" y="2" width="100" height="60"/>
+    <SubTexture name="facebook-login" x="2" y="1916" width="154" height="22"/>
     <SubTexture name="loading" x="964" y="2" width="960" height="640"/>
     <SubTexture name="menu_iphone_background" x="2" y="2" width="960" height="640"/>
 </TextureAtlas>
