@@ -63,7 +63,7 @@ package Menu.SettingsScreens
       _scroller.viewPort = _scrollable;
 	  addChild(_scroller);
 	  
-      _heading = new TextField(_greyBox.width, 50, "Main Settings", "kroeger 06_65", 50, Color.WHITE);
+      _heading = new TextField(_greyBox.width, 50, AssetRegistry.Strings.MAINSETTINGS, "kroeger 06_65", 50, Color.WHITE);
       _heading.x = (_greyBox.width - _heading.width) / 2;
       _scrollable.addChild(_heading);
 	  
@@ -99,9 +99,9 @@ package Menu.SettingsScreens
     }
     
     private function addUserName():void {
-      _nameHeading = new TextField(_greyBox.width / 2, 50, "User Name", "kroeger 06_65", 40, Color.WHITE);
+      _nameHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.USERNAME, "kroeger 06_65", 40, Color.WHITE);
       _nameHeading.x = (_greyBox.width - _nameHeading.width) / 2;
-      _nameHeading.y = _langHeading.y + _langHeading.height + 50;
+      _nameHeading.y = _langHeading.y + _langHeading.height + 80;
       
       _scrollable.addChild(_nameHeading);
      
@@ -111,6 +111,7 @@ package Menu.SettingsScreens
       _nameInput.x = _nameHeading.x;
       _nameInput.y = _nameHeading.y + _nameHeading.height;
       _nameInput.width = _nameHeading.width - 30;
+	  _nameInput.height = 80;
       
       _nameInput.onChange.add(function(input:TextInput):void {
         SaveGame.userName = input.text;
@@ -122,21 +123,21 @@ package Menu.SettingsScreens
     
     private function addControlSwitches():void {
       
-      _controlsHeading = new TextField(_greyBox.width / 2, 50, "Control Type", "kroeger 06_65", 40, Color.WHITE);
+      _controlsHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.CONTROLTYPE, "kroeger 06_65", 40, Color.WHITE);
       _controlsHeading.x = (_greyBox.width - _controlsHeading.width) / 2;
       _controlsHeading.y = _heading.y + _heading.height + 20;
       _scrollable.addChild(_controlsHeading);
       
       var controlGroup:ToggleGroup = new ToggleGroup;
       var boyStyle:Radio = new Radio();
-      boyStyle.label = "Snake View";
+      boyStyle.label = AssetRegistry.Strings.SNAKEVIEW;
       boyStyle.toggleGroup = controlGroup;
       boyStyle.onPress.add(function(radio:Radio):void {
         SaveGame.controlType = 1;
       });
       
       var fourway:Radio = new Radio;
-      fourway.label = "4-Way";
+      fourway.label = AssetRegistry.Strings.FOURWAY;
       fourway.toggleGroup = controlGroup;
       fourway.onPress.add(function(radio:Radio):void {
         SaveGame.controlType = 2;
@@ -156,21 +157,21 @@ package Menu.SettingsScreens
     }
     private function addDifficultySwitches():void {
       
-      _diffHeading = new TextField(_greyBox.width / 2, 50, "Level Difficulty", "kroeger 06_65", 40, Color.WHITE);
+      _diffHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.DIFFICULTY, "kroeger 06_65", 40, Color.WHITE);
       _diffHeading.x = (_greyBox.width - _diffHeading.width) / 2;
-      _diffHeading.y = _controlsHeading.y + _controlsHeading.height + 50;
+      _diffHeading.y = _controlsHeading.y + _controlsHeading.height + 80;
       _scrollable.addChild(_diffHeading);
       
       var diffGroup:ToggleGroup = new ToggleGroup;
       var casual:Radio = new Radio();
-      casual.label = "Casual";
+      casual.label = AssetRegistry.Strings.CASUAL;
       casual.toggleGroup = diffGroup;
       casual.onPress.add(function(radio:Radio):void {
         SaveGame.difficulty = 1;
       });
       
       var competetive:Radio = new Radio;
-      competetive.label = "Competetive";
+      competetive.label = AssetRegistry.Strings.COMPETETIVE;
       competetive.toggleGroup = diffGroup;
       competetive.onPress.add(function(radio:Radio):void {
         SaveGame.difficulty = 2;
@@ -191,9 +192,9 @@ package Menu.SettingsScreens
 	
 	private function addLanguageSwitches():void {
       
-      _langHeading = new TextField(_greyBox.width / 2, 50, "Language", "kroeger 06_65", 40, Color.WHITE);
+      _langHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.LANGUAGE, "kroeger 06_65", 40, Color.WHITE);
       _langHeading.x = (_greyBox.width - _langHeading.width) / 2;
-      _langHeading.y = _diffHeading.y + _diffHeading.height + 50;
+      _langHeading.y = _diffHeading.y + _diffHeading.height + 80;
       _scrollable.addChild(_langHeading);
       
       var langGroup:ToggleGroup = new ToggleGroup;

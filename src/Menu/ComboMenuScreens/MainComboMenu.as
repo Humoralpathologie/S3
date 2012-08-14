@@ -73,15 +73,21 @@ package Menu.ComboMenuScreens
     }
 	
     private function addToggle():void {
-      _arcadeModiHeading = new TextField(_greybox.width, 50, "4 Mins / Endless", "kroeger 06_65", 40, Color.WHITE);
+	 /*
+      _arcadeModiHeading = new TextField(_greybox.width, 50, "Arcade Mode", "kroeger 06_65", 40, Color.WHITE);
       _arcadeModiHeading.x = (Starling.current.stage.stageWidth - _arcadeModiHeading.width) / 2;
       _arcadeModiHeading.y = _greybox.y + 20;
-      addChild(_arcadeModiHeading);
+      addChild(_arcadeModiHeading);*/
       
       _arcadeModiToggleSwitch = new ToggleSwitch();
+	  _arcadeModiToggleSwitch.width = 400;
+	  
+	  _arcadeModiToggleSwitch.offText = "Endless Mode";
+	  _arcadeModiToggleSwitch.onText = "4 Minute-Mode";
+	  //_arcadeModiToggleSwitch.offLabelProperties = 
       _arcadeModiToggleSwitch.isSelected = SaveGame.arcadeModi;
-      _arcadeModiToggleSwitch.x = Starling.current.stage.stageWidth / 2;
-      _arcadeModiToggleSwitch.y = _arcadeModiHeading.y + _arcadeModiHeading.height;
+      _arcadeModiToggleSwitch.x = (Starling.current.stage.stageWidth - _arcadeModiToggleSwitch.width) / 2;
+      _arcadeModiToggleSwitch.y = _greybox.y + 20;
       
       _arcadeModiToggleSwitch.onChange.add(function(tswitch:ToggleSwitch):void {
         SaveGame.arcadeModi = tswitch.isSelected;
