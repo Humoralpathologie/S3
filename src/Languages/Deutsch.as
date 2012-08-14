@@ -25,6 +25,11 @@ package Languages
 	public static const CASUAL:String = "Gemuetlich";
 	public static const COMPETETIVE:String = "Stressig";
     
+	//Arcade Menu
+	public static const ARCADEHEADING:String = "Arcade Modus";
+	public static const OFFLABEL:String = "Endlos Modus";
+	public static const ONLABEL:String = "4 Minuten";
+	
     // Combo Menu
     public static const PLAY:String = "Play";
    
