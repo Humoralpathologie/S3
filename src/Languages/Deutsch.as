@@ -42,7 +42,12 @@ package Languages
     public static const SHUFFLEDESC:String = "Shuffle Egg: Performing this combo will spawn a Shuffle Egg. Devouring it will rearrange Little Snake's body tiles and give you the chance to score new combos.";
     public static const GOLDDESC:String = "Golden Egg: This combo will spawn a shiny, golden egg for 6 seconds. Or are you afraid of the big points?";
     public static const XTRALIFEDESC:String = "Extra Life: This combo propably will do exactly what you think it will.";
-	
+	//pause menu
+	public static const PAUSE:String = "PAUSE";
+	public static const BACK:String = "HAUPTMENUE";
+	public static const RESTART:String = "NEUSTART";
+	public static const SFX:String = "SFX";
+	public static const MUSIC:String = "MUSIK";
 	//Level objectives
 	public static const LEVEL1A:String = "TestFor Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 30 eggs & pay attention to the bonus scoring on your performance!!";
 	public static const LEVEL1B:String = "TestFor Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 50 eggs & pay attention to the bonus scoring on your performance!!";
