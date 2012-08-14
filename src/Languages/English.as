@@ -29,6 +29,9 @@ package Languages
 	public static const ARCADEHEADING:String = "Arcade Mode";
 	public static const OFFLABEL:String = "Endless Mode";
 	public static const ONLABEL:String = "4 Minute-Mode";
+	
+	//Arcade Info
+	public static const ARCADEINFO:String = "Blablabla Test!!!";
     // Combo Menu
     public static const PLAY:String = "Play";
    

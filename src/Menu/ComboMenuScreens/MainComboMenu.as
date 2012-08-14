@@ -54,28 +54,50 @@ package Menu.ComboMenuScreens
       addSwitchers();
       addButtons();
       addNormalCombos();
-      addInfo();
 	  addToggle();
+      addInfo();
     }
-    
+	
     private function addInfo():void {
       var question:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("info-button"));
       question.x = 860;
       question.y = 30;
       addChild(question);
-      
-      /*var infoDisplay:Button = new Button(AssetRegistry.MenuAtlas.getTexture("info-arcade"));
-      infoDisplay.x = (Starling.current.stage.stageWidth - infoDisplay.width) / 2;
-      infoDisplay.y = (Starling.current.stage.stageHeight - infoDisplay.height) / 2;
-      
-      question.addEventListener(Event.TRIGGERED, function(event:Event) {
+      var xButton:Button = new Button( AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+	  xButton.x = 860;
+	  xButton.y = 30;
+	  
+      var infoDisplay:Quad = new Quad(710, 450, Color.BLACK);
+      infoDisplay.x = 65 + 60;
+      infoDisplay.y = 40 + 30;
+	  infoDisplay.alpha = 0.5;
+
+	  var text:TextField = new TextField(infoDisplay.width, infoDisplay.height, AssetRegistry.Strings.ARCADEINFO, "kroeger 06_65", 40, Color.WHITE);
+      text.x = infoDisplay.x;
+	  text.y = infoDisplay.y;
+	  
+	  if (!SaveGame.secondArcade) {
+		  addChild(infoDisplay);
+		  addChild(text);
+		  removeChild(question);
+		  addChild(xButton);
+		  SaveGame.secondArcade = true;
+	  }
+	  
+	  question.addEventListener(Event.TRIGGERED, function(event:Event) {
         addChild(infoDisplay);
+		addChild(text);
+		addChild(xButton);
+		removeChild(question);
       });
       
-      infoDisplay.addEventListener(Event.TRIGGERED, function(event:Event) {
+      xButton.addEventListener(Event.TRIGGERED, function(event:Event) {
         removeChild(infoDisplay);
+		addChild(question);
+		removeChild(text);
+		removeChild(xButton);
       });
-      */
+      
     }
 	
     private function addToggle():void {

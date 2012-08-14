@@ -30,6 +30,8 @@ package Languages
 	public static const OFFLABEL:String = "Endlos Modus";
 	public static const ONLABEL:String = "4 Minuten";
 	
+	//Arcade Info
+	public static const ARCADEINFO:String = "Auf Deutsch Blablabla Test!!!";
     // Combo Menu
     public static const PLAY:String = "Play";
    
