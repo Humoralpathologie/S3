@@ -90,7 +90,6 @@ package Menu
       
       // No negative scores;
       
-      // _EXP = Math.max(_EXP, 0);
       _timeBonus = Math.max(_timeBonus, 0);
       
       _scores.total += (_timeBonus * 5);
@@ -102,7 +101,6 @@ package Menu
 	  createScoreBoard();
 	  addButtons();
 	  _boards.showScreen(SCORE);
-      //startScoring();
       //updateLeaderboard();
     }
 	
@@ -127,11 +125,6 @@ package Menu
             break;
       }
       
-      /*
-      if(_scores.snake){
-        _EXP = _scores.snake.eatenEggs - (_scores.snake.body.length - 4);
-      }
-      */
     }
 
 	private function createScoreBoard():void {
