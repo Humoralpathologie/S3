@@ -895,9 +895,10 @@ package Level
           updateTimers(event);
 		  trace("overallTimer: " + String(int(_overallTimer)));
 		  trace("extensionTime: " + String(int(_extensionTime)));
-		  if (int(_overallTimer) == _extensionTime) {
+		  if ((int(_overallTimer) > 0) && (int(_overallTimer) == _extensionTime)) {
 		    _chainTime = 2.5;
 			_extensionTime = 0;
+			showMessage("Chaintime extension extended!");
 		  }
         }
         
