@@ -22,6 +22,10 @@ package Menu
   import flash.net.*;
   import JSON;
   import starling.utils.VAlign;
+  import org.josht.starling.foxhole.transitions.ScreenFadeTransitionManager;
+  import org.josht.starling.foxhole.controls.ScreenNavigator;
+  import org.josht.starling.foxhole.controls.ScreenNavigatorItem;
+
   
   
   /**
@@ -34,9 +38,9 @@ package Menu
     private var _bg:Image;
     private var _scoreboard:Quad;
     private var _leaderboard:Quad;
-    private var _replayButton:Button;
-    private var _nextLevelButton:Button;
-    private var _backToMenuButton:Button;
+    private var _replayButton:starling.display.Button;
+    private var _nextLevelButton:starling.display.Button;
+    private var _backToMenuButton:starling.display.Button;
 
     private var _scorePic:Image;
     private var _scoreText:TextField;
@@ -50,13 +54,7 @@ package Menu
     private var _lifeBonusPic:Image;
     private var _lifeBonusText:TextField;
     public var _lifeBonusCounter:int = 0;
-   
-    /*
-    private var _EXP:int = 0;
-    private var _EXPText:TextField;
-    public var _EXPCounter:int = 0;
-    */
-
+  
     private var _totalText:TextField;
     public var _totalCounter:int = 0;
 
@@ -72,12 +70,17 @@ package Menu
     private var _lifeBonusHeading:TextField;
     private var _totalHeading:TextField;
     
+	private var _boards:ScreenNavigator;
+	private static const SCORE:String = "Score";
+    private static const LEADERBOARD:String = "Leaderboard";
+	
     public function LevelScore(scores:Object = null)
     {
       AssetRegistry.loadGraphics([AssetRegistry.SCORING, AssetRegistry.SNAKE, AssetRegistry.MENU]);
       
-      _tweens = new Vector.<GTween>;
+      
       _scores = scores;
+	  
       if (_scores == null)
       {
         _scores = {score: 1000, lives: 3, time: 30, level: 1}
@@ -94,10 +97,15 @@ package Menu
       if(!_scores.lost) {
         SaveGame.saveScore(_scores.level, _scores.total);
       }
-      buildMenu();
-      startScoring();
-      updateLeaderboard();
+	    
+	  addBackground();
+	  createScoreBoard();
+	  addButtons();
+	  _boards.showScreen(SCORE);
+      //startScoring();
+      //updateLeaderboard();
     }
+	
     private function calculateTime():void
     {
       
@@ -126,6 +134,17 @@ package Menu
       */
     }
 
+	private function createScoreBoard():void {
+      trace(_scores);
+      _boards = new ScreenNavigator();
+      var trans:ScreenFadeTransitionManager = new ScreenFadeTransitionManager(_boards);
+      _boards.addScreen(SCORE, new ScreenNavigatorItem(new ScoreBoard(), null, { scores: this._scores} ));
+      _boards.defaultScreenID = SCORE;
+      addChild(_boards);
+      
+    }
+    
+	/*
     private function updateLeaderboard():void
     {
       var url:String = "https://www.scoreoid.com/api/getBestScores";
@@ -182,14 +201,8 @@ package Menu
       
       urlLoader.load(request);
     }
-    
-    private function buildMenu():void
-    {
-      addBackground();
-      addBoards();
-      addTexts();
-      addButtons();
-    }
+	
+	
     
     private function medal(tween:GTween):void
     {
@@ -205,7 +218,7 @@ package Menu
           _medalSmall.y = 0;
           self.addChild(_medalSmall);
           _medalTween.target = _medalSmall;
-          _medalTween.setValues( { x: 320, y: 370 } );
+          _medalTween.setValues( { x: 755, y: 370 } );
           _medalTween.onComplete = null;
           //_medalTween.autoPlay = false;   
       }
@@ -255,11 +268,7 @@ package Menu
       var triggerTotal:Function = function(tween:GTween):void{
         _tweens.push(new GTween(self, 2, {_totalCounter: _scores.total}, {ease: Exponential.easeOut, onComplete:medal}));
       }
-      /*
-      var triggerEXP:Function = function(tween:GTween):void{
-        _tweens.push(new GTween(self, 2, {_EXPCounter: _EXP}, {ease: Exponential.easeOut, onComplete:medal}));
-      }
-      */
+     
       
       _tweens.push(new GTween(this, 2, {_scoreCounter: _scores.score}, {ease: Exponential.easeOut, onComplete:triggerTime}));
     }
@@ -298,21 +307,13 @@ package Menu
       _totalText.x = _lifeBonusText.x;
       _totalText.y = _totalHeading.y;
 
-      /*
-      _EXPText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
-      _EXPText.hAlign = HAlign.LEFT;
-      _EXPText.x = _lifeBonusPic.x + 90;
-      _EXPText.y = _lifeBonusText.y + 145;
-      */
 
       addChild(_lifeBonusText);
       addChild(_scoreText);
       addChild(_timeBonusText);
       addChild(_totalText);
-      /*
-      addChild(_EXPText);
-      */
-    }
+     
+    } */
     
     private function replay():void
     {
@@ -329,6 +330,7 @@ package Menu
       StageManager.switchStage(MainMenu);
     }
     
+	
     private function addButtons():void
     {
       _replayButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo"));
@@ -365,10 +367,11 @@ package Menu
       addChild(_bg);
     }
     
+	/*
     private function addBoards():void
     {
       
-      _scoreboard = new Quad(375, 475, 0x545454);
+      _scoreboard = new Quad(820, 475, 0x545454);
       _scoreboard.alpha = 179 / 255;
       _scoreboard.x = 70;
       _scoreboard.y = 30;
@@ -423,31 +426,12 @@ package Menu
       _totalHeading.hAlign = HAlign.LEFT;
       addChild(_totalHeading);
       
-      /*
-      _scorePic = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
-      _scorePic.x = _scoreboard.x + 20;
-      _scorePic.y = _scoreboard.y + 80;
       
-      _timeBonusPic = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
-      _timeBonusPic.x = _scorePic.x;
-      _timeBonusPic.y = _scorePic.y + _scorePic.height + 20;
-      
-      _lifeBonusPic = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
-      _lifeBonusPic.x = _timeBonusPic.x;
-      _lifeBonusPic.y = _timeBonusPic.y + _timeBonusPic.height + 20;
-      */
-      
-
-     /* 
-      addChild(_scorePic);
-      addChild(_timeBonusPic);
-      addChild(_lifeBonusPic);
-      */
-      
-    }
+    } */
     
     override public function dispose():void
-    {
+    { 
+	 /*
       for each(var tween:GTween in _tweens) {
         tween.end();
       }
@@ -483,7 +467,8 @@ package Menu
       _timeBonusHeading.dispose();
       _lifeBonusHeading.dispose();
       _totalHeading.dispose();
-      
+      */
+	  
       super.dispose();
     }
   }

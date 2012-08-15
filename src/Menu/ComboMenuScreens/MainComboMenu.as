@@ -16,6 +16,7 @@ package Menu.ComboMenuScreens
   import engine.SaveGame;
   import starling.text.TextField;
   import Menu.MainMenu;
+  import Menu.LevelScore;
   
   /**
    * ...
@@ -202,7 +203,7 @@ package Menu.ComboMenuScreens
       leaderboards.y = 540;
       addChild(leaderboards);
       leaderboards.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void {
-        //StageManager.switchStage(ArcadeState);
+        StageManager.switchStage(LevelScore);
       });
 	  
 	  var back:org.josht.starling.foxhole.controls.Button = new org.josht.starling.foxhole.controls.Button();
