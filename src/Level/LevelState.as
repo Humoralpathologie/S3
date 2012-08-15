@@ -129,6 +129,7 @@ package Level
     protected var _maxEggs:int = 5;
     protected var _timeExtension:Number = 3;
     protected var _chainTime:Number = 2.5;
+	protected var _extensionTime:int;
     protected var _spawnMap:Array = [];
     protected var _textLevel:Sprite;
     
@@ -896,6 +897,14 @@ package Level
         else
         {
           updateTimers(event);
+		  trace("overallTimer: " + String(int(_overallTimer)));
+		  trace("extensionTime: " + String(int(_extensionTime)));
+		  if ((int(_overallTimer) > 0) && (int(_overallTimer) == _extensionTime)) {
+		    _chainTime = 2.5;
+			_bonusBack.width = 27;
+			_extensionTime = 0;
+			showMessage("Chaintime extension extended!");
+		  }
         }
         
         if (_eggs.length < _maxEggs)
@@ -1242,6 +1251,26 @@ package Level
     public function set chainTime(value:Number):void
     {
       _chainTime = value;
+    }
+	
+	public function get extensionTime():Number
+    {
+      return _extensionTime;
+    }
+    
+    public function set extensionTime(value:Number):void
+    {
+      _extensionTime = value;
+    }
+    
+	public function get overallTimer():Number
+    {
+      return _overallTimer;
+    }
+   
+	public function setBonusBackWidth(value:int):void
+    {
+      _bonusBack.width = value;
     }
     
     public function get eggs():Eggs

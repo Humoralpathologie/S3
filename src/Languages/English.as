@@ -13,21 +13,31 @@ package Languages
     public static const STORY:String = "Story";
     public static const EXTRAS:String = "Extras";
     
-	// Settings Menu
-	public static const MAINSETTINGS:String = "Main Settings";
-	public static const USERNAME:String = "User Name";
-	public static const CONTROLTYPE:String = "Control Type";
-	public static const LANGUAGE:String = "Language";
-	public static const DIFFICULTY:String = "Level Difficulty";
-	
-	public static const SNAKEVIEW:String = "Snake View";
-	public static const FOURWAY:String = "4-Way";
-	public static const CASUAL:String = "Casual";
-	public static const COMPETETIVE:String = "Competetive";
-	
-	
+    // Settings Menu
+    public static const MAINSETTINGS:String = "Main Settings";
+    public static const USERNAME:String = "User Name";
+    public static const CONTROLTYPE:String = "Control Type";
+    public static const LANGUAGE:String = "Language";
+    public static const DIFFICULTY:String = "Level Difficulty";
+    
+    public static const SNAKEVIEW:String = "Snake View";
+    public static const FOURWAY:String = "4-Way";
+    public static const CASUAL:String = "Casual";
+    public static const COMPETETIVE:String = "Competetive";
+    
+    //Arcade Menu
+    public static const ARCADEHEADING:String = "Arcade Mode";
+    public static const OFFLABEL:String = "Endless Mode";
+    public static const ONLABEL:String = "4 Minute-Mode";
+    public static const PLAY:String = "PLAY";
+    public static const BACKBUTTON:String = "BACK";
+    public static const LEADERBOARDS:String = "LEADERBOARDS";
+    
+    //Arcade Info
+    public static const ARCADEINFO:String = "Blablabla Test!!!";
+    
     // Combo Menu
-    public static const PLAY:String = "Play";
+    public static const SELECTABLECOMBO:String = "SELECTABLE COMBOS";
     
     // Combo Descriptions
     public static const TIMECOMBODESC:String = "Bonus Time Up: Activate this combo and every time up-combo will give you 4 instead of 3 extra seconds.";
@@ -36,6 +46,17 @@ package Languages
     public static const SHUFFLEDESC:String = "Shuffle Egg: Performing this combo will spawn a Shuffle Egg. Devouring it will rearrange Little Snake's body tiles and give you the chance to score new combos.";
     public static const GOLDDESC:String = "Golden Egg: This combo will spawn a shiny, golden egg for 6 seconds. Or are you afraid of the big points?";
     public static const XTRALIFEDESC:String = "Extra Life: This combo propably will do exactly what you think it will.";
+    
+    public static const SPEEDDESC:String = "Speed ...";
+    public static const TIMEDESC:String = "Extra Time ...";
+    public static const SLOWERDESC:String = "GEt Slower ...";
+    public static const NOROTTENDESC:String = "No Rotten Eggs ...";
+    //pause menu
+    public static const PAUSE:String = "PAUSE";
+    public static const BACK:String = "MAIN MENU";
+    public static const RESTART:String = "RESTART";
+    public static const SFX:String = "SFX";
+    public static const MUSIC:String = "MUSIC";
     
     //Level objectives
     public static const LEVEL1A:String = "For Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 30 eggs & pay attention to the bonus scoring on your performance!!";
