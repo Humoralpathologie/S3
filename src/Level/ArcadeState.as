@@ -43,6 +43,7 @@ package Level
    */
   public class ArcadeState extends LevelState
   {
+	
     public function ArcadeState() {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       _rottenEnabled = true;
@@ -57,7 +58,7 @@ package Level
 	  //trace("ArcadeMode: " + String(SaveGame.arcadeModi));
 	  
 	  
-	  if (SaveGame.arcadeModi == false) {
+	  if (!SaveGame.arcadeModi) {
 		_comboSet.addCombo(new Combo.SlowerCombo);
 	  } else {
 		_comboSet.addCombo(new Combo.ExtraTimeCombo);
@@ -114,7 +115,7 @@ package Level
       
       placeEgg(egg);     
     }
-    
+	
     override public function dispose():void {
       AssetRegistry.soundmanager.fadeOutMusic();
       super.dispose();
@@ -162,10 +163,15 @@ package Level
 	    _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "combo", "speed", "poison"], this);
 	  }
       addChild(_hud);
-      _hud.poison.x = 108;
-      _hud.poison.y = 12;
+	  if (SaveGame.arcadeModi) {
+		_hud.poison.x = 108;
+		_hud.poison.y = 70;
+	  } else {
+		_hud.poison.x = 108;
+		_hud.poison.y = 12;
+	  }
       _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;
-	  _hud.poisonTextField.y = _hud.poison.y;
+	  _hud.poisonTextField.y = _hud.poison.y - 5;
     }    
     
     override protected function updateHud():void {

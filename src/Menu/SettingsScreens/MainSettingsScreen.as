@@ -49,15 +49,15 @@ package Menu.SettingsScreens
       super();
 	  _scrollable = new Sprite();
 	  
-      _greyBox = new Quad(710, 500, Color.BLACK);
+      _greyBox = new Quad(710, 480, Color.BLACK);
       _greyBox.alpha = 0.7;
       _greyBox.x = 65 + 60;
-      _greyBox.y = 40 + 30;
+      _greyBox.y = 40 + 40;
       
       addChild(_greyBox);      
       
 	  _scroller = new Scroller();
-      _scroller.setSize(_greyBox.width, _greyBox.height - 100);
+      _scroller.setSize(_greyBox.width, _greyBox.height - 10);
       _scroller.x = _greyBox.x;
       _scroller.y = _greyBox.y;
       _scroller.viewPort = _scrollable;
@@ -145,8 +145,8 @@ package Menu.SettingsScreens
       
       controlGroup.selectedIndex = SaveGame.controlType - 1;
       
-      boyStyle.x = _greyBox.x;
-	  fourway.x = _greyBox.x + (_greyBox.width / 2);
+      boyStyle.x = (_greyBox.width / 2) - 230;
+	  fourway.x = (_greyBox.width / 2) + 80;
       
       boyStyle.y = _controlsHeading.y + _controlsHeading.height;
       fourway.y = boyStyle.y;
@@ -179,8 +179,8 @@ package Menu.SettingsScreens
       
       diffGroup.selectedIndex = SaveGame.difficulty - 1;
       
-      casual.x = _greyBox.x;
-	  competetive.x = _greyBox.x + (_greyBox.width / 2);
+      casual.x = (_greyBox.width / 2) - 230;
+	  competetive.x = (_greyBox.width / 2) + 80;
       
       casual.y = _diffHeading.y + _diffHeading.height;
       competetive.y = casual.y;
@@ -219,8 +219,8 @@ package Menu.SettingsScreens
       
       langGroup.selectedIndex = SaveGame.language - 1;
       
-      eng.x = _greyBox.x;
-	  ger.x = _greyBox.x + (_greyBox.width / 2);
+      eng.x = (_greyBox.width / 2) - 230;
+	  ger.x = (_greyBox.width / 2) + 80;
       
       eng.y = _langHeading.y + _langHeading.height;
       ger.y = eng.y;

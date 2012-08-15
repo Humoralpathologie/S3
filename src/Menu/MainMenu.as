@@ -132,7 +132,7 @@ package Menu
       var exit:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
       exit.scaleX = exit.scaleY = 2;
       exit.x = Starling.current.stage.stageWidth - exit.width - 10;
-      exit.y = 10;
+      exit.y = 90;
       var that = this;
       exit.addEventListener(Event.TRIGGERED, function(event:Event):void {
         that.removeChild(_settings);

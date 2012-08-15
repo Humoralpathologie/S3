@@ -15,6 +15,7 @@ package Menu.ComboMenuScreens
   import Level.ArcadeState;
   import engine.SaveGame;
   import starling.text.TextField;
+  import Menu.MainMenu;
   
   /**
    * ...
@@ -28,6 +29,8 @@ package Menu.ComboMenuScreens
     protected var _greybox:Quad;
 	protected var _arcadeModiHeading:TextField;
 	protected var _arcadeModiToggleSwitch:ToggleSwitch;
+	protected var question:Button;
+	protected var _buttons:Array = [];
     
     public function MainComboMenu()
     {
@@ -45,9 +48,9 @@ package Menu.ComboMenuScreens
       
       addChild(_greybox);
 	  
-      _arcadeModiHeading = new TextField(_greybox.width, 50, AssetRegistry.Strings.ARCADEHEADING, "kroeger 06_65", 40, Color.WHITE);
+      _arcadeModiHeading = new TextField(_greybox.width, 60, AssetRegistry.Strings.ARCADEHEADING, "kroeger 06_65", 60, Color.WHITE);
       _arcadeModiHeading.x = (Starling.current.stage.stageWidth - _arcadeModiHeading.width) / 2;
-      _arcadeModiHeading.y = 20;
+      _arcadeModiHeading.y = 10;
       addChild(_arcadeModiHeading);
       
       
@@ -59,7 +62,7 @@ package Menu.ComboMenuScreens
     }
 	
     private function addInfo():void {
-      var question:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("info-button"));
+      question = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("info-button"));
       question.x = 860;
       question.y = 30;
       addChild(question);
@@ -100,6 +103,56 @@ package Menu.ComboMenuScreens
       
     }
 	
+	private function addComboInfo(i:int, button:Button):void {
+	  var xButton:Button = new Button( AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+	  xButton.x = 860;
+	  xButton.y = 30;
+	  
+      var infoDisplay:Quad = new Quad(710, 450, Color.BLACK);
+      infoDisplay.x = 65 + 60;
+      infoDisplay.y = 40 + 30;
+	  infoDisplay.alpha = 0.5;
+
+	  var text:TextField = new TextField(infoDisplay.width, infoDisplay.height, " ", "kroeger 06_65", 40, Color.WHITE);
+      text.x = infoDisplay.x;
+	  text.y = infoDisplay.y;
+	  
+	  
+	  
+	  switch (i) {
+		case 0:
+			text.text = AssetRegistry.Strings.SPEEDDESC;
+		break;
+		case 1:
+			if (SaveGame.arcadeModi){
+				text.text = AssetRegistry.Strings.TIMEDESC;
+			} else {
+				text.text = AssetRegistry.Strings.SLOWERDESC;
+			}
+		break;
+		case 2:
+			text.text = AssetRegistry.Strings.NOROTTENDESC;
+		break;
+	  }
+	  
+	  _buttons.push([button, text]);
+	  
+	  button.addEventListener(Event.TRIGGERED, function(event:Event) {
+        removeChild(question);
+		addChild(infoDisplay);
+		addChild(text);
+		addChild(xButton);
+		
+      });
+      
+      xButton.addEventListener(Event.TRIGGERED, function(event:Event) {
+        removeChild(infoDisplay);
+		addChild(question);
+		removeChild(text);
+		removeChild(xButton);
+      });
+	}
+	
     private function addToggle():void {
 	 
       _arcadeModiToggleSwitch = new ToggleSwitch();
@@ -110,10 +163,18 @@ package Menu.ComboMenuScreens
 	  //_arcadeModiToggleSwitch.offLabelProperties = 
       _arcadeModiToggleSwitch.isSelected = SaveGame.arcadeModi;
       _arcadeModiToggleSwitch.x = (Starling.current.stage.stageWidth - _arcadeModiToggleSwitch.width) / 2;
-      _arcadeModiToggleSwitch.y = _greybox.y + 20;
+      _arcadeModiToggleSwitch.y = _greybox.y + 350;
       
       _arcadeModiToggleSwitch.onChange.add(function(tswitch:ToggleSwitch):void {
         SaveGame.arcadeModi = tswitch.isSelected;
+		unflatten();
+		if (SaveGame.arcadeModi) {
+			_buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
+			_buttons[4][1].text = AssetRegistry.Strings.TIMEDESC;
+		} else {
+			_buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed");
+			_buttons[4][1].text = AssetRegistry.Strings.SLOWERDESC;	
+		}
       });
       
       addChild(_arcadeModiToggleSwitch);
@@ -125,27 +186,55 @@ package Menu.ComboMenuScreens
       var play:org.josht.starling.foxhole.controls.Button = new org.josht.starling.foxhole.controls.Button();
       play.label = AssetRegistry.Strings.PLAY;
       play.height = 80;
-      play.width = 300;
+      play.width = 220;
       play.x = 65 + 60;
       play.y = 540;
       addChild(play);
       play.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void {
         StageManager.switchStage(ArcadeState);
       });
+	  
+	   var leaderboards:org.josht.starling.foxhole.controls.Button = new org.josht.starling.foxhole.controls.Button();
+      leaderboards.label = AssetRegistry.Strings.LEADERBOARDS;
+      leaderboards.height = 80;
+      leaderboards.width = 250;
+      leaderboards.x = play.x + play.width + 10;
+      leaderboards.y = 540;
+      addChild(leaderboards);
+      leaderboards.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void {
+        //StageManager.switchStage(ArcadeState);
+      });
+	  
+	  var back:org.josht.starling.foxhole.controls.Button = new org.josht.starling.foxhole.controls.Button();
+      back.label = AssetRegistry.Strings.BACKBUTTON;
+      back.height = 80;
+      back.width = 220;
+      back.x = leaderboards.x + leaderboards.width + 10;
+      back.y = 540;
+      addChild(back);
+      back.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void {
+        StageManager.switchStage(MainMenu);
+      });
+	
     }
     
     private function addNormalCombos():void
     {
-      
-      var buttons:Array = [[AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("info-speed")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"), AssetRegistry.MenuAtlasOpaque.getTexture("info-time")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs"), AssetRegistry.MenuAtlasOpaque.getTexture("info-rotteneggs")]]//, [AssetRegistry.MenuAtlasOpaque.getTexture("combo-shuffle"), AssetRegistry.MenuAtlasOpaque.getTexture("info-shuffle")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-gold"), AssetRegistry.MenuAtlasOpaque.getTexture("info-gold")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtralife"), AssetRegistry.MenuAtlasOpaque.getTexture("info-xtralife")]];
-      
+	  var buttons:Array;
+      if (SaveGame.arcadeModi) {
+		buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")]//, [AssetRegistry.MenuAtlasOpaque.getTexture("combo-shuffle"), AssetRegistry.MenuAtlasOpaque.getTexture("info-shuffle")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-gold"), AssetRegistry.MenuAtlasOpaque.getTexture("info-gold")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtralife"), AssetRegistry.MenuAtlasOpaque.getTexture("info-xtralife")]];
+      } else {
+		buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")];
+	  }
+	  
       var space:int = 80;
       for (var i:int = 0; i < buttons.length; i++)
       {
-        var button:Button = new Button(buttons[i][0]);
+        var button:Button = new Button(buttons[i]);
         button.x = (_greybox.x + (_greybox.width - (buttons.length * button.width + (buttons.length - 1) * space)) / 2) + i * (button.width + space);        
-        button.y = 382;
+        button.y = 270;
         addChild(button);
+		addComboInfo(i, button);
         /*
         var desc:Button = new Button(buttons[i][1]);
         desc.x = (Starling.current.stage.stageWidth - desc.width) / 2;
@@ -207,9 +296,10 @@ package Menu.ComboMenuScreens
         combo.x = 0;
         combo.y = 0;
         slot.addChild(combo);
+		_buttons.push(slot);
         
         slot.x = (_greybox.x + (_greybox.width - (buttonCount * slot.width + (buttonCount - 1) * space)) / 2) + i * (slot.width + space);
-        slot.y = 112 + 30;
+        slot.y = 112;
         slot.addEventListener(Event.TRIGGERED, buttonSelector(i));
       }
     }

@@ -42,7 +42,7 @@ package Menu.PauseMenuScreens
       super();
       _levelstate = levelstate;
 
-      _greyBox = new Quad(710, 450, 0);
+      _greyBox = new Quad(710, 480, 0);
       _greyBox.x = 125;
       _greyBox.y = 95;
       _greyBox.alpha = 0.3;
@@ -151,7 +151,7 @@ package Menu.PauseMenuScreens
         SaveGame.controlType = 2;
       });
       
-      controlGroup.selectedIndex = SaveGame.controlType - 1;
+      controlGroup.selectedIndex = 1;
       
       boyStyle.x = _restartButton.x + 60;
 	  fourway.x = _backButton.x + 60;

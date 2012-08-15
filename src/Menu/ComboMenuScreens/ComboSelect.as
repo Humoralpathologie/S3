@@ -18,6 +18,7 @@ package Menu.ComboMenuScreens
   import starling.utils.HAlign;
   import starling.utils.VAlign;
   import org.josht.starling.foxhole.controls.ScrollBar;
+  import starling.core.Starling;
   
   /**
    * ...
@@ -29,6 +30,7 @@ package Menu.ComboMenuScreens
     protected var _sharedData:Object = { };
     protected var _scroller:Scroller;
     protected var _scrollable:Sprite;
+	protected var _selComboHeading:TextField;
     
     public function ComboSelect()
     {
@@ -38,13 +40,30 @@ package Menu.ComboMenuScreens
     override protected function initialize():void {
 
       _scrollable = new Sprite();
-      
+	  
       var greybox:Quad = new Quad(710, 450, Color.BLACK);
       greybox.alpha = 0.3;
       greybox.x = 65 + 60;
       greybox.y = 40 + 30;
       
-      addChild(greybox);  
+      addChild(greybox); 
+	  
+	  _selComboHeading = new TextField(greybox.width, 60, AssetRegistry.Strings.SELECTABLECOMBO, "kroeger 06_65", 60, Color.WHITE);
+      _selComboHeading.x = (Starling.current.stage.stageWidth - _selComboHeading.width) / 2;
+      _selComboHeading.y = 10;
+      addChild(_selComboHeading);
+	  
+	  var that:ComboSelect = this;
+	  
+	  var exit:starling.display.Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+      exit.scaleX = exit.scaleY = 2;
+      exit.x = Starling.current.stage.stageWidth - exit.width - 20;
+      exit.y = 20;
+      
+      exit.addEventListener(Event.TRIGGERED, function(event:Event):void {
+        onMainComboMenu.dispatch(that);
+      });
+      addChild(exit);
       
       _scroller = new Scroller();
       _scroller.setSize(greybox.width, greybox.height);
@@ -53,8 +72,10 @@ package Menu.ComboMenuScreens
       _scroller.viewPort = _scrollable;
       
       addChild(_scroller);
+	  
+	  
       
-      var that:ComboSelect = this;
+     
             
       var time:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-leveluptime"));
       time.x = 40;
@@ -161,7 +182,8 @@ package Menu.ComboMenuScreens
       _scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
       
     }
-    
+	
+
     public function get onMainComboMenu():Signal 
     {
         return _onMainComboMenu;
