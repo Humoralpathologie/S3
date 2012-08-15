@@ -897,6 +897,7 @@ package Level
 		  trace("extensionTime: " + String(int(_extensionTime)));
 		  if ((int(_overallTimer) > 0) && (int(_overallTimer) == _extensionTime)) {
 		    _chainTime = 2.5;
+			_bonusBack.width = 27;
 			_extensionTime = 0;
 			showMessage("Chaintime extension extended!");
 		  }
@@ -1262,7 +1263,11 @@ package Level
     {
       return _overallTimer;
     }
-    
+   
+	public function setBonusBackWidth(value:int):void
+    {
+      _bonusBack.width = value;
+    }
     
     public function get eggs():Eggs
     {

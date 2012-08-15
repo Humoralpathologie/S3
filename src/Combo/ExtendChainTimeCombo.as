@@ -19,6 +19,7 @@ package Combo
     override public function effect(state:LevelState):void {
       state.showMessage("Chain time extended!!");
       state.chainTime = 3.5;
+	  state.setBonusBackWidth(37);
 	  state.extensionTime = state.overallTimer + 60;
     }
   
