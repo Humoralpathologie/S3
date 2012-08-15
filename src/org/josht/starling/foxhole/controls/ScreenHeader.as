@@ -24,11 +24,13 @@
  */
 package org.josht.starling.foxhole.controls
 {
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-
 	import org.josht.starling.foxhole.core.FoxholeControl;
+	import org.josht.starling.foxhole.core.FoxholeControl;
+	import org.josht.starling.foxhole.core.ITextRenderer;
+	import org.josht.starling.foxhole.core.PropertyProxy;
 	import org.josht.starling.foxhole.layout.HorizontalLayout;
+	import org.josht.starling.foxhole.layout.LayoutBoundsResult;
+	import org.josht.starling.foxhole.layout.ViewPortBounds;
 	import org.josht.starling.foxhole.text.BitmapFontTextFormat;
 
 	import starling.display.DisplayObject;
@@ -93,12 +95,12 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private static const helperRect:Rectangle = new Rectangle();
+		private static const helperBounds:ViewPortBounds = new ViewPortBounds();
 
 		/**
 		 * @private
 		 */
-		private static const helperPoint:Point = new Point();
+		private static const helperResult:LayoutBoundsResult = new LayoutBoundsResult();
 
 		/**
 		 * Constructor.
@@ -107,6 +109,11 @@ package org.josht.starling.foxhole.controls
 		{
 			super();
 		}
+
+		/**
+		 * The value added to the <code>nameList</code> of the header's title.
+		 */
+		protected var defaultTitleName:String = "foxhole-header-title";
 
 		/**
 		 * @private
@@ -143,7 +150,38 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _titleLabel:Label;
+		protected var _titleFactory:Function;
+
+		/**
+		 * A function used to instantiate the header's title subcomponent.
+		 *
+		 * <p>The factory should have the following function signature:</p>
+		 * <pre>function():ITextRenderer</pre>
+		 *
+		 * @see org.josht.starling.foxhole.core.ITextRenderer
+		 */
+		public function get titleFactory():Function
+		{
+			return this._titleFactory;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set titleFactory(value:Function):void
+		{
+			if(this._titleFactory == value)
+			{
+				return;
+			}
+			this._titleFactory = value;
+			this.invalidate(INVALIDATION_FLAG_TEXT_RENDERER);
+		}
+
+		/**
+		 * @private
+		 */
+		private var _titleRenderer:ITextRenderer;
 
 		/**
 		 * @private
@@ -466,26 +504,50 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _textFormat:BitmapFontTextFormat;
+		private var _titleProperties:PropertyProxy;
 
 		/**
-		 * The font and styles used to draw the title text.
+		 * A set of key/value pairs to be passed down to the headers's title
+		 * instance.
+		 *
+		 * <p>If the subcomponent has its own subcomponents, their properties
+		 * can be set too, using attribute <code>&#64;</code> notation. For example,
+		 * to set the skin on the thumb of a <code>SimpleScrollBar</code>
+		 * which is in a <code>Scroller</code> which is in a <code>List</code>,
+		 * you can use the following syntax:</p>
+		 * <pre>list.scrollerProperties.&#64;verticalScrollBarProperties.&#64;thumbProperties.defaultSkin = new Image(texture);</pre>
 		 */
-		public function get textFormat():BitmapFontTextFormat
+		public function get titleProperties():Object
 		{
-			return this._textFormat;
+			if(!this._titleProperties)
+			{
+				this._titleProperties = new PropertyProxy(titleProperties_onChange);
+			}
+			return this._titleProperties;
 		}
 
 		/**
 		 * @private
 		 */
-		public function set textFormat(value:BitmapFontTextFormat):void
+		public function set titleProperties(value:Object):void
 		{
-			if(this._textFormat == value)
+			if(this._titleProperties == value)
 			{
 				return;
 			}
-			this._textFormat = value;
+			if(value && !(value is PropertyProxy))
+			{
+				value = PropertyProxy.fromObject(value);
+			}
+			if(this._titleProperties)
+			{
+				this._titleProperties.onChange.remove(titleProperties_onChange);
+			}
+			this._titleProperties = PropertyProxy(value);
+			if(this._titleProperties)
+			{
+				this._titleProperties.onChange.add(titleProperties_onChange);
+			}
 			this.invalidate(INVALIDATION_FLAG_STYLES);
 		}
 
@@ -525,15 +587,8 @@ package org.josht.starling.foxhole.controls
 			if(!this._layout)
 			{
 				this._layout = new HorizontalLayout();
+				this._layout.useVirtualLayout = false;
 				this._layout.verticalAlign = HorizontalLayout.VERTICAL_ALIGN_MIDDLE;
-			}
-
-			if(!this._titleLabel)
-			{
-				this._titleLabel = new Label();
-				this._titleLabel.nameList.add("foxhole-header-title");
-				this._titleLabel.touchable = false;
-				this.addChild(this._titleLabel);
 			}
 		}
 
@@ -547,21 +602,22 @@ package org.josht.starling.foxhole.controls
 			const stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
 			const leftContentInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_LEFT_CONTENT);
 			const rightContentInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_RIGHT_CONTENT);
+			const textRendererInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_TEXT_RENDERER);
 
-			if(dataInvalid)
+			if(textRendererInvalid)
 			{
-				this._titleLabel.text = this._title;
+				this.createTitle();
 			}
 
-			if(stylesInvalid)
+			if(textRendererInvalid || dataInvalid)
 			{
-				this._layout.gap = this._gap;
-				this._layout.paddingTop = this._paddingTop;
-				this._layout.paddingBottom = this._paddingBottom;
-				this._layout.paddingRight = this._paddingRight;
-				this._layout.paddingLeft = this._paddingLeft;
-				this._layout.verticalAlign = this._verticalAlign;
-				this._titleLabel.textFormat = this._textFormat;
+				this._titleRenderer.text = this._title;
+			}
+
+			if(textRendererInvalid || stylesInvalid)
+			{
+				this.refreshLayout();
+				this.refreshTitleStyles();
 			}
 
 			if(leftContentInvalid)
@@ -610,7 +666,7 @@ package org.josht.starling.foxhole.controls
 				}
 			}
 
-			if(sizeInvalid || stylesInvalid || dataInvalid || leftContentInvalid || rightContentInvalid)
+			if(textRendererInvalid || sizeInvalid || stylesInvalid || dataInvalid || leftContentInvalid || rightContentInvalid)
 			{
 				this.layoutTitle();
 			}
@@ -674,14 +730,15 @@ package org.josht.starling.foxhole.controls
 				}
 			}
 
-			this._titleLabel.validate();
-			if(needsWidth && !isNaN(this._titleLabel.width))
+			const foxholeTitle:FoxholeControl = FoxholeControl(this._titleRenderer);
+			foxholeTitle.validate();
+			if(needsWidth && !isNaN(foxholeTitle.width))
 			{
-				newWidth += this._titleLabel.width;
+				newWidth += foxholeTitle.width;
 			}
-			if(needsHeight && !isNaN(this._titleLabel.height))
+			if(needsHeight && !isNaN(foxholeTitle.height))
 			{
-				newHeight = Math.max(newHeight, this._titleLabel.height);
+				newHeight = Math.max(newHeight, foxholeTitle.height);
 			}
 			if(needsHeight)
 			{
@@ -697,6 +754,54 @@ package org.josht.starling.foxhole.controls
 			}
 
 			return this.setSizeInternal(newWidth, newHeight, false);
+		}
+
+		/**
+		 * @private
+		 */
+		protected function createTitle():void
+		{
+			if(this._titleRenderer)
+			{
+				this.removeChild(FoxholeControl(this._titleRenderer), true);
+				this._titleRenderer = null;
+			}
+
+			const factory:Function = this._titleFactory != null ? this._titleFactory : FoxholeControl.defaultTextRendererFactory;
+			this._titleRenderer = factory();
+			const foxholeTitle:FoxholeControl = FoxholeControl(this._titleRenderer);
+			foxholeTitle.nameList.add(this.defaultTitleName);
+			foxholeTitle.touchable = false;
+			this.addChild(foxholeTitle);
+		}
+
+		/**
+		 * @private
+		 */
+		protected function refreshLayout():void
+		{
+			this._layout.gap = this._gap;
+			this._layout.paddingTop = this._paddingTop;
+			this._layout.paddingBottom = this._paddingBottom;
+			this._layout.paddingRight = this._paddingRight;
+			this._layout.paddingLeft = this._paddingLeft;
+			this._layout.verticalAlign = this._verticalAlign;
+		}
+
+		/**
+		 * @private
+		 */
+		protected function refreshTitleStyles():void
+		{
+			const foxholeTitle:FoxholeControl = FoxholeControl(this._titleRenderer);
+			for(var propertyName:String in this._titleProperties)
+			{
+				if(foxholeTitle.hasOwnProperty(propertyName))
+				{
+					var propertyValue:Object = this._titleProperties[propertyName];
+					foxholeTitle[propertyName] = propertyValue;
+				}
+			}
 		}
 
 		/**
@@ -740,11 +845,11 @@ package org.josht.starling.foxhole.controls
 					FoxholeControl(item).validate();
 				}
 			}
-			helperRect.x = helperRect.y = 0;
-			helperRect.width = this.actualWidth;
-			helperRect.height = this.actualHeight;
+			helperBounds.x = helperBounds.y = 0;
+			helperBounds.explicitWidth = this.actualWidth;
+			helperBounds.explicitHeight = this.actualHeight;
 			this._layout.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_LEFT;
-			this._layout.layout(this._leftItems, helperRect, helperPoint);
+			this._layout.layout(this._leftItems, helperBounds, helperResult);
 
 		}
 
@@ -760,11 +865,11 @@ package org.josht.starling.foxhole.controls
 					FoxholeControl(item).validate();
 				}
 			}
-			helperRect.x = helperRect.y = 0;
-			helperRect.width = this.actualWidth;
-			helperRect.height = this.actualHeight;
+			helperBounds.x = helperBounds.y = 0;
+			helperBounds.explicitWidth = this.actualWidth;
+			helperBounds.explicitHeight = this.actualHeight;
 			this._layout.horizontalAlign = HorizontalLayout.HORIZONTAL_ALIGN_RIGHT;
-			this._layout.layout(this._rightItems, helperRect, helperPoint);
+			this._layout.layout(this._rightItems, helperBounds, helperResult);
 		}
 
 		/**
@@ -776,31 +881,40 @@ package org.josht.starling.foxhole.controls
 			{
 				return;
 			}
-			this._titleLabel.validate();
+			const foxholeTitle:FoxholeControl = FoxholeControl(this._titleRenderer);
+			foxholeTitle.validate();
 			if(this._titleAlign == TITLE_ALIGN_PREFER_LEFT && (!this._leftItems || this._leftItems.length == 0))
 			{
-				this._titleLabel.x = this._paddingLeft;
+				foxholeTitle.x = this._paddingLeft;
 			}
 			else if(this._titleAlign == TITLE_ALIGN_PREFER_RIGHT && (!this._rightItems || this._rightItems.length == 0))
 			{
-				this._titleLabel.x = this.actualWidth - this._paddingRight - this._titleLabel.width;
+				foxholeTitle.x = this.actualWidth - this._paddingRight - foxholeTitle.width;
 			}
 			else
 			{
-				this._titleLabel.x = (this.actualWidth - this._titleLabel.width) / 2;
+				foxholeTitle.x = (this.actualWidth - foxholeTitle.width) / 2;
 			}
 			if(this._verticalAlign == VERTICAL_ALIGN_TOP)
 			{
-				this._titleLabel.y = this._paddingTop;
+				foxholeTitle.y = this._paddingTop;
 			}
 			else if(this._verticalAlign == VERTICAL_ALIGN_BOTTOM)
 			{
-				this._titleLabel.y = this.actualHeight - this._paddingBottom - this._titleLabel.height;
+				foxholeTitle.y = this.actualHeight - this._paddingBottom - foxholeTitle.height;
 			}
 			else
 			{
-				this._titleLabel.y = (this.actualHeight - this._titleLabel.height) / 2;
+				foxholeTitle.y = (this.actualHeight - foxholeTitle.height) / 2;
 			}
+		}
+
+		/**
+		 * @private
+		 */
+		protected function titleProperties_onChange(proxy:PropertyProxy, propertyName:String):void
+		{
+			this.invalidate(INVALIDATION_FLAG_STYLES);
 		}
 	}
 }

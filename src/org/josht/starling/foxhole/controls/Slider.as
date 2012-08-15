@@ -35,6 +35,7 @@ package org.josht.starling.foxhole.controls
 	import org.osflash.signals.Signal;
 
 	import starling.display.DisplayObject;
+	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
@@ -46,6 +47,11 @@ package org.josht.starling.foxhole.controls
 	 */
 	public class Slider extends FoxholeControl
 	{
+		/**
+		 * @private
+		 */
+		private static const HELPER_POINT:Point = new Point();
+
 		/**
 		 * The slider's thumb may be dragged horizontally (on the x-axis).
 		 */
@@ -85,6 +91,7 @@ package org.josht.starling.foxhole.controls
 		public function Slider()
 		{
 			super();
+			this.addEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 		}
 
 		/**
@@ -442,13 +449,13 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _minimumTrackProperties:PropertyProxy = new PropertyProxy(minimumTrackProperties_onChange);
+		private var _minimumTrackProperties:PropertyProxy;
 
 		/**
 		 * A set of key/value pairs to be passed down to the slider's minimum
 		 * track instance. The minimum track is a Foxhole Button control.
 		 *
-		 * <p>If the sub-component has its own sub-components, their properties
+		 * <p>If the subcomponent has its own subcomponents, their properties
 		 * can be set too, using attribute <code>&#64;</code> notation. For example,
 		 * to set the skin on the thumb of a <code>SimpleScrollBar</code>
 		 * which is in a <code>Scroller</code> which is in a <code>List</code>,
@@ -457,6 +464,10 @@ package org.josht.starling.foxhole.controls
 		 */
 		public function get minimumTrackProperties():Object
 		{
+			if(!this._minimumTrackProperties)
+			{
+				this._minimumTrackProperties = new PropertyProxy(minimumTrackProperties_onChange);
+			}
 			return this._minimumTrackProperties;
 		}
 
@@ -497,13 +508,13 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _maximumTrackProperties:PropertyProxy = new PropertyProxy(maximumTrackProperties_onChange);
+		private var _maximumTrackProperties:PropertyProxy;
 		
 		/**
 		 * A set of key/value pairs to be passed down to the slider's maximum
 		 * track instance. The maximum track is a Foxhole Button control.
 		 *
-		 * <p>If the sub-component has its own sub-components, their properties
+		 * <p>If the subcomponent has its own subcomponents, their properties
 		 * can be set too, using attribute <code>&#64;</code> notation. For example,
 		 * to set the skin on the thumb of a <code>SimpleScrollBar</code>
 		 * which is in a <code>Scroller</code> which is in a <code>List</code>,
@@ -512,6 +523,10 @@ package org.josht.starling.foxhole.controls
 		 */
 		public function get maximumTrackProperties():Object
 		{
+			if(!this._maximumTrackProperties)
+			{
+				this._maximumTrackProperties = new PropertyProxy(maximumTrackProperties_onChange);
+			}
 			return this._maximumTrackProperties;
 		}
 		
@@ -552,13 +567,13 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _thumbProperties:PropertyProxy = new PropertyProxy(thumbProperties_onChange);
+		private var _thumbProperties:PropertyProxy;
 		
 		/**
 		 * A set of key/value pairs to be passed down to the slider's thumb
 		 * instance. The thumb is a Foxhole Button control.
 		 *
-		 * <p>If the sub-component has its own sub-components, their properties
+		 * <p>If the subcomponent has its own subcomponents, their properties
 		 * can be set too, using attribute <code>&#64;</code> notation. For example,
 		 * to set the skin on the thumb of a <code>SimpleScrollBar</code>
 		 * which is in a <code>Scroller</code> which is in a <code>List</code>,
@@ -567,6 +582,10 @@ package org.josht.starling.foxhole.controls
 		 */
 		public function get thumbProperties():Object
 		{
+			if(!this._thumbProperties)
+			{
+				this._thumbProperties = new PropertyProxy(thumbProperties_onChange);
+			}
 			return this._thumbProperties;
 		}
 		
@@ -1059,6 +1078,19 @@ package org.josht.starling.foxhole.controls
 		{
 			this.invalidate(INVALIDATION_FLAG_STYLES);
 		}
+
+		/**
+		 * @private
+		 */
+		protected function removedFromStageHandler(event:Event):void
+		{
+			this._touchPointID = -1;
+			this.isDragging = false;
+			if(!this.liveDragging)
+			{
+				this._onChange.dispatch(this);
+			}
+		}
 		
 		/**
 		 * @private
@@ -1069,44 +1101,65 @@ package org.josht.starling.foxhole.controls
 			{
 				return;
 			}
-			const touch:Touch = event.getTouch(DisplayObject(event.currentTarget));
-			if(!touch || (this._touchPointID >= 0 && this._touchPointID != touch.id))
+			const touches:Vector.<Touch> = event.getTouches(DisplayObject(event.currentTarget));
+			if(this._touchPointID >= 0)
 			{
-				return;
-			}
-
-			if(touch.phase == TouchPhase.BEGAN || touch.phase == TouchPhase.MOVED)
-			{
-				const location:Point = touch.getLocation(this);
-				if(touch.phase == TouchPhase.BEGAN)
+				var touch:Touch;
+				for each(var currentTouch:Touch in touches)
 				{
-					this._touchPointID = touch.id;
-					if(this._direction == DIRECTION_VERTICAL)
+					if(currentTouch.id == this._touchPointID)
 					{
-						this._thumbStartX = location.x;
-						this._thumbStartY = Math.min(this.actualHeight - this.thumb.height, Math.max(0, location.y - this.thumb.height / 2));
+						touch = currentTouch;
+						break;
 					}
-					else //horizontal
-					{
-						this._thumbStartX = Math.min(this.actualWidth - this.thumb.width, Math.max(0, location.x - this.thumb.width / 2));
-						this._thumbStartY = location.y;
-					}
-					this._touchStartX = location.x;
-					this._touchStartY = location.y;
-					this.isDragging = true;
-					this._onDragStart.dispatch(this);
 				}
-				this.dragTo(location);
-			}
-			else if(touch.phase == TouchPhase.ENDED)
-			{
-				this._touchPointID = -1;
-				this.isDragging = false;
-				if(!this.liveDragging)
+				if(!touch)
 				{
-					this._onChange.dispatch(this);
+					return;
 				}
-				this._onDragEnd.dispatch(this);
+				if(touch.phase == TouchPhase.MOVED)
+				{
+					touch.getLocation(this, HELPER_POINT);
+					this.dragTo(HELPER_POINT);
+				}
+				else if(touch.phase == TouchPhase.ENDED)
+				{
+					this._touchPointID = -1;
+					this.isDragging = false;
+					if(!this.liveDragging)
+					{
+						this._onChange.dispatch(this);
+					}
+					this._onDragEnd.dispatch(this);
+					return;
+				}
+			}
+			else
+			{
+				for each(touch in touches)
+				{
+					if(touch.phase == TouchPhase.BEGAN)
+					{
+						touch.getLocation(this, HELPER_POINT);
+						this._touchPointID = touch.id;
+						if(this._direction == DIRECTION_VERTICAL)
+						{
+							this._thumbStartX = HELPER_POINT.x;
+							this._thumbStartY = Math.min(this.actualHeight - this.thumb.height, Math.max(0, HELPER_POINT.y - this.thumb.height / 2));
+						}
+						else //horizontal
+						{
+							this._thumbStartX = Math.min(this.actualWidth - this.thumb.width, Math.max(0, HELPER_POINT.x - this.thumb.width / 2));
+							this._thumbStartY = HELPER_POINT.y;
+						}
+						this._touchStartX = HELPER_POINT.x;
+						this._touchStartY = HELPER_POINT.y;
+						this.isDragging = true;
+						this._onDragStart.dispatch(this);
+						this.dragTo(HELPER_POINT);
+						return;
+					}
+				}
 			}
 		}
 		
@@ -1119,35 +1172,60 @@ package org.josht.starling.foxhole.controls
 			{
 				return;
 			}
-			const touch:Touch = event.getTouch(this.thumb);
-			if(!touch || (this._touchPointID >= 0 && this._touchPointID != touch.id))
+			const touches:Vector.<Touch> = event.getTouches(this.thumb);
+			if(touches.length == 0)
 			{
 				return;
 			}
-			const location:Point = touch.getLocation(this);
-			if(touch.phase == TouchPhase.BEGAN)
+			if(this._touchPointID >= 0)
 			{
-				this._touchPointID = touch.id;
-				this._thumbStartX = this.thumb.x;
-				this._thumbStartY = this.thumb.y;
-				this._touchStartX = location.x;
-				this._touchStartY = location.y;
-				this.isDragging = true;
-				this._onDragStart.dispatch(this);
-			}
-			else if(touch.phase == TouchPhase.MOVED)
-			{
-				this.dragTo(location);
-			}
-			else if(touch.phase == TouchPhase.ENDED)
-			{
-				this._touchPointID = -1;
-				this.isDragging = false;
-				if(!this.liveDragging)
+				var touch:Touch;
+				for each(var currentTouch:Touch in touches)
 				{
-					this._onChange.dispatch(this);
+					if(currentTouch.id == this._touchPointID)
+					{
+						touch = currentTouch;
+						break;
+					}
 				}
-				this._onDragEnd.dispatch(this);
+				if(!touch)
+				{
+					return;
+				}
+				if(touch.phase == TouchPhase.MOVED)
+				{
+					touch.getLocation(this, HELPER_POINT);
+					this.dragTo(HELPER_POINT);
+				}
+				else if(touch.phase == TouchPhase.ENDED)
+				{
+					this._touchPointID = -1;
+					this.isDragging = false;
+					if(!this.liveDragging)
+					{
+						this._onChange.dispatch(this);
+					}
+					this._onDragEnd.dispatch(this);
+					return;
+				}
+			}
+			else
+			{
+				for each(touch in touches)
+				{
+					if(touch.phase == TouchPhase.BEGAN)
+					{
+						touch.getLocation(this, HELPER_POINT);
+						this._touchPointID = touch.id;
+						this._thumbStartX = this.thumb.x;
+						this._thumbStartY = this.thumb.y;
+						this._touchStartX = HELPER_POINT.x;
+						this._touchStartY = HELPER_POINT.y;
+						this.isDragging = true;
+						this._onDragStart.dispatch(this);
+						return;
+					}
+				}
 			}
 		}
 	}

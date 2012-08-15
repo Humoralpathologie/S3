@@ -82,7 +82,7 @@ package Menu
       _arcadeButton.x = (Starling.current.stage.stageWidth - _settingsButton.width) / 3;
       _arcadeButton.y = Starling.current.stage.stageHeight - _arcadeButton.height;
       _arcadeButton.onRelease.add(function(button:Button):void {
-        StageManager.switchStage(ComboMenu);
+        dispatchEventWith(SWITCHING, true, { stage: ComboMenu } );
       });
       
       _levelSelectButton = new Button();
@@ -92,7 +92,7 @@ package Menu
       _levelSelectButton.x = 0;
       _levelSelectButton.y = Starling.current.stage.stageHeight - _levelSelectButton.height;
       _levelSelectButton.onRelease.add(function(button:Button):void {
-        StageManager.switchStage(LevelSelect);
+        dispatchEventWith(SWITCHING, true, { stage: LevelSelect } );       
       });
 	  
 	  _extrasButton = new Button();

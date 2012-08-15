@@ -39,6 +39,8 @@ package org.josht.starling.foxhole.controls
 	import flash.text.engine.FontPosture;
 	import flash.text.engine.FontWeight;
 	import flash.ui.Keyboard;
+	import flash.ui.Mouse;
+	import flash.ui.MouseCursor;
 	import flash.utils.getDefinitionByName;
 
 	import org.josht.starling.display.ScrollRectManager;
@@ -56,7 +58,7 @@ package org.josht.starling.foxhole.controls
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.textures.Texture;
-	import starling.utils.transformCoords;
+	import starling.utils.MatrixUtil;
 
 	/**
 	 * A text entry control that allows users to enter and edit a single line of
@@ -103,6 +105,11 @@ package org.josht.starling.foxhole.controls
 		 * @private
 		 */
 		protected var isRealStageText:Boolean = true;
+
+		/**
+		 * @private
+		 */
+		protected var _touchPointID:int = -1;
 
 		/**
 		 * @private
@@ -401,6 +408,11 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
+		protected var _oldMouseCursor:String = null;
+
+		/**
+		 * @private
+		 */
 		protected var _onChange:Signal = new Signal(TextInput);
 
 		/**
@@ -428,13 +440,13 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _stageTextProperties:PropertyProxy = new PropertyProxy(stageTextProperties_onChange);
+		private var _stageTextProperties:PropertyProxy;
 
 		/**
 		 * A set of key/value pairs to be passed down to the text input's
 		 * StageText instance.
 		 *
-		 * <p>If the sub-component has its own sub-components, their properties
+		 * <p>If the subcomponent has its own subcomponents, their properties
 		 * can be set too, using attribute <code>&#64;</code> notation. For example,
 		 * to set the skin on the thumb of a <code>SimpleScrollBar</code>
 		 * which is in a <code>Scroller</code> which is in a <code>List</code>,
@@ -443,6 +455,10 @@ package org.josht.starling.foxhole.controls
 		 */
 		public function get stageTextProperties():Object
 		{
+			if(!this._stageTextProperties)
+			{
+				this._stageTextProperties = new PropertyProxy(stageTextProperties_onChange);
+			}
 			return this._stageTextProperties;
 		}
 
@@ -511,7 +527,7 @@ package org.josht.starling.foxhole.controls
 			super.render(support, alpha);
 			helperPoint.x = helperPoint.y = 0;
 			this.getTransformationMatrix(this.stage, helperMatrix);
-			transformCoords(helperMatrix, 0, 0, helperPoint);
+			MatrixUtil.transformCoords(helperMatrix, 0, 0, helperPoint);
 			ScrollRectManager.toStageCoordinates(helperPoint, this);
 			if(helperPoint.x != this._oldGlobalX || helperPoint.y != this._oldGlobalY)
 			{
@@ -581,6 +597,11 @@ package org.josht.starling.foxhole.controls
 			if(stateInvalid)
 			{
 				this.stageText.editable = this._isEnabled;
+				if(!this._isEnabled && Mouse.supportsNativeCursor && this._oldMouseCursor)
+				{
+					Mouse.cursor = this._oldMouseCursor;
+					this._oldMouseCursor = null;
+				}
 			}
 
 			if(stateInvalid || stylesInvalid)
@@ -765,16 +786,21 @@ package org.josht.starling.foxhole.controls
 					}
 					else //desktop
 					{
-						const location:Point = touch.getLocation(this);
-						location.x -= this._paddingLeft;
-						location.y -= this._paddingTop;
-						if(location.x < 0)
+						touch.getLocation(this, helperPoint);
+						helperPoint.x -= this._paddingLeft;
+						helperPoint.y -= this._paddingTop;
+						if(helperPoint.x < 0)
 						{
 							this._savedSelectionIndex = 0;
 						}
 						else
 						{
-							this._savedSelectionIndex = this._measureTextField.getCharIndexAtPoint(location.x, location.y);
+							this._savedSelectionIndex = this._measureTextField.getCharIndexAtPoint(helperPoint.x, helperPoint.y);
+							const bounds:Rectangle = this._measureTextField.getCharBoundaries(this._savedSelectionIndex);
+							if(bounds && (bounds.x + bounds.width - helperPoint.x) < (helperPoint.x - bounds.x))
+							{
+								this._savedSelectionIndex++;
+							}
 						}
 					}
 				}
@@ -799,6 +825,14 @@ package org.josht.starling.foxhole.controls
 				this.currentBackground.height = this.actualHeight;
 			}
 
+			this.refreshViewPort();
+		}
+
+		/**
+		 * @private
+		 */
+		protected function refreshViewPort():void
+		{
 			var viewPort:Rectangle = this.stageText.viewPort;
 			if(!viewPort)
 			{
@@ -807,7 +841,7 @@ package org.josht.starling.foxhole.controls
 
 			helperPoint.x = helperPoint.y = 0;
 			this.getTransformationMatrix(this.stage, helperMatrix);
-			transformCoords(helperMatrix, 0, 0, helperPoint);
+			MatrixUtil.transformCoords(helperMatrix, 0, 0, helperPoint);
 			ScrollRectManager.toStageCoordinates(helperPoint, this);
 			this._oldGlobalX = helperPoint.x;
 			this._oldGlobalY = helperPoint.y;
@@ -859,11 +893,13 @@ package org.josht.starling.foxhole.controls
 			this.stageText = new StageTextType(initOptions);
 			this.stageText.visible = false;
 			this.stageText.stage = Starling.current.nativeStage;
-			this.stageText.addEventListener(flash.events.Event.CHANGE, stageText_changeHandler);
+			this.stageText.addEventListener(Event.CHANGE, stageText_changeHandler);
 			this.stageText.addEventListener(KeyboardEvent.KEY_DOWN, stageText_keyDownHandler);
 			this.stageText.addEventListener(FocusEvent.FOCUS_IN, stageText_focusInHandler);
 			this.stageText.addEventListener(FocusEvent.FOCUS_OUT, stageText_focusOutHandler);
-			this.stageText.addEventListener(flash.events.Event.COMPLETE, stageText_completeHandler);
+			this.stageText.addEventListener(Event.COMPLETE, stageText_completeHandler);
+
+			this.refreshViewPort();
 		}
 
 		/**
@@ -873,10 +909,13 @@ package org.josht.starling.foxhole.controls
 		{
 			Starling.current.nativeStage.removeChild(this._measureTextField);
 
-			this.stageText.removeEventListener(flash.events.Event.CHANGE, stageText_changeHandler);
+			this._touchPointID = -1;
+
+			this.stageText.removeEventListener(Event.CHANGE, stageText_changeHandler);
 			this.stageText.removeEventListener(KeyboardEvent.KEY_DOWN, stageText_keyDownHandler);
 			this.stageText.removeEventListener(FocusEvent.FOCUS_IN, stageText_focusInHandler);
 			this.stageText.removeEventListener(FocusEvent.FOCUS_OUT, stageText_focusOutHandler);
+			this.stageText.removeEventListener(Event.COMPLETE, stageText_completeHandler);
 			this.stageText.stage = null;
 			this.stageText.dispose();
 			this.stageText = null;
@@ -887,22 +926,82 @@ package org.josht.starling.foxhole.controls
 		 */
 		protected function touchHandler(event:TouchEvent):void
 		{
-			if(!this._isEnabled || this._stageTextHasFocus)
+			if(!this._isEnabled)
 			{
 				return;
 			}
 
-			const touch:Touch = event.getTouch(this, TouchPhase.ENDED);
-			if(touch)
+			const touches:Vector.<Touch> = event.getTouches(this.stage);
+			if(touches.length == 0)
 			{
-				this.setFocusInternal(touch);
+				//end hover
+				if(Mouse.supportsNativeCursor && this._oldMouseCursor)
+				{
+					Mouse.cursor = this._oldMouseCursor;
+					this._oldMouseCursor = null;
+				}
+				return;
+			}
+			if(this._touchPointID >= 0)
+			{
+				var touch:Touch;
+				for each(var currentTouch:Touch in touches)
+				{
+					if(currentTouch.id == this._touchPointID)
+					{
+						touch = currentTouch;
+						break;
+					}
+				}
+				if(!touch)
+				{
+					//end hover
+					if(Mouse.supportsNativeCursor && this._oldMouseCursor)
+					{
+						Mouse.cursor = this._oldMouseCursor;
+						this._oldMouseCursor = null;
+					}
+					return;
+				}
+				if(touch.phase == TouchPhase.ENDED)
+				{
+					this._touchPointID = -1;
+					touch.getLocation(this, helperPoint);
+					ScrollRectManager.adjustTouchLocation(helperPoint, this);
+					var isInBounds:Boolean = this.hitTest(helperPoint, true) != null;
+					if(!this._stageTextHasFocus && isInBounds)
+					{
+						this.setFocusInternal(touch);
+					}
+					return;
+				}
+			}
+			else
+			{
+				for each(touch in touches)
+				{
+					if(touch.phase == TouchPhase.HOVER)
+					{
+						if(Mouse.supportsNativeCursor && !this._oldMouseCursor)
+						{
+							this._oldMouseCursor = Mouse.cursor;
+							Mouse.cursor = MouseCursor.IBEAM;
+						}
+						return;
+					}
+					else if(touch.phase == TouchPhase.BEGAN)
+					{
+						this._touchPointID = touch.id;
+						return;
+					}
+				}
 			}
 		}
 
 		/**
 		 * @private
 		 */
-		protected function stageText_changeHandler(event:flash.events.Event):void
+		protected function stageText_changeHandler(event:Event):void
 		{
 			this.text = this.stageText.text;
 		}
@@ -910,9 +1009,9 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		protected function stageText_completeHandler(event:flash.events.Event):void
+		protected function stageText_completeHandler(event:Event):void
 		{
-			this.stageText.removeEventListener(flash.events.Event.COMPLETE, stageText_completeHandler);
+			this.stageText.removeEventListener(Event.COMPLETE, stageText_completeHandler);
 			this.invalidate();
 
 			if(this._isWaitingToSetFocus && this._text)

@@ -1,50 +1,49 @@
 /*
-Copyright (c) 2012 Josh Tynjala
+ Copyright (c) 2012 Josh Tynjala
 
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
+ Permission is hereby granted, free of charge, to any person
+ obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without
+ restriction, including without limitation the rights to use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following
+ conditions:
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-*/
-package org.josht.starling.foxhole.controls
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+ */
+package org.josht.starling.foxhole.controls.renderers
 {
 	import flash.events.TimerEvent;
+	import flash.geom.Point;
 	import flash.utils.Timer;
 
+	import org.josht.starling.foxhole.controls.Button;
+	import org.josht.starling.foxhole.controls.text.BitmapFontTextRenderer;
 	import org.josht.starling.foxhole.core.FoxholeControl;
 
 	import starling.display.DisplayObject;
 	import starling.display.Image;
-	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.textures.Texture;
 
 	/**
-	 * The default item renderer for List. Supports up to three optional
-	 * sub-views, including a label to display text, an icon to display an
-	 * image, and an "accessory" to display a UI control or another display
-	 * object (with shortcuts for including a second image or a second label).
-	 * 
-	 * @see List
+	 * An abstract class for item renderer implementations.
 	 */
-	public class DefaultItemRenderer extends Button implements IListItemRenderer
+	public class BaseDefaultItemRenderer extends Button
 	{
+		private static const helperPoint:Point = new Point();
+
 		/**
 		 * @private
 		 */
@@ -61,15 +60,15 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		protected static function defaultLabelFactory():Label
+		protected static function defaultLabelFactory():BitmapFontTextRenderer
 		{
-			return new Label();
+			return new BitmapFontTextRenderer();
 		}
-		
+
 		/**
 		 * Constructor.
 		 */
-		public function DefaultItemRenderer()
+		public function BaseDefaultItemRenderer()
 		{
 			super();
 			this.isToggle = true;
@@ -89,26 +88,26 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		protected var accessoryLabel:Label;
+		protected var accessoryLabel:BitmapFontTextRenderer;
 
 		/**
 		 * @private
 		 */
 		protected var accessory:DisplayObject;
-		
+
 		/**
 		 * @private
 		 */
 		private var _data:Object;
-		
+
 		/**
-		 * @inheritDoc
+		 * The item displayed by this renderer.
 		 */
 		public function get data():Object
 		{
 			return this._data;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -121,67 +120,17 @@ package org.josht.starling.foxhole.controls
 			this._data = value;
 			this.invalidate(INVALIDATION_FLAG_DATA);
 		}
-		
+
 		/**
 		 * @private
 		 */
-		private var _index:int = -1;
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get index():int
-		{
-			return this._index;
-		}
-		
-		/**
-		 * @private
-		 */
-		public function set index(value:int):void
-		{
-			this._index = value;
-		}
-		
-		/**
-		 * @private
-		 */
-		private var _owner:List;
-		
-		/**
-		 * @inheritDoc
-		 */
-		public function get owner():List
-		{
-			return this._owner;
-		}
-		
-		/**
-		 * @private
-		 */
-		public function set owner(value:List):void
-		{
-			if(this._owner == value)
-			{
-				return;
-			}
-			if(this._owner)
-			{
-				this._owner.onScroll.remove(owner_onScroll);
-			}
-			this._owner = value;
-			if(this._owner)
-			{
-				this._owner.onScroll.add(owner_onScroll);
-			}
-			this.invalidate(INVALIDATION_FLAG_DATA);
-		}
-		
+		protected var _owner:FoxholeControl;
+
 		/**
 		 * @private
 		 */
 		protected var _delayedCurrentState:String;
-		
+
 		/**
 		 * @private
 		 */
@@ -208,22 +157,31 @@ package org.josht.starling.foxhole.controls
 		{
 			this._useStateDelayTimer = value;
 		}
-		
+
 		/**
 		 * @private
 		 */
 		override protected function set currentState(value:String):void
 		{
-			if(this._useStateDelayTimer && this._stateDelayTimer)
+			if(this._useStateDelayTimer && this._stateDelayTimer && this._stateDelayTimer.running)
 			{
 				this._delayedCurrentState = value;
 				return;
 			}
-			else if(this._useStateDelayTimer && !this._stateDelayTimer && value.toLowerCase().indexOf("down") >= 0)
+			else if(this._useStateDelayTimer &&
+				(!this._stateDelayTimer || !this._stateDelayTimer.running) &&
+				(value == Button.STATE_DOWN))
 			{
 				this._delayedCurrentState = value;
-				this._stateDelayTimer = new Timer(DOWN_STATE_DELAY_MS, 1);
-				this._stateDelayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, stateDelayTimer_timerCompleteHandler);
+				if(this._stateDelayTimer)
+				{
+					this._stateDelayTimer.reset();
+				}
+				else
+				{
+					this._stateDelayTimer = new Timer(DOWN_STATE_DELAY_MS, 1);
+					this._stateDelayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, stateDelayTimer_timerCompleteHandler);
+				}
 				this._stateDelayTimer.start();
 				return;
 			}
@@ -233,8 +191,6 @@ package org.josht.starling.foxhole.controls
 			if(this._stateDelayTimer)
 			{
 				this._stateDelayTimer.stop();
-				this._stateDelayTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, stateDelayTimer_timerCompleteHandler);
-				this._stateDelayTimer = null;
 			}
 			super.currentState = value;
 		}
@@ -827,8 +783,8 @@ package org.josht.starling.foxhole.controls
 		 * Useful for transforming the <code>Image</code> in some way. For
 		 * example, you might want to scale it for current DPI.
 		 *
-		 * @see #iconTextureField;
-		 * @see #iconTextureFunction;
+		 * @see #accessoryTextureField;
+		 * @see #accessoryTextureFunction;
 		 */
 		public function get accessoryImageFactory():Function
 		{
@@ -858,8 +814,8 @@ package org.josht.starling.foxhole.controls
 		 * of <code>accessoryLabelField</code> or <code>accessoryLabelFunction</code>.
 		 * Useful for skinning the <code>Label</code>.
 		 *
-		 * @see #iconTextureField;
-		 * @see #iconTextureFunction;
+		 * @see #accessoryLabelField;
+		 * @see #accessoryLabelFunction;
 		 */
 		public function get accessoryLabelFactory():Function
 		{
@@ -902,10 +858,12 @@ package org.josht.starling.foxhole.controls
 			if(this.accessoryImage)
 			{
 				this.accessoryImage.dispose();
+				this.accessoryImage = null;
 			}
 			if(this.accessoryLabel)
 			{
 				this.accessoryLabel.dispose();
+				this.accessoryLabel = null;
 			}
 			super.dispose();
 		}
@@ -1026,7 +984,7 @@ package org.josht.starling.foxhole.controls
 
 			return null;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -1038,6 +996,101 @@ package org.josht.starling.foxhole.controls
 				this.commitData();
 			}
 			super.draw();
+		}
+
+		/**
+		 * @private
+		 */
+		override protected function autoSizeIfNeeded():Boolean
+		{
+			const needsWidth:Boolean = isNaN(this.explicitWidth);
+			const needsHeight:Boolean = isNaN(this.explicitHeight);
+			if(!needsWidth && !needsHeight)
+			{
+				return false;
+			}
+			this.labelControl.measureText(helperPoint);
+			if(this.accessory is FoxholeControl)
+			{
+				FoxholeControl(this.accessory).validate();
+			}
+			var newWidth:Number = this.explicitWidth;
+			if(needsWidth)
+			{
+				if(this.currentIcon && this.label)
+				{
+					if(this._iconPosition != ICON_POSITION_TOP && this._iconPosition != ICON_POSITION_BOTTOM)
+					{
+						var adjustedGap:Number = this._gap == Number.POSITIVE_INFINITY ? Math.min(this._paddingLeft, this._paddingRight) : this._gap;
+						newWidth = this.currentIcon.width + adjustedGap + helperPoint.x;
+					}
+					else
+					{
+						newWidth = Math.max(this.currentIcon.width, helperPoint.x);
+					}
+				}
+				else if(this.currentIcon)
+				{
+					newWidth = this.currentIcon.width;
+				}
+				else if(this.label)
+				{
+					newWidth = helperPoint.x;
+				}
+				if(this.accessory)
+				{
+					newWidth += this.accessory.width
+				}
+				newWidth += this._paddingLeft + this._paddingRight;
+				if(isNaN(newWidth))
+				{
+					newWidth = this._originalSkinWidth;
+				}
+				else if(!isNaN(this._originalSkinWidth))
+				{
+					newWidth = Math.max(newWidth, this._originalSkinWidth);
+				}
+			}
+
+			var newHeight:Number = this.explicitHeight;
+			if(needsHeight)
+			{
+				if(this.currentIcon && this.label)
+				{
+					if(this._iconPosition == ICON_POSITION_TOP || this._iconPosition == ICON_POSITION_BOTTOM)
+					{
+						adjustedGap = this._gap == Number.POSITIVE_INFINITY ? Math.min(this._paddingTop, this._paddingBottom) : this._gap;
+						newHeight = this.currentIcon.height + adjustedGap + helperPoint.y;
+					}
+					else
+					{
+						newHeight = Math.max(this.currentIcon.height, helperPoint.y);
+					}
+				}
+				else if(this.currentIcon)
+				{
+					newHeight = this.currentIcon.height;
+				}
+				else if(this.label)
+				{
+					newHeight = helperPoint.y;
+				}
+				if(this.accessory)
+				{
+					newHeight = Math.max(newHeight, this.accessory.height);
+				}
+				newHeight += this._paddingTop + this._paddingBottom;
+				if(isNaN(newHeight))
+				{
+					newHeight = this._originalSkinHeight;
+				}
+				else if(!isNaN(this._originalSkinHeight))
+				{
+					newHeight = Math.max(newHeight, this._originalSkinHeight);
+				}
+			}
+
+			return this.setSizeInternal(newWidth, newHeight, false);
 		}
 
 		/**
@@ -1060,7 +1113,7 @@ package org.josht.starling.foxhole.controls
 					this.accessory = newAccessory;
 					if(this.accessory)
 					{
-						if(this.accessory is FoxholeControl && !(this.accessory is Label))
+						if(this.accessory is FoxholeControl && !(this.accessory is BitmapFontTextRenderer))
 						{
 							this.accessory.addEventListener(TouchEvent.TOUCH, accessory_touchHandler);
 						}
@@ -1165,35 +1218,30 @@ package org.josht.starling.foxhole.controls
 			this.accessory.x = this.actualWidth - this._paddingRight - this.accessory.width;
 			this.accessory.y = (this.actualHeight - this.accessory.height) / 2;
 		}
-		
+
 		/**
 		 * @private
 		 */
-		protected function owner_onScroll(list:List):void
+		protected function handleOwnerScroll():void
 		{
-			const state:String = this.isSelected ? Button.STATE_SELECTED_UP : Button.STATE_UP;
-			if(this._currentState != state)
+			if(this._currentState != Button.STATE_UP)
 			{
-				super.currentState = state;
+				super.currentState = Button.STATE_UP;
 			}
 			this._touchPointID = -1;
-			if(!this._stateDelayTimer)
+			if(!this._stateDelayTimer || !this._stateDelayTimer.running)
 			{
 				return;
 			}
 			this._delayedCurrentState = null;
-			this._stateDelayTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, stateDelayTimer_timerCompleteHandler);
 			this._stateDelayTimer.stop();
-			this._stateDelayTimer = null;
 		}
-		
+
 		/**
 		 * @private
 		 */
 		protected function stateDelayTimer_timerCompleteHandler(event:TimerEvent):void
 		{
-			this._stateDelayTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, stateDelayTimer_timerCompleteHandler);
-			this._stateDelayTimer = null;
 			super.currentState = this._delayedCurrentState;
 			this._delayedCurrentState = null;
 		}

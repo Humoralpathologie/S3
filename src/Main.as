@@ -14,15 +14,12 @@ package
   import Level.LevelState;
   import org.josht.starling.foxhole.themes.IFoxholeTheme;
   import starling.core.Starling;
-  import fr.kouma.starling.utils.Stats;
   import Level.*;
   import engine.StageManager;
   import engine.SaveGame;
   //import com.demonsters.debugger.MonsterDebugger;
   import flash.system.Capabilities;
-  import org.josht.starling.foxhole.themes.MinimalTheme;
-  
-  
+    
   /**
    * ...
    * @author
@@ -33,9 +30,7 @@ package
   {
     
     private var starling:Starling;
-    private var assets:AssetRegistry;
-    private var _theme:IFoxholeTheme;
-    
+    private var assets:AssetRegistry;    
     
     public function Main():void
     {
@@ -60,6 +55,7 @@ package
       
       var screenWidth:int = stage.fullScreenWidth;
       var screenHeight:int = stage.fullScreenHeight;      
+      
       
       if (Capabilities.os.indexOf("Windows") != -1 || Capabilities.os.indexOf("Mac") != -1)
       {
@@ -96,7 +92,6 @@ package
       loadingBMP.scaleX = loadingBMP.scaleY = AssetRegistry.SCALE;
       loadingSprite.addChild(loadingBMP);
       
-      
       addChild(loadingSprite);
       
       // For debugging. 
@@ -106,9 +101,7 @@ package
         {
           // Starling is ready! We remove the startup image and start the game.
           removeChild(loadingSprite);
-          starling.start();
-          _theme = new MinimalTheme(starling.stage, false);
-          
+          starling.start();          
         });
     
       // When the game becomes inactive, we pause Starling; otherwise, the enter frame event

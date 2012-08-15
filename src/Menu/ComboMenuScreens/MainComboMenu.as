@@ -11,7 +11,7 @@ package Menu.ComboMenuScreens
   import starling.events.Event;
   import starling.utils.Color;
   import starling.core.Starling;
-  import engine.StageManager;
+  import engine.ManagedStage;
   import Level.ArcadeState;
   import engine.SaveGame;
   import starling.text.TextField;
@@ -107,7 +107,7 @@ package Menu.ComboMenuScreens
       play.y = 540;
       addChild(play);
       play.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void {
-        StageManager.switchStage(ArcadeState);
+        dispatchEventWith(ManagedStage.SWITCHING, true, { stage:ArcadeState } );
       });
     }
     

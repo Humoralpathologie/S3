@@ -30,7 +30,6 @@ package org.josht.starling.foxhole.controls.popups
 	import flash.ui.Keyboard;
 
 	import org.josht.starling.display.ScrollRectManager;
-
 	import org.josht.starling.foxhole.core.FoxholeControl;
 	import org.josht.starling.foxhole.core.PopUpManager;
 	import org.osflash.signals.ISignal;
@@ -249,6 +248,7 @@ package org.josht.starling.foxhole.controls.popups
 			{
 				return;
 			}
+			//any began touch is okay here. we don't need to check all touches
 			const touch:Touch = event.getTouch(Starling.current.stage, TouchPhase.BEGAN);
 			if(!touch)
 			{

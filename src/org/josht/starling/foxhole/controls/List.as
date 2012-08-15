@@ -26,11 +26,11 @@ package org.josht.starling.foxhole.controls
 {
 	import flash.geom.Point;
 
+	import org.josht.starling.foxhole.controls.renderers.DefaultListItemRenderer;
 	import org.josht.starling.foxhole.controls.supportClasses.ListDataViewPort;
 	import org.josht.starling.foxhole.core.FoxholeControl;
 	import org.josht.starling.foxhole.core.PropertyProxy;
 	import org.josht.starling.foxhole.data.ListCollection;
-	import org.josht.starling.foxhole.layout.HorizontalLayout;
 	import org.josht.starling.foxhole.layout.ILayout;
 	import org.josht.starling.foxhole.layout.IVirtualLayout;
 	import org.josht.starling.foxhole.layout.VerticalLayout;
@@ -41,7 +41,16 @@ package org.josht.starling.foxhole.controls
 	import starling.events.TouchEvent;
 
 	/**
-	 * Displays a one-dimensional list of items. Supports scrolling.
+	 * Displays a one-dimensional list of items. Supports scrolling, custom
+	 * item renderers, and custom layouts.
+	 *
+	 * <p>Layouts may be, and are highly encouraged to be, <em>virtual</em>,
+	 * meaning that the List is capable of creating a limited number of item
+	 * renderers to display a subset of the data provider instead of creating a
+	 * renderer for every single item. This allows for optimal performance with
+	 * very large data providers.</p>
+	 *
+	 * @see GroupedList
 	 */
 	public class List extends FoxholeControl
 	{
@@ -78,7 +87,12 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _scrollToIndex:int = -1;
+		protected var _scrollToIndex:int = -1;
+
+		/**
+		 * @private
+		 */
+		protected var _scrollToIndexDuration:Number;
 
 		/**
 		 * @private
@@ -156,6 +170,20 @@ package org.josht.starling.foxhole.controls
 		{
 			return this._maxHorizontalScrollPosition;
 		}
+
+		/**
+		 * @private
+		 */
+		protected var _horizontalPageIndex:int = 0;
+
+		/**
+		 * The index of the horizontal page, if snapping is enabled. If snapping
+		 * is disabled, the index will always be <code>0</code>.
+		 */
+		public function get horizontalPageIndex():int
+		{
+			return this._horizontalPageIndex;
+		}
 		
 		/**
 		 * @private
@@ -187,6 +215,20 @@ package org.josht.starling.foxhole.controls
 			this._verticalScrollPosition = value;
 			this.invalidate(INVALIDATION_FLAG_SCROLL);
 			this._onScroll.dispatch(this);
+		}
+
+		/**
+		 * @private
+		 */
+		protected var _verticalPageIndex:int = 0;
+
+		/**
+		 * The index of the vertical page, if snapping is enabled. If snapping
+		 * is disabled, the index will always be <code>0</code>.
+		 */
+		public function get verticalPageIndex():int
+		{
+			return this._verticalPageIndex;
 		}
 		
 		/**
@@ -372,13 +414,13 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _scrollerProperties:PropertyProxy = new PropertyProxy(scrollerProperties_onChange);
+		private var _scrollerProperties:PropertyProxy;
 		
 		/**
 		 * A set of key/value pairs to be passed down to the list's scroller
 		 * instance. The scroller is a Foxhole Scroller control.
 		 *
-		 * <p>If the sub-component has its own sub-components, their properties
+		 * <p>If the subcomponent has its own subcomponents, their properties
 		 * can be set too, using attribute <code>&#64;</code> notation. For example,
 		 * to set the skin on the thumb of a <code>SimpleScrollBar</code>
 		 * which is in a <code>Scroller</code> which is in a <code>List</code>,
@@ -387,6 +429,10 @@ package org.josht.starling.foxhole.controls
 		 */
 		public function get scrollerProperties():Object
 		{
+			if(!this._scrollerProperties)
+			{
+				this._scrollerProperties = new PropertyProxy(scrollerProperties_onChange);
+			}
 			return this._scrollerProperties;
 		}
 		
@@ -399,18 +445,9 @@ package org.josht.starling.foxhole.controls
 			{
 				return;
 			}
-			if(!value)
+			if(value && !(value is PropertyProxy))
 			{
-				value = new PropertyProxy();
-			}
-			if(!(value is PropertyProxy))
-			{
-				const newValue:PropertyProxy = new PropertyProxy();
-				for(var propertyName:String in value)
-				{
-					newValue[propertyName] = value[propertyName];
-				}
-				value = newValue;
+				value = PropertyProxy.fromObject(value);
 			}
 			if(this._scrollerProperties)
 			{
@@ -427,7 +464,7 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _itemRendererProperties:PropertyProxy = new PropertyProxy(itemRendererProperties_onChange);
+		private var _itemRendererProperties:PropertyProxy;
 
 		/**
 		 * A set of key/value pairs to be passed down to all of the list's item
@@ -436,7 +473,7 @@ package org.josht.starling.foxhole.controls
 		 * to the display list) should be passed to the item renderers using an
 		 * <code>itemRendererFactory</code> or with a theme.
 		 *
-		 * <p>If the sub-component has its own sub-components, their properties
+		 * <p>If the subcomponent has its own subcomponents, their properties
 		 * can be set too, using attribute <code>&#64;</code> notation. For example,
 		 * to set the skin on the thumb of a <code>SimpleScrollBar</code>
 		 * which is in a <code>Scroller</code> which is in a <code>List</code>,
@@ -447,6 +484,10 @@ package org.josht.starling.foxhole.controls
 		 */
 		public function get itemRendererProperties():Object
 		{
+			if(!this._itemRendererProperties)
+			{
+				this._itemRendererProperties = new PropertyProxy(itemRendererProperties_onChange);
+			}
 			return this._itemRendererProperties;
 		}
 
@@ -672,7 +713,7 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _itemRendererType:Class = DefaultItemRenderer;
+		private var _itemRendererType:Class = DefaultListItemRenderer;
 		
 		/**
 		 * The class used to instantiate item renderers.
@@ -793,20 +834,23 @@ package org.josht.starling.foxhole.controls
 		}
 		
 		/**
-		 * Scrolls the list so that the specified item is visible.
+		 * Scrolls the list so that the specified item is visible. If
+		 * <code>animationDuration</code> is greater than zero, the scroll will
+		 * animate. The duration is in seconds.
 		 */
-		public function scrollToDisplayIndex(index:int):void
+		public function scrollToDisplayIndex(index:int, animationDuration:Number = 0):void
 		{
 			if(this._scrollToIndex == index)
 			{
 				return;
 			}
 			this._scrollToIndex = index;
+			this._scrollToIndexDuration = animationDuration;
 			this.invalidate(INVALIDATION_FLAG_SCROLL);
 		}
 		
 		/**
-		 * @inheritDoc
+		 * @private
 		 */
 		override public function dispose():void
 		{
@@ -818,7 +862,10 @@ package org.josht.starling.foxhole.controls
 		
 		/**
 		 * If the user is dragging the scroll, calling stopScrolling() will
-		 * cause the list to ignore the drag.
+		 * cause the list to ignore the drag. The children of the list
+		 * will still receive touches, so it's useful to call this if the
+		 * children need to support touches or dragging without the list
+		 * also scrolling.
 		 */
 		public function stopScrolling():void
 		{
@@ -842,7 +889,7 @@ package org.josht.starling.foxhole.controls
 					layout.paddingLeft = 0;
 				layout.gap = 0;
 				layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_JUSTIFY;
-				layout.verticalAlign = HorizontalLayout.VERTICAL_ALIGN_TOP;
+				layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_TOP;
 				this._layout = layout;
 			}
 
@@ -942,6 +989,8 @@ package org.josht.starling.foxhole.controls
 			this._maxVerticalScrollPosition = this.scroller.maxVerticalScrollPosition;
 			this._horizontalScrollPosition = this.scroller.horizontalScrollPosition;
 			this._verticalScrollPosition = this.scroller.verticalScrollPosition;
+			this._horizontalPageIndex = this.scroller.horizontalPageIndex;
+			this._verticalPageIndex = this.scroller.verticalPageIndex;
 
 			if(this._scrollToIndex >= 0)
 			{
@@ -967,8 +1016,16 @@ package org.josht.starling.foxhole.controls
 						helperPoint.y = this._verticalScrollPosition;
 					}
 
-					this.horizontalScrollPosition = Math.max(0, Math.min(helperPoint.x, this._maxHorizontalScrollPosition));
-					this.verticalScrollPosition = Math.max(0, Math.min(helperPoint.y, this._maxVerticalScrollPosition));
+					if(this._scrollToIndexDuration > 0)
+					{
+						this.scroller.throwTo(Math.max(0, Math.min(helperPoint.x, this._maxHorizontalScrollPosition)),
+							Math.max(0, Math.min(helperPoint.y, this._maxVerticalScrollPosition)), this._scrollToIndexDuration);
+					}
+					else
+					{
+						this.horizontalScrollPosition = Math.max(0, Math.min(helperPoint.x, this._maxHorizontalScrollPosition));
+						this.verticalScrollPosition = Math.max(0, Math.min(helperPoint.y, this._maxVerticalScrollPosition));
+					}
 				}
 				this._scrollToIndex = -1;
 			}
@@ -1073,8 +1130,12 @@ package org.josht.starling.foxhole.controls
 		{
 			this._maxHorizontalScrollPosition = this.scroller.maxHorizontalScrollPosition;
 			this._maxVerticalScrollPosition = this.scroller.maxVerticalScrollPosition;
-			this.horizontalScrollPosition = this.scroller.horizontalScrollPosition;
-			this.verticalScrollPosition = this.scroller.verticalScrollPosition;
+			this._horizontalPageIndex = this.scroller.horizontalPageIndex;
+			this._verticalPageIndex = this.scroller.verticalPageIndex;
+			this._horizontalScrollPosition = this.scroller.horizontalScrollPosition;
+			this._verticalScrollPosition = this.scroller.verticalScrollPosition;
+			this.invalidate(INVALIDATION_FLAG_SCROLL);
+			this._onScroll.dispatch(this);
 		}
 		
 		/**

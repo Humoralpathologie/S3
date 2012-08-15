@@ -6,7 +6,6 @@ package Level
   import Eggs.Eggs;
   import flash.geom.Rectangle;
   import flash.media.Sound;
-  import fr.kouma.starling.utils.Stats;
   import Snake.Snake;
   import starling.animation.Tween;
   import starling.core.Starling;
@@ -150,7 +149,7 @@ package Level
 		  var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: false}
 		}
         AssetRegistry.soundmanager.fadeOutMusic();
-        StageManager.switchStage(LevelScore, score);
+        dispatchEventWith(SWITCHING, true, { stage: LevelScore, args: score } );
       }
 	}
 	

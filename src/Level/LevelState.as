@@ -855,7 +855,8 @@ package Level
         var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true}
         
         AssetRegistry.soundmanager.fadeOutMusic();
-        StageManager.switchStage(LevelScore, score);
+        dispatchEventWith(ManagedStage.SWITCHING, true, { stage: LevelScore, args:score } );
+        
       }
     }
     
@@ -1187,7 +1188,7 @@ package Level
       {
         var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake}
         AssetRegistry.soundmanager.fadeOutMusic();
-        StageManager.switchStage(LevelScore, score);
+        dispatchEventWith(ManagedStage.SWITCHING, true, { stage: LevelScore, args:score } );        
         SaveGame.unlockLevel(_levelNr + 1);
       }
     }

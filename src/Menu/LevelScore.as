@@ -316,17 +316,17 @@ package Menu
     
     private function replay():void
     {
-      StageManager.switchStage(AssetRegistry.LEVELS[_scores.level - 1]);
+      dispatchEventWith(SWITCHING, true, { stage: AssetRegistry.LEVELS[_scores.level - 1] } );
     }
     
     private function nextLevel():void
     {
-      StageManager.switchStage(AssetRegistry.LEVELS[_scores.level]);
+      dispatchEventWith(SWITCHING, true, { stage: AssetRegistry.LEVELS[_scores.level] } );
     }
     
     private function backToMenu():void
     {
-      StageManager.switchStage(MainMenu);
+      dispatchEventWith(SWITCHING, true, { stage: MainMenu } );
     }
     
     private function addButtons():void

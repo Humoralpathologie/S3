@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 package org.josht.starling.display
 {
+	import flash.errors.IllegalOperationError;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -34,9 +35,8 @@ package org.josht.starling.display
 	import starling.display.DisplayObject;
 	import starling.display.QuadBatch;
 	import starling.events.Event;
-	import starling.textures.Texture;
 	import starling.textures.TextureSmoothing;
-	import starling.utils.transformCoords;
+	import starling.utils.MatrixUtil;
 
 	/**
 	 * Scales an image with nine regions to maintain the aspect ratio of the
@@ -59,7 +59,7 @@ package org.josht.starling.display
 			this._textures = textures;
 			this._textureScale = textureScale;
 			this._hitArea = new Rectangle();
-			this.initializeWidthAndHeight();
+			this.readjustSize();
 
 			this._batch = new QuadBatch();
 			this._batch.touchable = false;
@@ -68,9 +68,46 @@ package org.josht.starling.display
 			this.addEventListener(Event.FLATTEN, flattenHandler);
 		}
 
-		private var _textures:Scale9Textures;
+		/**
+		 * @private
+		 */
 		private var _propertiesChanged:Boolean = true;
+
+		/**
+		 * @private
+		 */
 		private var _layoutChanged:Boolean = true;
+
+		/**
+		 * @private
+		 */
+		private var _textures:Scale9Textures;
+
+		/**
+		 * The textures displayed by this image.
+		 */
+		public function get textures():Scale9Textures
+		{
+			return this._textures;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set textures(value:Scale9Textures):void
+		{
+			if(!value)
+			{
+				throw new IllegalOperationError("Scale9Image textures cannot be null.")
+			}
+			if(this._textures == value)
+			{
+				return;
+			}
+			this._textures = value;
+			this._layoutChanged = true;
+			this._propertiesChanged = true;
+		}
 
 		/**
 		 * @private
@@ -235,26 +272,26 @@ package org.josht.starling.display
 			else
 			{
 				this.getTransformationMatrix(targetSpace, helperMatrix);
-				
-				transformCoords(helperMatrix, this._hitArea.x, this._hitArea.y, helperPoint);
+
+				MatrixUtil.transformCoords(helperMatrix, this._hitArea.x, this._hitArea.y, helperPoint);
 				minX = minX < helperPoint.x ? minX : helperPoint.x;
 				maxX = maxX > helperPoint.x ? maxX : helperPoint.x;
 				minY = minY < helperPoint.y ? minY : helperPoint.y;
 				maxY = maxY > helperPoint.y ? maxY : helperPoint.y;
-				
-				transformCoords(helperMatrix, this._hitArea.x, this._hitArea.y + this._hitArea.height, helperPoint);
+
+				MatrixUtil.transformCoords(helperMatrix, this._hitArea.x, this._hitArea.y + this._hitArea.height, helperPoint);
 				minX = minX < helperPoint.x ? minX : helperPoint.x;
 				maxX = maxX > helperPoint.x ? maxX : helperPoint.x;
 				minY = minY < helperPoint.y ? minY : helperPoint.y;
 				maxY = maxY > helperPoint.y ? maxY : helperPoint.y;
-				
-				transformCoords(helperMatrix, this._hitArea.x + this._hitArea.width, this._hitArea.y, helperPoint);
+
+				MatrixUtil.transformCoords(helperMatrix, this._hitArea.x + this._hitArea.width, this._hitArea.y, helperPoint);
 				minX = minX < helperPoint.x ? minX : helperPoint.x;
 				maxX = maxX > helperPoint.x ? maxX : helperPoint.x;
 				minY = minY < helperPoint.y ? minY : helperPoint.y;
 				maxY = maxY > helperPoint.y ? maxY : helperPoint.y;
-				
-				transformCoords(helperMatrix, this._hitArea.x + this._hitArea.width, this._hitArea.y + this._hitArea.height, helperPoint);
+
+				MatrixUtil.transformCoords(helperMatrix, this._hitArea.x + this._hitArea.width, this._hitArea.y + this._hitArea.height, helperPoint);
 				minX = minX < helperPoint.x ? minX : helperPoint.x;
 				maxX = maxX > helperPoint.x ? maxX : helperPoint.x;
 				minY = minY < helperPoint.y ? minY : helperPoint.y;
@@ -297,6 +334,18 @@ package org.josht.starling.display
 		{
 			this.validate();
 			super.render(support, parentAlpha);
+		}
+
+		/**
+		 * Readjusts the dimensions of the image according to its current
+		 * textures. Call this method to synchronize image and texture size
+		 * after assigning textures with a different size.
+		 */
+		public function readjustSize():void
+		{
+			const frame:Rectangle = this._textures.texture.frame;
+			this.width = frame.width * this._textureScale;
+			this.height = frame.height * this._textureScale;
 		}
 
 		/**
@@ -432,16 +481,6 @@ package org.josht.starling.display
 
 			this._propertiesChanged = false;
 			this._layoutChanged = false;
-		}
-
-		/**
-		 * @private
-		 */
-		private function initializeWidthAndHeight():void
-		{
-			const frame:Rectangle = this._textures.texture.frame;
-			this.width = frame.width * this._textureScale;
-			this.height = frame.height * this._textureScale;
 		}
 
 		/**

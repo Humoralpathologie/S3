@@ -28,6 +28,7 @@ package org.josht.starling.foxhole.controls
 	import org.josht.starling.foxhole.core.FoxholeControl;
 	import org.josht.starling.foxhole.core.PropertyProxy;
 	import org.josht.starling.foxhole.layout.ILayout;
+	import org.josht.starling.foxhole.layout.IVirtualLayout;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 
@@ -255,13 +256,13 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		private var _scrollerProperties:PropertyProxy = new PropertyProxy(scrollerProperties_onChange);
+		private var _scrollerProperties:PropertyProxy;
 
 		/**
 		 * A set of key/value pairs to be passed down to the container's scroller
 		 * instance. The scroller is a Foxhole Scroller control.
 		 *
-		 * <p>If the sub-component has its own sub-components, their properties
+		 * <p>If the subcomponent has its own subcomponents, their properties
 		 * can be set too, using attribute <code>&#64;</code> notation. For example,
 		 * to set the skin on the thumb of a <code>SimpleScrollBar</code>
 		 * which is in a <code>Scroller</code> which is in a <code>List</code>,
@@ -270,6 +271,10 @@ package org.josht.starling.foxhole.controls
 		 */
 		public function get scrollerProperties():Object
 		{
+			if(!this._scrollerProperties)
+			{
+				this._scrollerProperties = new PropertyProxy(scrollerProperties_onChange);
+			}
 			return this._scrollerProperties;
 		}
 
@@ -347,17 +352,17 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * @private
 		 */
-		override public function addChildAt(child:DisplayObject, index:int):void
+		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
-			this.viewPort.addChildAt(child, index);
+			return this.viewPort.addChildAt(child, index);
 		}
 
 		/**
 		 * @private
 		 */
-		override public function removeChildAt(index:int, dispose:Boolean = false):void
+		override public function removeChildAt(index:int, dispose:Boolean = false):DisplayObject
 		{
-			this.viewPort.removeChildAt(index, dispose);
+			return this.viewPort.removeChildAt(index, dispose);
 		}
 
 		/**
@@ -402,6 +407,22 @@ package org.josht.starling.foxhole.controls
 		}
 
 		/**
+		 * If the user is dragging the scroll, calling stopScrolling() will
+		 * cause the container to ignore the drag. The children of the container
+		 * will still receive touches, so it's useful to call this if the
+		 * children need to support touches or dragging without the container
+		 * also scrolling.
+		 */
+		public function stopScrolling():void
+		{
+			if(!this.scroller)
+			{
+				return;
+			}
+			this.scroller.stopScrolling();
+		}
+
+		/**
 		 * @private
 		 */
 		override protected function initialize():void
@@ -428,6 +449,10 @@ package org.josht.starling.foxhole.controls
 
 			if(dataInvalid)
 			{
+				if(this._layout is IVirtualLayout)
+				{
+					IVirtualLayout(this._layout).useVirtualLayout = false;
+				}
 				this.viewPort.layout = this._layout;
 			}
 

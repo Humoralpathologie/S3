@@ -6,9 +6,9 @@ package Menu.PauseMenuScreens
   import org.josht.starling.foxhole.controls.Slider;
   import starling.display.Quad;
   import org.osflash.signals.ISignal;
-  import engine.StageManager;
   import Menu.MainMenu;
   import flash.utils.*;
+  import engine.ManagedStage;
   
   /**
    * ...
@@ -54,7 +54,7 @@ package Menu.PauseMenuScreens
       _backButton.x = _greyBox.x + (_greyBox.width - _backButton.width) / 2;
       _backButton.y = _zoomSlider.y + 100;
       _backButton.onRelease.add(function(button:Button) {
-        StageManager.switchStage(MainMenu);
+        dispatchEventWith(ManagedStage.SWITCHING, true, { stage: MainMenu } );
       });
       
       _restartButton = new Button();
@@ -64,7 +64,7 @@ package Menu.PauseMenuScreens
       _restartButton.x = _backButton.x;
       _restartButton.y = _backButton.y + _backButton.height + 40;
       _restartButton.onRelease.add(function(button:Button) {
-        StageManager.switchStage(Class(getDefinitionByName(getQualifiedClassName(levelstate))));
+        dispatchEventWith(ManagedStage.SWITCHING, true, { stage: Class(getDefinitionByName(getQualifiedClassName(levelstate))) } );
       });      
           
       addChild(_backButton);

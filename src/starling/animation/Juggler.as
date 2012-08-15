@@ -78,10 +78,9 @@ package starling.animation
             
             var dispatcher:EventDispatcher = object as EventDispatcher;
             if (dispatcher) dispatcher.removeEventListener(Event.REMOVE_FROM_JUGGLER, onRemove);
-            
-            for (var i:int=mObjects.length-1; i>=0; --i)
-                if (mObjects[i] == object) 
-                    mObjects.splice(i, 1);
+
+            var index:int = mObjects.indexOf(object);
+            if (index != -1) mObjects[index] = null;
         }
         
         /** Removes all tweens with a certain target. */
@@ -94,7 +93,7 @@ package starling.animation
             {
                 var tween:Tween = mObjects[i] as Tween;
                 if (tween && tween.target == target)
-                    mObjects.splice(i, 1);
+                    mObjects[i] = null;
             }
         }
         
@@ -123,19 +122,44 @@ package starling.animation
         /** Advances all objects by a certain time (in seconds). */
         public function advanceTime(time:Number):void
         {   
-            if(!paused) {
-            mElapsedTime += time * timeFactor;
-            if (mObjects.length == 0) return;
-            
-            // since 'advanceTime' could modify the juggler (through a callback), we iterate
-            // over a copy of 'mObjects'.
-            
+            if (mPaused) { return } ;
             var numObjects:int = mObjects.length;
-            var objectCopy:Vector.<IAnimatable> = mObjects.concat();
+            var currentIndex:int = 0;
+            var i:int;
             
-            for (var i:int=0; i<numObjects; ++i)
-                objectCopy[i].advanceTime(time);
+            mElapsedTime += time * mTimeFactor;
+            if (numObjects == 0) return;
+            
+            // there is a high probability that the "advanceTime" function modifies the list 
+            // of animatables. we must not process new objects right now (they will be processed
+            // in the next frame), and we need to clean up any empty slots in the list.
+            
+            for (i=0; i<numObjects; ++i)
+            {
+                var object:IAnimatable = mObjects[i];
+                if (object)
+                {
+                    object.advanceTime(time);
+                    
+                    // shift objects into empty slots along the way
+                    if (currentIndex != i) 
+                    {
+                        mObjects[currentIndex] = object;
+                        mObjects[i] = null;
+                    }
+                    
+                    ++currentIndex;
+                }
+            }
+            
+            if (currentIndex != i)
+            {
+                numObjects = mObjects.length; // count might have changed!
                 
+                while (i < numObjects)
+                    mObjects[currentIndex++] = mObjects[i++];
+                
+                mObjects.length = currentIndex;
             }
         }
         
@@ -146,25 +170,9 @@ package starling.animation
         
         /** The total life time of the juggler. */
         public function get elapsedTime():Number { return mElapsedTime; }        
-        
-        public function get paused():Boolean 
-        {
-            return mPaused;
-        }
-        
-        public function set paused(value:Boolean):void 
-        {
-            mPaused = value;
-        }
-        
-        public function get timeFactor():Number 
-        {
-            return mTimeFactor;
-        }
-        
-        public function set tTimeFactor(value:Number):void 
-        {
-            mTimeFactor = value;
-        }
+        public function get paused():Boolean { return mPaused; }
+        public function set paused(value:Boolean):void { mPaused = value; }
+        public function get timeFactor():Number { return mTimeFactor; }
+        public function set timeFactor(value:Number):void { mTimeFactor = value; }
     }
 }

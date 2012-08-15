@@ -22,13 +22,14 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-package org.josht.starling.foxhole.controls
+package org.josht.starling.foxhole.controls.text
 {
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
 	import org.josht.starling.foxhole.core.FoxholeControl;
+	import org.josht.starling.foxhole.core.ITextRenderer;
 	import org.josht.starling.foxhole.text.BitmapFontTextFormat;
 
 	import starling.core.RenderSupport;
@@ -39,10 +40,9 @@ package org.josht.starling.foxhole.controls
 	import starling.textures.TextureSmoothing;
 
 	/**
-	 * Displays bitmap text. Automatically resizes itself. Can be truncated to a
-	 * maximum width.
+	 * Renders text using bitmap fonts.
 	 */
-	public class Label extends FoxholeControl
+	public class BitmapFontTextRenderer extends FoxholeControl implements ITextRenderer
 	{
 		/**
 		 * @private
@@ -57,7 +57,7 @@ package org.josht.starling.foxhole.controls
 		/**
 		 * Constructor.
 		 */
-		public function Label()
+		public function BitmapFontTextRenderer()
 		{
 			this.isQuickHitAreaEnabled = true;
 		}
@@ -66,11 +66,16 @@ package org.josht.starling.foxhole.controls
 		 * @private
 		 */
 		private var _characterBatch:QuadBatch;
+
+		/**
+		 * @private
+		 */
+		protected var currentTextFormat:BitmapFontTextFormat;
 		
 		/**
 		 * @private
 		 */
-		private var _textFormat:BitmapFontTextFormat;
+		protected var _textFormat:BitmapFontTextFormat;
 		
 		/**
 		 * The font and styles used to draw the text.
@@ -90,6 +95,32 @@ package org.josht.starling.foxhole.controls
 				return;
 			}
 			this._textFormat = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		protected var _disabledTextFormat:BitmapFontTextFormat;
+
+		/**
+		 * The font and styles used to draw the text when the label is disabled.
+		 */
+		public function get disabledTextFormat():BitmapFontTextFormat
+		{
+			return this._disabledTextFormat;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set disabledTextFormat(value:BitmapFontTextFormat):void
+		{
+			if(this._disabledTextFormat == value)
+			{
+				return;
+			}
+			this._disabledTextFormat = value;
 			this.invalidate(INVALIDATION_FLAG_STYLES);
 		}
 		
@@ -201,6 +232,21 @@ package org.josht.starling.foxhole.controls
 		}
 
 		/**
+		 * @inheritDoc
+		 */
+		public function get baseline():Number
+		{
+			if(!this._textFormat)
+			{
+				return 0;
+			}
+			const font:BitmapFont = this._textFormat.font;
+			const formatSize:Number = this._textFormat.size;
+			const fontSizeScale:Number = isNaN(formatSize) ? 1 : (formatSize / font.size);
+			return font.baseline * fontSizeScale;
+		}
+
+		/**
 		 * @private
 		 */
 		override public function render(support:RenderSupport, alpha:Number):void
@@ -225,10 +271,15 @@ package org.josht.starling.foxhole.controls
 		}
 		
 		/**
-		 * Measures the label's text without a full validation.
+		 * @inheritDoc
 		 */
 		public function measureText(result:Point = null):Point
 		{
+			if(this.isInvalid(INVALIDATION_FLAG_STYLES) || this.isInvalid(INVALIDATION_FLAG_STATE))
+			{
+				this.refreshTextFormat();
+			}
+
 			if(!result)
 			{
 				result = new Point();
@@ -237,16 +288,16 @@ package org.josht.starling.foxhole.controls
 			{
 				result.x = result.y = 0;
 			}
-			if(!this._textFormat)
+			if(!this.currentTextFormat)
 			{
 				return result;
 			}
-			const font:BitmapFont = this._textFormat.font;
-			const customSize:Number = this._textFormat.size;
-			const customLetterSpacing:Number = this._textFormat.letterSpacing;
-			const isKerningEnabled:Boolean = this._textFormat.isKerningEnabled;
+			const font:BitmapFont = this.currentTextFormat.font;
+			const customSize:Number = this.currentTextFormat.size;
+			const customLetterSpacing:Number = this.currentTextFormat.letterSpacing;
+			const isKerningEnabled:Boolean = this.currentTextFormat.isKerningEnabled;
 			const scale:Number = isNaN(customSize) ? 1 : (customSize / font.size);
-			const color:uint = this._textFormat.color;
+			const color:uint = this.currentTextFormat.color;
 			const lineHeight:Number = font.lineHeight * scale;
 			
 			var maxX:Number = 0;
@@ -306,21 +357,27 @@ package org.josht.starling.foxhole.controls
 			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
 			const stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
 			const sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
-			
+			const stateInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STATE);
+
+			if(stylesInvalid || stateInvalid)
+			{
+				this.refreshTextFormat();
+			}
+
 			if(dataInvalid || stylesInvalid || sizeInvalid)
 			{
 				this._characterBatch.reset();
-				if(!this._textFormat)
+				if(!this.currentTextFormat)
 				{
 					this.setSizeInternal(0, 0, false);
 					return;
 				}
-				const font:BitmapFont = this._textFormat.font;
-				const customSize:Number = this._textFormat.size;
-				const customLetterSpacing:Number = this._textFormat.letterSpacing;
-				const isKerningEnabled:Boolean = this._textFormat.isKerningEnabled;
+				const font:BitmapFont = this.currentTextFormat.font;
+				const customSize:Number = this.currentTextFormat.size;
+				const customLetterSpacing:Number = this.currentTextFormat.letterSpacing;
+				const isKerningEnabled:Boolean = this.currentTextFormat.isKerningEnabled;
 				const scale:Number = isNaN(customSize) ? 1 : (customSize / font.size);
-				const color:uint = this._textFormat.color;
+				const color:uint = this.currentTextFormat.color;
 				const lineHeight:Number = font.lineHeight * scale;
 
 				var maxX:Number = 0;
@@ -391,7 +448,25 @@ package org.josht.starling.foxhole.controls
 			}
 		}
 
-		private function getTruncatedText():String
+		/**
+		 * @private
+		 */
+		protected function refreshTextFormat():void
+		{
+			if(!this._isEnabled && this._disabledTextFormat)
+			{
+				this.currentTextFormat = this._disabledTextFormat;
+			}
+			else
+			{
+				this.currentTextFormat = this._textFormat;
+			}
+		}
+
+		/**
+		 * @private
+		 */
+		protected function getTruncatedText():String
 		{
 			//if the maxWidth is infinity or the string is multiline, don't
 			//allow truncation
@@ -400,10 +475,10 @@ package org.josht.starling.foxhole.controls
 				return this._text;
 			}
 
-			const font:BitmapFont = this._textFormat.font;
-			const customSize:Number = this._textFormat.size;
-			const customLetterSpacing:Number = this._textFormat.letterSpacing;
-			const isKerningEnabled:Boolean = this._textFormat.isKerningEnabled;
+			const font:BitmapFont = this.currentTextFormat.font;
+			const customSize:Number = this.currentTextFormat.size;
+			const customLetterSpacing:Number = this.currentTextFormat.letterSpacing;
+			const isKerningEnabled:Boolean = this.currentTextFormat.isKerningEnabled;
 			const scale:Number = isNaN(customSize) ? 1 : (customSize / font.size);
 			var currentX:Number = 0;
 			var lastCharID:Number = NaN;

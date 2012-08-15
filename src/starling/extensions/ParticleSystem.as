@@ -95,7 +95,6 @@ package starling.extensions
         {
             if (mVertexBuffer) mVertexBuffer.dispose();
             if (mIndexBuffer)  mIndexBuffer.dispose();
-            mParticles = null;
             
             Starling.current.removeEventListener(Event.CONTEXT3D_CREATE, onContextCreated);
             
@@ -320,6 +319,11 @@ package starling.extensions
             // always call this method when you write custom rendering code!
             // it causes all previously batched quads/images to render.
             support.finishQuadBatch();
+            
+            // make this call to keep the statistics display in sync.
+            // to play it safe, it's done in a backwards-compatible way here.
+            if (support.hasOwnProperty("raiseDrawCount"))
+                support.raiseDrawCount();
             
             alpha *= this.alpha;
             
