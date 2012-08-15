@@ -46,16 +46,14 @@ package UI
     private var _comboText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _speedText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
     private var _poisonText:TextField = new TextField(80, 50, "0", "kroeger 06_65", 45, Color.WHITE);
-<<<<<<< HEAD
     private var _controls:Vector.<Button>;
-=======
     
     private var _previewBoxes:Array = [new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
                                       new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
                                       new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
                                       new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview")),
                                       new Image(AssetRegistry.SnakeAtlas.getTexture("UIBoxFuerPreview"))];
->>>>>>> eaae77c... implementing preview
+
  
     private var _previewTypes:Array = [];
     private var _icons:Object = {lifes: [_lifes, _lifesText, {x: 12, y: 12}],
