@@ -193,14 +193,7 @@ package UI
         }
       }
 
-      var xPos:int = 780;//960 - 36 * 5
-      var yPos:int = 10;
-      for (var k:int; k < _previewBoxes.length; k++){
-        _previewBoxes[k].x = xPos;
-        _previewBoxes[k].y = yPos;
-        xPos += _previewBoxes[k].width;
-        addChild(_previewBoxes[k]);
-      }
+
       unflatten();
       addChild(_scoreText);
       addChild(_radar);      
@@ -211,6 +204,15 @@ package UI
         levelstate.togglePause();
       });
       addChild(_pause);     
+      
+      var xPos:int =  _pause.x - (36 * 5);//960 - 36 * 5 
+      var yPos:int = 10;
+      for (var k:int; k < _previewBoxes.length; k++){
+        _previewBoxes[k].x = xPos;
+        _previewBoxes[k].y = yPos;
+        xPos += _previewBoxes[k].width;
+        addChild(_previewBoxes[k]);
+      }      
       _controls.push(_pause);
     }
     
