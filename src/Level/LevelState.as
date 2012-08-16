@@ -61,7 +61,7 @@ package Level
   import flash.events.Event;
   import Menu.PauseMenuScreens.*;
   import org.josht.starling.foxhole.themes.MinimalTheme;
- 
+  
   /**
    * ...
    * @author
@@ -114,7 +114,7 @@ package Level
     private static var sfx:Sound;
     private var _bonusTimer:Number = 0;
     protected var _bonusTimerPoints:Number = 0;
-	
+    
     private var _bonusBar:Quad;
     private var _bonusBack:Quad;
     
@@ -129,12 +129,12 @@ package Level
     protected var _maxEggs:int = 5;
     protected var _timeExtension:Number = 3;
     protected var _chainTime:Number = 2.5;
-	protected var _extensionTime:int;
+    protected var _extensionTime:int;
     protected var _spawnMap:Array = [];
     protected var _textLevel:Sprite;
     
     private var _updateTimer:Number;
-	
+    
     // Pause Menu
     protected var _pauseMenu:ScreenNavigator;
     
@@ -149,14 +149,17 @@ package Level
     public function LevelState()
     {
       super();
-      addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-	  trace("Language: " + String(SaveGame.language));
-	  trace(AssetRegistry.Strings);
-	  if (SaveGame.difficulty == 1) {
-		SaveGame.startSpeed = 7;  
-	  } else {
-		SaveGame.startSpeed = 10;
-	  }
+      Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+      trace("Language: " + String(SaveGame.language));
+      trace(AssetRegistry.Strings);
+      if (SaveGame.difficulty == 1)
+      {
+        SaveGame.startSpeed = 7;
+      }
+      else
+      {
+        SaveGame.startSpeed = 10;
+      }
       // Initialize and fill the TextField pool
       _textFieldPool = new Vector.<TextField>;
       _textLevel = new Sprite;
@@ -167,11 +170,11 @@ package Level
         _textLevel.addChild(temp);
         _textFieldPool.push(temp);
       }
-                 
+      
       sfx = AssetRegistry.LevelMusic1Sound;
-            
+      
       _currentCombos = null;
-     
+      
       _speed = 1 / SaveGame.startSpeed;
       
       this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
@@ -196,8 +199,8 @@ package Level
       addObstacles();
       addSpawnMap();
       setBoundaries();
-	  _snake = new Snake(SaveGame.startSpeed);
-	  
+      _snake = new Snake(SaveGame.startSpeed);
+      
       _following = _snake.head;
       _levelStage.addChild(_snake);
       
@@ -212,9 +215,9 @@ package Level
       addParticles();
       
       addChild(_textLevel);
-     
+      
       addHud();
-           
+      
       //create bonusbar
       _bonusBar = new Quad(1, 8, 0xffffff);
       _bonusBack = new Quad(27, 10, 0x000000);
@@ -225,7 +228,7 @@ package Level
       _levelStage.addChild(_bonusBar);
       
       startAt(_startPos.x, _startPos.y);
-         
+      
       _mchammer = new Quad(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
       _mchammer.alpha = 0;
       
@@ -234,8 +237,7 @@ package Level
       
       pause();
       showObjective();
-      
-      
+    
     }
     
     public function extendTime():void
@@ -258,7 +260,7 @@ package Level
     
     protected function showObjective():void
     {
-	  
+    
     }
     
     protected function addSpawnMap():void
@@ -328,10 +330,10 @@ package Level
     }
     
     public function addFrame():void
-    {      
+    {
       var frame:Image = new Image(AssetRegistry.HalfFrameTexture);
       var rightFrame:Image = new Image(AssetRegistry.HalfFrameTexture);
-      frame.x = -186; 
+      frame.x = -186;
       frame.y = -161;
       rightFrame.scaleX = -1;
       rightFrame.x = frame.x + frame.width + frame.width;
@@ -418,7 +420,7 @@ package Level
       // Use a GTween, as the Starling tweens are paused.
       new GTween(_sadSnake, 2, {y: Starling.current.stage.stageHeight - _sadSnake.height});
       new GTween(_sadText, 2, {y: 0});
-            
+      
       var registerTouchHandler:Function = function():void
       {
         addEventListener(TouchEvent.TOUCH, dieScreenTouch);
@@ -523,7 +525,7 @@ package Level
       egg = _eggs.recycleEgg(0, 0, types[Math.floor(Math.random() * types.length)]);
       
       placeEgg(egg);
-      
+    
     }
     
     public function placeEgg(egg:Eggs.Egg, rotten:Boolean = false):void
@@ -539,7 +541,7 @@ package Level
       } while (!free(eggx, eggy));
       egg.tileX = eggx;
       egg.tileY = eggy;
-      
+    
     }
     
     private function free(x:int, y:int):Boolean
@@ -550,14 +552,14 @@ package Level
     protected function eatEgg(egg:Egg):void
     {
       
-       AssetRegistry.BiteSound.play();
+      AssetRegistry.BiteSound.play();
       
       if (!_rottenEnabled && egg.type == AssetRegistry.EGGROTTEN || egg.type != AssetRegistry.EGGROTTEN) // || egg.type < AssetRegistry.EGGROTTEN)
       {
         if (egg.type <= AssetRegistry.EGGROTTEN)
         {
           _snake.eat(egg.type);
-		      _hud.addPreview(egg.type); 
+          _hud.addPreview(egg.type);
         }
         
         var particle:PDParticleSystem = _particles[egg.type];
@@ -595,7 +597,7 @@ package Level
           showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
           _score += _bonusTimerPoints;
         }
-		
+        
         _score += points;
         _bonusTimer = _chainTime;
         
@@ -619,8 +621,8 @@ package Level
         
       }
       
-       AssetRegistry.soundmanager.level = Math.floor(_snake.eatenEggs / 10);
-      
+      AssetRegistry.soundmanager.level = Math.floor(_snake.eatenEggs / 10);
+    
     }
     
     protected function updateTimers(event:EnterFrameEvent):void
@@ -705,14 +707,15 @@ package Level
             
             _snake.removeBodyPart(egg);
             
-            soundCounter++;            
-            _hud.updatePreview(_snake); 
-
+            soundCounter++;
+            _hud.updatePreview(_snake);
+            
             setTimeout(func, (300 / (expoCounter * expoCounter)) + 80);
-
-
+            
           }
-        } else {
+        }
+        else
+        {
           _justAte = true;
         }
       }
@@ -745,7 +748,7 @@ package Level
       }
       
       Starling.juggler.add(tween);
-      
+    
     }
     
     protected function doCombos():void
@@ -861,7 +864,7 @@ package Level
         var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true}
         
         AssetRegistry.soundmanager.fadeOutMusic();
-        dispatchEventWith(ManagedStage.SWITCHING, true, { stage: LevelScore, args:score } );
+        dispatchEventWith(ManagedStage.SWITCHING, true, {stage: LevelScore, args: score});
         
       }
     }
@@ -902,14 +905,15 @@ package Level
         else
         {
           updateTimers(event);
-		  trace("overallTimer: " + String(int(_overallTimer)));
-		  trace("extensionTime: " + String(int(_extensionTime)));
-		  if ((int(_overallTimer) > 0) && (int(_overallTimer) == _extensionTime)) {
-		    _chainTime = 2.5;
-			_bonusBack.width = 27;
-			_extensionTime = 0;
-			showMessage("Chaintime extension extended!");
-		  }
+          trace("overallTimer: " + String(int(_overallTimer)));
+          trace("extensionTime: " + String(int(_extensionTime)));
+          if ((int(_overallTimer) > 0) && (int(_overallTimer) == _extensionTime))
+          {
+            _chainTime = 2.5;
+            _bonusBack.width = 27;
+            _extensionTime = 0;
+            showMessage("Chaintime extension extended!");
+          }
         }
         
         if (_eggs.length < _maxEggs)
@@ -918,14 +922,14 @@ package Level
         }
         
         updateHud();
-
+        
         _snake.update(event.passedTime * Starling.juggler.timeFactor);
-          
+        
         _speed = _snake.speed;
         if (_timer >= _speed)
         {
           _snake.move();
-   
+          
           doCombos();
           
           eggCollide();
@@ -944,7 +948,7 @@ package Level
         }
         
       }
-      
+    
       //Starling.current.statsDisplay.additionalStats["TU"] = getTimer() - _updateTimer;
     
     }
@@ -1031,49 +1035,56 @@ package Level
       //Starling.juggler.paused = false;
     }
     
-    public function togglePause():void {
-      if (_paused) {
+    public function togglePause():void
+    {
+      if (_paused)
+      {
         unpause();
         hidePauseMenu();
-      } else {
+      }
+      else
+      {
         pause();
         showPauseMenu();
       }
     }
     
-    private function createPauseMenu():void {
+    private function createPauseMenu():void
+    {
       
       _pauseMenu = new ScreenNavigator();
       var trans:ScreenFadeTransitionManager = new ScreenFadeTransitionManager(_pauseMenu);
-           
+      
       _pauseMenu.addScreen(PAUSEMAIN, new ScreenNavigatorItem(new PauseMainScreen(this)));
       _pauseMenu.defaultScreenID = PAUSEMAIN;
       addChild(_pauseMenu);
-      
-      /*
-      _zoomSlider = new Slider();
-      _zoomSlider.value = _zoom;
-      _zoomSlider.minimum = 0.5;
-      _zoomSlider.maximum = 5;
-      _zoomSlider.onChange.add(function(slider:Slider) {
-        zoom = slider.value;
-      });*/
-      
+    
+    /*
+       _zoomSlider = new Slider();
+       _zoomSlider.value = _zoom;
+       _zoomSlider.minimum = 0.5;
+       _zoomSlider.maximum = 5;
+       _zoomSlider.onChange.add(function(slider:Slider) {
+       zoom = slider.value;
+     });*/
+    
     }
     
-    private function showPauseMenu():void {
+    private function showPauseMenu():void
+    {
       _mchammer.y = 100; // Keep pause button.
       _pauseMenu.showScreen(PAUSEMAIN);
     }
     
-    private function hidePauseMenu():void {
+    private function hidePauseMenu():void
+    {
       _mchammer.y = 0;
       _pauseMenu.clearScreen();
     }
     
     protected function checkWin():void
     {
-
+    
     }
     
     protected function win():void
@@ -1094,7 +1105,7 @@ package Level
       // Use a GTween, as the Starling tweens are paused.
       new GTween(_evilSnake, 2, {y: Starling.current.stage.stageHeight - _evilSnake.height});
       new GTween(_evilText, 2, {y: 0});
-            
+      
       var registerTouchHandler:Function = function():void
       {
         addEventListener(TouchEvent.TOUCH, winScreenTouch);
@@ -1105,8 +1116,8 @@ package Level
     
     protected function showObjectiveBox(desc:String, goals:Array, fontSize:int = 50):void
     {
-	  var _scrollable:Sprite = new Sprite();
-	  
+      var _scrollable:Sprite = new Sprite();
+      
       var box:Quad = new Quad(800, 600, 0);
       box.alpha = 0x44 / 0xff;
       box.x = (960 - box.width) / 2;
@@ -1114,27 +1125,29 @@ package Level
       addChild(box);
       
       var _goals:Sprite = new Sprite();
-	  
+      
       var xPos:int = box.x;
       var yPos:int = box.y + 80;
-	  
-      for (var i:int = 0; i < goals.length; i++) {
+      
+      for (var i:int = 0; i < goals.length; i++)
+      {
         var img:Image = goals[i][0];
         var txt:TextField = new TextField(80, 50, goals[x][1], "kroeger 06_65", 45, Color.WHITE);
         img.x = xPos;
         img.y = yPos;
-		img.scaleX = img.scaleY = 3;
-		trace("goals.length = " + String(goals.length));
-		if (goals.length == 1) {
-		  img.x = (box.width - img.width) / 2 - 80;   
-	    }
-		txt.scaleX = txt.scaleY = 1.5;
+        img.scaleX = img.scaleY = 3;
+        trace("goals.length = " + String(goals.length));
+        if (goals.length == 1)
+        {
+          img.x = (box.width - img.width) / 2 - 80;
+        }
+        txt.scaleX = txt.scaleY = 1.5;
         txt.x = img.x + img.width + 10;
-		txt.y = img.y - 5;
+        txt.y = img.y - 5;
         xPos = txt.x + txt.width + 10;
         _goals.addChild(img);
         _goals.addChild(txt);
-      }	  
+      }
       _goals.x = (box.x - _goals.x) / 2;
       _scrollable.addChild(_goals);
       
@@ -1145,36 +1158,37 @@ package Level
       _scroller.viewPort = _scrollable;
       
       addChild(_scroller);
-	  
+      
       var text:TextField = new TextField(700, 800, "", "kroeger 06_65", fontSize, Color.WHITE);
-      text.text = desc;	  
-	  text.x = (box.width - text.width) / 2;
-	  text.y = box.y + 50; 
-	  
-	  _scrollable.addChild(text);
+      text.text = desc;
+      text.x = (box.width - text.width) / 2;
+      text.y = box.y + 50;
+      
+      _scrollable.addChild(text);
       
       _scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
-	  
+      
       //text.touchable = false;
       var that = this;
       
-	  var _goButton:Button = new Button();
-	  _goButton.label = "GO!";
-	  _goButton.width = 800;
-	  _goButton.height = 80;
-	  _goButton.x = (Starling.current.stage.stageWidth - 800) / 2;
-	  _goButton.y = Starling.current.stage.stageHeight - 80;
-	 
-	  var that:LevelState = this;
-	  addChild(_goButton);
-	  _goButton.onRelease.add(function(button:Button) {
-		that.removeChild(_goButton);
-		that.removeChild(box);
-		that.removeChild(_scrollable);
-		that.removeChild(_scroller);
-		unpause();
-      });
-	  
+      var _goButton:Button = new Button();
+      _goButton.label = "GO!";
+      _goButton.width = 800;
+      _goButton.height = 80;
+      _goButton.x = (Starling.current.stage.stageWidth - 800) / 2;
+      _goButton.y = Starling.current.stage.stageHeight - 80;
+      
+      var that:LevelState = this;
+      addChild(_goButton);
+      _goButton.onRelease.add(function(button:Button)
+        {
+          that.removeChild(_goButton);
+          that.removeChild(box);
+          that.removeChild(_scrollable);
+          that.removeChild(_scroller);
+          unpause();
+        });
+    
     }
     
     protected function startAt(x:int, y:int):void
@@ -1202,7 +1216,7 @@ package Level
       {
         var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake}
         AssetRegistry.soundmanager.fadeOutMusic();
-        dispatchEventWith(ManagedStage.SWITCHING, true, { stage: LevelScore, args:score } );        
+        dispatchEventWith(ManagedStage.SWITCHING, true, {stage: LevelScore, args: score});
         SaveGame.unlockLevel(_levelNr + 1);
       }
     }
@@ -1257,8 +1271,8 @@ package Level
     {
       _chainTime = value;
     }
-	
-	public function get extensionTime():Number
+    
+    public function get extensionTime():Number
     {
       return _extensionTime;
     }
@@ -1268,12 +1282,12 @@ package Level
       _extensionTime = value;
     }
     
-	public function get overallTimer():Number
+    public function get overallTimer():Number
     {
       return _overallTimer;
     }
-   
-	public function setBonusBackWidth(value:int):void
+    
+    public function setBonusBackWidth(value:int):void
     {
       _bonusBack.width = value;
     }
@@ -1288,7 +1302,8 @@ package Level
       _eggs = value;
     }
     
-    override public function dispose():void {
+    override public function dispose():void
+    {
       var i:int = 0;
       
       removeChildren();
@@ -1296,19 +1311,20 @@ package Level
       _textLevel.dispose();
       _textLevel = null;
       
-      for (i = 0; i < _textFieldPool.length; i++) {
+      for (i = 0; i < _textFieldPool.length; i++)
+      {
         _textFieldPool[i].dispose();
       }
       
       _currentCombos = null;
       
       this.removeEventListeners(EnterFrameEvent.ENTER_FRAME);
-      this.removeEventListeners(KeyboardEvent.KEY_DOWN);
+      Starling.current.stage.removeEventListeners(KeyboardEvent.KEY_DOWN);
       this.removeEventListeners(TouchEvent.TOUCH);
       
       _comboSet.dispose();
       _comboSet = null;
-      _levelStage.removeChildren();      
+      _levelStage.removeChildren();
       _levelStage.dispose();
       _levelStage = null;
       _bg.dispose();
@@ -1323,7 +1339,7 @@ package Level
       _rottenEggs.dispose();
       _rottenEggs = null;
       _hud.dispose();
-      _hud = null; 
+      _hud = null;
       _bonusBar.dispose();
       _bonusBar = null;
       _bonusBack.dispose();
@@ -1333,13 +1349,14 @@ package Level
       _pauseMenu.dispose();
       _pauseMenu = null;
       
-      for each(var particle:PDParticleSystem in _particles) {
+      for each (var particle:PDParticleSystem in _particles)
+      {
         particle.dispose();
       }
       _particles = null;
-
-      super.dispose();
       
+      super.dispose();
+    
     }
   
   }
