@@ -74,6 +74,7 @@ package Menu.SettingsScreens
       _scroller.x = _greyBox.x;
       _scroller.y = _heading.y + _heading.height + 20;
       _scroller.setSize(_greyBox.width, _greyBox.height - (_heading.height + 20));
+      _scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
       
 	    addChild(_scroller);
       

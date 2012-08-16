@@ -37,6 +37,7 @@ package org.josht.starling.foxhole.themes
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 	import starling.text.BitmapFont;
+  import starling.text.TextField;  
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	import starling.textures.TextureSmoothing;
@@ -106,7 +107,8 @@ package org.josht.starling.foxhole.themes
 		[Embed(source="/../assets/fonts/pf_ronda_seven.fnt",mimeType="application/octet-stream")]
 		protected static const ATLAS_FONT_XML:Class;
 
-		protected static const BITMAP_FONT:BitmapFont = new BitmapFont(ATLAS.getTexture("pf_ronda_seven_0"), XML(new ATLAS_FONT_XML()));
+		//protected static const BITMAP_FONT:BitmapFont = new BitmapFont(ATLAS.getTexture("pf_ronda_seven_0"), XML(new ATLAS_FONT_XML()));
+    protected static const BITMAP_FONT:BitmapFont = TextField.getBitmapFont("kroeger 06_65");
 
 		public function MinimalTheme(root:DisplayObject, scaleToDPI:Boolean = true)
 		{
@@ -165,7 +167,8 @@ package org.josht.starling.foxhole.themes
 
 			//since it's a pixel font, we want a multiple of the original size,
 			//which, in this case, is 8.
-			this._fontSize = Math.max(4, roundToNearest(24 * this._scale, 8));
+			//this._fontSize = Math.max(4, roundToNearest(24 * this._scale, 8));
+      _fontSize = 28;
 
 			this.setInitializerForClass(BitmapFontTextRenderer, labelInitializer);
 			this.setInitializerForClass(Button, buttonInitializer);
