@@ -72,7 +72,7 @@ package engine {
 	  return _sharedObject.data.secondArcade;
 	}
     public static function get startSpeed():int {
-      return _sharedObject.data.startSpeed || 10;
+      return _sharedObject.data.startSpeed;
     }
     
     public static function get noGreenArcade():Boolean {
@@ -84,11 +84,7 @@ package engine {
     }
     
     public static function set startSpeed(value:int):void {
-	  if (difficulty == 2){
-        _sharedObject.data.startSpeed = 10;
-	  } else {
-	    _sharedObject.data.startSpeed = 7;
-	  }
+	    _sharedObject.data.startSpeed = value;
     }    
   
     public static function initializeData():void {

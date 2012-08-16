@@ -82,6 +82,20 @@ package Languages
     public static const WEEKLY:String = "Weekly";
     public static const FRIENDS:String = "Friends";
     public static const PERSONAL:String = "Personal";
+    
+    //Messages
+    public static const JUMPMESSAGE:String = "And now jump over the valley!";
+    public static const FASTERMESSAGE:String = "Faster!";
+    public static const SLOWERMESSAGE:String = "Slower!";
+    public static const NOROTTENMESSAGE:String = "No Rotten Eggs!";
+    public static const SHUFFLEMESSAGE:String = "Shuffle!";
+    public static const GOLDENMESSAGE:String = "Golden Egg!";
+    public static const EXTRATIMEMESSAGE:String = "Bonus Time!";
+    public static const EXTRALIFEMESSAGE:String = "Bonus Life!";
+    public static const EXTRAEGGSMESSAGE:String = "Extra Eggs!";
+    public static const EXTRATIMEEXTMESSAGE:String = "Bonus Time extended!";
+    public static const CHAINTIMEEXTMESSAGE:String = "Chain Time extended to 3 secs!";
+    public static const CHAINTIMEEXTENDMESSAGE:String = "Chain Time back to 2 secs";
 	}
 
 }

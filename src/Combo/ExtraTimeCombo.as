@@ -12,7 +12,7 @@ package Combo
     
     override public function effect(state:LevelState):void {
       state.extendTime();
-      state.showMessage("Bonus Time!");
+      state.showMessage(AssetRegistry.Strings.EXTRATIMEMESSAGE);
     }
   }
 }

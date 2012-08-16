@@ -22,7 +22,7 @@ package Combo
           state.eggs.removeChild(goldEgg);
         }
       }, 6);
-      state.showMessage("Golden Egg!");
+      state.showMessage(AssetRegistry.Strings.GOLDENMESSAGE);
     }
   }
 }

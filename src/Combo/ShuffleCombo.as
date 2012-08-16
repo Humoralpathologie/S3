@@ -17,7 +17,7 @@ package Combo
     override public function effect(state:LevelState):void
     {
       state.placeEgg(state.eggs.recycleEgg(0,0, AssetRegistry.EGGSHUFFLE));
-      state.showMessage("Shuffle!");
+      state.showMessage(AssetRegistry.Strings.SHUFFLEMESSAGE);
     }
   }
 }
