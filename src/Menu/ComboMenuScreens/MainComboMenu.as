@@ -163,7 +163,7 @@ package Menu.ComboMenuScreens
         {
           removeChild(infoDisplay);
           addChild(question);
-          removeChild(text);
+          removeChild(_text);
           removeChild(xButton);
         });
     
