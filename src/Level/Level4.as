@@ -79,11 +79,11 @@ package Level
     
     override protected function showObjective():void
     {     
-	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  var _neededSpeed:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-speed"));
 	  if (SaveGame.difficulty == 1) {	
-		showObjectiveBox(AssetRegistry.Strings.LEVEL4A, [[_neededEggs, 30] ] );
+		showObjectiveBox(AssetRegistry.Strings.LEVEL4A, [[_neededSpeed, 5] ] );
 	  } else {
-	    showObjectiveBox(AssetRegistry.Strings.LEVEL4B, [[_neededEggs, 50] ] );
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL4B, [[_neededSpeed, 7] ] );
 	  }
     }    
     
