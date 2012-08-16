@@ -8,49 +8,50 @@ package Languages
   public class English
   {
     // Main Menu
-    public static const ARCADE:String = "Arcade";
-    public static const SETTINGS:String = "Settings";
-    public static const STORY:String = "Story";
-	public static const EXTRAS:String = "Extras";
+    public static const ARCADE:String = "ARCADE";
+    public static const SETTINGS:String = "SETTINGS";
+    public static const STORY:String = "STORY";
+	public static const EXTRAS:String = "EXTRAS";
     
 	// Settings Menu
-	public static const MAINSETTINGS:String = "Main Settings";
-	public static const USERNAME:String = "User Name";
-	public static const CONTROLTYPE:String = "Control Type";
-	public static const LANGUAGE:String = "Language";
-	public static const DIFFICULTY:String = "Level Difficulty";
+	public static const MAINSETTINGS:String = "MAIN SETTINGS";
+	public static const USERNAME:String = "USER NAME";
+	public static const CONTROLTYPE:String = "CONTROL TYPE";
+	public static const LANGUAGE:String = "LANGUAGE";
+	public static const DIFFICULTY:String = "LEVEL DIFFICULTY";
 	
-	public static const SNAKEVIEW:String = "Snake View";
-	public static const FOURWAY:String = "4-Way";
-	public static const CASUAL:String = "Casual";
-	public static const COMPETETIVE:String = "Competetive";
+	public static const SNAKEVIEW:String = "TYPE 1";
+	public static const FOURWAY:String = "TYPE 2";
+	public static const CASUAL:String = "CASUAL";
+	public static const COMPETETIVE:String = "COMPETETIVE";
 	
 	//Arcade Menu
-	public static const ARCADEHEADING:String = "Arcade Mode";
-	public static const OFFLABEL:String = "Endless Mode";
-	public static const ONLABEL:String = "4 Minute-Mode";
+	public static const ARCADEHEADING:String = "ARCADE MODE";
+	public static const OFFLABEL:String = "ENDLESS MODE";
+	public static const ONLABEL:String = "COUNTDOWN MODE";
 	public static const PLAY:String = "PLAY";
 	public static const BACKBUTTON:String = "BACK";
 	public static const LEADERBOARDS:String = "LEADERBOARDS";
 	
 	//Arcade Info
-	public static const ARCADEINFO:String = "Blablabla Test!!!";
+	public static const ARCADEINFO:String = "This mode is all about earning the highest score by experimenting with different combos.\nThe Countdown Mode gives you 3 minutes to help Little Snake devour as many eggs as possible before the volcanic eruption. Additional to the 3 basic combos, there are 3 combo slots you can change around as you like with combo combinations you favour.\nIf you are too chicken and afraid of volcanoes, you may as well play the Endless Mode. There you can really go wild on high scoring and even slow down if you become too fast. But would you want to?! So, take a risk and do your best!";
 	
     // Combo Menu
     public static const SELECTABLECOMBO:String = "SELECTABLE COMBOS";
 	
     // Combo Descriptions
-    public static const TIMECOMBODESC:String = "Bonus Time Up: Activate this combo and every time up-combo will give you 4 instead of 3 extra seconds.";
-    public static const CHAINTIMEDESC:String = "Chain Time Up: Activate this combo and the chain time will rise to 3 seconds for the current round.";
+    public static const TIMECOMBODESC:String = "Bonus Time Up: Activate this combo and every Bonus Time Combo will give you 4 instead of 3 extra seconds.";
+    public static const CHAINTIMEDESC:String = "Chain Time Up: Activate this combo and the chain time will rise to 3 seconds for 60 seconds.";
     public static const XTRASPAWNDESC:String = "Extra Eggs: Activate this combo and 5 extra eggs will spawn!";
     public static const SHUFFLEDESC:String = "Shuffle Egg: Performing this combo will spawn a Shuffle Egg. Devouring it will rearrange Little Snake's body tiles and give you the chance to score new combos.";
     public static const GOLDDESC:String = "Golden Egg: This combo will spawn a shiny, golden egg for 6 seconds. Or are you afraid of the big points?";
-    public static const XTRALIFEDESC:String = "Extra Life: This combo propably will do exactly what you think it will.";
+    public static const XTRALIFEDESC:String = "Extra Life: This combo will probably do exactly what you think it will.";
 	
-	public static const SPEEDDESC:String = "Speed ...";
-	public static const TIMEDESC:String = "Extra Time ...";
-	public static const SLOWERDESC:String = "GEt Slower ...";
-	public static const NOROTTENDESC:String = "No Rotten Eggs ...";
+	public static const SPEEDDESC:String = "Speed Combo: Performing this combo will make you faster.";
+	public static const TIMEDESC:String = "Bonus Time Combo: Do you hate it when you want to score high but a volcanic eruption keeps interrupting you? Performing this combo will delay the volcanic eruption by 3 seconds.";
+	public static const SLOWERDESC:String = "Snail Combo: Performing this combo will slow you down.";
+	public static const NOROTTENDESC:String = "No Rotten Egg Combo: Performing this combo gets you rid of the bothersome and poisonous eggs.";
+
 	//pause menu
 	public static const PAUSE:String = "PAUSE";
 	public static const BACK:String = "MAIN MENU";

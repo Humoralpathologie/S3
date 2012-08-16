@@ -71,10 +71,10 @@ package Menu.ComboMenuScreens
 	  xButton.x = 860;
 	  xButton.y = 30;
 	  
-      var infoDisplay:Quad = new Quad(710, 450, Color.BLACK);
+      var infoDisplay:Quad = new Quad(710, 450, 0x545454);
       infoDisplay.x = 65 + 60;
       infoDisplay.y = 40 + 30;
-	  infoDisplay.alpha = 0.5;
+	  infoDisplay.alpha = 1;
 
 	  var text:TextField = new TextField(infoDisplay.width, infoDisplay.height, AssetRegistry.Strings.ARCADEINFO, "kroeger 06_65", 40, Color.WHITE);
       text.x = infoDisplay.x;
@@ -109,13 +109,13 @@ package Menu.ComboMenuScreens
 	  xButton.x = 860;
 	  xButton.y = 30;
 	  
-      var infoDisplay:Quad = new Quad(710, 450, Color.BLACK);
+      var infoDisplay:Quad = new Quad(710, 450, 0x545454);
       infoDisplay.x = 65 + 60;
       infoDisplay.y = 40 + 30;
-	  infoDisplay.alpha = 0.5;
+	  infoDisplay.alpha = 1;
 
-	  var text:TextField = new TextField(infoDisplay.width, infoDisplay.height, " ", "kroeger 06_65", 40, Color.WHITE);
-      text.x = infoDisplay.x;
+	  var text:TextField = new TextField(infoDisplay.width - 40, infoDisplay.height, " ", "kroeger 06_65", 40, Color.WHITE);
+      text.x = infoDisplay.x + 20;
 	  text.y = infoDisplay.y;
 	  
 	  
