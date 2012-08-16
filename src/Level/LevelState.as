@@ -1055,6 +1055,18 @@ package Level
       return String(_snake.eatenEggs);
     }
     
+    public function get speed():String {
+      return String(_snake.mps - SaveGame.startSpeed);
+    }
+    
+    public function get comboCount():String {
+      return String(_combos);
+    }
+    
+    public function get poisonCount():String {
+      return String(_poisonEggs);
+    }
+    
     public function get overallTime():String {
       var _sec:String = (int(_overallTimer) % 60) < 10 ? "0" + String(int(_overallTimer) % 60) : String(int(_overallTimer) % 60);
       var _min:String = (int(_overallTimer) / 60) < 10 ? "0" + String(int(int(_overallTimer) / 60)) : String(int(int(_overallTimer) / 60));

@@ -195,10 +195,22 @@ package Level
       }
       _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;
       _hud.poisonTextField.y = _hud.poison.y - 5;*/
+      
       _hud = new HUD(this);
-      _hud.iconsCfg = {
-        time: {type: "time", pos: 2, watching: "timeLeftFormatted"}
+      
+      var iconsCfg:Object = {
+        lives: { type: "lives", pos: 1, watching: "lives" },
+        combo: { type: "combo", pos: 3, watching: "comboCount"},
+        poison: { type: "poison", pos: 4, watching: "poisonCount"}
+      };
+      
+      if (SaveGame.arcadeModi) {
+        iconsCfg["time"] = { type: "time", pos: 2, watching: "timeLeftFormatted" };
+      } else {
+        iconsCfg["speed"] = { type: "speed", pos: 2, watching: "speed" };
       }
+      
+      _hud.iconsCfg = iconsCfg;
       addChild(_hud);
 
     }
