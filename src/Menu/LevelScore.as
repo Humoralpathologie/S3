@@ -22,6 +22,10 @@ package Menu
   import flash.net.*;
   import JSON;
   import starling.utils.VAlign;
+  import org.josht.starling.foxhole.transitions.ScreenFadeTransitionManager;
+  import org.josht.starling.foxhole.controls.ScreenNavigator;
+  import org.josht.starling.foxhole.controls.ScreenNavigatorItem;
+
   
   
   /**
@@ -34,9 +38,9 @@ package Menu
     private var _bg:Image;
     private var _scoreboard:Quad;
     private var _leaderboard:Quad;
-    private var _replayButton:Button;
-    private var _nextLevelButton:Button;
-    private var _backToMenuButton:Button;
+    private var _replayButton:starling.display.Button;
+    private var _nextLevelButton:starling.display.Button;
+    private var _backToMenuButton:starling.display.Button;
 
     private var _scorePic:Image;
     private var _scoreText:TextField;
@@ -50,13 +54,7 @@ package Menu
     private var _lifeBonusPic:Image;
     private var _lifeBonusText:TextField;
     public var _lifeBonusCounter:int = 0;
-   
-    /*
-    private var _EXP:int = 0;
-    private var _EXPText:TextField;
-    public var _EXPCounter:int = 0;
-    */
-
+  
     private var _totalText:TextField;
     public var _totalCounter:int = 0;
 
@@ -72,12 +70,19 @@ package Menu
     private var _lifeBonusHeading:TextField;
     private var _totalHeading:TextField;
     
+	private var _boards:ScreenNavigator;
+	private static const SCORE:String = "Score";
+    private static const LEADERBOARDS:String = "Leaderboards";
+	private var _scoreScreen:ScoreBoard;
+	private var _leaderboardScreen:Leaderboards;
+	
     public function LevelScore(scores:Object = null)
     {
       AssetRegistry.loadGraphics([AssetRegistry.SCORING, AssetRegistry.SNAKE, AssetRegistry.MENU]);
       
-      _tweens = new Vector.<GTween>;
+      
       _scores = scores;
+	  
       if (_scores == null)
       {
         _scores = {score: 1000, lives: 3, time: 30, level: 1}
@@ -87,17 +92,20 @@ package Menu
       
       // No negative scores;
       
-      // _EXP = Math.max(_EXP, 0);
       _timeBonus = Math.max(_timeBonus, 0);
       
       _scores.total += (_timeBonus * 5);
       if(!_scores.lost) {
         SaveGame.saveScore(_scores.level, _scores.total);
       }
-      buildMenu();
-      startScoring();
-      updateLeaderboard();
+	    
+	  addBackground();
+	  createScoreBoard();
+	  addButtons();
+	  _boards.showScreen(SCORE);
+      //updateLeaderboard();
     }
+	
     private function calculateTime():void
     {
       
@@ -119,13 +127,22 @@ package Menu
             break;
       }
       
-      /*
-      if(_scores.snake){
-        _EXP = _scores.snake.eatenEggs - (_scores.snake.body.length - 4);
-      }
-      */
     }
 
+	private function createScoreBoard():void {
+      trace(_scores);
+      _boards = new ScreenNavigator();
+      var trans:ScreenFadeTransitionManager = new ScreenFadeTransitionManager(_boards);
+	  _scoreScreen = new ScoreBoard();
+	  _leaderboardScreen = new Leaderboards();
+      _boards.addScreen(SCORE, new ScreenNavigatorItem(_scoreScreen, { onScoring: LEADERBOARDS}, { scores: this._scores} ));
+      _boards.defaultScreenID = SCORE;
+	  _boards.addScreen(LEADERBOARDS, new ScreenNavigatorItem(_leaderboardScreen, { onLeaderboards: SCORE}));
+      addChild(_boards);
+      
+    }
+    
+	/*
     private function updateLeaderboard():void
     {
       var url:String = "https://www.scoreoid.com/api/getBestScores";
@@ -182,137 +199,9 @@ package Menu
       
       urlLoader.load(request);
     }
-    
-    private function buildMenu():void
-    {
-      addBackground();
-      addBoards();
-      addTexts();
-      addButtons();
-    }
-    
-    private function medal(tween:GTween):void
-    {
-      var self:LevelScore = this;
-      var func:Function = function(tween:GTween):void {
-        _medalTween.setValues( { x: 960 } );
-        _medalTween.onComplete = func2;
-      }
-      
-      var func2:Function = function(tween:GTween):void {
-          self.removeChild(_medal);
-          _medalSmall.x = 960;
-          _medalSmall.y = 0;
-          self.addChild(_medalSmall);
-          _medalTween.target = _medalSmall;
-          _medalTween.setValues( { x: 320, y: 370 } );
-          _medalTween.onComplete = null;
-          //_medalTween.autoPlay = false;   
-      }
-      
-      if (_scores.total >= 400 && _scores.total < 600) {
-        _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture("medaille_bronze"));
-        _medal.x = -800;
-        _medal.y = 0;
-        _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
-      } else if (_scores.total >= 600 && _scores.total < 800) {
-        _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture("medaille_saphir"));
-        _medal.x = -800;
-        _medal.y = 0;
-        _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("saphire_small"));
-      } else if (_scores.total >= 800 && _scores.total < 1000) {
-        _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture("medaille_silber"));
-        _medal.x = -800;
-        _medal.y = 0;
-        _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("silver_small"));
-      } else if (_scores.total >= 1000) {
-        _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture("medaille_gold"));
-        _medal.x = -800;
-        _medal.y = 0;
-        _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture("gold_small"));
-      }
-
-
-      if (_medal) {
-        _medalTween = new GTween(_medal, 1.5, {x: 105}, {ease: Elastic.easeInOut, onComplete: func});
-        _tweens.push(_medalTween);
-        addChild(_medal);
-      }
-
-    }
-    private function startScoring():void
-    {
-      var self:LevelScore = this;
-      addEventListener(EnterFrameEvent.ENTER_FRAME, updateTexts);
-      var triggerLife:Function = function(tween:GTween):void{
-        _tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.lives * 100}, {ease: Exponential.easeOut, onComplete:triggerTotal}));
-      }
-      var triggerTime:Function = function(tween:GTween):void {
-        if(!_scores.lost) {
-          _tweens.push(new GTween(self, 2, { _timeBonusCounter: _timeBonus }, { ease: Exponential.easeOut, onComplete:triggerLife } ));
-        }
-      }
-      var triggerTotal:Function = function(tween:GTween):void{
-        _tweens.push(new GTween(self, 2, {_totalCounter: _scores.total}, {ease: Exponential.easeOut, onComplete:medal}));
-      }
-      /*
-      var triggerEXP:Function = function(tween:GTween):void{
-        _tweens.push(new GTween(self, 2, {_EXPCounter: _EXP}, {ease: Exponential.easeOut, onComplete:medal}));
-      }
-      */
-      
-      _tweens.push(new GTween(this, 2, {_scoreCounter: _scores.score}, {ease: Exponential.easeOut, onComplete:triggerTime}));
-    }
-    
-    private function updateTexts(event:EnterFrameEvent):void
-    {
-      _lifeBonusText.text = String(_lifeBonusCounter);
-      _timeBonusText.text = String(_timeBonusCounter * 5);
-      _scoreText.text = String(_scoreCounter);
-      _totalText.text = String(_totalCounter);
-      //_EXPText.text = String(_EXPCounter);
-    }
-    
-    private function addTexts():void
-    {
-
-      
-      
-      _lifeBonusText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
-      _lifeBonusText.hAlign = HAlign.RIGHT;
-      _lifeBonusText.x = _lifeBonusHeading.x + _lifeBonusHeading.width + 10;
-      _lifeBonusText.y = _lifeBonusHeading.y;
-      
-      _scoreText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
-      _scoreText.hAlign = HAlign.RIGHT;
-      _scoreText.x = _lifeBonusText.x;
-      _scoreText.y = _scoreHeading.y;
-      
-      _timeBonusText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
-      _timeBonusText.hAlign = HAlign.RIGHT;
-      _timeBonusText.x = _lifeBonusText.x;
-      _timeBonusText.y = _timeBonusHeading.y;
-      
-      _totalText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
-      _totalText.hAlign = HAlign.RIGHT;
-      _totalText.x = _lifeBonusText.x;
-      _totalText.y = _totalHeading.y;
-
-      /*
-      _EXPText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
-      _EXPText.hAlign = HAlign.LEFT;
-      _EXPText.x = _lifeBonusPic.x + 90;
-      _EXPText.y = _lifeBonusText.y + 145;
-      */
-
-      addChild(_lifeBonusText);
-      addChild(_scoreText);
-      addChild(_timeBonusText);
-      addChild(_totalText);
-      /*
-      addChild(_EXPText);
-      */
-    }
+	
+	
+*/
     
     private function replay():void
     {
@@ -329,6 +218,7 @@ package Menu
       dispatchEventWith(SWITCHING, true, { stage: MainMenu } );
     }
     
+	
     private function addButtons():void
     {
       _replayButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo"));
@@ -365,125 +255,20 @@ package Menu
       addChild(_bg);
     }
     
-    private function addBoards():void
-    {
-      
-      _scoreboard = new Quad(375, 475, 0x545454);
-      _scoreboard.alpha = 179 / 255;
-      _scoreboard.x = 70;
-      _scoreboard.y = 30;
-      addChild(_scoreboard);
-      
-      
-      _leaderboard = new Quad(375, 475, 0x545454);
-      _leaderboard.alpha = _scoreboard.alpha;
-      _leaderboard.x = _scoreboard.width + 140;
-      _leaderboard.y = _scoreboard.y;
-      addChild(_leaderboard);
-      
-      _leaderboardText = new TextField(200, 35, "Leaderboard", "kroeger 06_65", 35, Color.WHITE);
-      _leaderboardText.vAlign = VAlign.TOP;
-      _leaderboardText.hAlign = HAlign.LEFT;
-      _leaderboardText.x = _leaderboard.x + 20;
-      _leaderboardText.y = _leaderboard.y + 20;      
-      addChild(_leaderboardText);      
-      
-      _scoreboardText = new TextField(200, 35, "Scores", "kroeger 06_65", 35, Color.WHITE);
-      _scoreboardText.vAlign = VAlign.TOP;
-      _scoreboardText.hAlign = HAlign.LEFT;
-      _scoreboardText.x = _scoreboard.x + 20;
-      _scoreboardText.y = _scoreboard.y + 20;
-      addChild(_scoreboardText);
-      
-      _scoreHeading = new TextField(200, 40, "Score", "kroeger 06_65", 35, Color.WHITE);
-      _scoreHeading.x = _scoreboard.x + 20;
-      _scoreHeading.y = _scoreboard.y + 80;
-      _scoreHeading.vAlign = VAlign.TOP;
-      _scoreHeading.hAlign = HAlign.LEFT;
-      addChild(_scoreHeading);
-     
-      _timeBonusHeading = new TextField(200, 40, "Time Bonus", "kroeger 06_65", 35, Color.WHITE);
-      _timeBonusHeading.x = _scoreHeading.x;
-      _timeBonusHeading.y = _scoreHeading.y + 60;
-      _timeBonusHeading.vAlign = VAlign.TOP;
-      _timeBonusHeading.hAlign = HAlign.LEFT;
-      addChild(_timeBonusHeading);
-      
-      _lifeBonusHeading = new TextField(200, 40, "Life Bonus", "kroeger 06_65", 35, Color.WHITE);
-      _lifeBonusHeading.x = _scoreHeading.x;
-      _lifeBonusHeading.y = _timeBonusHeading.y + 60;
-      _lifeBonusHeading.vAlign = VAlign.TOP;
-      _lifeBonusHeading.hAlign = HAlign.LEFT;
-      addChild(_lifeBonusHeading);
-      
-      _totalHeading = new TextField(200, 40, "Total", "kroeger 06_65", 35, Color.WHITE);
-      _totalHeading.x = _scoreHeading.x;
-      _totalHeading.y = _lifeBonusHeading.y + 80;
-      _totalHeading.vAlign = VAlign.TOP;
-      _totalHeading.hAlign = HAlign.LEFT;
-      addChild(_totalHeading);
-      
-      /*
-      _scorePic = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
-      _scorePic.x = _scoreboard.x + 20;
-      _scorePic.y = _scoreboard.y + 80;
-      
-      _timeBonusPic = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
-      _timeBonusPic.x = _scorePic.x;
-      _timeBonusPic.y = _scorePic.y + _scorePic.height + 20;
-      
-      _lifeBonusPic = new Image(AssetRegistry.ScoringAtlas.getTexture("bronze_small"));
-      _lifeBonusPic.x = _timeBonusPic.x;
-      _lifeBonusPic.y = _timeBonusPic.y + _timeBonusPic.height + 20;
-      */
-      
-
-     /* 
-      addChild(_scorePic);
-      addChild(_timeBonusPic);
-      addChild(_lifeBonusPic);
-      */
-      
-    }
     
     override public function dispose():void
-    {
-      for each(var tween:GTween in _tweens) {
-        tween.end();
-      }
-      
-      removeEventListeners(EnterFrameEvent.ENTER_FRAME);
-      
-      _tweens = null;
-      _bg.dispose();
-      _scoreboard.dispose();
-      _replayButton.removeEventListeners(starling.events.Event.TRIGGERED);
+    { 
+	 /*  
+      _leaderboardText.dispose();
+     */
+	  _scoreScreen.dispose();
+	  _replayButton.removeEventListeners(starling.events.Event.TRIGGERED);
       _replayButton.dispose();
       _nextLevelButton.removeEventListeners(starling.events.Event.TRIGGERED);
       _nextLevelButton.dispose();
       _backToMenuButton.removeEventListeners(starling.events.Event.TRIGGERED);
       _backToMenuButton.dispose();
-      
-      _scoreText.dispose();
-      _timeBonusText.dispose();
-      _lifeBonusText.dispose();
-      _totalText.dispose();
-      
-      if(_medal != null)
-        _medal.dispose();
-        
-      _medalTween = null;
-      
-      if(_medalSmall != null)
-        _medalSmall.dispose();
-      
-      _leaderboardText.dispose();
-      _scoreboardText.dispose();
-      _scoreHeading.dispose();
-      _timeBonusHeading.dispose();
-      _lifeBonusHeading.dispose();
-      _totalHeading.dispose();
-      
+	  _bg.dispose();
       super.dispose();
     }
   }

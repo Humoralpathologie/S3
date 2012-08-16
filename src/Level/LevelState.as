@@ -1131,12 +1131,13 @@ package Level
     
     protected function showObjectiveBox(desc:String, goals:Array, fontSize:int = 50):void
     {
-      var _scrollable:Sprite = new Sprite();
-      
-      var box:Quad = new Quad(800, 600, 0);
+
+	  var _scrollable:Sprite = new Sprite();
+	  
+      var box:Quad = new Quad(800, 535, 0);
       box.alpha = 0x44 / 0xff;
       box.x = (960 - box.width) / 2;
-      box.y = (640 - box.height) / 2;
+      box.y = 30;
       addChild(box);
       
       var _goals:Sprite = new Sprite();
@@ -1167,7 +1168,7 @@ package Level
       _scrollable.addChild(_goals);
       
       var _scroller:Scroller = new Scroller();
-      _scroller.setSize(box.width, box.height - 100);
+      _scroller.setSize(box.width, box.height - 30);
       _scroller.x = box.x;
       _scroller.y = box.y;
       _scroller.viewPort = _scrollable;

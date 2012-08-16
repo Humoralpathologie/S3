@@ -8,27 +8,27 @@ package Languages
   public class Deutsch
   {
     // Main Menu
-    public static const ARCADE:String = "Arcade";
-    public static const SETTINGS:String = "Einstellungen";
-    public static const STORY:String = "Story";
-	public static const EXTRAS:String = "Extras";
+    public static const ARCADE:String = "ARCADE";
+    public static const SETTINGS:String = "EINSTELLUNGEN";
+    public static const STORY:String = "STORY";
+    public static const EXTRAS:String = "EXTRAS";
 	
 	// Settings Menu
-	public static const MAINSETTINGS:String = "Einstellungen";
-	public static const USERNAME:String = "Spielername";
-	public static const CONTROLTYPE:String = "Steuerung";
-	public static const LANGUAGE:String = "Sprache";
-	public static const DIFFICULTY:String = "Levelschwierigkeit";
+	public static const MAINSETTINGS:String = "EINSTELLUNGEN";
+	public static const USERNAME:String = "SPIELERNAME";
+	public static const CONTROLTYPE:String = "STEUERUNG";
+	public static const LANGUAGE:String = "SPRACHE";
+	public static const DIFFICULTY:String = "LEVELSCHWIERIGKEIT";
 	
-	public static const SNAKEVIEW:String = "Snake-Sicht";
-	public static const FOURWAY:String = "4-Wege";
-	public static const CASUAL:String = "Gemuetlich";
-	public static const COMPETETIVE:String = "Stressig";
+	public static const SNAKEVIEW:String = "TYP 1";
+	public static const FOURWAY:String = "TYP 2";
+	public static const CASUAL:String = "GEMUETLICH";
+	public static const COMPETETIVE:String = "STRESSIG";
     
 	//Arcade Menu
-	public static const ARCADEHEADING:String = "Arcade Modus";
-	public static const OFFLABEL:String = "Endlos Modus";
-	public static const ONLABEL:String = "4 Minuten";
+	public static const ARCADEHEADING:String = "ARCADE MODUS";
+	public static const OFFLABEL:String = "ENDLOSMODUS";
+	public static const ONLABEL:String = "COUNTDOWNMODUS";
 	public static const PLAY:String = "SPIELEN";
 	public static const BACKBUTTON:String = "ZURUECK";
 	public static const LEADERBOARDS:String = "LEADERBOARDS";
@@ -37,7 +37,7 @@ package Languages
 	public static const ARCADEINFO:String = "Auf Deutsch Blablabla Test!!!";
 	
     // Combo Menu
-	public static const SELECTABLECOMBO:String = "SELECTABLE COMBOS";
+	public static const SELECTABLECOMBO:String = "AUSWAEHLBARE COMBOS";
    
     // Combo Descriptions
     public static const TIMECOMBODESC:String = "Bonus Time Up: Activate this combo and every time up-combo will give you 4 instead of 3 extra seconds.";
