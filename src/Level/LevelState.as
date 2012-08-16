@@ -276,6 +276,7 @@ package Level
     
     public function showMessage(message:String):void
     {
+      /*
       var field:TextField = recycleText();
       field.color = Color.WHITE;
       field.text = message;
@@ -289,6 +290,8 @@ package Level
         field.visible = false;
       }
       _messages.push(tween);
+      */
+      dispatchEventWith(HUD.DISPLAY_MESSAGE, true, { message:message } );
       
       //Starling.current.juggler.add(tween);
     }
@@ -923,8 +926,10 @@ package Level
         else
         {
           updateTimers(event);
+          /*
           trace("overallTimer: " + String(int(_overallTimer)));
           trace("extensionTime: " + String(int(_extensionTime)));
+          */
           if ((int(_overallTimer) > 0) && (int(_overallTimer) == _extensionTime))
           {
             _chainTime = 2.5;
@@ -940,6 +945,7 @@ package Level
         }
         
         //updateHud();
+        _hud.update();
         
         _snake.update(event.passedTime * Starling.juggler.timeFactor);
         
@@ -1035,6 +1041,24 @@ package Level
       // TODO: Should be computed only once.
       _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.x);
       _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.y);
+    }
+    
+    public function get score():String {
+      return String(_score);
+    }
+    
+    public function get lives():String {
+      return String(_snake.lives);
+    }
+    
+    public function get eatenEggs():String {
+      return String(_snake.eatenEggs);
+    }
+    
+    public function get overallTime():String {
+      var _sec:String = (int(_overallTimer) % 60) < 10 ? "0" + String(int(_overallTimer) % 60) : String(int(_overallTimer) % 60);
+      var _min:String = (int(_overallTimer) / 60) < 10 ? "0" + String(int(int(_overallTimer) / 60)) : String(int(int(_overallTimer) / 60));
+      return _min + ":" + _sec;    
     }
     
     public function pause():void

@@ -35,12 +35,12 @@ package engine
       showStage(MainMenu);
     }
     
-    private function onStageClosing(event:Event) {
+    private function onStageClosing(event:Event):void {
       _currentStage.removeFromParent(true);
       _currentStage = null;
     }
     
-    private function onStageSwitching(event:Event) {
+    private function onStageSwitching(event:Event):void {
       onStageClosing(event);
       showStage(event.data.stage, event.data.args);
     }

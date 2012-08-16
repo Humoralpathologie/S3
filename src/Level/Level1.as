@@ -87,12 +87,12 @@ package Level
     override protected function addHud():void {
       //_hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "eggs"], this);
       _hud = new HUD(this);
-      var iconCfg:Object = {
-        lives: { type: "lives", pos: 1 },
-        time: { type: "time", pos: 2 },
-        eggs: { type: "eggs", pos: 3}
+      var iconsCfg:Object = {
+        lives: { type: "lives", pos: 1, watching: "lives" },
+        time: { type: "time", pos: 2, watching: "overallTime" },
+        eggs: { type: "eggs", pos: 3, watching: "eatenEggs"}
       }
-      _hud.icons = iconCfg;
+      _hud.iconsCfg = iconsCfg;
       addChild(_hud);
       
     }

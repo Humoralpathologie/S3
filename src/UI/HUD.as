@@ -2,12 +2,14 @@ package UI
 {
   import flash.geom.Point;
   import Level.LevelState;
+  import starling.animation.Tween;
   import starling.display.Button;
   import starling.display.DisplayObject;
   import starling.display.Image;
   import starling.display.Sprite;
   import engine.AssetRegistry;
   import starling.events.Event;
+  import starling.events.Touch;
   import starling.events.TouchEvent;
   import starling.events.TouchPhase;
   import engine.SaveGame;
@@ -16,6 +18,7 @@ package UI
   import starling.utils.Color;
   import starling.utils.VAlign;
   import starling.utils.HAlign;
+  import starling.core.Starling;
   
   /**
    * ...
@@ -23,21 +26,36 @@ package UI
    */
   public class HUD extends Sprite
   {
+    public static const CONTROLS_CHANGED:String = "controlschanged";
+    public static const DISPLAY_MESSAGE:String = "displaymessage";
+    
     private var _controls:Sprite;
     private var _top:Image;
     private var _buttons:Vector.<Button>;
     private var _levelState:LevelState;
     private var _icons:Vector.<DisplayObject>;
+    private var _iconsCfg:Object = { };
     private var _iconLayer:Sprite;
     private var _textLayer:Sprite;
+    private var _score:TextField;
+    private var _tweens:Vector.<Tween>;
+    private var _textFieldPool:Vector.<TextField>;
     
     public function HUD(levelState:LevelState)
     {
       _levelState = levelState;
       _iconLayer = new Sprite();
+      _iconLayer.touchable = false;
       
       // TextFields always force a new draw call, so add them last!
       _textLayer = new Sprite();
+      _textLayer.touchable = false;
+      
+      // This keeps our tweens.
+      _tweens = new Vector.<Tween>;
+      
+      // This is to re-use TextFields for message display.
+      _textFieldPool = new Vector.<TextField>;
       
       createTop();
       createControls();
@@ -46,20 +64,67 @@ package UI
       addChild(_controls);
       addChild(_iconLayer);
       addChild(_textLayer);
+      
+      // Listen if the controls change in the pause menu.
+      _levelState.addEventListener(HUD.CONTROLS_CHANGED, onControlsChanged);
+      
+      // Listen if we should display any messages.
+      _levelState.addEventListener(HUD.DISPLAY_MESSAGE, onDisplayMessage);
     }
     
-    public function set icons(value:Object):void {
-      if (_icons) { destroyIcons() };
-      createIcons(value);
+    private function recycleTextField():TextField {
+      return new TextField(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight, "", "kroeger 06_65", 90, Color.WHITE);
     }
     
-    // Creates icons AND the necessary text.
-    private function createIcons(iconsCfg:Object):void {
+    private function onDisplayMessage(evt:Event) {
+      var tween:Tween;
+      var textMessage:TextField;
+      
+      textMessage = recycleTextField();
+      textMessage.text = evt.data.message;
+      textMessage.touchable = false;
+      tween = new Tween(textMessage, 3);
+      tween.animate("y", -textMessage.height);
+      tween.onComplete = function():void {
+        textMessage.visible = false;
+      }
+      _tweens.push(tween);
+      Starling.juggler.add(tween);
+ 
+      _textLayer.addChild(textMessage);     
+    }
+    
+    public function set iconsCfg(value:Object):void {
+      _iconsCfg = value;
+      createIcons();
+    }
+    
+    public function update():void {
+      // Update score display.
+      _score.text = _levelState.score;
+      
+      // Update all icon TextFields.
+      for each (var iconCfg in _iconsCfg) {
+        iconCfg.textField.text = _levelState[iconCfg.watching];
+      }
+    }
+    
+    // Creates icons AND the necessary text. This also creates the score display.
+    private function createIcons():void {
       var iconImg:Image;
       var iconTxt:TextField;
       var pos:Point;
-      for each(var iconCfg:Object in iconsCfg) {
-        
+      var iconCfg:Object;
+            
+      // Create the score display.
+      _score = new TextField(Starling.current.stage.stageWidth, 100, "0", "kroeger 06_65", 80, Color.WHITE);
+      _score.touchable = false;
+      _textLayer.addChild(_score);
+      
+      // Make the level-dependent icons.
+      
+      for (var iconName:String in _iconsCfg) {
+        iconCfg = _iconsCfg[iconName];
         // Make the Icon
         pos = getIconPos(iconCfg.pos);
         iconImg = new Image(getIconTexture(iconCfg.type));
@@ -69,8 +134,8 @@ package UI
         iconImg.scaleY = 2;
         iconImg.touchable = false;
         
-        // Make the text
-        iconTxt = new TextField(80, iconImg.height, "0", "kroeger 06_65", 40, Color.WHITE);
+        // Make the TextFields. These are wide to accomodate the long time display.
+        iconTxt = new TextField(200, iconImg.height, "0", "kroeger 06_65", 40, Color.WHITE);
         iconTxt.vAlign = VAlign.CENTER;
         iconTxt.hAlign = HAlign.LEFT;
         iconTxt.text = "X";
@@ -78,9 +143,11 @@ package UI
         iconTxt.x = iconImg.x + iconImg.width + 12;
         iconTxt.y = iconImg.y;
         
+        // Remember this so we can change it later.
+        iconCfg.textField = iconTxt;
+        
         _iconLayer.addChild(iconImg);
         _textLayer.addChild(iconTxt);   
-        _icons.push(iconTxt);
       }
     }
     
@@ -122,14 +189,22 @@ package UI
     
     // TODO: Actually write this.
     private function destroyIcons():void {
+      _score.dispose();
+      _score = null;
       _icons = null;
     }
     
     private function createTop():void {
       _top = new Image(AssetRegistry.UIAtlas.getTexture("ui-top"));
+      _top.addEventListener(TouchEvent.TOUCH, function(evt:TouchEvent) {
+          if (evt.getTouch(_top, TouchPhase.ENDED)) {
+            _levelState.togglePause();
+          }
+      });
     }
     
     private function destroyTop():void {
+      _top.removeEventListeners(TouchEvent.TOUCH);
       _top.dispose();
       _top = null;      
     }
@@ -157,6 +232,7 @@ package UI
     
     private function createButtons():void {
       // There may already be buttons;
+      trace("Creating buttons type " + String(SaveGame.controlType));
       destroyButtons();
       _buttons = new Vector.<Button>;
       if(SaveGame.controlType == 1) {
@@ -220,8 +296,16 @@ package UI
       _iconLayer = null;
     }
     
+    private function onControlsChanged(evt:Event) {
+      createButtons();
+    }
+    
     override public function dispose():void {
       super.dispose();
+      _levelState.removeEventListener(HUD.DISPLAY_MESSAGE, onDisplayMessage);
+      _levelState.removeEventListener(HUD.CONTROLS_CHANGED, onControlsChanged);
+      
+      //TODO: tweens, textfieldpool
       destroyIconLayer();
       destroyTop();
       destroyControls();

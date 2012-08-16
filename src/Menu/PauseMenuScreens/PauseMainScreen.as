@@ -17,6 +17,7 @@ package Menu.PauseMenuScreens
   import org.josht.starling.foxhole.controls.Radio;
   import org.josht.starling.foxhole.core.ToggleGroup;
   import engine.SaveGame;
+  import UI.HUD;
   
   /**
    * ...
@@ -135,6 +136,7 @@ package Menu.PauseMenuScreens
       boyStyle.onPress.add(function(radio:Radio):void
         {
           SaveGame.controlType = 1;
+          dispatchEventWith(HUD.CONTROLS_CHANGED, true);
         });
       
       var fourway:Radio = new Radio;
@@ -143,6 +145,7 @@ package Menu.PauseMenuScreens
       fourway.onPress.add(function(radio:Radio):void
         {
           SaveGame.controlType = 2;
+          dispatchEventWith(HUD.CONTROLS_CHANGED, true);         
         });
       
       controlGroup.selectedIndex = 1;
