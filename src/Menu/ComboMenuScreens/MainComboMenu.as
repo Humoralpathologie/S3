@@ -23,7 +23,6 @@ package Menu.ComboMenuScreens
   import org.josht.starling.foxhole.controls.Scroller;
   import org.josht.starling.foxhole.controls.ScrollBar;
   import starling.display.Sprite;
-
   
   /**
    * ...
@@ -35,18 +34,18 @@ package Menu.ComboMenuScreens
     protected var _onComboSelect:Signal = new Signal(MainComboMenu);
     protected var _sharedData:Object = {};
     protected var _greybox:Quad;
-
-	protected var _arcadeModiHeading:TextField;
-	protected var _arcadeModiToggleSwitch:ToggleSwitch;
-	protected var question:Image;
-	protected var xButton:Image;
-	protected var _buttons:Array = [];
-	protected var _infoButtonX:Quad;
-	protected var _infoButtonQ:Quad;
-	protected var infoDisplay:Quad;
-	protected var _text:TextField;
-	private var _scroller:Scroller;
-	private var _scrollable:Sprite;
+    
+    protected var _arcadeModiHeading:TextField;
+    protected var _arcadeModiToggleSwitch:ToggleSwitch;
+    protected var question:Image;
+    protected var xButton:Image;
+    protected var _buttons:Array = [];
+    protected var _infoButtonX:Quad;
+    protected var _infoButtonQ:Quad;
+    protected var infoDisplay:Quad;
+    protected var _text:TextField;
+    private var _scroller:Scroller;
+    private var _scrollable:Sprite;
     
     public function MainComboMenu()
     {
@@ -61,29 +60,29 @@ package Menu.ComboMenuScreens
       _greybox.alpha = 0.3;
       _greybox.x = 65 + 60;
       _greybox.y = 40 + 30;
-	  
-	  xButton = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
-	  xButton.x = 860;
-	  xButton.y = 30;
       
-	  infoDisplay = new Quad(710, 450, 0x545454);
+      xButton = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+      xButton.x = 860;
+      xButton.y = 30;
+      
+      infoDisplay = new Quad(710, 450, 0x545454);
       infoDisplay.x = 65 + 60;
       infoDisplay.y = 40 + 30;
-	  infoDisplay.alpha = 1;
-	  
-	  _text = new TextField(_greybox.width, infoDisplay.height + 300, "", "kroeger 06_65", 40, Color.WHITE);
+      infoDisplay.alpha = 1;
+      
+      _text = new TextField(_greybox.width, infoDisplay.height + 300, "", "kroeger 06_65", 40, Color.WHITE);
       _text.x = 0;
-	  
-	  //_text.y = infoDisplay.y;
-	  
-	  _scrollable = new Sprite();
-	   
-	  _scroller = new Scroller();
+      
+      //_text.y = infoDisplay.y;
+      
+      _scrollable = new Sprite();
+      
+      _scroller = new Scroller();
       _scroller.setSize(_greybox.width, _greybox.height - 10);
       _scroller.x = _greybox.x;
       _scroller.y = _greybox.y;
       _scroller.viewPort = _scrollable;
-	  
+      
       addChild(_greybox);
       
       _arcadeModiHeading = new TextField(_greybox.width, 60, AssetRegistry.Strings.ARCADEHEADING, "kroeger 06_65", 60, Color.WHITE);
@@ -97,67 +96,71 @@ package Menu.ComboMenuScreens
       addToggle();
       addInfo();
     }
-	
-    private function addInfo():void {
-	  _infoButtonQ = new Quad(200, 200, Color.BLACK);
-	  _infoButtonQ.x = 760;
-	  _infoButtonQ.y = 0;
-	  _infoButtonQ.alpha = 0;
-	  
-	  
+    
+    private function addInfo():void
+    {
+      _infoButtonQ = new Quad(200, 200, Color.BLACK);
+      _infoButtonQ.x = 760;
+      _infoButtonQ.y = 0;
+      _infoButtonQ.alpha = 0;
+      
       question = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("info-button"));
       question.x = 860;
       question.y = 30;
       addChild(question);
-	  addChild(_infoButtonQ);
-	  
-	  _infoButtonX = new Quad(200, 200, Color.BLACK);
-	  _infoButtonX.x = _infoButtonQ.x;
-	  _infoButtonX.y = 0;
-	  _infoButtonX.alpha = 0;
-	  
-	  
-	  if (!SaveGame.secondArcade) {
-		  _text.text = AssetRegistry.Strings.ARCADEINFO;
-		  addChild(infoDisplay);
-		  //addChild(_scrollable);
-		  addChild(_scroller);  
-		  _scrollable.addChild(_text);
-		  removeChild(question);
-		  removeChild(_infoButtonQ);
-		  addChild(xButton);
-		  addChild(_infoButtonX);
-		  SaveGame.secondArcade = true;
-	  }
-	  
-	  var that:MainComboMenu = this;
-	  _infoButtonQ.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent) {
-		var touch:Touch = event.getTouch(that, TouchPhase.ENDED);
-		if (touch) {
-			_text.text = AssetRegistry.Strings.ARCADEINFO;
-			addChild(infoDisplay);
-			//addChild(_scrollable);
-		    addChild(_scroller);  
-		    _scrollable.addChild(_text);
-			addChild(xButton);
-			addChild(_infoButtonX);
-			removeChild(_infoButtonQ);
-			removeChild(question);
-		}
-      });
+      addChild(_infoButtonQ);
       
-      _infoButtonX.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent) {
-		var touch:Touch = event.getTouch(that, TouchPhase.ENDED);
-		if (touch) {
-			removeChild(infoDisplay);
-			//removeChild(_scrollable);
-			removeChild(_scroller);
-			addChild(question);
-			addChild(_infoButtonQ);	
-			removeChild(xButton);
-			removeChild(_infoButtonX);
-		}
-      });
+      _infoButtonX = new Quad(200, 200, Color.BLACK);
+      _infoButtonX.x = _infoButtonQ.x;
+      _infoButtonX.y = 0;
+      _infoButtonX.alpha = 0;
+      
+      if (!SaveGame.secondArcade)
+      {
+        _text.text = AssetRegistry.Strings.ARCADEINFO;
+        addChild(infoDisplay);
+        //addChild(_scrollable);
+        addChild(_scroller);
+        _scrollable.addChild(_text);
+        removeChild(question);
+        removeChild(_infoButtonQ);
+        addChild(xButton);
+        addChild(_infoButtonX);
+        SaveGame.secondArcade = true;
+      }
+      
+      var that:MainComboMenu = this;
+      _infoButtonQ.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent)
+        {
+          var touch:Touch = event.getTouch(that, TouchPhase.ENDED);
+          if (touch)
+          {
+            _text.text = AssetRegistry.Strings.ARCADEINFO;
+            addChild(infoDisplay);
+            //addChild(_scrollable);
+            addChild(_scroller);
+            _scrollable.addChild(_text);
+            addChild(xButton);
+            addChild(_infoButtonX);
+            removeChild(_infoButtonQ);
+            removeChild(question);
+          }
+        });
+      
+      _infoButtonX.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent)
+        {
+          var touch:Touch = event.getTouch(that, TouchPhase.ENDED);
+          if (touch)
+          {
+            removeChild(infoDisplay);
+            //removeChild(_scrollable);
+            removeChild(_scroller);
+            addChild(question);
+            addChild(_infoButtonQ);
+            removeChild(xButton);
+            removeChild(_infoButtonX);
+          }
+        });
       
       xButton.addEventListener(Event.TRIGGERED, function(event:Event)
         {
@@ -168,45 +171,51 @@ package Menu.ComboMenuScreens
         });
     
     }
-
-	
-	private function addComboInfo(i:int, button:Button):void {
-	  _text.width -= 40;
+    
+    private function addComboInfo(i:int, button:Button):void
+    {
+      _text.width -= 40;
       _text.x = infoDisplay.x + 20;
-	  
-	  _buttons.push([button, _text]);
-	  
-	  button.addEventListener(Event.TRIGGERED, function(event:Event) {
-		switch (i) {
-		case 0:
-			_text.text = AssetRegistry.Strings.SPEEDDESC;
-		break;
-		case 1:
-			if (SaveGame.arcadeModi){
-				_text.text = AssetRegistry.Strings.TIMEDESC;
-			} else {
-				_text.text = AssetRegistry.Strings.SLOWERDESC;
-			}
-		break;
-		case 2:
-			_text.text = AssetRegistry.Strings.NOROTTENDESC;
-		break;
-	  }
-        removeChild(question);
-		removeChild(_infoButtonQ)
-		addChild(infoDisplay);
-		//addChild(_scrollable);
-	    addChild(_scroller);  
-		_scrollable.addChild(_text);
-		addChild(xButton);
-		addChild(_infoButtonX);
-		
-      });
-   
-	}
-	
-    private function addToggle():void {
-	 
+      
+      _buttons.push([button, _text]);
+      
+      button.addEventListener(Event.TRIGGERED, function(event:Event)
+        {
+          switch (i)
+          {
+            case 0:
+              _text.text = AssetRegistry.Strings.SPEEDDESC;
+              break;
+            case 1:
+              if (SaveGame.arcadeModi)
+              {
+                _text.text = AssetRegistry.Strings.TIMEDESC;
+              }
+              else
+              {
+                _text.text = AssetRegistry.Strings.SLOWERDESC;
+              }
+              break;
+            case 2:
+              _text.text = AssetRegistry.Strings.NOROTTENDESC;
+              break;
+          }
+          removeChild(question);
+          removeChild(_infoButtonQ)
+          addChild(infoDisplay);
+          //addChild(_scrollable);
+          addChild(_scroller);
+          _scrollable.addChild(_text);
+          addChild(xButton);
+          addChild(_infoButtonX);
+        
+        });
+    
+    }
+    
+    private function addToggle():void
+    {
+      
       _arcadeModiToggleSwitch = new ToggleSwitch();
       _arcadeModiToggleSwitch.width = 400;
       
@@ -217,20 +226,23 @@ package Menu.ComboMenuScreens
       _arcadeModiToggleSwitch.x = (Starling.current.stage.stageWidth - _arcadeModiToggleSwitch.width) / 2;
       _arcadeModiToggleSwitch.y = _greybox.y + 350;
       
-
-      _arcadeModiToggleSwitch.onChange.add(function(tswitch:ToggleSwitch):void {
-        SaveGame.arcadeModi = tswitch.isSelected;
-		unflatten();
-		if (SaveGame.arcadeModi) {
-			_buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
-			_buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
-			_buttons[4][1].text = AssetRegistry.Strings.TIMEDESC;
-		} else {
-			_buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed");
-			_buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed");
-			_buttons[4][1].text = AssetRegistry.Strings.SLOWERDESC;	
-		}
-      });
+      _arcadeModiToggleSwitch.onChange.add(function(tswitch:ToggleSwitch):void
+        {
+          SaveGame.arcadeModi = tswitch.isSelected;
+          unflatten();
+          if (SaveGame.arcadeModi)
+          {
+            _buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
+            _buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
+            _buttons[4][1].text = AssetRegistry.Strings.TIMEDESC;
+          }
+          else
+          {
+            _buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed");
+            _buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed");
+            _buttons[4][1].text = AssetRegistry.Strings.SLOWERDESC;
+          }
+        });
       
       addChild(_arcadeModiToggleSwitch);
     }
@@ -257,11 +269,12 @@ package Menu.ComboMenuScreens
       leaderboards.x = play.x + play.width + 10;
       leaderboards.y = 540;
       addChild(leaderboards);
-      leaderboards.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void {
-        dispatchEventWith(ManagedStage.SWITCHING, true, { stage: LevelScore } );
-      });
-	  
-	  var back:org.josht.starling.foxhole.controls.Button = new org.josht.starling.foxhole.controls.Button();
+      leaderboards.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void
+        {
+          dispatchEventWith(ManagedStage.SWITCHING, true, {stage: LevelScore});
+        });
+      
+      var back:org.josht.starling.foxhole.controls.Button = new org.josht.starling.foxhole.controls.Button();
       back.label = AssetRegistry.Strings.BACKBUTTON;
       back.height = 80;
       back.width = 220;
