@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:3615dcd8f96a90114dc9964b75d7e1d8$ -->
+<!-- $TexturePacker:SmartUpdate:3d0071d15c046451e788602302f5599b$ -->
 <TextureAtlas imagePath="UI.png">
     <SubTexture name="KreisRadar" x="142" y="287" width="168" height="168"/>
     <SubTexture name="SadSnakeText" x="194" y="108" width="184" height="66" frameX="-90" frameY="-22" frameWidth="384" frameHeight="92"/>
@@ -17,5 +17,5 @@
     <SubTexture name="ui-classic-180-right" x="206" y="457" width="58" height="52" frameX="-134" frameY="-60" frameWidth="192" frameHeight="120"/>
     <SubTexture name="ui-classic-left" x="388" y="2" width="116" height="50" frameX="0" frameY="-6" frameWidth="192" frameHeight="60"/>
     <SubTexture name="ui-classic-right" x="388" y="54" width="114" height="50" frameX="-78" frameY="-6" frameWidth="192" frameHeight="60"/>
-    <SubTexture name="ui-top" x="2" y="2" width="384" height="54" frameX="0" frameY="0" frameWidth="384" frameHeight="80"/>
+    <SubTexture name="ui-top" x="2" y="2" width="384" height="54" frameX="0" frameY="0" frameWidth="384" frameHeight="76"/>
 </TextureAtlas>
