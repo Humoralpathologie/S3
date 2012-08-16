@@ -72,7 +72,7 @@ package Menu
     
 	private var _boards:ScreenNavigator;
 	private static const SCORE:String = "Score";
-    private static const LEADERBOARD:String = "Leaderboard";
+    private static const LEADERBOARDS:String = "Leaderboards";
 	
     public function LevelScore(scores:Object = null)
     {
@@ -131,8 +131,9 @@ package Menu
       trace(_scores);
       _boards = new ScreenNavigator();
       var trans:ScreenFadeTransitionManager = new ScreenFadeTransitionManager(_boards);
-      _boards.addScreen(SCORE, new ScreenNavigatorItem(new ScoreBoard(), null, { scores: this._scores} ));
+      _boards.addScreen(SCORE, new ScreenNavigatorItem(new ScoreBoard(), { onScoring: LEADERBOARDS}, { scores: this._scores} ));
       _boards.defaultScreenID = SCORE;
+	  _boards.addScreen(LEADERBOARDS, new ScreenNavigatorItem(new Leaderboards(), { onLeaderboards: SCORE}));
       addChild(_boards);
       
     }
