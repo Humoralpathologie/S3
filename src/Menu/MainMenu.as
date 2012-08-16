@@ -2,6 +2,7 @@ package Menu
 {
     import engine.ManagedStage;
     import org.josht.starling.foxhole.controls.Radio;
+    import org.josht.starling.foxhole.controls.Screen;
     import org.josht.starling.foxhole.controls.ScreenNavigator;
     import org.josht.starling.foxhole.controls.ScreenNavigatorItem;
     import org.josht.starling.foxhole.core.ToggleGroup;
@@ -105,7 +106,7 @@ package Menu
       addChild(_settingsButton);
       addChild(_arcadeButton);
       addChild(_levelSelectButton);
-	  addChild(_extrasButton);
+	    addChild(_extrasButton);
     }
     
     private function createSettingsNavigator():void {
@@ -113,8 +114,9 @@ package Menu
       const BETASETTINGSSCREEN:String = "BETA";
       
       _settings = new ScreenNavigator();
+      var settingsscreeen:Screen = new MainSettingsScreen();
       _transitions = new ScreenSlidingStackTransitionManager(_settings);
-      _settings.addScreen(MAINSETTINGSSCREEN, new ScreenNavigatorItem(MainSettingsScreen, {
+      _settings.addScreen(MAINSETTINGSSCREEN, new ScreenNavigatorItem(settingsscreeen, {
         onBetaSelect: BETASETTINGSSCREEN
       }));
       
@@ -127,6 +129,10 @@ package Menu
     }
     
     private function showSettingsNavigator():void {
+      // Leaky.
+      _settings.dispose();
+      createSettingsNavigator(); 
+     
       _settings.showDefaultScreen();
       addChild(_settings);
       var exit:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlasAlpha.getTexture("x"));

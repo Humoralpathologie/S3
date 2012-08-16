@@ -20,6 +20,10 @@ package engine {
       return _sharedObject.data.controlType || 2;
     }
     
+    public static function get loggedIn():Boolean {
+      return userName != "anonymous";
+    }
+    
     public static function set controlType(value:int):void {
       _sharedObject.data.controlType = value;
     }

@@ -115,8 +115,8 @@ package engine
     public function advanceTime(time:Number):void
     {
       _text.x -= _speed * time;
-      trace(_text.x);
-      trace(_textWidth);
+      //  trace(_text.x);
+      // trace(_textWidth);
       if (_text.x <= -_textWidth)
       {
         Starling.juggler.remove(this);
