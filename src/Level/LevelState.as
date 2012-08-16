@@ -95,6 +95,9 @@ package Level
     private var _firstFrame:Boolean = true;
     private var _frameCounter:int = 0;
     
+    private var _messages:Vector.<Tween>;
+    private var _messageDelay:Number = 0;
+    
     // Death screen
     private var _sadSnake:Image;
     private var _sadText:Image;
@@ -149,6 +152,9 @@ package Level
     public function LevelState()
     {
       super();
+      
+      _messages = new Vector.<Tween>;
+      
       Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       trace("Language: " + String(SaveGame.language));
       trace(AssetRegistry.Strings);
@@ -277,11 +283,14 @@ package Level
       var tween:Tween = new Tween(field, 3);
       tween.animate("y", -field.height);
       tween.animate("alpha", 0);
+      field.alpha = 0;
       tween.onComplete = function():void
       {
         field.visible = false;
       }
-      Starling.current.juggler.add(tween);
+      _messages.push(tween);
+      
+      //Starling.current.juggler.add(tween);
     }
     
     private function recycleText(width:int = -1, height:int = -1, text:String = null, size:int = -1):TextField
@@ -881,6 +890,12 @@ package Level
     
     private function onEnterFrame(event:EnterFrameEvent):void
     {
+      if (_messageDelay <= _overallTimer && _messages.length > 0) {
+        var message:Tween = _messages.pop();
+        message.target.alpha = 1;
+        Starling.current.juggler.add(message);
+        _messageDelay = _overallTimer + 0.5;
+      }
       
       _updateTimer = getTimer();
       if (!_won)
@@ -1315,7 +1330,7 @@ package Level
       {
         _textFieldPool[i].dispose();
       }
-      
+            
       _currentCombos = null;
       
       this.removeEventListeners(EnterFrameEvent.ENTER_FRAME);
