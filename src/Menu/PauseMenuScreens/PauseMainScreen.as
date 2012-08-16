@@ -148,7 +148,7 @@ package Menu.PauseMenuScreens
           dispatchEventWith(HUD.CONTROLS_CHANGED, true);         
         });
       
-      controlGroup.selectedIndex = 1;
+      controlGroup.selectedIndex = SaveGame.controlType - 1;
       
       boyStyle.x = _restartButton.x + 60;
       fourway.x = _backButton.x + 60;

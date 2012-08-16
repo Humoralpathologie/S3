@@ -196,8 +196,15 @@ package Level
       _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;
       _hud.poisonTextField.y = _hud.poison.y - 5;*/
       _hud = new HUD(this);
+      _hud.iconsCfg = {
+        time: {type: "time", pos: 2, watching: "timeLeftFormatted"}
+      }
       addChild(_hud);
 
+    }
+    
+    public function get timeLeftFormatted():String {
+      return String(Math.max(0, _timeLeft).toFixed(2));
     }
     
     override protected function updateHud():void

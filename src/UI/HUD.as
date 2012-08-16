@@ -39,7 +39,7 @@ package UI
     private var _textLayer:Sprite;
     private var _score:TextField;
     private var _tweens:Vector.<Tween>;
-    private var _textFieldPool:Vector.<TextField>;
+    private var _textMessagesPool:Vector.<TextField>;
     
     public function HUD(levelState:LevelState)
     {
@@ -55,7 +55,7 @@ package UI
       _tweens = new Vector.<Tween>;
       
       // This is to re-use TextFields for message display.
-      _textFieldPool = new Vector.<TextField>;
+      _textMessagesPool = new Vector.<TextField>;
       
       createTop();
       createControls();
@@ -72,17 +72,32 @@ package UI
       _levelState.addEventListener(HUD.DISPLAY_MESSAGE, onDisplayMessage);
     }
     
-    private function recycleTextField():TextField {
-      return new TextField(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight, "", "kroeger 06_65", 90, Color.WHITE);
+    private function recycleMessage():TextField {
+      var i:int;
+      var txt:TextField;
+      
+      for (i = 0; i < _textMessagesPool.length; i++) {
+        if (_textMessagesPool[i].visible == false) {
+          _textMessagesPool[i].y = 0;
+          trace("Recycling old message");
+          return _textMessagesPool[i];
+        }
+      }
+      
+      trace("Making a new message");
+      txt = new TextField(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight, "", "kroeger 06_65", 90, Color.WHITE);
+      txt.touchable = false;
+      _textMessagesPool.push(txt);
+      return txt;
     }
     
     private function onDisplayMessage(evt:Event) {
       var tween:Tween;
       var textMessage:TextField;
       
-      textMessage = recycleTextField();
+      textMessage = recycleMessage();
       textMessage.text = evt.data.message;
-      textMessage.touchable = false;
+      
       tween = new Tween(textMessage, 3);
       tween.animate("y", -textMessage.height);
       tween.onComplete = function():void {
