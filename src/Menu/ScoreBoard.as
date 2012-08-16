@@ -231,7 +231,7 @@ package Menu
       _scoreboard.y = 30;
       addChild(_scoreboard);
       
-      _scoreboardText = new TextField(200, 35, "Scores", "kroeger 06_65", 35, Color.WHITE);
+      _scoreboardText = new TextField(200, 40, AssetRegistry.Strings.SCORES, "kroeger 06_65", 40, Color.WHITE);
       _scoreboardText.vAlign = VAlign.TOP;
       _scoreboardText.hAlign = HAlign.LEFT;
       _scoreboardText.x = _scoreboard.x + 20;

@@ -165,21 +165,11 @@ package Menu.ComboMenuScreens
 						removeChild(_infoButtonX);
 					}
 				});
-		/*
-			 xButton.addEventListener(Event.TRIGGERED, function(event:Event)
-			 {
-			 removeChild(infoDisplay);
-			 addChild(question);
-			 removeChild(_text);
-			 removeChild(xButton);
-			 });
-		 */
+	
 		}
 		
 		private function addComboInfo(i:int, button:Button):void
 		{
-			//_text.width -= 40;
-			//_text.x = infoDisplay.x + 20;
 			
 			_buttons.push([button, _text]);
 			
