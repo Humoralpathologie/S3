@@ -91,16 +91,22 @@ package Level
     }    
 
     override protected function addHud():void {
-      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "poison"],this);
+      // _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "poison"], this);
+      _hud = new HUD(this);
+
       addChild(_hud);
+      
+      /*
       _hud.poison.x = 108;
       _hud.poison.y = 70;
-      _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;  
+      _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;  */
     }
     override protected function updateHud():void {
       super.updateHud();
+      /*
       _hud.comboText = String(_combos);
       _hud.poisonText = String(_poisonEggs);   
+      */
     }
     
     override protected function addObstacles():void

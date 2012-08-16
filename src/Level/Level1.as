@@ -85,14 +85,15 @@ package Level
     }
 
     override protected function addHud():void {
-      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "eggs"], this);
+      //_hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "eggs"], this);
+      _hud = new HUD(this);
       addChild(_hud);
       
     }
 
     override protected function updateHud():void {
       super.updateHud();
-      _hud.eggsText = String(_snake.eatenEggs);   
+      //_hud.eggsText = String(_snake.eatenEggs);   
     }
 
     override protected function addObstacles():void

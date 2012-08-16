@@ -354,7 +354,8 @@ package Level
     
     protected function addHud():void
     {
-      _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time"], this);
+      //_hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time"], this);
+      _hud = new HUD(this);
       addChild(_hud);
     }
     
@@ -568,7 +569,7 @@ package Level
         if (egg.type <= AssetRegistry.EGGROTTEN)
         {
           _snake.eat(egg.type);
-          _hud.addPreview(egg.type);
+          //_hud.addPreview(egg.type);
         }
         
         var particle:PDParticleSystem = _particles[egg.type];
@@ -717,7 +718,7 @@ package Level
             _snake.removeBodyPart(egg);
             
             soundCounter++;
-            _hud.updatePreview(_snake);
+            //_hud.updatePreview(_snake);
             
             setTimeout(func, (300 / (expoCounter * expoCounter)) + 80);
             
@@ -880,12 +881,14 @@ package Level
     
     protected function updateHud():void
     {
-      _hud.radar.update();
+      //_hud.radar.update();
       var _sec:String = (int(_overallTimer) % 60) < 10 ? "0" + String(int(_overallTimer) % 60) : String(int(_overallTimer) % 60);
       var _min:String = (int(_overallTimer) / 60) < 10 ? "0" + String(int(int(_overallTimer) / 60)) : String(int(int(_overallTimer) / 60));
+      /*
       _hud.score = String(_score);
       _hud.lifesText = String(_snake.lives);
       _hud.timeText = _min + ":" + _sec;
+      */
     }
     
     private function onEnterFrame(event:EnterFrameEvent):void
@@ -936,7 +939,7 @@ package Level
           spawnRandomEgg();
         }
         
-        updateHud();
+        //updateHud();
         
         _snake.update(event.passedTime * Starling.juggler.timeFactor);
         
