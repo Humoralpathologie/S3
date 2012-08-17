@@ -2,6 +2,7 @@ package UI
 {
   import flash.geom.Point;
   import Level.LevelState;
+  import Snake.BodyPart;
   import starling.animation.Tween;
   import starling.display.Button;
   import starling.display.DisplayObject;
@@ -19,6 +20,7 @@ package UI
   import starling.utils.VAlign;
   import starling.utils.HAlign;
   import starling.core.Starling;
+  import Snake.Snake;
   
   /**
    * ...
@@ -33,13 +35,14 @@ package UI
     private var _top:Image;
     private var _buttons:Vector.<Button>;
     private var _levelState:LevelState;
-    private var _icons:Vector.<DisplayObject>;
     private var _iconsCfg:Object = { };
     private var _iconLayer:Sprite;
     private var _textLayer:Sprite;
     private var _score:TextField;
     private var _tweens:Vector.<Tween>;
     private var _textMessagesPool:Vector.<TextField>;
+    private var _tailView:Sprite;
+    private var _tailViewBoxes:Vector.<Image>;
     
     public function HUD(levelState:LevelState)
     {
@@ -59,10 +62,15 @@ package UI
       
       createTop();
       createControls();
+      createTailView();
       
+      // UIAtlas.
       addChild(_top);
       addChild(_controls);
+      // SnakeAtlas.
       addChild(_iconLayer);
+      addChild(_tailView);
+      // Text, so it doesn't matter.
       addChild(_textLayer);
       
       // Listen if the controls change in the pause menu.
@@ -70,6 +78,44 @@ package UI
       
       // Listen if we should display any messages.
       _levelState.addEventListener(HUD.DISPLAY_MESSAGE, onDisplayMessage);
+      
+      // Listen for changes in the snake body.
+      _levelState.addEventListener(Snake.Snake.BODY_CHANGED, onSnakeBodyChanged);
+    }
+    
+    private function onSnakeBodyChanged(evt:Event) {
+      updateTailView(_levelState.snake.getTailTypes());
+    }
+    
+    private function createTailView():void {
+      var i:int;
+      var tailViewBox:Image;
+      
+      var baseX:int = 750;
+      var baseY:int = 10;
+      
+      _tailView = new Sprite();
+      _tailView.touchable = false;
+      _tailViewBoxes = new Vector.<Image>;
+          
+      for (i = 0; i < 5; i++) {
+        tailViewBox = new Image(tailViewTexture(AssetRegistry.EGGNONE));
+        tailViewBox.y = baseY;
+        tailViewBox.x = baseX + (tailViewBox.width * i);
+        _tailView.addChild(tailViewBox);
+        _tailViewBoxes.push(tailViewBox);
+      }
+    }
+    
+    private function updateTailView(types:Array):void {
+      var i:int;
+      // There should always be an eggtype for every box.
+      if (types.length != _tailViewBoxes.length) {
+        return;
+      }
+      for (i = 0; i < types.length; i++) {
+        _tailViewBoxes[i].texture = tailViewTexture(types[i]);
+      }
     }
     
     private function recycleMessage():TextField {
@@ -79,6 +125,7 @@ package UI
       for (i = 0; i < _textMessagesPool.length; i++) {
         if (_textMessagesPool[i].visible == false) {
           _textMessagesPool[i].y = 0;
+          _textMessagesPool[i].visible = true;
           trace("Recycling old message");
           return _textMessagesPool[i];
         }
@@ -91,7 +138,7 @@ package UI
       return txt;
     }
     
-    private function onDisplayMessage(evt:Event) {
+    private function onDisplayMessage(evt:Event):void {
       var tween:Tween;
       var textMessage:TextField;
       
@@ -202,11 +249,16 @@ package UI
       return txtr;
     }
     
-    // TODO: Actually write this.
     private function destroyIcons():void {
-      _score.dispose();
+       _iconsCfg = null;
+      _iconLayer.removeChildren(0, -1, true);
+      _iconLayer.dispose();
+      _iconLayer = null;
+      _score.removeFromParent(true);
       _score = null;
-      _icons = null;
+      _textLayer.removeChildren(0, -1, true);
+      _textLayer.dispose();
+      _textLayer = null;
     }
     
     private function createTop():void {
@@ -247,7 +299,6 @@ package UI
     
     private function createButtons():void {
       // There may already be buttons;
-      trace("Creating buttons type " + String(SaveGame.controlType));
       destroyButtons();
       _buttons = new Vector.<Button>;
       if(SaveGame.controlType == 1) {
@@ -298,30 +349,69 @@ package UI
           });
         };
         tmp(button, btnData.fn);
-        tmp = null;
         
         _buttons.push(button);
         _controls.addChild(button);
       }
     }
     
-    private function destroyIconLayer():void {
-      destroyIcons();
-      _iconLayer.dispose();
-      _iconLayer = null;
+    private function onControlsChanged(evt:Event):void {
+      createButtons();
     }
     
-    private function onControlsChanged(evt:Event) {
-      createButtons();
+    private function destroyTweens():void {
+      var i:int;
+      for (i = 0; i < _tweens.length; i++) {
+        Starling.current.juggler.remove(_tweens[i]);
+        _tweens[i] = null;
+      }
+      _tweens = null;
+    }
+    
+    private function destroyTextMessagesPool():void {
+      var i:int;
+      for (var i = 0; i < _textMessagesPool.length; i++) {
+        _textMessagesPool[i].dispose();
+        _textMessagesPool[i] = null;
+      }
+      _textMessagesPool = null;
+    }
+    
+    private function tailViewTexture(eggType:int):Texture {
+      var type:String;
+      switch (eggType) {    
+        case AssetRegistry.EGGZERO:
+          type = "UIBoxFuerPreview";
+        break;
+        case AssetRegistry.EGGA:
+          type = "PreviewIconEiA";
+        break;
+        case AssetRegistry.EGGB:
+          type = "PreviewIconEiB";
+        break;
+        case AssetRegistry.EGGC:
+          type = "PreviewIconEiC";
+        break;
+        case AssetRegistry.EGGROTTEN:
+          type = "UIBoxFuerPreview";
+        break;
+        default:
+          type = "UIBoxFuerPreview";
+        break;
+      } 
+      return AssetRegistry.SnakeAtlas.getTexture(type);
     }
     
     override public function dispose():void {
       super.dispose();
+      _levelState.removeEventListener(Snake.Snake.BODY_CHANGED, onSnakeBodyChanged);
       _levelState.removeEventListener(HUD.DISPLAY_MESSAGE, onDisplayMessage);
       _levelState.removeEventListener(HUD.CONTROLS_CHANGED, onControlsChanged);
       
-      //TODO: tweens, textfieldpool
-      destroyIconLayer();
+      //TODO: tailview
+      destroyTextMessagesPool();
+      destroyTweens();
+      destroyIcons();
       destroyTop();
       destroyControls();
     }

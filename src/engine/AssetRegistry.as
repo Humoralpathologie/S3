@@ -261,6 +261,7 @@ package engine
     public static const LEFT:int = 2;
     public static const RIGHT:int = 3;
     
+    public static const EGGNONE:int = -1;
     public static const EGGZERO:int = 0;
     public static const EGGA:int = 1;
     public static const EGGB:int = 2;

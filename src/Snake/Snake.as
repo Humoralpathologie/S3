@@ -24,6 +24,8 @@ package Snake
   public class Snake extends Sprite
   {
     
+    public static const BODY_CHANGED:String = "bodychanged";
+    
     private var _head:Head;
     private var _speed:Number;
     private var _mps:int;
@@ -71,6 +73,22 @@ package Snake
       this.mps = mps;
     }
     
+    public function getTailTypes():Array {
+      var i:int;      
+      var res = [];
+      
+      var filler:int = Math.max(0, 5 - _body.length)
+      for (i = 0; i < filler; i++) {
+        res.push(AssetRegistry.EGGNONE);
+      }
+      
+      for (i = Math.max(_body.length - 5, 0); i < _body.length; i++) {
+        res.push(_body[i].type);
+      }
+      
+      return res;
+    }
+    
     public function shuffle():void
     {
       function randomSort(a:*, b:*):Number
@@ -84,6 +102,7 @@ package Snake
       var back:Array = _body.slice(4);
       back.sort(randomSort);
       _body = front.concat(back);
+      dispatchEventWith(BODY_CHANGED, true);
     }
     
     public override function render(support:RenderSupport, parentAlpha:Number):void
@@ -189,6 +208,7 @@ package Snake
         _tail.tileY = -10;
         //_bodyEggs.addChild(_newPart);
         _newPart = null;
+        dispatchEventWith(BODY_CHANGED, true);
       }
       
       var l:int = _body.length
@@ -244,6 +264,7 @@ package Snake
     public function removeBodyPart(part:Snake.BodyPart):void {
       //_bodyEggs.removeChild(part);
       body.splice(body.indexOf(part), 1);
+      dispatchEventWith(BODY_CHANGED, true);
       part.removing = false;
       _freeBodyParts.push(part);
     }
