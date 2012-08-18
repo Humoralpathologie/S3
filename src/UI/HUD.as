@@ -49,6 +49,8 @@ package UI
     private var _radarEggsLayer:Sprite;
     private var _radarEggs:Vector.<Image>;
     private var _center:Point;
+    private var _messageQueue:Vector.<String>;
+    private var _messageQueueRunning:Boolean = false;
     
     public function HUD(levelState:LevelState)
     {
@@ -65,6 +67,10 @@ package UI
       
       // This is to re-use TextFields for message display.
       _textMessagesPool = new Vector.<TextField>;
+      
+      // Initialize message queue;
+      _messageQueue = new Vector.<String>;
+      _messageQueueRunning = false;
       
       // A center point so we don't need to recalculate
       _center = new Point(AssetRegistry.STAGE_WIDTH / 2, AssetRegistry.STAGE_HEIGHT / 2);
@@ -202,22 +208,50 @@ package UI
       return txt;
     }
     
-    private function onDisplayMessage(evt:Event):void {
+    private function showMessage(message:String):void {
       var tween:Tween;
-      var textMessage:TextField;
-      
+      var textMessage:TextField;      
       textMessage = recycleMessage();
-      textMessage.text = evt.data.message;
-      
+      textMessage.text = message; 
+        
       tween = new Tween(textMessage, 3);
       tween.animate("y", -textMessage.height);
       tween.onComplete = function():void {
         textMessage.visible = false;
       }
+        
       _tweens.push(tween);
       Starling.juggler.add(tween);
- 
-      _textLayer.addChild(textMessage);     
+     
+      _textLayer.addChild(textMessage);       
+    }
+    
+    private function showNextMessage():void {  
+      trace("Showing next message");
+      // Stop if we don't have queue
+      if (!_messageQueue) { _messageQueueRunning = false;  return; }
+        
+      if (_messageQueue.length > 0) {
+        var message:String = _messageQueue.pop();
+        showMessage(message);
+        Starling.juggler.delayCall(showNextMessage, 0.5);
+      } else {
+        _messageQueueRunning = false;
+      }
+    }
+    
+    private function startMessageQueue():void {
+      trace("Starting message queue");
+      _messageQueueRunning = true;    
+      showNextMessage();
+    }
+    
+    private function onDisplayMessage(evt:Event):void {
+      _messageQueue.push(evt.data.message);
+      trace(_messageQueueRunning);
+      if (!_messageQueueRunning) {
+        startMessageQueue();
+      }
     }
     
     public function set iconsCfg(value:Object):void {
@@ -513,7 +547,7 @@ package UI
       _levelState.removeEventListener(HUD.DISPLAY_MESSAGE, onDisplayMessage);
       _levelState.removeEventListener(HUD.CONTROLS_CHANGED, onControlsChanged);
       
-      //TODO: tailview
+      //TODO: tailview, radareggs, messagequeue
       destroyRadarCircle();
       destroyTextMessagesPool();
       destroyTweens();
