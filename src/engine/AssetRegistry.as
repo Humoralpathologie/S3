@@ -273,8 +273,8 @@ package engine
     public static var HQ:Boolean = false;
     public static var LEVELS:Array;
     
-    public static const STAGE_WIDTH:int = 640;
-    public static const STAGE_HEIGHT:int = 960;
+    public static const STAGE_WIDTH:int = 960;
+    public static const STAGE_HEIGHT:int = 640;
     
     public static const ASPECT_RATIO:Number = STAGE_HEIGHT / STAGE_WIDTH;
     public static var SCALE:Number = 0;

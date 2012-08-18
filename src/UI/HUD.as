@@ -1,5 +1,6 @@
 package UI
 {
+  import Eggs.Egg;
   import flash.geom.Point;
   import Level.LevelState;
   import Snake.BodyPart;
@@ -7,6 +8,7 @@ package UI
   import starling.display.Button;
   import starling.display.DisplayObject;
   import starling.display.Image;
+  import starling.display.QuadBatch;
   import starling.display.Sprite;
   import engine.AssetRegistry;
   import starling.events.Event;
@@ -43,6 +45,10 @@ package UI
     private var _textMessagesPool:Vector.<TextField>;
     private var _tailView:Sprite;
     private var _tailViewBoxes:Vector.<Image>;
+    private var _radarCircle:Image;
+    private var _radarEggsLayer:Sprite;
+    private var _radarEggs:Vector.<Image>;
+    private var _center:Point;
     
     public function HUD(levelState:LevelState)
     {
@@ -60,16 +66,23 @@ package UI
       // This is to re-use TextFields for message display.
       _textMessagesPool = new Vector.<TextField>;
       
+      // A center point so we don't need to recalculate
+      _center = new Point(AssetRegistry.STAGE_WIDTH / 2, AssetRegistry.STAGE_HEIGHT / 2);
+      
       createTop();
       createControls();
       createTailView();
+      createRadarCircle();
+      createRadarEggs();
       
       // UIAtlas.
       addChild(_top);
       addChild(_controls);
+      addChild(_radarCircle);
       // SnakeAtlas.
       addChild(_iconLayer);
       addChild(_tailView);
+      addChild(_radarEggsLayer);
       // Text, so it doesn't matter.
       addChild(_textLayer);
       
@@ -81,6 +94,57 @@ package UI
       
       // Listen for changes in the snake body.
       _levelState.addEventListener(Snake.Snake.BODY_CHANGED, onSnakeBodyChanged);
+    }
+    
+    private function createRadarEggs():void {      
+      var i:int;
+      
+      _radarEggsLayer = new Sprite();
+      _radarEggsLayer.touchable = false;
+      
+      _radarEggs = new Vector.<Image>;
+      
+      for (i = 0; i < 20; i++) {
+        _radarEggs.push(new Image(getRadarEggTexture(AssetRegistry.EGGA)));
+        _radarEggs[i].visible = false;
+        _radarEggsLayer.addChild(_radarEggs[i]);
+      }
+    }
+    
+    private function getRadarEggTexture(type:int):Texture {
+      var texture:Texture;
+      
+      switch(type) {
+        case AssetRegistry.EGGA:
+            texture = AssetRegistry.SnakeAtlas.getTexture("radar_a");
+            break;
+        case AssetRegistry.EGGB:
+            texture = AssetRegistry.SnakeAtlas.getTexture("radar_b");
+            break;
+        case AssetRegistry.EGGC:
+            texture = AssetRegistry.SnakeAtlas.getTexture("radar_c");
+            break;
+        case AssetRegistry.EGGGOLDEN:
+            texture = AssetRegistry.SnakeAtlas.getTexture("radar_gold");
+            break;
+        case AssetRegistry.EGGSHUFFLE:
+            texture = AssetRegistry.SnakeAtlas.getTexture("radar_shuffle");
+            break;           
+        case AssetRegistry.EGGZERO:
+            texture = AssetRegistry.SnakeAtlas.getTexture("radar_green");
+            break;        
+        case AssetRegistry.EGGROTTEN:
+            texture = AssetRegistry.SnakeAtlas.getTexture("radar_rotten");
+            break;                   
+      }
+    
+      return texture;
+    }
+        
+    private function createRadarCircle():void {
+      _radarCircle = new Image(AssetRegistry.UIAtlas.getTexture("KreisRadar"));
+      _radarCircle.x = (AssetRegistry.STAGE_WIDTH - _radarCircle.width) / 2;
+      _radarCircle.y = (AssetRegistry.STAGE_HEIGHT - _radarCircle.height) / 2;
     }
     
     private function onSnakeBodyChanged(evt:Event) {
@@ -132,7 +196,7 @@ package UI
       }
       
       trace("Making a new message");
-      txt = new TextField(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight, "", "kroeger 06_65", 90, Color.WHITE);
+      txt = new TextField(AssetRegistry.STAGE_WIDTH, AssetRegistry.STAGE_HEIGHT, "", "kroeger 06_65", 90, Color.WHITE);
       txt.touchable = false;
       _textMessagesPool.push(txt);
       return txt;
@@ -162,6 +226,13 @@ package UI
     }
     
     public function update():void {
+      var i:int;
+      var levelEggs:Vector.<Egg> = _levelState.eggs.eggPool;
+      var radarEgg:Image;
+      var levelEgg:Egg;
+      var pos:Point = new Point();
+      var levelEggsLength:int = levelEggs.length;
+      
       // Update score display.
       _score.text = _levelState.score;
       
@@ -169,6 +240,34 @@ package UI
       for each (var iconCfg in _iconsCfg) {
         iconCfg.textField.text = _levelState[iconCfg.watching];
       }
+      
+      // Update radar      
+      for (i = 0; i < _radarEggs.length; i++) {
+        radarEgg = _radarEggs[i]; 
+        
+        if (i < levelEggsLength) {
+          levelEgg = levelEggs[i];
+          
+          radarEgg.texture = getRadarEggTexture(levelEgg.type);
+          setRadarEggPosition(levelEgg, radarEgg);
+          
+          radarEgg.visible = true;
+        } else {
+          radarEgg.visible = false;
+        }
+      }
+    }
+    
+    private function setRadarEggPosition(egg:Egg, radarEgg:Image):void {
+      var theta:Number;
+      var dx:Number, dy:Number;
+      
+      dx = egg.x - _levelState.snake.head.x;
+      dy = egg.y - _levelState.snake.head.y;
+      theta = Math.atan2(dy, dx);
+          
+      radarEgg.x = (_center.x - (radarEgg.width) / 2) + (210 * Math.cos(theta));
+      radarEgg.y = (_center.y - (radarEgg.height) / 2) + (210 * Math.sin(theta));               
     }
     
     // Creates icons AND the necessary text. This also creates the score display.
@@ -179,7 +278,7 @@ package UI
       var iconCfg:Object;
             
       // Create the score display.
-      _score = new TextField(Starling.current.stage.stageWidth, 100, "0", "kroeger 06_65", 80, Color.WHITE);
+      _score = new TextField(AssetRegistry.STAGE_WIDTH, 100, "0", "kroeger 06_65", 80, Color.WHITE);
       _score.touchable = false;
       _textLayer.addChild(_score);
       
@@ -402,13 +501,20 @@ package UI
       return AssetRegistry.SnakeAtlas.getTexture(type);
     }
     
+    private function destroyRadarCircle():void {
+      _radarCircle.removeFromParent(true);
+      _radarCircle = null;
+    }
+    
     override public function dispose():void {
       super.dispose();
+      
       _levelState.removeEventListener(Snake.Snake.BODY_CHANGED, onSnakeBodyChanged);
       _levelState.removeEventListener(HUD.DISPLAY_MESSAGE, onDisplayMessage);
       _levelState.removeEventListener(HUD.CONTROLS_CHANGED, onControlsChanged);
       
       //TODO: tailview
+      destroyRadarCircle();
       destroyTextMessagesPool();
       destroyTweens();
       destroyIcons();
