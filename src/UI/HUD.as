@@ -279,7 +279,7 @@ package UI
       for (i = 0; i < _radarEggs.length; i++) {
         radarEgg = _radarEggs[i]; 
         
-        if (i < levelEggsLength) {
+        if (i < levelEggsLength && levelEggs[i].visible) {
           levelEgg = levelEggs[i];
           
           radarEgg.texture = getRadarEggTexture(levelEgg.type);
