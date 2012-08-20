@@ -1,6 +1,7 @@
 package Level
 {
   import engine.AssetRegistry;
+  import org.osflash.signals.natives.NativeMappedSignal;
   //import com.demonsters.debugger.MonsterDebugger;
   import com.gskinner.motion.GTween;
   import Eggs.Egg;
@@ -104,7 +105,8 @@ package Level
     private var _mchammer:Quad;
     
     // Shaking
-    private var _shaking:Boolean = false;
+    protected var _shaking:Boolean = false;
+    protected var _intensity:Number;
     
     private var _evilSnake:Image;
     private var _evilText:Image;
@@ -377,7 +379,7 @@ package Level
       egg = _eggs.overlapEgg(_snake.head);
       if (egg)
       {
-        shake();
+        //shake();
         eatEgg(egg);
         _justAte = true;
       }
@@ -1041,9 +1043,12 @@ package Level
       _levelStage.y = Math.max( -((_bg.height + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.y);
       
       if (_shaking) {
+        _levelStage.x += _intensity;
+        _levelStage.y += _intensity;
+        /*
         _levelStage.x += (Math.random() * 20 - 10);
         _levelStage.y += (Math.random() * 20 - 10);
-
+        */
       }
     }
     
