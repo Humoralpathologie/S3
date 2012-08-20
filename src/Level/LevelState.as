@@ -103,6 +103,9 @@ package Level
     private var _sadText:Image;
     private var _mchammer:Quad;
     
+    // Shaking
+    private var _shaking:Boolean = false;
+    
     private var _evilSnake:Image;
     private var _evilText:Image;
     protected var _levelNr:int = 0;
@@ -362,6 +365,11 @@ package Level
       addChild(_hud);
     }
     
+    private function shake():void {
+      _shaking = true;
+      Starling.juggler.delayCall(function():void { _shaking = false }, 0.5);
+    }
+    
     private function eggCollide():void
     {
       var egg:Eggs.Egg;
@@ -369,6 +377,7 @@ package Level
       egg = _eggs.overlapEgg(_snake.head);
       if (egg)
       {
+        shake();
         eatEgg(egg);
         _justAte = true;
       }
@@ -1029,7 +1038,13 @@ package Level
       _levelStage.y = Math.min(_levelStage.y, frame);
       // TODO: Should be computed only once.
       _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.x);
-      _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.y);
+      _levelStage.y = Math.max( -((_bg.height + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.y);
+      
+      if (_shaking) {
+        _levelStage.x += (Math.random() * 20 - 10);
+        _levelStage.y += (Math.random() * 20 - 10);
+
+      }
     }
     
     public function get score():String
