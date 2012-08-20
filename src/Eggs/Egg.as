@@ -1,6 +1,7 @@
 package Eggs
 {
   import engine.TileSprite;
+  import starling.animation.IAnimatable;
   import starling.textures.Texture;
   import starling.display.Image;
   import engine.AssetRegistry
@@ -13,7 +14,7 @@ package Eggs
    * ...
    * @author
    */
-  public class Egg extends TileSprite
+  public class Egg extends TileSprite implements IAnimatable
   {
     private var _type:int = 0;
     private static var _clips:Object;
@@ -69,7 +70,6 @@ package Eggs
       }
       _image = new MovieClip(_clips[value], 1);
       addChild(_image);
-      Starling.juggler.add(_image as MovieClip);
     }
     
     public function pinkify():void
@@ -86,6 +86,13 @@ package Eggs
     override public function dispose():void {
       _clips = null;
       super.dispose();
+    }
+    
+    /* INTERFACE starling.animation.IAnimatable */
+    
+    public function advanceTime(time:Number):void 
+    {
+      (_image as MovieClip).advanceTime(time);
     }
   }
 

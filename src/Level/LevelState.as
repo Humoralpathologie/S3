@@ -1,6 +1,7 @@
 package Level
 {
   import engine.AssetRegistry;
+  import starling.animation.Juggler;
   //import com.demonsters.debugger.MonsterDebugger;
   import com.gskinner.motion.GTween;
   import Eggs.Egg;
@@ -31,7 +32,6 @@ package Level
   import starling.events.KeyboardEvent;
   import engine.AssetRegistry;
   import UI.HUD;
-  import UI.Radar;
   import flash.system.Capabilities;
   import starling.display.BlendMode;
   import starling.text.TextField;
@@ -63,9 +63,10 @@ package Level
   import org.josht.starling.foxhole.themes.MinimalTheme;
   
   /**
-   * ...
-   * @author
+   * The base class for all Levels
+   * @author Roger Braun, Tim Schierbaum, Jiayi Zheng
    */
+  
   public class LevelState extends ManagedStage
   {
     protected var _bg:Image;
@@ -94,9 +95,6 @@ package Level
     private var _paused:Boolean = false;
     private var _firstFrame:Boolean = true;
     private var _frameCounter:int = 0;
-    
-    private var _messages:Vector.<Tween>;
-    private var _messageDelay:Number = 0;
     
     // Death screen
     private var _sadSnake:Image;
@@ -137,7 +135,7 @@ package Level
     protected var _chainTime:Number = 2.5;
     protected var _extensionTime:int;
     protected var _spawnMap:Array = [];
-    protected var _textLevel:Sprite;
+    protected var _textLayer:Sprite;
     
     private var _updateTimer:Number;
     
@@ -152,41 +150,27 @@ package Level
     
     static const PAUSEMAIN:String = "MAIN";
     
+    private var _gameJuggler:Juggler;
+    
     public function LevelState()
     {
       super();
       
-      _messages = new Vector.<Tween>;
-      
-      Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-      trace("Language: " + String(SaveGame.language));
-      trace(AssetRegistry.Strings);
-      if (SaveGame.difficulty == 1)
-      {
-        SaveGame.startSpeed = 7;
-      }
-      else
-      {
-        SaveGame.startSpeed = 10;
-      }
-      // Initialize and fill the TextField pool
-      _textFieldPool = new Vector.<TextField>;
-      _textLevel = new Sprite;
-      for (var i:int = 0; i < 15; i++)
-      {
-        var temp:TextField = new TextField(100, 100, "", "kroeger 06_65");
-        temp.visible = false;
-        _textLevel.addChild(temp);
-        _textFieldPool.push(temp);
-      }
-      
-      sfx = AssetRegistry.LevelMusic1Sound;
+      setSpeed();
       
       _currentCombos = null;
+       
+      // Register Keyboard controls
+      Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
-      _speed = 1 / SaveGame.startSpeed;
-      
+      // Update every frame
       this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
+      
+      // Initialize and fill the TextField pool
+      initializeTextPool();
+      
+      // Juggler for in-game objects that can be paused
+      _gameJuggler = new Juggler();
       
       // Combos:
       
@@ -208,13 +192,19 @@ package Level
       addObstacles();
       addSpawnMap();
       setBoundaries();
+      
       _snake = new Snake(SaveGame.startSpeed);
+      _gameJuggler.add(_snake);
       
       _following = _snake.head;
+      
       _levelStage.addChild(_snake);
       
       _eggs = new Eggs();
-      _rottenEggs = new Eggs.Eggs();
+      _rottenEggs = new Eggs();
+      
+      _gameJuggler.add(_eggs);
+      _gameJuggler.add(_rottenEggs);
       
       spawnInitialEggs();
       
@@ -223,22 +213,16 @@ package Level
       addAboveSnake();
       addParticles();
       
-      addChild(_textLevel);
+      addChild(_textLayer);
       
       addHud();
       
       //create bonusbar
-      _bonusBar = new Quad(1, 8, 0xffffff);
-      _bonusBack = new Quad(27, 10, 0x000000);
-      
-      _bonusBack.alpha = 0;
-      _bonusBar.scaleX = 0;
-      _levelStage.addChild(_bonusBack);
-      _levelStage.addChild(_bonusBar);
+      createBonusBar();
       
       startAt(_startPos.x, _startPos.y);
       
-      _mchammer = new Quad(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
+      _mchammer = new Quad(AssetRegistry.STAGE_WIDTH, AssetRegistry.STAGE_HEIGHT);
       _mchammer.alpha = 0;
       
       addChild(_mchammer);
@@ -246,7 +230,6 @@ package Level
       
       pause();
       showObjective();
-    
     }
     
     public function extendTime():void
@@ -263,7 +246,7 @@ package Level
       {
         _particles[list[i][0]] = new PDParticleSystem(list[i][1], list[i][2]);
         _levelStage.addChild(_particles[list[i][0]]);
-        Starling.juggler.add(_particles[list[i][0]]);
+        _gameJuggler.add(_particles[list[i][0]]);
       }
     }
     
@@ -279,24 +262,7 @@ package Level
     
     public function showMessage(message:String):void
     {
-      /*
-         var field:TextField = recycleText();
-         field.color = Color.WHITE;
-         field.text = message;
-         field.touchable = false;
-         var tween:Tween = new Tween(field, 3);
-         tween.animate("y", -field.height);
-         tween.animate("alpha", 0);
-         field.alpha = 0;
-         tween.onComplete = function():void
-         {
-         field.visible = false;
-         }
-         _messages.push(tween);
-       */
-      dispatchEventWith(HUD.DISPLAY_MESSAGE, true, {message: message});
-    
-      //Starling.current.juggler.add(tween);
+      dispatchEventWith(HUD.DISPLAY_MESSAGE, true, {message: message});    
     }
     
     private function recycleText(width:int = -1, height:int = -1, text:String = null, size:int = -1):TextField
@@ -304,8 +270,8 @@ package Level
       var length:int = _textFieldPool.length;
       var field:TextField;
       
-      width = (width == -1) ? Starling.current.stage.stageWidth : width;
-      height = (height == -1) ? Starling.current.stage.stageHeight : height;
+      width = (width == -1) ? AssetRegistry.STAGE_WIDTH : width;
+      height = (height == -1) ? AssetRegistry.STAGE_HEIGHT : height;
       size = (size == -1) ? 90 : size;
       
       // First, try to find a TextField that is not visible anymore.
@@ -334,7 +300,7 @@ package Level
       // If we reached this part we need a new TextField.
       trace("Building new Textfield");
       field = new TextField(width, height, text || "", "kroeger 06_65", size, Color.WHITE);
-      _textLevel.addChild(field);
+      _textLayer.addChild(field);
       _textFieldPool.push(field);
       return field;
     }
@@ -367,7 +333,7 @@ package Level
     
     private function shake():void {
       _shaking = true;
-      Starling.juggler.delayCall(function():void { _shaking = false }, 0.5);
+     _gameJuggler.delayCall(function():void { _shaking = false }, 0.5);
     }
     
     private function eggCollide():void
@@ -427,12 +393,12 @@ package Level
       pause();
       
       _sadSnake = new Image(AssetRegistry.UIAtlas.getTexture("sadsnake"));
-      _sadSnake.x = (Starling.current.stage.stageWidth - _sadSnake.width) / 2;
-      _sadSnake.y = Starling.current.stage.stageHeight;
+      _sadSnake.x = (AssetRegistry.STAGE_WIDTH - _sadSnake.width) / 2;
+      _sadSnake.y = AssetRegistry.STAGE_HEIGHT;
       _sadSnake.touchable = false;
       
       _sadText = new Image(AssetRegistry.UIAtlas.getTexture("SadSnakeText"));
-      _sadText.x = (Starling.current.stage.stageWidth - _sadText.width) / 2;
+      _sadText.x = (AssetRegistry.STAGE_WIDTH - _sadText.width) / 2;
       _sadText.y = -_sadText.height;
       _sadText.touchable = false;
       
@@ -440,7 +406,7 @@ package Level
       addChild(_sadText);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_sadSnake, 2, {y: Starling.current.stage.stageHeight - _sadSnake.height});
+      new GTween(_sadSnake, 2, {y: AssetRegistry.STAGE_HEIGHT - _sadSnake.height});
       new GTween(_sadText, 2, {y: 0});
       
       var registerTouchHandler:Function = function():void
@@ -526,16 +492,6 @@ package Level
       pd.maxCapacity = Math.min(50, pd.maxCapacity);
       pd.touchable = false;
       pd.start(0.5);
-    }
-    
-    private function peggle():void
-    {
-      if (_snake.eatenEggs == 10)
-      {
-        new GTween(this, 0.5, {zoom: 5});
-        new GTween(Starling.juggler, 0.5, {timeFactor: 0.1});
-        AssetRegistry.WinMusicSound.play();
-      }
     }
     
     public function spawnRandomEgg():void
@@ -649,7 +605,7 @@ package Level
     
     protected function updateTimers(event:EnterFrameEvent):void
     {
-      var passedTime:Number = event.passedTime * Starling.juggler.timeFactor;
+      var passedTime:Number = event.passedTime * _gameJuggler.timeFactor;
       _timer += passedTime;
       _bonusTimer -= passedTime;
       _overallTimer += passedTime;
@@ -769,7 +725,7 @@ package Level
         text.visible = false;
       }
       
-      Starling.juggler.add(tween);
+      _gameJuggler.add(tween);
     
     }
     
@@ -862,12 +818,12 @@ package Level
       pause();
       var image:Image;
       image = new Image(AssetRegistry.UIAtlas.getTexture("game over_gravestone"));
-      image.x = (Starling.current.stage.stageWidth - image.width) / 2;
-      image.y = Starling.current.stage.stageHeight;
+      image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
+      image.y = AssetRegistry.STAGE_HEIGHT;
       addChild(image);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(image, 2, {y: Starling.current.stage.stageHeight - image.height});
+      new GTween(image, 2, {y: AssetRegistry.STAGE_HEIGHT - image.height});
       
       var registerTouchHandler:Function = function():void
       {
@@ -893,14 +849,7 @@ package Level
     
     private function onEnterFrame(event:EnterFrameEvent):void
     {
-      if (_messageDelay <= _overallTimer && _messages.length > 0)
-      {
-        var message:Tween = _messages.pop();
-        message.target.alpha = 1;
-        Starling.current.juggler.add(message);
-        _messageDelay = _overallTimer + 0.5;
-      }
-      
+       
       _updateTimer = getTimer();
       if (!_won)
       {
@@ -923,6 +872,8 @@ package Level
         }
         else
         {
+          _gameJuggler.advanceTime(event.passedTime);
+          
           updateTimers(event);
           /*
              trace("overallTimer: " + String(int(_overallTimer)));
@@ -944,9 +895,7 @@ package Level
         
         //updateHud();
         _hud.update();
-        
-        _snake.update(event.passedTime * Starling.juggler.timeFactor);
-        
+                
         _speed = _snake.speed;
         if (_timer >= _speed)
         {
@@ -1005,8 +954,8 @@ package Level
       
       a = _camerax + _following.frameOffset.x + 7;
       b = _cameray + _following.frameOffset.y + 7;
-      centerX = -(a * _zoom) + Starling.current.stage.stageWidth / 2;
-      centerY = -(b * _zoom) + Starling.current.stage.stageHeight / 2;
+      centerX = -(a * _zoom) + AssetRegistry.STAGE_WIDTH / 2;
+      centerY = -(b * _zoom) + AssetRegistry.STAGE_HEIGHT / 2;
       
       if (Math.abs(centerX - _levelStage.x) > WINDOW)
       {
@@ -1037,8 +986,8 @@ package Level
       _levelStage.x = Math.min(_levelStage.x, frame);
       _levelStage.y = Math.min(_levelStage.y, frame);
       // TODO: Should be computed only once.
-      _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.x);
-      _levelStage.y = Math.max( -((_bg.height + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.y);
+      _levelStage.x = Math.max( -((_bg.width + frame) * _zoom) + AssetRegistry.STAGE_HEIGHT, _levelStage.x);
+      _levelStage.y = Math.max( -((_bg.height + frame) * _zoom) + AssetRegistry.STAGE_HEIGHT, _levelStage.y);
       
       if (_shaking) {
         _levelStage.x += (Math.random() * 20 - 10);
@@ -1124,15 +1073,6 @@ package Level
       _pauseMenu.defaultScreenID = PAUSEMAIN;
       addChild(_pauseMenu);
     
-    /*
-       _zoomSlider = new Slider();
-       _zoomSlider.value = _zoom;
-       _zoomSlider.minimum = 0.5;
-       _zoomSlider.maximum = 5;
-       _zoomSlider.onChange.add(function(slider:Slider) {
-       zoom = slider.value;
-     });*/
-    
     }
     
     private function showPauseMenu():void
@@ -1158,17 +1098,17 @@ package Level
       pause();
       
       _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
-      _evilSnake.x = (Starling.current.stage.stageWidth - _evilSnake.width) / 2;
-      _evilSnake.y = Starling.current.stage.stageHeight;
+      _evilSnake.x = (AssetRegistry.STAGE_WIDTH - _evilSnake.width) / 2;
+      _evilSnake.y = AssetRegistry.STAGE_HEIGHT;
       addChild(_evilSnake);
       
       _evilText = new Image(AssetRegistry.UIAtlas.getTexture("Snake_EvilLaughText"));
-      _evilText.x = (Starling.current.stage.stageWidth - _evilText.width) / 2;
+      _evilText.x = (AssetRegistry.STAGE_WIDTH - _evilText.width) / 2;
       _evilText.y = 0;
       addChild(_evilText);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_evilSnake, 2, {y: Starling.current.stage.stageHeight - _evilSnake.height});
+      new GTween(_evilSnake, 2, {y: AssetRegistry.STAGE_HEIGHT - _evilSnake.height});
       new GTween(_evilText, 2, {y: 0});
       
       var registerTouchHandler:Function = function():void
@@ -1241,8 +1181,9 @@ package Level
       _goButton.label = "GO!";
       _goButton.width = 800;
       _goButton.height = 80;
-      _goButton.x = (Starling.current.stage.stageWidth - 800) / 2;
-      _goButton.y = Starling.current.stage.stageHeight - 80;
+      
+      _goButton.x = (AssetRegistry.STAGE_WIDTH - 800) / 2;
+      _goButton.y = AssetRegistry.STAGE_HEIGHT - 80;
       
       var that:LevelState = this;
       addChild(_goButton);
@@ -1285,6 +1226,44 @@ package Level
         dispatchEventWith(ManagedStage.SWITCHING, true, {stage: LevelScore, args: score});
         SaveGame.unlockLevel(_levelNr + 1);
       }
+    }
+    
+    private function setSpeed():void 
+    {
+        if (SaveGame.difficulty == 1)
+        {
+          SaveGame.startSpeed = 7;
+        }
+        else
+        {
+          SaveGame.startSpeed = 10;
+        }
+      _speed = 1 / SaveGame.startSpeed;
+        
+    }
+    
+    private function initializeTextPool():void 
+    {
+        _textFieldPool = new Vector.<TextField>;
+        _textLayer = new Sprite;
+        for (var i:int = 0; i < 15; i++)
+        {
+          var temp:TextField = new TextField(100, 100, "", "kroeger 06_65");
+          temp.visible = false;
+          _textLayer.addChild(temp);
+          _textFieldPool.push(temp);
+        }
+    }
+    
+    private function createBonusBar():void 
+    {
+        _bonusBar = new Quad(1, 8, 0xffffff);
+        _bonusBack = new Quad(27, 10, 0x000000);
+        
+        _bonusBack.alpha = 0;
+        _bonusBar.scaleX = 0;
+        _levelStage.addChild(_bonusBack);
+        _levelStage.addChild(_bonusBar);
     }
     
     public function get zoom():Number
@@ -1374,8 +1353,8 @@ package Level
       
       removeChildren();
       
-      _textLevel.dispose();
-      _textLevel = null;
+      _textLayer.dispose();
+      _textLayer = null;
       
       for (i = 0; i < _textFieldPool.length; i++)
       {
@@ -1420,6 +1399,9 @@ package Level
         particle.dispose();
       }
       _particles = null;
+      
+      _gameJuggler.purge();
+      _gameJuggler = null;
       
       super.dispose();
     

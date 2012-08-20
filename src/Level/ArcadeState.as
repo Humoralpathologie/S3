@@ -31,7 +31,6 @@ package Level
   import Combo.*;
   import flash.utils.*;
   import com.gskinner.motion.easing.Exponential
-  import UI.Radar;
   import engine.SaveGame;
   import engine.StageManager;
   import Menu.LevelScore;

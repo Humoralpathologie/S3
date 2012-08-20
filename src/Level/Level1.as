@@ -15,7 +15,6 @@ package Level
   import starling.text.TextField;
   import starling.textures.TextureSmoothing;
   import UI.HUD;
-  import UI.Radar;
   import engine.SaveGame;
   import starling.utils.Color;
   

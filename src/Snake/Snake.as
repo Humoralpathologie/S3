@@ -2,6 +2,7 @@ package Snake
 {
   import engine.TileSprite;
   import flash.geom.Point;
+  import starling.animation.IAnimatable;
   import starling.animation.Tween;
   import starling.display.DisplayObject;
   import starling.display.Image;
@@ -21,7 +22,7 @@ package Snake
    * @author
    */
   
-  public class Snake extends Sprite
+  public class Snake extends Sprite implements IAnimatable
   {
     
     public static const BODY_CHANGED:String = "bodychanged";
@@ -244,8 +245,9 @@ package Snake
       
     }
     
-    public function update(time:Number):void
+    public function advanceTime(time:Number):void
     { 
+      _head.advanceTime(time);
       _head.update(time);
       for (var i:int = 0; i < _body.length; i++)
       {        

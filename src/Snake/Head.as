@@ -3,6 +3,7 @@ package Snake
   import engine.TileSprite;
   import engine.AssetRegistry;
   import flash.geom.Point;
+  import starling.animation.IAnimatable;
   import starling.core.Starling;
   import starling.display.MovieClip;
   import starling.textures.Texture;
@@ -12,7 +13,7 @@ package Snake
    * ...
    * @author
    */
-  public class Head extends TileSprite
+  public class Head extends TileSprite implements IAnimatable
   {
     private var _headLeft:MovieClip;
     private var _headRight:MovieClip;
@@ -61,12 +62,16 @@ package Snake
       addChild(_headDown);
       addChild(_headRight);
       addChild(_headUp);
-      
-      Starling.juggler.add(_headLeft);
-      Starling.juggler.add(_headDown);
-      Starling.juggler.add(_headRight);
-      Starling.juggler.add(_headUp);
+
     }
+    
+    public function advanceTime(time:Number):void {
+      _headLeft.advanceTime(time);
+      _headDown.advanceTime(time);
+      _headRight.advanceTime(time);
+      _headUp.advanceTime(time);
+    }
+    
     private function changeTexture():void
     {
       if (!_changed) {

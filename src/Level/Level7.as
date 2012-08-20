@@ -12,7 +12,6 @@ package Level
   import starling.core.Starling;
   import Eggs.Egg;
   import UI.HUD;
-  import UI.Radar;
   import engine.SaveGame;
   
   import Combo.NoRottenCombo;

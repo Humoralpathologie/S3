@@ -10,7 +10,6 @@ package Level
   import starling.display.BlendMode;
   import Eggs.Egg;
   import UI.HUD;
-  import UI.Radar;
   import engine.SaveGame;
 
   public class Level3 extends LevelState 

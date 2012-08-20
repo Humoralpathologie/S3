@@ -12,7 +12,6 @@ package Level
   import starling.display.BlendMode;
   import starling.textures.TextureSmoothing;
   import UI.HUD;
-  import UI.Radar;
   import Eggs.Egg;
   import engine.SaveGame;
   

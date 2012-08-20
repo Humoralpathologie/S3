@@ -9,7 +9,6 @@ package Level
   import starling.display.BlendMode;
   import Eggs.Egg;
   import UI.HUD;
-  import UI.Radar;
   import engine.SaveGame;
 
   

@@ -1,6 +1,7 @@
 package Eggs
 {
   import Snake.Snake;
+  import starling.animation.IAnimatable;
   import starling.display.Sprite;
   import Eggs.Egg;
   import engine.AssetRegistry;
@@ -9,7 +10,7 @@ package Eggs
    * ...
    * @author
    */
-  public class Eggs extends Sprite
+  public class Eggs extends Sprite implements IAnimatable
   {
     private var _eggPool:Vector.<Egg>;
     private var _length:int = 0;
@@ -121,6 +122,16 @@ package Eggs
       }
       
       super.dispose();
+    }
+    
+    /* INTERFACE starling.animation.IAnimatable */
+    
+    public function advanceTime(time:Number):void 
+    {
+      var i:int;
+      for (i = 0; i < _length; i++) {
+        _eggPool[i].advanceTime(time);
+      }
     }
     
   }
