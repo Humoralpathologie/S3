@@ -277,22 +277,22 @@ package Level
     public function showMessage(message:String):void
     {
       /*
-      var field:TextField = recycleText();
-      field.color = Color.WHITE;
-      field.text = message;
-      field.touchable = false;
-      var tween:Tween = new Tween(field, 3);
-      tween.animate("y", -field.height);
-      tween.animate("alpha", 0);
-      field.alpha = 0;
-      tween.onComplete = function():void
-      {
-        field.visible = false;
-      }
-      _messages.push(tween);
-      */
-      dispatchEventWith(HUD.DISPLAY_MESSAGE, true, { message:message } );
-      
+         var field:TextField = recycleText();
+         field.color = Color.WHITE;
+         field.text = message;
+         field.touchable = false;
+         var tween:Tween = new Tween(field, 3);
+         tween.animate("y", -field.height);
+         tween.animate("alpha", 0);
+         field.alpha = 0;
+         tween.onComplete = function():void
+         {
+         field.visible = false;
+         }
+         _messages.push(tween);
+       */
+      dispatchEventWith(HUD.DISPLAY_MESSAGE, true, {message: message});
+    
       //Starling.current.juggler.add(tween);
     }
     
@@ -572,7 +572,7 @@ package Level
         if (egg.type <= AssetRegistry.EGGROTTEN)
         {
           _snake.eat(egg.type);
-          //_hud.addPreview(egg.type);
+            //_hud.addPreview(egg.type);
         }
         
         var particle:PDParticleSystem = _particles[egg.type];
@@ -887,16 +887,17 @@ package Level
       //_hud.radar.update();
       var _sec:String = (int(_overallTimer) % 60) < 10 ? "0" + String(int(_overallTimer) % 60) : String(int(_overallTimer) % 60);
       var _min:String = (int(_overallTimer) / 60) < 10 ? "0" + String(int(int(_overallTimer) / 60)) : String(int(int(_overallTimer) / 60));
-      /*
-      _hud.score = String(_score);
-      _hud.lifesText = String(_snake.lives);
-      _hud.timeText = _min + ":" + _sec;
-      */
+    /*
+       _hud.score = String(_score);
+       _hud.lifesText = String(_snake.lives);
+       _hud.timeText = _min + ":" + _sec;
+     */
     }
     
     private function onEnterFrame(event:EnterFrameEvent):void
     {
-      if (_messageDelay <= _overallTimer && _messages.length > 0) {
+      if (_messageDelay <= _overallTimer && _messages.length > 0)
+      {
         var message:Tween = _messages.pop();
         message.target.alpha = 1;
         Starling.current.juggler.add(message);
@@ -927,9 +928,9 @@ package Level
         {
           updateTimers(event);
           /*
-          trace("overallTimer: " + String(int(_overallTimer)));
-          trace("extensionTime: " + String(int(_extensionTime)));
-          */
+             trace("overallTimer: " + String(int(_overallTimer)));
+             trace("extensionTime: " + String(int(_extensionTime)));
+           */
           if ((int(_overallTimer) > 0) && (int(_overallTimer) == _extensionTime))
           {
             _chainTime = 2.5;
@@ -1043,34 +1044,41 @@ package Level
       _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.y);
     }
     
-    public function get score():String {
+    public function get score():String
+    {
       return String(_score);
     }
     
-    public function get lives():String {
+    public function get lives():String
+    {
       return String(_snake.lives);
     }
     
-    public function get eatenEggs():String {
+    public function get eatenEggs():String
+    {
       return String(_snake.eatenEggs);
     }
     
-    public function get speed():String {
+    public function get speed():String
+    {
       return String(_snake.mps - SaveGame.startSpeed);
     }
     
-    public function get comboCount():String {
+    public function get comboCount():String
+    {
       return String(_combos);
     }
     
-    public function get poisonCount():String {
+    public function get poisonCount():String
+    {
       return String(_poisonEggs);
     }
     
-    public function get overallTime():String {
+    public function get overallTime():String
+    {
       var _sec:String = (int(_overallTimer) % 60) < 10 ? "0" + String(int(_overallTimer) % 60) : String(int(_overallTimer) % 60);
       var _min:String = (int(_overallTimer) / 60) < 10 ? "0" + String(int(int(_overallTimer) / 60)) : String(int(int(_overallTimer) / 60));
-      return _min + ":" + _sec;    
+      return _min + ":" + _sec;
     }
     
     public function pause():void
@@ -1170,9 +1178,9 @@ package Level
     
     protected function showObjectiveBox(desc:String, goals:Array, fontSize:int = 50):void
     {
-
-	  var _scrollable:Sprite = new Sprite();
-	  
+      
+      var _scrollable:Sprite = new Sprite();
+      
       var box:Quad = new Quad(800, 535, 0);
       box.alpha = 0x44 / 0xff;
       box.x = (960 - box.width) / 2;
@@ -1370,7 +1378,7 @@ package Level
       {
         _textFieldPool[i].dispose();
       }
-            
+      
       _currentCombos = null;
       
       this.removeEventListeners(EnterFrameEvent.ENTER_FRAME);
