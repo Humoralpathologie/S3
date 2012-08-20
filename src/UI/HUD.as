@@ -221,7 +221,7 @@ package UI
       }
         
       _tweens.push(tween);
-      Starling.juggler.add(tween);
+      _levelState.gameJuggler.add(tween);
      
       _textLayer.addChild(textMessage);       
     }
@@ -234,7 +234,7 @@ package UI
       if (_messageQueue.length > 0) {
         var message:String = _messageQueue.pop();
         showMessage(message);
-        Starling.juggler.delayCall(showNextMessage, 0.5);
+        _levelState.gameJuggler.delayCall(showNextMessage, 0.5);
       } else {
         _messageQueueRunning = false;
       }
@@ -495,7 +495,7 @@ package UI
     private function destroyTweens():void {
       var i:int;
       for (i = 0; i < _tweens.length; i++) {
-        Starling.current.juggler.remove(_tweens[i]);
+        _levelState.gameJuggler.remove(_tweens[i]);
         _tweens[i] = null;
       }
       _tweens = null;

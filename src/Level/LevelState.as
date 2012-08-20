@@ -1347,6 +1347,11 @@ package Level
       _eggs = value;
     }
     
+    public function get gameJuggler():Juggler 
+    {
+        return _gameJuggler;
+    }
+    
     override public function dispose():void
     {
       var i:int = 0;
