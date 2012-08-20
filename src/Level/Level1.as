@@ -97,11 +97,6 @@ package Level
       
     }
 
-    override protected function updateHud():void {
-      super.updateHud();
-      //_hud.eggsText = String(_snake.eatenEggs);   
-    }
-
     override protected function addObstacles():void
     {
       var pos:Array = [96, 97, 98, 99, 100, 10, 11, 12, 13, 14, 52, 53, 54, 55, 56, 57, 140, 141, 95];

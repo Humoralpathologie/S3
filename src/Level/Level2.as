@@ -83,16 +83,15 @@ package Level
     override protected function addHud():void {
       //_hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "speed"], this);
       _hud = new HUD(this);
-      addChild(_hud);
+      var iconsCfg:Object = {
+        lives: { type: "lives", pos: 1, watching: "lives" },
+        time: { type: "time", pos: 2, watching: "overallTime" },
+        combo: { type: "combo", pos: 3, watching: "comboCount"},
+        speed: { type: "speed", pos: 4, watching: "speed"}
+      }
       
-    }
-    override protected function updateHud():void {
-      super.updateHud();
-
-      /*
-      _hud.comboText = String(_combos);
-      _hud.speedText = String(_snake.mps);   
-      */
+      _hud.iconsCfg = iconsCfg;
+      addChild(_hud);
     }
 
     override protected function addObstacles():void

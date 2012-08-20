@@ -219,22 +219,6 @@ package Level
       return String(Math.max(0, _timeLeft).toFixed(2));
     }
     
-    override protected function updateHud():void
-    {
-    /*
-       _hud.radar.update();
-       _hud.score = String(_score);
-       _hud.lifesText = String(_snake.lives);
-       if (SaveGame.arcadeModi){
-       _hud.timeText = String(Math.max(0, _timeLeft).toFixed(2));
-       } else {
-       _hud.speedText = String(_snake.mps);
-       }
-       _hud.poisonText = String(_poisonEggs);
-       _hud.comboText = String(_combos);
-     */
-    }
-    
     override protected function checkLost():void
     {
       if (_poisonEggs > 4)

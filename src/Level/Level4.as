@@ -89,18 +89,19 @@ package Level
     
     override protected function addHud():void {
       //_hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed", "poison"], this);
+      
       _hud = new HUD(this);
+      var iconsCfg:Object = {
+        lives: { type: "lives", pos: 1, watching: "lives" },
+        time: { type: "time", pos: 2, watching: "overallTime" },
+        speed: { type: "speed", pos: 3, watching: "speed"},
+        poison: { type: "poison", pos: 4, watching: "poisonCount"}
+      }
       
+      _hud.iconsCfg = iconsCfg;
       addChild(_hud);
-      
     }
-    override protected function updateHud():void {
-      super.updateHud();
-      /*
-      _hud.speedText = String(_snake.mps);
-      _hud.poisonText = String(_poisonEggs);   
-      */
-    }
+
     override protected function addObstacles():void
     {
       var pos:Array = [1552, 1489, 1488, 1551, 2432, 2433, 2434, 2435, 2436, 2437, 2438, 2439, 2440, 2441, 2442, 2443, 2381, 2445, 2446, 2444, 2354, 2467, 2468, 2469, 2470, 2471, 2344, 2345, 2346, 2347, 2348, 2477, 2478, 2479, 2352, 2481, 2482, 2483, 2484, 2485, 2486, 2487, 2480, 2489, 2490, 2491, 2492, 2493, 2349, 2350, 2488, 2342, 2343, 2472, 2473, 2474, 2475, 2476, 2368, 2369, 2351, 2341, 2372, 2509, 2502, 2494, 2504, 2505, 2506, 2370, 2371, 2500, 2501, 2383, 2503, 2376, 2495, 2496, 2507, 2508, 2499, 2382, 2373, 2374, 2375, 2404, 2405, 2406, 2407, 2408, 2409, 2410, 2411, 2412, 2413, 2414, 2415, 2378, 2379, 2380, 2497, 2498, 2377, 2366, 2431];

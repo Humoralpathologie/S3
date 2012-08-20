@@ -882,18 +882,6 @@ package Level
       }
     }
     
-    protected function updateHud():void
-    {
-      //_hud.radar.update();
-      var _sec:String = (int(_overallTimer) % 60) < 10 ? "0" + String(int(_overallTimer) % 60) : String(int(_overallTimer) % 60);
-      var _min:String = (int(_overallTimer) / 60) < 10 ? "0" + String(int(int(_overallTimer) / 60)) : String(int(int(_overallTimer) / 60));
-    /*
-       _hud.score = String(_score);
-       _hud.lifesText = String(_snake.lives);
-       _hud.timeText = _min + ":" + _sec;
-     */
-    }
-    
     private function onEnterFrame(event:EnterFrameEvent):void
     {
       if (_messageDelay <= _overallTimer && _messages.length > 0)
