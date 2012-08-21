@@ -187,7 +187,7 @@ package Menu.ComboMenuScreens
               _text.text = AssetRegistry.Strings.SPEEDDESC;
               break;
             case 1:
-              if (SaveGame.arcadeModi)
+              if (SaveGame.endless)
               {
                 _text.text = AssetRegistry.Strings.TIMEDESC;
               }
@@ -222,15 +222,15 @@ package Menu.ComboMenuScreens
       _arcadeModiToggleSwitch.offText = AssetRegistry.Strings.OFFLABEL;
       _arcadeModiToggleSwitch.onText = AssetRegistry.Strings.ONLABEL;
       //_arcadeModiToggleSwitch.offLabelProperties = 
-      _arcadeModiToggleSwitch.isSelected = SaveGame.arcadeModi;
+      _arcadeModiToggleSwitch.isSelected = SaveGame.endless;
       _arcadeModiToggleSwitch.x = (Starling.current.stage.stageWidth - _arcadeModiToggleSwitch.width) / 2;
       _arcadeModiToggleSwitch.y = _greybox.y + 350;
       
       _arcadeModiToggleSwitch.onChange.add(function(tswitch:ToggleSwitch):void
         {
-          SaveGame.arcadeModi = tswitch.isSelected;
+          SaveGame.endless = tswitch.isSelected;
           unflatten();
-          if (SaveGame.arcadeModi)
+          if (SaveGame.endless)
           {
             _buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
             _buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
@@ -291,7 +291,7 @@ package Menu.ComboMenuScreens
     private function addNormalCombos():void
     {
       var buttons:Array;
-      if (SaveGame.arcadeModi)
+      if (SaveGame.endless)
       {
         buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")] //, [AssetRegistry.MenuAtlasOpaque.getTexture("combo-shuffle"), AssetRegistry.MenuAtlasOpaque.getTexture("info-shuffle")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-gold"), AssetRegistry.MenuAtlasOpaque.getTexture("info-gold")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtralife"), AssetRegistry.MenuAtlasOpaque.getTexture("info-xtralife")]];
       }

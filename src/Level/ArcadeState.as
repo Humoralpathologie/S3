@@ -57,7 +57,7 @@ package Level
       //_comboSet.addCombo(new Combo.ExtraTimeCombo);
       //trace("ArcadeMode: " + String(SaveGame.arcadeModi));
       
-      if (!SaveGame.arcadeModi)
+      if (!SaveGame.endless)
       {
         _comboSet.addCombo(new Combo.SlowerCombo);
       }
@@ -147,11 +147,11 @@ package Level
     
     override protected function checkWin():void
     { 
-      if (_timeLeft <= 170 && SaveGame.arcadeModi) {
+      if (_timeLeft <= 5 && SaveGame.endless) {
         _intensity = Math.random() * 20 - int(_timeLeft);
         _shaking = true;
       }
-      if (_timeLeft <= 0 && SaveGame.arcadeModi)
+      if (_timeLeft <= 0 && SaveGame.endless)
       {
         win();
       }
@@ -162,7 +162,7 @@ package Level
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
-        if (SaveGame.arcadeModi)
+        if (SaveGame.endless)
         {
           var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true}
         }
@@ -208,7 +208,7 @@ package Level
         poison: { type: "poison", pos: 4, watching: "poisonCount"}
       };
       
-      if (SaveGame.arcadeModi) {
+      if (SaveGame.endless) {
         iconsCfg["time"] = { type: "time", pos: 2, watching: "timeLeftFormatted" };
       } else {
         iconsCfg["speed"] = { type: "speed", pos: 2, watching: "speed" };
