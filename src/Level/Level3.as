@@ -81,11 +81,12 @@ package Level
     
     override protected function showObjective():void
     {  
-	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  var _neededCombos:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-combo"));
+    var _neededTime:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-time"));
 	  if (SaveGame.difficulty == 1) {	
-		showObjectiveBox(AssetRegistry.Strings.LEVEL3A, [[_neededEggs, 30] ] );
+		showObjectiveBox(AssetRegistry.Strings.LEVEL3A, [[_neededCombos, 7], [_neededTime, "4:00"]] );
 	  } else {
-	    showObjectiveBox(AssetRegistry.Strings.LEVEL3B, [[_neededEggs, 50] ] );
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL3B, [[_neededCombos, 10], [_neededTime, "4:00"]] );
 	  }
     }    
 

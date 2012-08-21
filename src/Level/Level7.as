@@ -73,14 +73,11 @@ package Level
     
     override protected function showObjective():void
     {
-      var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
-      if (SaveGame.difficulty == 1)
-      {
-        showObjectiveBox(AssetRegistry.Strings.LEVEL7A, [[_neededEggs, 30]]);
-      }
-      else
-      {
-        showObjectiveBox(AssetRegistry.Strings.LEVEL7B, [[_neededEggs, 50]]);
+	  var _neededChains:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  if (SaveGame.difficulty == 1) {	
+		showObjectiveBox(AssetRegistry.Strings.LEVEL7A, [[_neededChains, "2x10"] ] );
+	  } else {
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL7B, [[_neededChains, "3x10"] ] );
       }
     }
     

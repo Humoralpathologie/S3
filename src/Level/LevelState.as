@@ -853,8 +853,7 @@ package Level
     }
     
     private function onEnterFrame(event:EnterFrameEvent):void
-    {
-       
+    {       
       _updateTimer = getTimer();
       if (!_won)
       {
@@ -1146,16 +1145,18 @@ package Level
       for (var i:int = 0; i < goals.length; i++)
       {
         var img:Image = goals[i][0];
-        var txt:TextField = new TextField(80, 50, goals[x][1], "kroeger 06_65", 45, Color.WHITE);
-        img.x = xPos;
-        img.y = yPos;
+				var txt:TextField = new TextField(140, 60, goals[i][1], "kroeger 06_65", 60, Color.WHITE);
+				txt.hAlign = HAlign.LEFT;
+				img.x = xPos + 70;
+				img.y = yPos - 60;
         img.scaleX = img.scaleY = 3;
         trace("goals.length = " + String(goals.length));
         if (goals.length == 1)
         {
-          img.x = (box.width - img.width) / 2 - 80;
+					img.x = (box.width - img.width) / 2 - 100;
+					img.y = yPos;
         }
-        txt.scaleX = txt.scaleY = 1.5;
+				//txt.scaleX = txt.scaleY = 1.5;
         txt.x = img.x + img.width + 10;
         txt.y = img.y - 5;
         xPos = txt.x + txt.width + 10;

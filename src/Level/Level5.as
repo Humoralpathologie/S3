@@ -70,11 +70,11 @@ package Level
     
     override protected function showObjective():void
     {    
-	  var _neededEggs:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+	  var _neededTime:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-time"));
 	  if (SaveGame.difficulty == 1) {	
-		showObjectiveBox(AssetRegistry.Strings.LEVEL5A, [[_neededEggs, 30] ] );
+		showObjectiveBox(AssetRegistry.Strings.LEVEL5A, [[_neededTime, "3:00"] ] );
 	  } else {
-	    showObjectiveBox(AssetRegistry.Strings.LEVEL5B, [[_neededEggs, 50] ] );
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL5B, [[_neededTime, "3:00"] ] );
 	  }
     }        
     override protected function addHud():void {

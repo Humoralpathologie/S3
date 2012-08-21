@@ -69,12 +69,12 @@ package Languages
 		public static const LEVEL3B:String = "On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 4 minutes or by getting 10 combos. And eating more than 4 gray eggs will kill you from now on!!";
 		public static const LEVEL4A:String = "Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snake's speed up to 5 and jump!";
 		public static const LEVEL4B:String = "Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snake's speed up to 7 and jump!";
-		public static const LEVEL5A:String = "These ghastly spikes won't hold little Snake back!\n\nObjective:\nAvoid the spikes for at least 4 Minutes. If the Rotten Eggs get in your way, try the new combo displayed in the upper right corner.";
-		public static const LEVEL5B:String = "These ghastly spikes won't hold little Snake back!\n\nObjective:\nAvoid the spikes for at least 4 Minutes. If the Rotten Eggs get in your way, try the new combo displayed in the upper right corner.";
+		public static const LEVEL5A:String = "These ghastly spikes won't hold little Snake back!\n\nObjective:\nAvoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try the new combo displayed in the upper right corner.";
+		public static const LEVEL5B:String = "These ghastly spikes won't hold little Snake back!\n\nObjective:\nAvoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try the new combo displayed in the upper right corner.";
 		public static const LEVEL6A:String = "Terror Triceratops has hidden 4 eggs especially well. Maybe they contain his heirs. Little Snake cannot afford to pass on these eggs.\n\nObjective:\nEat the 4 special eggs. If you have a problem getting into the tight spots, perform () to slow down time.";
 		public static const LEVEL6B:String = "Terror Triceratops has hidden 4 eggs especially well. Maybe they contain his heirs. Little Snake cannot afford to pass on these eggs.\n\nObjective:\nEat the 4 special eggs. If you have a problem getting into the tight spots, perform () to slow down time.";
 		public static const LEVEL7A:String = "Addiction\n\nObjective:\nEat two chains of at least ten eggs & don't stop eating for longer than 5 seconds.";
-		public static const LEVEL7B:String = "Addiction\n\nObjective:\nEat two chains of at least ten eggs & don't stop eating for longer than 5 seconds.";
+		public static const LEVEL7B:String = "Addiction\n\nObjective:\nEat three chains of at least ten eggs & don't stop eating for longer than 5 seconds.";
 		
 		//Score Boards
 		public static const SCORES:String = "SCORES";
