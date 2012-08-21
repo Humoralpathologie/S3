@@ -39,15 +39,15 @@ package engine {
 	  return _sharedObject.data.difficulty;
 	}
 	
-	public static function set arcadeModi(value:Boolean):void {
-	  _sharedObject.data.arcadeModi = value;
+	public static function set endless(value:Boolean):void {
+	  _sharedObject.data.endless = value;
 	}
 	
-	public static function get arcadeModi():Boolean {
-	  if (!_sharedObject.data.arcadeModi) {
-		_sharedObject.data.arcadeModi = false;
+	public static function get endless():Boolean {
+	  if (!_sharedObject.data.endless) {
+		_sharedObject.data.endless = false;
 	  }
-	  return _sharedObject.data.arcadeModi;
+	  return _sharedObject.data.endless;
 	}
 	
 	public static function set language(value:int):void {
