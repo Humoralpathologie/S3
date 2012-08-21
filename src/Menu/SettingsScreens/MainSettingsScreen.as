@@ -55,7 +55,7 @@ package Menu.SettingsScreens
 
       _scrollable = new Sprite();
       
-      _greyBox = new Quad(710, 500, Color.BLACK);
+      _greyBox = new Quad(710, 480, Color.BLACK);
       _greyBox.alpha = 0.7;
       _greyBox.x = 65 + 60;
       _greyBox.y = 40 + 40;
