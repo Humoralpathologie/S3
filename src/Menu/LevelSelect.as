@@ -35,14 +35,7 @@ package Menu
     private var _boxes:Object;
     private var _tempPoint:Point;
        
-    private static const _lockedPositions:Array = [
-      [15, 262],
-      [261, 377],
-      [514, 509],
-      [261, 626],
-      [11, 743],
-      [261, 881],     
-    ];
+		private static const _lockedPositions:Array = [[15, 262], [261, 377], [514, 509], [261, 626], [11, 743], [261, 881],];
     
     public function LevelSelect()
     {
@@ -93,8 +86,10 @@ package Menu
             p.y += _scroller.verticalScrollPosition;
             trace(p);
             
-            for each(var obj:Object in _boxes) {
-              if (Utils.polygonHitTest(p, obj.box)) {
+					for each (var obj:Object in _boxes)
+					{
+						if (Utils.polygonHitTest(p, obj.box))
+						{
                 obj.callback();
               }
             }
@@ -118,19 +113,19 @@ package Menu
       box = [new Point(266, 742), new Point(472, 639), new Point(688, 742), new Point(480, 848)];
       _boxes["level4"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: Level4}) }};
 	  
-	  box = [new Point(15, 871), new Point(226, 764), new Point(439, 871), new Point(226, 976)];
+	    box = [new Point(15, 871), new Point(226, 764), new Point(439, 871), new Point(226, 976)];
       _boxes["level5"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: Level5}) }};
 	  
-	  box = [new Point(265, 997), new Point(477, 980), new Point(689, 997), new Point(477, 1104)];
-      _boxes["level7"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: Level7}) }};
+	    box = [new Point(265, 997), new Point(477, 980), new Point(689, 997), new Point(477, 1104)];
+      _boxes["level6"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: Level7}) }};
 	  
       box = [new Point(718, 286), new Point(893, 212), new Point(887, 306), new Point(729, 306)];
       _boxes["backtomenu"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: MainMenu}) }};
       
-      
     }
     
-    private function addLocks():void {
+		private function addLocks():void
+		{
       
       _locks = new Vector.<Image>;
       var lock:Image;
@@ -138,8 +133,10 @@ package Menu
       var y:int;
       var textureName:String;
       
-      for (var i:int = 2; i < 7; i++) {
-        if (i > 6 || !SaveGame.levelUnlocked(i)) {
+			for (var i:int = 2; i < 7; i++)
+			{
+				if (i > 6 || !SaveGame.levelUnlocked(i))
+				{
           x = _lockedPositions[i - 1][0];
           y = _lockedPositions[i - 1][1];
           textureName = "tile-level" + String(i) + "_" + String(x) + "-" + String(y);
@@ -151,13 +148,15 @@ package Menu
       }
     }
     
-    override public function dispose():void {
+		override public function dispose():void
+		{
       _scrollable.removeEventListeners(TouchEvent.TOUCH);
       _scrollable.dispose();
       _levelSelectBottom.dispose();
       _levelSelectTop.dispose();
       _scroller.dispose();
-      for (var i:int = 0; i < _locks.length; i++) {
+			for (var i:int = 0; i < _locks.length; i++)
+			{
         _locks[i].dispose();
       }
       _locks = null;
