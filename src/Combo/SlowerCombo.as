@@ -12,7 +12,7 @@ package Combo
     
     override public function effect(state:LevelState):void {
       state.snake.slower();
-      state.showMessage("Slower!");
+      state.showMessage(AssetRegistry.Strings.SLOWERMESSAGE);
     }
   }
 }

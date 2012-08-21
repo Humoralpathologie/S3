@@ -17,7 +17,7 @@ package Combo
     }
     
     override public function effect(state:LevelState):void {
-      state.showMessage("Extra Eggs!!");
+      state.showMessage(AssetRegistry.Strings.EXTRAEGGSMESSAGE);
       for (var i:int = 0; i < 5; i++) {
         state.spawnRandomEgg();
       }

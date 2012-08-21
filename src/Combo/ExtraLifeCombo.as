@@ -21,7 +21,7 @@ package Combo
     override public function effect(state:LevelState):void
     {
       state.snake.lives += 1;
-      state.showMessage("Bonus Life!");
+      state.showMessage(AssetRegistry.Strings.EXTRALIFEMESSAGE);
     }
   
   }

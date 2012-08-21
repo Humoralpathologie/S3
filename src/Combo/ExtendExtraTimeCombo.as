@@ -17,7 +17,7 @@ package Combo
     }
     
     override public function effect(state:LevelState):void {
-      state.showMessage("Extra time extended!!");
+      state.showMessage(AssetRegistry.Strings.EXTRATIMEEXTMESSAGE);
       state.timeExtension = 4;
     }
   

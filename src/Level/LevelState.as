@@ -75,7 +75,7 @@ package Level
     protected var _hud:HUD;
     private var _timer:Number = 0;
     protected var _snake:Snake;
-    private var _speed:Number = 0.3;
+		protected var _speed:Number = 0.3;
     protected var _levelStage:Sprite;
     protected var _eggs:Eggs;
     private var _rottenEggs:Eggs.Eggs;
@@ -196,7 +196,7 @@ package Level
       
       _snake = new Snake(SaveGame.startSpeed);
       _gameJuggler.add(_snake);
-      
+
       _following = _snake.head;
       
       _levelStage.addChild(_snake);
@@ -888,7 +888,7 @@ package Level
             _chainTime = 2.5;
             _bonusBack.width = 27;
             _extensionTime = 0;
-            showMessage("Chaintime extension extended!");
+						showMessage(AssetRegistry.Strings.CHAINTIMEEXTENDMESSAGE);
           }
         }
         
