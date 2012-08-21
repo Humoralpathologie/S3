@@ -23,6 +23,7 @@ package Menu.ComboMenuScreens
   import org.josht.starling.foxhole.controls.Scroller;
   import org.josht.starling.foxhole.controls.ScrollBar;
   import starling.display.Sprite;
+	import starling.utils.HAlign;
   
   /**
    * ...
@@ -70,8 +71,9 @@ package Menu.ComboMenuScreens
       infoDisplay.y = 40 + 30;
       infoDisplay.alpha = 1;
       
-      _text = new TextField(_greybox.width, infoDisplay.height + 300, "", "kroeger 06_65", 40, Color.WHITE);
-      _text.x = 0;
+			_text = new TextField(_greybox.width - 40, infoDisplay.height + 300, "", "kroeger 06_65", 40, Color.WHITE);
+			_text.x = 20;
+			//_text.hAlign = HAlign.LEFT;
       
       //_text.y = infoDisplay.y;
       
@@ -117,6 +119,7 @@ package Menu.ComboMenuScreens
       
       if (!SaveGame.secondArcade)
       {
+				_text.height = infoDisplay.height + 300;
         _text.text = AssetRegistry.Strings.ARCADEINFO;
         addChild(infoDisplay);
         //addChild(_scrollable);
@@ -130,11 +133,14 @@ package Menu.ComboMenuScreens
       }
       
       var that:MainComboMenu = this;
+      
       _infoButtonQ.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
         {
           var touch:Touch = event.getTouch(that, TouchPhase.ENDED);
           if (touch)
           {
+
+						_text.height = infoDisplay.height + 300;
             _text.text = AssetRegistry.Strings.ARCADEINFO;
             addChild(infoDisplay);
             //addChild(_scrollable);
@@ -161,26 +167,27 @@ package Menu.ComboMenuScreens
             removeChild(_infoButtonX);
           }
         });
-      
-      xButton.addEventListener(Event.TRIGGERED, function(event:Event):void
+		/*
+			 xButton.addEventListener(Event.TRIGGERED, function(event:Event)
         {
           removeChild(infoDisplay);
           addChild(question);
           removeChild(_text);
           removeChild(xButton);
         });
-    
+		 */
     }
     
     private function addComboInfo(i:int, button:Button):void
     {
-      _text.width -= 40;
-      _text.x = infoDisplay.x + 20;
-      
-      _buttons.push([button, _text]);
-      
-      button.addEventListener(Event.TRIGGERED, function(event:Event):void
-        {
+			//_text.width -= 40;
+			//_text.x = infoDisplay.x + 20;
+			
+			_buttons.push([button, _text]);
+			
+			button.addEventListener(Event.TRIGGERED, function(event:Event):void
+				{
+					_text.height = _greybox.height;
           switch (i)
           {
             case 0:
