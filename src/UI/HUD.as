@@ -249,6 +249,7 @@ package UI
       
       textMessage.text = pointObj.message; 
       textMessage.color = pointObj.color;
+      textMessage.scaleX = textMessage.scaleY = 0.2;
         
       tween = new Tween(textMessage, 3);
       tween.animate("scaleX", 3);
