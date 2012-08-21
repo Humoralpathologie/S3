@@ -75,7 +75,7 @@ package Snake
     private function changeTexture():void
     {
       if (!_changed) {
-        if (_mps < 16) {
+        if (_mps < 12) {
           _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_0");
           _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_1");
           _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_2"); 
@@ -84,7 +84,7 @@ package Snake
           _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_5");
           _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_6");
           _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_7");
-        } else if (_mps >= 16 && _mps < 21) {
+        } else if (_mps >= 12 && _mps < 14) {
           _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_8");
           _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_9");
           _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_10"); 
@@ -93,7 +93,7 @@ package Snake
           _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_13");
           _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_14");
           _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_15");
-        } else if (_mps >= 21 && _mps < 26) {
+        } else if (_mps >= 14 && _mps < 19) {
           _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_16");
           _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_17");
           _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_18"); 
@@ -102,7 +102,7 @@ package Snake
           _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_21");
           _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_22");
           _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_23");
-        } else if (_mps >= 26 && _mps < 31){
+        } else if (_mps >= 19 && _mps < 31){
           _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_24");
           _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_25");
           _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_26"); 
