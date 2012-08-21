@@ -147,7 +147,7 @@ package Level
     
     override protected function checkWin():void
     { 
-      if (_timeLeft <= 5) {
+      if (_timeLeft <= 170 && SaveGame.arcadeModi) {
         _intensity = Math.random() * 20 - int(_timeLeft);
         _shaking = true;
       }
