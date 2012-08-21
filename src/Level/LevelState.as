@@ -62,6 +62,7 @@ package Level
   import flash.events.Event;
   import Menu.PauseMenuScreens.*;
   import org.josht.starling.foxhole.themes.MinimalTheme;
+  import UI.Shake;
   
   /**
    * ...
@@ -105,8 +106,7 @@ package Level
     private var _mchammer:Quad;
     
     // Shaking
-    protected var _shaking:Boolean = false;
-    protected var _intensity:Number;
+    private var _shaking:Boolean = false;
     
     private var _evilSnake:Image;
     private var _evilText:Image;
@@ -366,12 +366,7 @@ package Level
       _hud = new HUD(this);
       addChild(_hud);
     }
-    
-    private function shake():void {
-      _shaking = true;
-      Starling.juggler.delayCall(function():void { _shaking = false }, 0.5);
-    }
-    
+      
     private function eggCollide():void
     {
       var egg:Eggs.Egg;
@@ -422,6 +417,8 @@ package Level
     {
       _snake.lives--;
       _snake.mps = SaveGame.startSpeed;
+      var _shake = new Shake(_levelStage, 25, 0.5);
+      Starling.juggler.add(_shake);
       if (_snake.lives < 0)
       {
         return;
@@ -508,6 +505,7 @@ package Level
         
         removeEventListener(TouchEvent.TOUCH, dieScreenTouch);
         resetSnake();
+        _shaking = false;
         unpause();
       }
     }
@@ -628,6 +626,8 @@ package Level
       }
       else
       {
+        var _shake = new Shake(_levelStage, 20, 0.5);
+        Starling.juggler.add(_shake);
         _poisonEggs += 1;
         _score -= 5;
         showPoints(egg, "-5", 20, Color.RED);
@@ -1042,14 +1042,6 @@ package Level
       _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.x);
       _levelStage.y = Math.max( -((_bg.height + frame) * _zoom) + Starling.current.stage.stageHeight, _levelStage.y);
       
-      if (_shaking) {
-        _levelStage.x += _intensity;
-        _levelStage.y += _intensity;
-        /*
-        _levelStage.x += (Math.random() * 20 - 10);
-        _levelStage.y += (Math.random() * 20 - 10);
-        */
-      }
     }
     
     public function get score():String

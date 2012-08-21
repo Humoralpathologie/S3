@@ -35,6 +35,7 @@ package Level
   import engine.SaveGame;
   import engine.StageManager;
   import Menu.LevelScore;
+  import UI.Shake;
   
   /**
    * ...
@@ -42,7 +43,8 @@ package Level
    */
   public class ArcadeState extends LevelState
   {
-    
+    //shake intensity
+    private var _intensity:Number = 10;
     public function ArcadeState()
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
@@ -147,9 +149,11 @@ package Level
     
     override protected function checkWin():void
     { 
-      if (_timeLeft <= 5 && SaveGame.endless) {
-        _intensity = Math.random() * 20 - int(_timeLeft);
-        _shaking = true;
+      if (_timeLeft <= 7 && SaveGame.endless)
+      {
+        _levelStage.x += Math.random() * _intensity - (_intensity / 2);
+        _levelStage.y += Math.random() * _intensity - (_intensity / 2)
+        _intensity+=0.2;
       }
       if (_timeLeft <= 0 && SaveGame.endless)
       {
