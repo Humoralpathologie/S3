@@ -76,12 +76,13 @@ package Menu
     
     private function onTouch(e:TouchEvent):void 
     {
-      var touch:Touch = e.getTouch(_scrollable, TouchPhase.BEGAN);
+      var touch:Touch;
+      touch = e.getTouch(_scrollable, TouchPhase.BEGAN);
       if (touch) {
         _tempPoint = touch.getLocation(_scrollable);
       }
       
-      var touch:Touch = e.getTouch(_scrollable, TouchPhase.ENDED);
+      touch = e.getTouch(_scrollable, TouchPhase.ENDED);
       if (touch) {
         trace("Clicked");
         var p:Point = touch.getLocation(_scrollable);
@@ -106,25 +107,25 @@ package Menu
       _boxes = {};
       var box:Array = [new Point(18, 368), new Point(282, 261), new Point(442, 369), new Point(233, 473)];
       
-      _boxes["level1"] = { box:box, callback:function() { dispatchEventWith(SWITCHING, true, {stage: Level1}) }};
+      _boxes["level1"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: Level1}) }};
       
       box = [new Point(265, 492), new Point(479, 385), new Point(691, 491), new Point(478, 599)];
-      _boxes["level2"] = { box:box, callback:function() { dispatchEventWith(SWITCHING, true, {stage: Level2}) }};
+      _boxes["level2"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: Level2}) }};
       
       box = [new Point(517, 616), new Point(729, 512), new Point(942, 616), new Point(731, 726)];
-      _boxes["level3"] = { box:box, callback:function() { dispatchEventWith(SWITCHING, true, {stage: Level3}) }};
+      _boxes["level3"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: Level3}) }};
       
       box = [new Point(266, 742), new Point(472, 639), new Point(688, 742), new Point(480, 848)];
-      _boxes["level4"] = { box:box, callback:function() { dispatchEventWith(SWITCHING, true, {stage: Level4}) }};
+      _boxes["level4"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: Level4}) }};
 	  
 	  box = [new Point(15, 871), new Point(226, 764), new Point(439, 871), new Point(226, 976)];
-      _boxes["level5"] = { box:box, callback:function() { dispatchEventWith(SWITCHING, true, {stage: Level5}) }};
+      _boxes["level5"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: Level5}) }};
 	  
 	  box = [new Point(265, 997), new Point(477, 980), new Point(689, 997), new Point(477, 1104)];
-      _boxes["level7"] = { box:box, callback:function() { dispatchEventWith(SWITCHING, true, {stage: Level7}) }};
+      _boxes["level7"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: Level7}) }};
 	  
       box = [new Point(718, 286), new Point(893, 212), new Point(887, 306), new Point(729, 306)];
-      _boxes["backtomenu"] = { box:box, callback:function() { dispatchEventWith(SWITCHING, true, {stage: MainMenu}) }};
+      _boxes["backtomenu"] = { box:box, callback:function():void { dispatchEventWith(SWITCHING, true, {stage: MainMenu}) }};
       
       
     }

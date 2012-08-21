@@ -75,7 +75,7 @@ package Menu
 		_back.x = _leaderboard.x - _back.width;
 		_back.y = _leaderboard.y + _back.height + 10;
 		var that:Leaderboards = this;
-		_back.addEventListener(Event.TRIGGERED, function(event:Event) {
+		_back.addEventListener(Event.TRIGGERED, function(event:Event):void {
 			_onLeaderboards.dispatch(that);
 		});
 		addChild(_back);

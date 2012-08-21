@@ -89,7 +89,7 @@ package engine
         var result:Object = JSON.parse(event.target.data);
         var notificationStr:String = result["notifications"]["game_notification"][0]["GameNotification"]["content"];
         setText(notificationStr);
-      } catch (err) {
+      } catch (err:Error) {
         // If anything goes wrong, just set one of the hints.
         setRandomHint();
       }

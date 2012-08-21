@@ -158,16 +158,17 @@ package Level
     
     override protected function onLoseHandler(event:TouchEvent):void
     {
+      var score:Object;
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
         if (SaveGame.arcadeModi)
         {
-          var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true}
+          score = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true}
         }
         else
         {
-          var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: false}
+          score = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: false}
         }
         AssetRegistry.soundmanager.fadeOutMusic();
         dispatchEventWith(SWITCHING, true, {stage: LevelScore, args: score});

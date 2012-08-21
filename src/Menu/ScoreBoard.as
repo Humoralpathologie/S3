@@ -105,7 +105,7 @@ package Menu
       _next.x = _scoreboard.x + _scoreboard.width + _next.width;
       _next.y = _scoreboard.y + 10;
 	  var that:ScoreBoard = this;
-	  _next.addEventListener(Event.TRIGGERED, function(event:Event) {
+	  _next.addEventListener(Event.TRIGGERED, function(event:Event):void {
         _onScoring.dispatch(that);
       });
 	  addChild(_next);

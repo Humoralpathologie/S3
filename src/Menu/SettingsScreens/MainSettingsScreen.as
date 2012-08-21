@@ -149,7 +149,7 @@ package Menu.SettingsScreens
           _nameHeading.text = "User Name: " + SaveGame.userName;
         });*/
         
-        _facebookButton.addEventListener(Event.TRIGGERED, function(event:Event) {
+        _facebookButton.addEventListener(Event.TRIGGERED, function(event:Event):void {
           FacebookMobile.logout(null, "https://m.facebook.com/dialog/permissions.request?app_id=APP_ID&display=touch&next=http%3A%2F%2Fwww.facebook.com%2Fconnect%2Flogin_success.html&type=user_agent&perms=publish_stream&fbconnect=1");
           SaveGame.userName = null;
           _nameHeading.text = "User Name: " + SaveGame.userName;
@@ -170,7 +170,7 @@ package Menu.SettingsScreens
             FacebookMobile.login(fbinit, Starling.current.nativeStage, [], webview);
           });
           */
-        _facebookButton.addEventListener(Event.TRIGGERED, function(event:Event) {
+        _facebookButton.addEventListener(Event.TRIGGERED, function(event:Event):void {
           Starling.current.stop();
           var webView:StageWebView = new StageWebView;
           webView.stage = Starling.current.nativeStage;

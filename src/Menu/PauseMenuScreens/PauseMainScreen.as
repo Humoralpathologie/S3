@@ -60,7 +60,7 @@ package Menu.PauseMenuScreens
       _restartButton.height = 80;
       _restartButton.x = _greyBox.x + 30;
       _restartButton.y = _pauseHeading.y + 100;
-      _restartButton.onRelease.add(function(button:Button)
+      _restartButton.onRelease.add(function(button:Button):void
         {
           dispatchEventWith(ManagedStage.SWITCHING, true, {stage: Class(getDefinitionByName(getQualifiedClassName(levelstate)))});
         });
@@ -70,7 +70,7 @@ package Menu.PauseMenuScreens
       _backButton.height = 80;
       _backButton.x = _restartButton.x + _restartButton.width + 50;
       _backButton.y = _pauseHeading.y + 100;
-      _backButton.onRelease.add(function(button:Button)
+      _backButton.onRelease.add(function(button:Button):void
         {
           dispatchEventWith(ManagedStage.SWITCHING, true, {stage: MainMenu});
         });

@@ -80,7 +80,7 @@ package Menu.ComboMenuScreens
       var time:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-leveluptime"));
       time.x = 40;
       time.y = 40;
-      time.addEventListener(Event.TRIGGERED, function(event:Event) {
+      time.addEventListener(Event.TRIGGERED, function(event:Event):void {
         SaveGame.saveSpecial(sharedData.selected, { effect: "combo-leveluptime" } );
         onMainComboMenu.dispatch(that);
       });
@@ -97,7 +97,7 @@ package Menu.ComboMenuScreens
       var chaintime:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-chaintime"));
       chaintime.x = time.x;
       chaintime.y = timeText.y + timeText.height + 20;
-      chaintime.addEventListener(Event.TRIGGERED, function(event:Event) {
+      chaintime.addEventListener(Event.TRIGGERED, function(event:Event):void {
         SaveGame.saveSpecial(sharedData.selected, { effect: "combo-chaintime" } );
         onMainComboMenu.dispatch(that);
       });      
@@ -113,7 +113,7 @@ package Menu.ComboMenuScreens
       var xtraspawn:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtraspawn"));
       xtraspawn.x = time.x;
       xtraspawn.y = chaintimeText.y + chaintimeText.height + 20;
-      xtraspawn.addEventListener(Event.TRIGGERED, function(event:Event) {
+      xtraspawn.addEventListener(Event.TRIGGERED, function(event:Event):void {
         SaveGame.saveSpecial(sharedData.selected, { effect: "combo-xtraspawn" } );
         onMainComboMenu.dispatch(that);
       });      
@@ -129,7 +129,7 @@ package Menu.ComboMenuScreens
       var shuffle:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-shuffle"));
       shuffle.x = time.x;
       shuffle.y = xtraspawnText.y + xtraspawnText.height + 20;
-      shuffle.addEventListener(Event.TRIGGERED, function(e:Event) {
+      shuffle.addEventListener(Event.TRIGGERED, function(e:Event):void {
         SaveGame.saveSpecial(sharedData.selected, { effect: "combo-shuffle" } );
         onMainComboMenu.dispatch(that);
       });
@@ -145,7 +145,7 @@ package Menu.ComboMenuScreens
       var gold:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-gold"));
       gold.x = time.x;
       gold.y = shuffleText.y + shuffleText.height + 20;
-      gold.addEventListener(Event.TRIGGERED, function(e:Event) {
+      gold.addEventListener(Event.TRIGGERED, function(e:Event):void {
         SaveGame.saveSpecial(sharedData.selected, { effect: "combo-gold" } );
         onMainComboMenu.dispatch(that);
       });
@@ -161,7 +161,7 @@ package Menu.ComboMenuScreens
       var xtralife:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtralife"));
       xtralife.x = time.x;
       xtralife.y = goldText.y + goldText.height + 20;
-      xtralife.addEventListener(Event.TRIGGERED, function(e:Event) {
+      xtralife.addEventListener(Event.TRIGGERED, function(e:Event):void {
         SaveGame.saveSpecial(sharedData.selected, { effect: "combo-xtralife" } );
         onMainComboMenu.dispatch(that);
       });

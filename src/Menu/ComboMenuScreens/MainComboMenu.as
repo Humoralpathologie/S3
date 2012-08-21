@@ -130,7 +130,7 @@ package Menu.ComboMenuScreens
       }
       
       var that:MainComboMenu = this;
-      _infoButtonQ.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent)
+      _infoButtonQ.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
         {
           var touch:Touch = event.getTouch(that, TouchPhase.ENDED);
           if (touch)
@@ -147,7 +147,7 @@ package Menu.ComboMenuScreens
           }
         });
       
-      _infoButtonX.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent)
+      _infoButtonX.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
         {
           var touch:Touch = event.getTouch(that, TouchPhase.ENDED);
           if (touch)
@@ -162,7 +162,7 @@ package Menu.ComboMenuScreens
           }
         });
       
-      xButton.addEventListener(Event.TRIGGERED, function(event:Event)
+      xButton.addEventListener(Event.TRIGGERED, function(event:Event):void
         {
           removeChild(infoDisplay);
           addChild(question);
@@ -179,7 +179,7 @@ package Menu.ComboMenuScreens
       
       _buttons.push([button, _text]);
       
-      button.addEventListener(Event.TRIGGERED, function(event:Event)
+      button.addEventListener(Event.TRIGGERED, function(event:Event):void
         {
           switch (i)
           {

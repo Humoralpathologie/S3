@@ -72,7 +72,7 @@ package Menu
       _settingsButton.height = 80;
       _settingsButton.x = Starling.current.stage.stageWidth - _settingsButton.width;
       _settingsButton.y = Starling.current.stage.stageHeight - _settingsButton.height;
-      _settingsButton.onRelease.add(function(button:Button) {
+      _settingsButton.onRelease.add(function(button:Button):void {
         showSettingsNavigator();
       });
       
@@ -139,7 +139,7 @@ package Menu
       exit.scaleX = exit.scaleY = 2;
       exit.x = Starling.current.stage.stageWidth - exit.width - 10;
       exit.y = 90;
-      var that = this;
+      var that:MainMenu = this;
       exit.addEventListener(Event.TRIGGERED, function(event:Event):void {
         that.removeChild(_settings);
       });

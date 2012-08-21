@@ -3,7 +3,7 @@ package Combo {
     
     private var _combos:Array;
     
-    public function dispose() {
+    public function dispose():void {
       var i:int = 0;
       for (i = 0; i < _combos.length; i++) {
         _combos[i].dispose();

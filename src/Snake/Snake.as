@@ -76,7 +76,7 @@ package Snake
     
     public function getTailTypes():Array {
       var i:int;      
-      var res = [];
+      var res:Array = [];
       
       var filler:int = Math.max(0, 5 - _body.length)
       for (i = 0; i < filler; i++) {

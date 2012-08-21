@@ -22,7 +22,7 @@ package UI
   import starling.utils.VAlign;
   import starling.utils.HAlign;
   import starling.core.Starling;
-  import Snake.Snake;
+  import Snake.Snake;  
   
   /**
    * ...
@@ -32,6 +32,7 @@ package UI
   {
     public static const CONTROLS_CHANGED:String = "controlschanged";
     public static const DISPLAY_MESSAGE:String = "displaymessage";
+    public static const DISPLAY_POINTS:String = "displaypoints";
     
     private var _controls:Sprite;
     private var _top:Image;
@@ -51,6 +52,8 @@ package UI
     private var _center:Point;
     private var _messageQueue:Vector.<String>;
     private var _messageQueueRunning:Boolean = false;
+    private var _pointsQueue:Vector.<Object>;
+    private var _pointsQueueRunning:Boolean = false;    
     
     public function HUD(levelState:LevelState)
     {
@@ -68,9 +71,13 @@ package UI
       // This is to re-use TextFields for message display.
       _textMessagesPool = new Vector.<TextField>;
       
-      // Initialize message queue;
+      // Initialize message queue.
       _messageQueue = new Vector.<String>;
       _messageQueueRunning = false;
+    
+      // Initialize points queue.
+      _pointsQueue = new Vector.<Object>;
+      _pointsQueueRunning = false;
       
       // A center point so we don't need to recalculate
       _center = new Point(AssetRegistry.STAGE_WIDTH / 2, AssetRegistry.STAGE_HEIGHT / 2);
@@ -97,6 +104,9 @@ package UI
       
       // Listen if we should display any messages.
       _levelState.addEventListener(HUD.DISPLAY_MESSAGE, onDisplayMessage);
+      
+      // Listen if we should display any points.
+      _levelState.addEventListener(HUD.DISPLAY_POINTS, onDisplayPoints);
       
       // Listen for changes in the snake body.
       _levelState.addEventListener(Snake.Snake.BODY_CHANGED, onSnakeBodyChanged);
@@ -153,7 +163,7 @@ package UI
       _radarCircle.y = (AssetRegistry.STAGE_HEIGHT - _radarCircle.height) / 2;
     }
     
-    private function onSnakeBodyChanged(evt:Event) {
+    private function onSnakeBodyChanged(evt:Event):void {
       updateTailView(_levelState.snake.getTailTypes());
     }
     
@@ -194,8 +204,14 @@ package UI
       
       for (i = 0; i < _textMessagesPool.length; i++) {
         if (_textMessagesPool[i].visible == false) {
-          _textMessagesPool[i].y = 0;
-          _textMessagesPool[i].visible = true;
+          txt = _textMessagesPool[i];
+          txt.y = 0;
+          txt.x = 0;
+          txt.color = Color.WHITE;
+          txt.rotation = 0;
+          txt.alpha = 1;
+          txt.visible = true;
+          txt.scaleX = txt.scaleY = 1;
           trace("Recycling old message");
           return _textMessagesPool[i];
         }
@@ -226,6 +242,30 @@ package UI
       _textLayer.addChild(textMessage);       
     }
     
+    private function showPoint(pointObj:Object):void {
+      var tween:Tween;
+      var textMessage:TextField;      
+      textMessage = recycleMessage();
+      
+      textMessage.text = pointObj.message; 
+      textMessage.color = pointObj.color;
+        
+      tween = new Tween(textMessage, 3);
+      tween.animate("scaleX", 3);
+      tween.animate("scaleY", 3);
+      tween.animate("x", -textMessage.width);
+      tween.animate("y", -textMessage.height);
+      tween.animate("rotation", 45 * (Math.PI / 180));
+      tween.onComplete = function():void {
+        textMessage.visible = false;
+      }
+        
+      _tweens.push(tween);
+      _levelState.gameJuggler.add(tween);
+     
+      _textLayer.addChild(textMessage);       
+    }    
+    
     private function showNextMessage():void {  
       trace("Showing next message");
       // Stop if we don't have queue
@@ -239,12 +279,32 @@ package UI
         _messageQueueRunning = false;
       }
     }
+
+    private function showNextPoint():void {  
+      trace("Showing next point");
+      // Stop if we don't have queue
+      if (!_pointsQueue) { _pointsQueueRunning = false;  return; }
+        
+      if (_pointsQueue.length > 0) {
+        var pointObj:Object = _pointsQueue.pop();
+        showPoint(pointObj);
+        _levelState.gameJuggler.delayCall(showNextPoint, 0.5);
+      } else {
+        _pointsQueueRunning = false;
+      }
+    }    
     
     private function startMessageQueue():void {
       trace("Starting message queue");
       _messageQueueRunning = true;    
       showNextMessage();
     }
+
+    private function startPointsQueue():void {
+      trace("Starting points queue");
+      _pointsQueueRunning = true;    
+      showNextPoint();
+    }    
     
     private function onDisplayMessage(evt:Event):void {
       _messageQueue.push(evt.data.message);
@@ -253,6 +313,13 @@ package UI
         startMessageQueue();
       }
     }
+    
+    private function onDisplayPoints(evt:Event):void {
+      _pointsQueue.push(evt.data);
+      if (!_pointsQueueRunning) {
+        startPointsQueue();
+      }
+    }    
     
     public function set iconsCfg(value:Object):void {
       _iconsCfg = value;
@@ -271,7 +338,7 @@ package UI
       _score.text = _levelState.score;
       
       // Update all icon TextFields.
-      for each (var iconCfg in _iconsCfg) {
+      for each (var iconCfg:Object in _iconsCfg) {
         iconCfg.textField.text = _levelState[iconCfg.watching];
       }
       
@@ -396,7 +463,7 @@ package UI
     
     private function createTop():void {
       _top = new Image(AssetRegistry.UIAtlas.getTexture("ui-top"));
-      _top.addEventListener(TouchEvent.TOUCH, function(evt:TouchEvent) {
+      _top.addEventListener(TouchEvent.TOUCH, function(evt:TouchEvent):void {
           if (evt.getTouch(_top, TouchPhase.ENDED)) {
             _levelState.togglePause();
           }
@@ -443,25 +510,25 @@ package UI
     
     private function createType1Buttons():void {
       var buttonConfig:Object = {
-        left180: { x: 0, y: 190, texture: "ui-classic-180-left", fn: function() { _levelState.snake.oneeightyLeft() }},
-        right180: { x: 480, y: 190, texture: "ui-classic-180-right", fn: function() { _levelState.snake.oneeightyRight() }},
-        left: { x: 0, y: 490, texture: "ui-classic-left", fn: function() { _levelState.snake.moveLeft() }},
-        right: { x: 480, y: 490, texture: "ui-classic-right", fn: function() { _levelState.snake.moveRight() }}  
+        left180: { x: 0, y: 190, texture: "ui-classic-180-left", fn: function():void { _levelState.snake.oneeightyLeft() }},
+        right180: { x: 480, y: 190, texture: "ui-classic-180-right", fn: function():void { _levelState.snake.oneeightyRight() }},
+        left: { x: 0, y: 490, texture: "ui-classic-left", fn: function():void { _levelState.snake.moveLeft() }},
+        right: { x: 480, y: 490, texture: "ui-classic-right", fn: function():void { _levelState.snake.moveRight() }}  
         };
       createButtonsHelper(buttonConfig);
     }
     
     private function createType2Buttons():void {
       var buttonConfig:Object = {
-        up: { x: 490, y: 190, texture: "ui-4way-bottom-up", fn: function() { _levelState.snake.changeDirection(AssetRegistry.UP); }},
-        down: { x: 490, y: 500, texture: "ui-4way-bottom-down", fn: function() { _levelState.snake.changeDirection(AssetRegistry.DOWN); }},
-        left: { x: 0, y: 190, texture: "ui-4way-bottom-left", fn: function() { _levelState.snake.changeDirection(AssetRegistry.LEFT);}},
-        right: { x: 190, y: 190, texture: "ui-4way-bottom-right", fn: function() { _levelState.snake.changeDirection(AssetRegistry.RIGHT); }}  
+        up: { x: 490, y: 190, texture: "ui-4way-bottom-up", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.UP); }},
+        down: { x: 490, y: 500, texture: "ui-4way-bottom-down", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.DOWN); }},
+        left: { x: 0, y: 190, texture: "ui-4way-bottom-left", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.LEFT);}},
+        right: { x: 190, y: 190, texture: "ui-4way-bottom-right", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.RIGHT); }}  
         };
       createButtonsHelper(buttonConfig);
     }    
     
-    private function createButtonsHelper(buttonConfig:Object) {
+    private function createButtonsHelper(buttonConfig:Object):void {
       var button:Button;
       
       for each(var btnData:Object in buttonConfig) {
@@ -475,7 +542,7 @@ package UI
         // TODO: Maybe this should be rewritten with Events?
         
         var tmp:Function = function(button:Button, callback:Function):void {
-          button.addEventListener(TouchEvent.TOUCH, function(evt:TouchEvent) {
+          button.addEventListener(TouchEvent.TOUCH, function(evt:TouchEvent):void {
             if (evt.getTouch(button, TouchPhase.BEGAN)) {
               callback();
             }
@@ -503,7 +570,7 @@ package UI
     
     private function destroyTextMessagesPool():void {
       var i:int;
-      for (var i = 0; i < _textMessagesPool.length; i++) {
+      for (i = 0; i < _textMessagesPool.length; i++) {
         _textMessagesPool[i].dispose();
         _textMessagesPool[i] = null;
       }
@@ -544,6 +611,7 @@ package UI
       super.dispose();
       
       _levelState.removeEventListener(Snake.Snake.BODY_CHANGED, onSnakeBodyChanged);
+      _levelState.removeEventListener(HUD.DISPLAY_POINTS, onDisplayPoints);
       _levelState.removeEventListener(HUD.DISPLAY_MESSAGE, onDisplayMessage);
       _levelState.removeEventListener(HUD.CONTROLS_CHANGED, onControlsChanged);
       

@@ -325,6 +325,8 @@ package engine
     }
     
     public static function loadGraphics(needed:Array, keep:Boolean = false):void {
+      var i:int;
+      
       var assets:Object = {
         (String(MENU)): { load: loadMenuGraphics, dispose: disposeMenuGraphics },
         (String(LEVELSELECT)): { load: loadLevelSelectGraphics, dispose: disposeLevelSelectGraphics },
@@ -344,7 +346,7 @@ package engine
       var toUnload:Array = [];
       
       // Throw out stuff we already have and mark things to unload.
-      for (var i:int = 0; i < loaded.length; i++) {
+      for (i = 0; i < loaded.length; i++) {
         if (needed.indexOf(loaded[i]) != -1) {
           needed.splice(needed.indexOf(loaded[i]), 1);
         } else {
@@ -354,7 +356,7 @@ package engine
       
       // Unload what we don't need. Don't unload if keep is true.
       if(!keep) {
-        for (var i:int = 0;  i < toUnload.length; i++) {
+        for (i = 0; i < toUnload.length; i++) {
           assets[toUnload[i]].dispose();
           trace("Unloading " + toUnload[i]);
           loaded.splice(loaded.indexOf(toUnload[i]), 1);
@@ -369,7 +371,7 @@ package engine
       trace(loaded);
       
       // Load what we still need
-      for (var i:int = 0; i < needed.length; i++) {
+      for (i = 0; i < needed.length; i++) {
         assets[needed[i]].load();
         trace("Loading " + needed[i]);
         loaded.push(needed[i]);

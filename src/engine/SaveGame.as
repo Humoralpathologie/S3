@@ -136,7 +136,8 @@ package engine {
     }
     
     public static function saveSpecial(slot:int, special:Object):void {
-      for (var i in specials) {
+      var i:String;
+      for (i in specials) {
         if (specials[i] && (specials[i].effect == special.effect)) {
           specials[i] = null;
         }

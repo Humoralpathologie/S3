@@ -30,11 +30,12 @@ package Eggs
     */
     // Strange bug. AssetRegistry.EGGZERO 
     public function recycleEgg(tileX:int = 0, tileY:int = 0, type:int = 0):Eggs.Egg {
+      var i:int;
       var length:int;
       var egg:Eggs.Egg;
       length = _eggPool.length;
       // First try to find one with the right type.
-      for (var i:int = 0; i < length; i++) {
+      for (i = 0; i < length; i++) {
         egg = _eggPool[i];
         if (!egg.visible && egg.type == type) {
           trace("Recycling Egg with right type.");
@@ -46,7 +47,7 @@ package Eggs
           return(egg);
         }       
       }
-      for (var i:int = 0; i < length; i++) {
+      for (i = 0; i < length; i++) {
         egg = _eggPool[i];
         if (!egg.visible) {
           trace("Recycling Egg.");
@@ -84,7 +85,7 @@ package Eggs
     }
     
     public function overlapEgg(head:Snake.Head):Eggs.Egg {
-      var length = _eggPool.length;
+      var length:int = _eggPool.length;
       var egg:Eggs.Egg;
       for (var i:int = 0; i < length; i++) {
         egg = _eggPool[i];

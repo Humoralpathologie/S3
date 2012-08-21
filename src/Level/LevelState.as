@@ -149,7 +149,7 @@ package Level
     
     private static const WINDOW:Number = 100;
     
-    static const PAUSEMAIN:String = "MAIN";
+    private static const PAUSEMAIN:String = "MAIN";
     
     private var _gameJuggler:Juggler;
     
@@ -530,6 +530,7 @@ package Level
     
     protected function eatEgg(egg:Egg):void
     {
+      var particle:PDParticleSystem;
       
       AssetRegistry.BiteSound.play();
       
@@ -541,7 +542,7 @@ package Level
             //_hud.addPreview(egg.type);
         }
         
-        var particle:PDParticleSystem = _particles[egg.type];
+        particle = _particles[egg.type];
         if (particle)
         {
           particle.x = egg.x + 10;
@@ -586,7 +587,7 @@ package Level
         _poisonEggs += 1;
         _score -= 5;
         showPoints(egg, "-5", 20, Color.RED);
-        var particle:PDParticleSystem = _particles["realRotten"];
+        particle = _particles["realRotten"];
         if (particle)
         {
           particle.x = egg.x + 10;
@@ -701,10 +702,13 @@ package Level
       
       func();
     }
-    
+     
     private function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void
     {
+      var pos:Point = new Point();
       
+      dispatchEventWith(HUD.DISPLAY_POINTS, true, { position: pos, message: points, color: color } );
+      /*
       var text:TextField = recycleText(120, 120, points, 60); // new TextField(120, 120, points, "kroeger 06_65", 60);
       text.color = color;
       text.autoScale = true;
@@ -727,7 +731,7 @@ package Level
       }
       
       _gameJuggler.add(tween);
-    
+      */
     }
     
     protected function doCombos():void
@@ -1178,8 +1182,7 @@ package Level
       
       _scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
       
-      //text.touchable = false;
-      var that = this;
+      var that:LevelState = this;
       
       var _goButton:Button = new Button();
       _goButton.label = "GO!";
@@ -1189,9 +1192,8 @@ package Level
       _goButton.x = (AssetRegistry.STAGE_WIDTH - 800) / 2;
       _goButton.y = AssetRegistry.STAGE_HEIGHT - 80;
       
-      var that:LevelState = this;
       addChild(_goButton);
-      _goButton.onRelease.add(function(button:Button)
+      _goButton.onRelease.add(function(button:Button):void
         {
           that.removeChild(_goButton);
           that.removeChild(box);

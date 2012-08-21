@@ -49,7 +49,7 @@ package Menu.SettingsScreens
       _mainButton = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("arrow_reduced"));
       _mainButton.x = _greyBox.x - _mainButton.width;
       _mainButton.y = _greyBox.y;
-      var that = this;
+      var that:BetaSettingsScreen = this;
       _mainButton.addEventListener(Event.TRIGGERED, function(event:Event):void {
         onMainSelect.dispatch(that);
       });

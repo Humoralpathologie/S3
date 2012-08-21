@@ -39,7 +39,7 @@ package Eggs
     private function makeClips():void {
       _clips = { };
       var frames:Vector.<Texture> = new Vector.<Texture>;
-      var eggTypeGraphics = {
+      var eggTypeGraphics:Object = {
         (int(AssetRegistry.EGGZERO)): ["eggs_0", "eggs_1"],
         (int(AssetRegistry.EGGA)): ["eggs_2", "eggs_3"],
         (int(AssetRegistry.EGGB)): ["eggs_4", "eggs_5"],
@@ -49,7 +49,7 @@ package Eggs
         (int(AssetRegistry.EGGSHUFFLE)): ["eggs_12", "eggs_13"]
       }
       
-      for (var eggType in eggTypeGraphics) {
+      for (var eggType:String in eggTypeGraphics) {
         var pics:Array;
         pics = eggTypeGraphics[eggType]
         frames = new Vector.<Texture>;

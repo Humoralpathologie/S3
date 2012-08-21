@@ -74,7 +74,7 @@ package engine
         var channel:SoundChannel;
         channel = music.play(0, 1, _musicTransform);
         _musicPlaying.push(channel);
-        channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event)
+        channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event):void
           {
             _musicPlaying.splice(_musicPlaying.indexOf(channel), 1);
           });
@@ -96,7 +96,7 @@ package engine
           music = musicLevels[Math.min(_level, musicLevels.length - 1)];
           channel = music.play(0, 1, _musicTransform);
           _musicPlaying.push(channel);
-          channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event)
+          channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event):void
             {
               _musicPlaying.splice(_musicPlaying.indexOf(channel), 1);
               play();
@@ -114,7 +114,7 @@ package engine
         var channel:SoundChannel;
         channel = sound.play(0, 1, _soundTransform);
         _soundsPlaying.push(channel);
-        channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event)
+        channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event):void
           {
             _soundsPlaying.splice(_soundsPlaying.indexOf(channel), 1);
           });
