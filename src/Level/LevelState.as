@@ -651,9 +651,11 @@ package Level
 			_bonusBack.y = _bonusBar.y - 1;
 			if (_bonusTimer > 0.5)
 			{
-				_bonusBack.alpha = 0.3;
+        if (_chainTime == 2.5) _bonusBack.alpha = 0.3;
+        if (_chainTime == 3.5) _bonusBack.alpha = 0.6;
+        
 				_bonusBar.scaleX = ((_bonusTimer - 0.5) / 2) * 25;
-				_bonusBar.color = Color.argb(255, (1 - ((_bonusTimer - 0.5) / 2)) * 255, ((_bonusTimer - 0.5) / 2) * 255, 0);
+				_bonusBar.color = Color.argb(255, (1 - ((_bonusTimer - 0.5) / int(_chainTime))) * 255, ((_bonusTimer - 0.5) / int(_chainTime)) * 255, 0);
 				
 			}
 			else
@@ -925,6 +927,7 @@ package Level
 					{
 						_chainTime = 2.5;
 						_bonusBack.width = 27;
+            _bonusBack.color =  0x000000;
 						_extensionTime = 0;
 						showMessage(AssetRegistry.Strings.CHAINTIMEEXTENDMESSAGE);
 					}
@@ -1304,9 +1307,10 @@ package Level
 			return _overallTimer;
 		}
 		
-		public function setBonusBackWidth(value:int):void
+		public function adjustBonusBack(width:int):void
 		{
-			_bonusBack.width = value;
+      _bonusBack.color = 0xffff00;
+			_bonusBack.width = width;
 		}
 		
 		public function get eggs():Eggs

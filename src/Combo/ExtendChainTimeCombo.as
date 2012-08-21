@@ -19,8 +19,8 @@ package Combo
     override public function effect(state:LevelState):void {
       state.showMessage(AssetRegistry.Strings.CHAINTIMEEXTMESSAGE);
       state.chainTime = 3.5;
-	  state.setBonusBackWidth(37);
-	  state.extensionTime = state.overallTimer + 60;
+	    state.adjustBonusBack(37);
+	    state.extensionTime = state.overallTimer + 60;
     }
   
   }
