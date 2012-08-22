@@ -65,6 +65,8 @@ package Menu
       _scrollable.addEventListener(TouchEvent.TOUCH, onTouch);
       
       addChild(_scroller);
+	  
+	  SaveGame.isArcade = false;
     }
     
     private function onTouch(e:TouchEvent):void 

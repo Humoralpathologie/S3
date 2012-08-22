@@ -10,7 +10,7 @@ package Menu
   import starling.display.Quad;
   import starling.display.QuadBatch;
   import starling.events.Event;
-  
+  //import Level.ArcadeState;
   import flash.events.Event;
   import starling.display.Button;
   import starling.display.Image;
@@ -130,7 +130,7 @@ package Menu
     }
 
 	private function createScoreBoard():void {
-      trace(_scores);
+      trace("_scores" + _scores);
       _boards = new ScreenNavigator();
       var trans:ScreenFadeTransitionManager = new ScreenFadeTransitionManager(_boards);
 	  _scoreScreen = new ScoreBoard();
@@ -205,8 +205,11 @@ package Menu
     
     private function replay():void
     {	
-	  
-      dispatchEventWith(SWITCHING, true, { stage: AssetRegistry.LEVELS[_scores.level - 1] } );
+	  if (_scores.level == 9) {
+		dispatchEventWith(SWITCHING, true, { stage: ComboMenu } )
+	  } else {
+        dispatchEventWith(SWITCHING, true, { stage: AssetRegistry.LEVELS[_scores.level - 1] } );
+	  }
     }
     
     private function nextLevel():void
@@ -226,7 +229,6 @@ package Menu
       _replayButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo-broken");
       _replayButton.x = 960 / 2 - 145 / 2;
       _replayButton.y = 460;
-	  //trace(_levelNr);
       
       _replayButton.addEventListener(starling.events.Event.TRIGGERED, replay);
       

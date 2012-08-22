@@ -71,6 +71,18 @@ package engine {
 	  }
 	  return _sharedObject.data.secondArcade;
 	}
+	
+	public static function set isArcade(value:Boolean):void {
+	  _sharedObject.data.isArcade = value;
+	}
+	
+	public static function get isArcade():Boolean {
+	  if (!_sharedObject.data.isArcade) {
+		_sharedObject.data.isArcade = false;
+	  }
+	  return _sharedObject.data.isArcade;
+	}
+	
     public static function get startSpeed():int {
       return _sharedObject.data.startSpeed;
     }

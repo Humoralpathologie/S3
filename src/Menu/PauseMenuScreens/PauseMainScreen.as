@@ -21,6 +21,7 @@ package Menu.PauseMenuScreens
 	import UI.HUD;
 	import flash.display.Sprite;
 	import org.josht.starling.display.Image;
+
 	
 	/**
 	 * ...
@@ -87,7 +88,9 @@ package Menu.PauseMenuScreens
 			addToggles();
 			addControlSwitches();
 			
-			addSpecialComboReminders();
+			if (SaveGame.isArcade){
+			  addSpecialComboReminders();
+			}
 			
 			this.validate();
 		}
