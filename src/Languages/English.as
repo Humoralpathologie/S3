@@ -34,24 +34,24 @@ package Languages
 		public static const LEADERBOARDS:String = "LEADERBOARDS";
 		
 		//Arcade Info
-		public static const ARCADEINFO:String = "This mode is all about earning the highest score by experimenting with different combos.\nThe Countdown Mode gives you 3 minutes to help Little Snake devour as many eggs as possible before the volcanic eruption. Additional to the 3 basic combos, there are 3 combo slots you can change around as you like with combo combinations you favour.\nIf you are too chicken and afraid of volcanoes, you may as well play the Endless Mode. There you can really go wild on high scoring and even slow down if you become too fast. But would you want to?! So, take a risk and do your best!";
+		public static const ARCADEINFO:String = "This mode is all about earning the highest score by experimenting with different combos.\nThe Countdown Mode gives you 3 minutes to help Little Snake devour as many eggs as possible before the vulcano erupts. Additional to the basic combos, there are 3 slots to which you can assign special combos.\nIf you are too chicken and afraid of volcanoes, you may as well play the Endless Mode. There you can really go wild on high scoring and even slow down if you become too fast. But would you want to?! So, take a risk and do your best!";
 		
 		// Combo Menu
 		public static const SELECTABLECOMBO:String = "SELECTABLE COMBOS";
 		
 		// Combo Descriptions
-		public static const TIMECOMBODESC:String = "Bonus Time Up: Activate this combo and every Bonus Time Combo will give you 4 instead of 3 extra seconds.";
-		public static const CHAINTIMEDESC:String = "Chain Time Up: Activate this combo and the chain time will rise to 3 seconds for 60 seconds.";
-		public static const XTRASPAWNDESC:String = "Extra Eggs: Activate this combo and 5 extra eggs will spawn!";
+		public static const TIMECOMBODESC:String = "Bonus Time Up: Perform this combo and for 1 minute every Bonus Time Combo will give you 4 instead of 3 extra seconds.";
+		public static const CHAINTIMEDESC:String = "Chain Time Up: Perform this combo and the Chain Time will be extended to 3 seconds for 60 seconds.";
+		public static const XTRASPAWNDESC:String = "Extra Eggs: Performing this combo will instantly spawn 5 extra eggs!";
 		public static const SHUFFLEDESC:String = "Shuffle Egg: Performing this combo will spawn a Shuffle Egg. Devouring it will rearrange Little Snake's body tiles and give you the chance to score new combos.";
-		public static const GOLDDESC:String = "Golden Egg: This combo will spawn a shiny, golden egg for 6 seconds. Or are you afraid of the big points?";
+		public static const GOLDDESC:String = "Golden Egg: This combo will spawn a shiny, golden egg. Get to it within 6 seconds if you aren't afraid of scoring high";
 		
-		public static const XTRALIFEDESC:String = "Extra Life: This combo will probably do exactly what you think it will.";
+		public static const XTRALIFEDESC:String = "Extra Life: This combo does probably exactly what you think.";
 		
 		public static const SPEEDDESC:String = "Speed Combo: Performing this combo will make you faster.";
-		public static const TIMEDESC:String = "Bonus Time Combo: Do you hate it when you want to score high but a volcanic eruption keeps interrupting you? Performing this combo will delay the volcanic eruption by 3 seconds.";
+		public static const TIMEDESC:String = "Bonus Time Combo: Do you hate it when you want to score high but a volcanic eruption spoils all the fun? Performing this combo will delay the volcanic eruption by 3 seconds.";
 		public static const SLOWERDESC:String = "Snail Combo: Performing this combo will slow you down.";
-		public static const NOROTTENDESC:String = "No Rotten Egg Combo: Performing this combo gets you rid of the bothersome and poisonous eggs.";
+		public static const NOROTTENDESC:String = "No Rotten Egg Combo: Performing this combo rids you of the bothersome and poisonous eggs.";
 		
 		//pause menu
 		public static const PAUSE:String = "PAUSE";
