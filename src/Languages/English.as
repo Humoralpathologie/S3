@@ -71,8 +71,8 @@ package Languages
 		public static const LEVEL4B:String = "Get Little Snake's speed up to 7 and jump!\n\nStory:\nSeems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...";
 		public static const LEVEL5A:String = "Avoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try a combo with the new eggs\n\nStory:\nOur hero jumped the canyon just to face these ghastly spikes - but they won't hold him back!";
 		public static const LEVEL5B:String = "Avoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try a combo with the new eggs\n\nStory:\nOur hero jumped the canyon just to face these ghastly spikes - but they won't hold him back!";
-		public static const LEVEL6A:String = "Eat 2 chains of at least 10 eggs & don't stop eating for longer than 6 seconds\n\nStory:\nLittle Snake has developed a serious egg addiction. Don't let withdrawal get to him!";
-		public static const LEVEL6B:String = "Eat 3 chains of at least 10 eggs & don't stop eating for longer than 6 seconds\n\nStory:\nLittle Snake has developed a serious egg addiction. Don't let withdrawal get to him!";
+		public static const LEVEL6A:String = "Eat 2 chains of at least 6 eggs & don't stop eating for longer than 14 seconds\n\nStory:\nLittle Snake has developed a serious egg addiction. Don't let withdrawal get to him!";
+		public static const LEVEL6B:String = "Eat 3 chains of at least 10 eggs & don't stop eating for longer than 8 seconds\n\nStory:\nLittle Snake has developed a serious egg addiction. Don't let withdrawal get to him!";
 		public static const LEVEL7A:String = "What's the deal with those special eggs? Make them disappear all at once!\n\nStory:\nAt last Little Snake has found the Terror Triceratops. However, the coward hides himself away in a fort. Find a way to circumvent his defenses!";
 		public static const LEVEL7B:String = "What's the deal with those special eggs? Make them disappear all at once!\n\nStory:\nAt last Little Snake has found the Terror Triceratops. However, the coward hides himself away in a fort. Find a way to circumvent his defenses!";
 		
@@ -85,17 +85,17 @@ package Languages
     
     //Messages
     public static const JUMPMESSAGE:String = "And now jump over the valley!";
-    public static const FASTERMESSAGE:String = "Speed +";
-    public static const SLOWERMESSAGE:String = "Speed -";
+    public static const FASTERMESSAGE:String = "Speed+";
+    public static const SLOWERMESSAGE:String = "Speed-";
     public static const NOROTTENMESSAGE:String = "No Rotten Eggs!";
     public static const SHUFFLEMESSAGE:String = "Shuffle Egg!";
     public static const GOLDENMESSAGE:String = "Golden Egg!";
     public static const EXTRATIMEMESSAGE:String = "Bonus Time!";
     public static const EXTRALIFEMESSAGE:String = "Bonus Life!";
     public static const EXTRAEGGSMESSAGE:String = "Extra Eggs!";
-    public static const EXTRATIMEEXTMESSAGE:String = "Bonus Time +";
-    public static const CHAINTIMEEXTMESSAGE:String = "Chain Time +";
-    public static const CHAINTIMEEXTENDMESSAGE:String = "Chain Time -";
+    public static const EXTRATIMEEXTMESSAGE:String = "Bonus Time+";
+    public static const CHAINTIMEEXTMESSAGE:String = "Chain Time+";
+    public static const CHAINTIMEEXTENDMESSAGE:String = "Chain Time-";
 	}
 
 }
