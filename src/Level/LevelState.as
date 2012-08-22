@@ -1085,7 +1085,7 @@ package Level
       _pauseMenu.showScreen(PAUSEMAIN);
     }
     
-    private function hidePauseMenu():void
+    public function hidePauseMenu():void
     {
       _mchammer.y = 0;
       _pauseMenu.clearScreen();
@@ -1218,7 +1218,6 @@ package Level
             if (Math.abs(p.y - _tempPoint.y) < 50) 
            {
               p.y += _scroller.verticalScrollPosition;
-              trace(p);
               that.removeChild(_goButton);
               that.removeChild(box);
               that.removeChild(_scroller);
