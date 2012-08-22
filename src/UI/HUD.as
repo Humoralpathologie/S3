@@ -256,9 +256,9 @@ package UI
       tween = new Tween(textMessage, 2);
       tween.animate("scaleX", 2);
       tween.animate("scaleY", 2);
-      tween.animate("x", -AssetRegistry.STAGE_WIDTH/2);
-      tween.animate("y", -AssetRegistry.STAGE_HEIGHT);
-      //tween.animate("rotation", 45 * (Math.PI / 180));
+      tween.animate("x", -textMessage.width);
+      tween.animate("y", -textMessage.height*0.75);
+      tween.animate("rotation", -45 * (Math.PI / 180));
       tween.animate("alpha", 0);
       tween.onComplete = function():void {
         textMessage.visible = false;
