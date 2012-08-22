@@ -355,6 +355,7 @@ package Menu.ComboMenuScreens
         if (SaveGame.specials[i])
         {
           slot = new Button(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[i].effect));
+		  //trace(SaveGame.specials[i].effect);
         }
         else
         {

@@ -46,7 +46,7 @@ package Level
     private var _intensity:Number = 10;
     public function ArcadeState()
     {
-      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
+      //AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       _rottenEnabled = true;
       
       var combos:Array = AssetRegistry.COMBO_TRIGGERS;
