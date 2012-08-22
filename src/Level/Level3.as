@@ -84,9 +84,9 @@ package Level
 	  var _neededCombos:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-combo"));
     var _neededTime:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-time"));
 	  if (SaveGame.difficulty == 1) {	
-		showObjectiveBox(AssetRegistry.Strings.LEVEL3A, [[_neededCombos, 7], [_neededTime, "4:00"]] );
+		showObjectiveBox(AssetRegistry.Strings.LEVEL3A, [[_neededCombos, "x 7"], [_neededTime, "= 4:00"]] );
 	  } else {
-	    showObjectiveBox(AssetRegistry.Strings.LEVEL3B, [[_neededCombos, 10], [_neededTime, "4:00"]] );
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL3B, [[_neededCombos, "x 10"], [_neededTime, "= 4:00"]] );
 	  }
     }    
 

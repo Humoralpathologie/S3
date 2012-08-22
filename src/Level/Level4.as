@@ -84,9 +84,9 @@ package Level
     {     
 	  var _neededSpeed:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-speed"));
 	  if (SaveGame.difficulty == 1) {	
-		showObjectiveBox(AssetRegistry.Strings.LEVEL4A, [[_neededSpeed, 5] ] );
+		showObjectiveBox(AssetRegistry.Strings.LEVEL4A, [[_neededSpeed,"= 5"] ] );
 	  } else {
-	    showObjectiveBox(AssetRegistry.Strings.LEVEL4B, [[_neededSpeed, 7] ] );
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL4B, [[_neededSpeed,"= 7"] ] );
 	  }
     }    
     
