@@ -111,12 +111,12 @@ package Menu.SettingsScreens
         if (success)
         {
           SaveGame.userName = success.user.name;
-          
+          SaveGame.userID = success.user.id;
         }
         if (failure)
         {
           SaveGame.userName = "anonymous";
-         
+          SaveGame.userID = null;
         }
         _nameHeading.text = "User Name: " + SaveGame.userName;
 

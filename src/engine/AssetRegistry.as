@@ -302,7 +302,10 @@ package engine
     
     public static var Strings:Class;
     
-   
+    // Stuff for Scoreoid.
+    
+    public static const GAME_ID:String = "atZTbG24V";
+    public static const API_KEY:String = "7bb1d7f5ac027ae81b6c42649fddc490b3eef755";
     
     public static function init():void
     {

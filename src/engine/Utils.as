@@ -1,7 +1,9 @@
 package engine
 {
-  import flash.geom.Point;
-  import flash.globalization.CollatorMode;
+  import flash.geom.*;
+  import flash.net.*;
+  import flash.events.Event;
+  import starling.utils.HAlign;
   
   /**
    * Utilities.
@@ -9,6 +11,84 @@ package engine
    */
   public class Utils
   {
+    
+    static public function createOrEditPlayer(id:String, name:String) {
+      editPlayer(id, name, createPlayer);
+    }
+    
+    static public function createPlayer(id:String, name:String) {
+      
+    }
+    
+    static public function editPlayer(id:String, name:String, alternate:Function) {
+      var url:String = "https://www.scoreoid.com/api/editPlayer";
+      var request:URLRequest = new URLRequest(url);
+      var requestVars:URLVariables = new URLVariables();
+      request.data = requestVars;      
+      requestVars.api_key = AssetRegistry.API_KEY;
+      requestVars.game_id = AssetRegistry.GAME_ID;     
+      
+      
+    }
+    
+    public static function scoreoidRequest(url:String, data:Object, onSuccess:Function, onError:Function = null) {
+      var request:URLRequest = new URLRequest(url);
+      var requestVars:URLVariables = new URLVariables();
+      request.data = requestVars;
+      requestVars.api_key = AssetRegistry.API_KEY;
+      requestVars.game_id = AssetRegistry.GAME_ID;
+      requestVars.response = "JSON"      
+      
+      for (var attr:String in data) {
+       requestVars[attr] = data[attr];
+      }
+
+      request.method = URLRequestMethod.POST;
+      
+      var loaderCompleteHandler:Function = function(event:flash.events.Event):void
+      {
+
+        var result:Object = JSON.parse(event.target.data);
+        if (result.error)
+        {
+          if (onError) {
+            onError(null);
+          } else {
+            onSuccess(null);
+          }
+          return;
+        }
+        
+        onSuccess(result);
+      }      
+
+      var urlLoader:URLLoader = new URLLoader();
+      urlLoader = new URLLoader();
+      urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
+      urlLoader.addEventListener(flash.events.Event.COMPLETE, loaderCompleteHandler);
+      
+      urlLoader.load(request);      
+    }
+    
+    static public function getLeaderboard(level:int, callback:Function) {
+      
+      var requestVars:Object = { };
+      requestVars.order_by = "score";
+      requestVars.order = "desc";
+      requestVars.limit = 10;
+      requestVars.difficulty = level;
+      
+      var successHandler:Function = function(result:*) {
+        var data:Array = result as Array;
+        callback(data);
+      }
+      
+      var errorHandler:Function = function(result:*) {
+        callback([]);
+      }
+      
+      scoreoidRequest("https://www.scoreoid.com/api/getBestScores", requestVars, successHandler, errorHandler);
+    }
     
     // Straight port from http://lassieadventurestudio.wordpress.com/2012/03/20/polygon-hit-test/
     static public function polygonHitTest(p:Point, poly:Array):Boolean

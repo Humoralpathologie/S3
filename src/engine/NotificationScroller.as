@@ -56,7 +56,7 @@ package engine
       _bg.alpha = 0.3;
       addChild(_bg);
       
-      _text = new TextField(4000, 80, "", "kroeger 06_65", 50, Color.WHITE);
+      _text = new TextField(4000, 80, "", "kroeger 06_65", 64, Color.WHITE);
       _text.hAlign = HAlign.LEFT;
       addChild(_text);
       getNotifications();
@@ -69,7 +69,7 @@ package engine
       var requestVars:URLVariables = new URLVariables();
       request.data = requestVars;
       requestVars.api_key = "7bb1d7f5ac027ae81b6c42649fddc490b3eef755";
-      requestVars.game_id = "5UIVQJJ3X";
+      requestVars.game_id = "atZTbG24V";
       requestVars.response = "JSON"
       
       request.method = URLRequestMethod.POST;
