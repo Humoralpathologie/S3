@@ -22,13 +22,12 @@ package UI
       _levelStage = levelStage;
     }
     public function advanceTime(time:Number):void {
-      var intensity:int = Math.random() * _intensity - int (_intensity / 2);
       _duration -= time;
       if (_duration <= 0) {
          dispatchEventWith(Event.REMOVE_FROM_JUGGLER);
       } else {
-        _levelStage.x += intensity;
-        _levelStage.y += intensity;
+        _levelStage.x += Math.random() * _intensity - int (_intensity / 2);
+        _levelStage.y += Math.random() * _intensity - int (_intensity / 2);
       }
     }
     

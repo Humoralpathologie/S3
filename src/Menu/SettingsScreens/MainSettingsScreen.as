@@ -71,9 +71,9 @@ package Menu.SettingsScreens
       
       
       _scroller = new Scroller();
-      _scroller.x = _greyBox.x;
+      _scroller.x = _greyBox.x - 10;
       _scroller.y = _heading.y + _heading.height + 20;
-      _scroller.setSize(_greyBox.width, _greyBox.height - (_heading.height + 20));
+      _scroller.setSize(_greyBox.width + 10, _greyBox.height - (_heading.height + 20));
       _scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
       
 	    addChild(_scroller);
@@ -128,7 +128,7 @@ package Menu.SettingsScreens
     private function addUserName():void
     {
       _nameHeading = new TextField(_greyBox.width, 50, "User Name: " + SaveGame.userName, "kroeger 06_65", 40, Color.WHITE);
-      _nameHeading.x = 0 // (_greyBox.width - _nameHeading.width) / 2;
+      _nameHeading.x = (_greyBox.width - _nameHeading.width) / 2;
       _nameHeading.y = _langHeading.y + _langHeading.height + 50;
       _nameHeading.hAlign = HAlign.CENTER;
       
