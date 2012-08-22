@@ -62,6 +62,7 @@ package Level
   import Menu.PauseMenuScreens.*;
   import org.josht.starling.foxhole.themes.MinimalTheme;
   import UI.Shake;
+  import engine.Utils;
   
   /**
    * The base class for all Levels
@@ -152,6 +153,7 @@ package Level
     private static const PAUSEMAIN:String = "MAIN";
     
     private var _gameJuggler:Juggler;
+    
     
     public function LevelState()
     {
@@ -1184,7 +1186,6 @@ package Level
       _goButton.label = "GO!";
       _goButton.width = 800;
       _goButton.height = 80;
-      
       _goButton.x = (AssetRegistry.STAGE_WIDTH - 800) / 2;
       _goButton.y = AssetRegistry.STAGE_HEIGHT - 80;
       
@@ -1197,8 +1198,39 @@ package Level
           that.removeChild(_scroller);
           unpause();
         });
-    
+        
+      var _tempPoint:Point;
+      var onTouch:Function = function (e:TouchEvent):void 
+        {
+
+          var touch:Touch;
+          touch = e.getTouch(_scrollable, TouchPhase.BEGAN);
+          if (touch) {
+            _tempPoint = touch.getLocation(_scrollable);
+          }
+      
+          touch = e.getTouch(_scrollable, TouchPhase.ENDED);
+          if (touch) {
+            trace("Clicked");
+            var p:Point = touch.getLocation(_scrollable);
+        
+            // Did not scroll to far, probably a click.
+            if (Math.abs(p.y - _tempPoint.y) < 50) 
+           {
+              p.y += _scroller.verticalScrollPosition;
+              trace(p);
+              that.removeChild(_goButton);
+              that.removeChild(box);
+              that.removeChild(_scroller);
+              unpause();
+              that.removeChild(_scrollable);
+           
+            }
+          }
+        }
+       _scrollable.addEventListener(TouchEvent.TOUCH, onTouch);
     }
+    
     
     protected function startAt(x:int, y:int):void
     {

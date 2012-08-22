@@ -168,7 +168,7 @@ package org.josht.starling.foxhole.themes
 			//since it's a pixel font, we want a multiple of the original size,
 			//which, in this case, is 8.
 			//this._fontSize = Math.max(4, roundToNearest(24 * this._scale, 8));
-      _fontSize = 28;
+      _fontSize = 30;//28;
 
 			this.setInitializerForClass(BitmapFontTextRenderer, labelInitializer);
 			this.setInitializerForClass(Button, buttonInitializer);
@@ -230,7 +230,7 @@ package org.josht.starling.foxhole.themes
 			};
 			button.stateToSkinFunction = skinSelector.updateValue;
 
-			button.defaultLabelProperties.textFormat = new BitmapFontTextFormat(BITMAP_FONT, this._fontSize, PRIMARY_TEXT_COLOR);
+			button.defaultLabelProperties.textFormat = new BitmapFontTextFormat(BITMAP_FONT, this._fontSize, SELECTED_TEXT_COLOR);//PRIMARY_TEXT_COLOR);
 			button.defaultSelectedLabelProperties.textFormat = new BitmapFontTextFormat(BITMAP_FONT, this._fontSize, SELECTED_TEXT_COLOR);
 
 			button.paddingTop = button.paddingBottom = 8 * this._scale;
