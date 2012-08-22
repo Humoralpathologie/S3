@@ -10,5 +10,5 @@ AIR_Android_readme.txt
 AIR_iOS_readme.txt
 PackageApp.bat
 Run.bat
-StarlingSnake.as3proj
+*.as3proj
 application.xml
