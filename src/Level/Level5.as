@@ -83,11 +83,11 @@ package Level
 	  var _neededTime:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-time"));
 			if (SaveGame.difficulty == 1)
 			{
-		showObjectiveBox(AssetRegistry.Strings.LEVEL5A, [[_neededTime, "3:00"] ] );
+		showObjectiveBox(AssetRegistry.Strings.LEVEL5A, [[_neededTime, "= 3:00"] ] );
 			}
 			else
 			{
-	    showObjectiveBox(AssetRegistry.Strings.LEVEL5B, [[_neededTime, "3:00"] ] );
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL5B, [[_neededTime, "= 3:00"] ] );
 	  }
     }      
     

@@ -62,6 +62,7 @@ package Level
   import Menu.PauseMenuScreens.*;
   import org.josht.starling.foxhole.themes.MinimalTheme;
   import UI.Shake;
+  import engine.Utils;
   
   /**
    * The base class for all Levels
@@ -152,6 +153,7 @@ package Level
     private static const PAUSEMAIN:String = "MAIN";
     
     private var _gameJuggler:Juggler;
+    
     
     public function LevelState()
     {
@@ -1083,7 +1085,7 @@ package Level
       _pauseMenu.showScreen(PAUSEMAIN);
     }
     
-    private function hidePauseMenu():void
+    public function hidePauseMenu():void
     {
       _mchammer.y = 0;
       _pauseMenu.clearScreen();
@@ -1126,26 +1128,31 @@ package Level
       
       var _scrollable:Sprite = new Sprite();
       
+      var heading:TextField = new TextField(600, 60, "Objective", "kroeger 06_65", 60, Color.WHITE);
+     
       var box:Quad = new Quad(800, 535, 0);
       box.alpha = 0x44 / 0xff;
       box.x = (960 - box.width) / 2;
       box.y = 30;
       addChild(box);
+      heading.x = (box.width - heading.width) / 2;
+      heading.y = box.y + 10;
+      _scrollable.addChild(heading);
       
-      var _goals:Sprite = new Sprite();
+      //var _goals:Sprite = new Sprite();
       
-      var xPos:int = box.x;
-      var yPos:int = box.y + 80;
-      
+      var xPos:int = 10;
+      var yPos:int = heading.y + heading.height + 20;
+
       for (var i:int = 0; i < goals.length; i++)
       {
+       //var objectiveText:TextField = new TextField(140, 60, goals[i][0], "kroeger 06_65", 60, Color.WHITE);
         var img:Image = goals[i][0];
-				var txt:TextField = new TextField(140, 60, goals[i][1], "kroeger 06_65", 60, Color.WHITE);
+				var txt:TextField = new TextField(200, 60, goals[i][1], "kroeger 06_65", 60, Color.WHITE);
 				txt.hAlign = HAlign.LEFT;
 				img.x = xPos + 70;
-				img.y = yPos - 60;
+				img.y = yPos;
         img.scaleX = img.scaleY = 3;
-        trace("goals.length = " + String(goals.length));
         if (goals.length == 1)
         {
 					img.x = (box.width - img.width) / 2 - 100;
@@ -1155,11 +1162,9 @@ package Level
         txt.x = img.x + img.width + 10;
         txt.y = img.y - 5;
         xPos = txt.x + txt.width + 10;
-        _goals.addChild(img);
-        _goals.addChild(txt);
+        _scrollable.addChild(img);
+        _scrollable.addChild(txt);
       }
-      _goals.x = (box.x - _goals.x) / 2;
-      _scrollable.addChild(_goals);
       
       var _scroller:Scroller = new Scroller();
       _scroller.setSize(box.width, box.height - 30);
@@ -1169,11 +1174,12 @@ package Level
       
       addChild(_scroller);
       
+      
       var text:TextField = new TextField(700, 800, "", "kroeger 06_65", fontSize, Color.WHITE);
       text.text = desc;
       text.x = (box.width - text.width) / 2;
-      text.y = box.y + 50;
-      
+      text.y = yPos + 80;
+      text.vAlign = VAlign.TOP;
       _scrollable.addChild(text);
       
       _scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
@@ -1184,7 +1190,6 @@ package Level
       _goButton.label = "GO!";
       _goButton.width = 800;
       _goButton.height = 80;
-      
       _goButton.x = (AssetRegistry.STAGE_WIDTH - 800) / 2;
       _goButton.y = AssetRegistry.STAGE_HEIGHT - 80;
       
@@ -1197,8 +1202,38 @@ package Level
           that.removeChild(_scroller);
           unpause();
         });
-    
+        
+      var _tempPoint:Point;
+      var onTouch:Function = function (e:TouchEvent):void 
+        {
+
+          var touch:Touch;
+          touch = e.getTouch(_scrollable, TouchPhase.BEGAN);
+          if (touch) {
+            _tempPoint = touch.getLocation(_scrollable);
+          }
+      
+          touch = e.getTouch(_scrollable, TouchPhase.ENDED);
+          if (touch) {
+            trace("Clicked");
+            var p:Point = touch.getLocation(_scrollable);
+        
+            // Did not scroll to far, probably a click.
+            if (Math.abs(p.y - _tempPoint.y) < 50) 
+           {
+              p.y += _scroller.verticalScrollPosition;
+              that.removeChild(_goButton);
+              that.removeChild(box);
+              that.removeChild(_scroller);
+              unpause();
+              that.removeChild(_scrollable);
+           
+            }
+          }
+        }
+       _scrollable.addEventListener(TouchEvent.TOUCH, onTouch);
     }
+    
     
     protected function startAt(x:int, y:int):void
     {

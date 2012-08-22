@@ -10,6 +10,7 @@ package Menu.PauseMenuScreens
   import Menu.MainMenu;
   import flash.utils.*;
   import engine.ManagedStage;
+  import starling.events.TouchEvent;
   import starling.text.TextField;
   import starling.core.Starling;
   import engine.AssetRegistry;
@@ -18,7 +19,8 @@ package Menu.PauseMenuScreens
   import org.josht.starling.foxhole.core.ToggleGroup;
   import engine.SaveGame;
   import UI.HUD;
-  
+  import starling.events.Touch;
+  import starling.events.TouchPhase;
   /**
    * ...
    * @author
@@ -36,6 +38,7 @@ package Menu.PauseMenuScreens
     private var _sfxHeading:TextField;
     private var _musicHeading:TextField;
     private var _controlsHeading:TextField;
+      
     
     public function PauseMainScreen(levelstate:LevelState)
     
@@ -49,10 +52,22 @@ package Menu.PauseMenuScreens
       _greyBox.alpha = 0.3;
       addChild(_greyBox);
       
+      var onTouch:Function = function (e:TouchEvent) :void {
+        var touch:Touch;
+        touch = e.getTouch(_pauseHeading, TouchPhase.ENDED);
+        if (touch)
+        {       
+          _levelstate.hidePauseMenu(); 
+          _levelstate.unpause(); 
+        }
+      }
+
+      
       _pauseHeading = new TextField(_greyBox.width, 80, AssetRegistry.Strings.PAUSE, "kroeger 06_65", 60, Color.WHITE);
       _pauseHeading.x = (Starling.current.stage.stageWidth - _pauseHeading.width) / 2;
       _pauseHeading.y = 100;
       addChild(_pauseHeading);
+      _pauseHeading.addEventListener(TouchEvent.TOUCH,  onTouch);
       
       _restartButton = new Button();
       _restartButton.label = AssetRegistry.Strings.RESTART;

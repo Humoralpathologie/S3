@@ -60,9 +60,9 @@ package Level
     {     
 	  var _neededCombos:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-combo"));
 	   if (SaveGame.difficulty == 1) {	
-		showObjectiveBox(AssetRegistry.Strings.LEVEL2A, [[_neededCombos, 7] ] );
+		showObjectiveBox(AssetRegistry.Strings.LEVEL2A, [[_neededCombos, "x 7"] ] );
 	  } else {
-	    showObjectiveBox(AssetRegistry.Strings.LEVEL2B, [[_neededCombos, 10] ] );
+	    showObjectiveBox(AssetRegistry.Strings.LEVEL2B, [[_neededCombos, "x 10"] ] );
 	  }
     }
     

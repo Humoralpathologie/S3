@@ -135,14 +135,23 @@ package Menu
      
       _settings.showDefaultScreen();
       addChild(_settings);
-      var exit:starling.display.Button = new starling.display.Button(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
-      exit.scaleX = exit.scaleY = 2;
-      exit.x = Starling.current.stage.stageWidth - exit.width - 10;
-      exit.y = 90;
+      var xButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+      xButton.scaleX = xButton.scaleY = 2;
+      xButton.x = Starling.current.stage.stageWidth - xButton.width - 10;
+      xButton.y = 90;
+      var exit:Quad = new Quad(140, 250, 0xffffff);
+      exit.alpha = 0;
+      exit.x = Starling.current.stage.stageWidth - exit.width;
+      exit.y = 80;
       var that:MainMenu = this;
-      exit.addEventListener(Event.TRIGGERED, function(event:Event):void {
-        that.removeChild(_settings);
+      exit.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
+         var touch:Touch = event.getTouch(exit, TouchPhase.ENDED);
+          if (touch)
+          {
+            that.removeChild(_settings);
+          }
       });
+      _settings.addChild(xButton);
       _settings.addChild(exit);
     }
         

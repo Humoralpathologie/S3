@@ -61,20 +61,20 @@ package Languages
 		public static const MUSIC:String = "MUSIC";
 		
 		//Level objectives
-		public static const LEVEL1A:String = "For Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 30 eggs & pay attention to the bonus scoring on your performance!!";
-		public static const LEVEL1B:String = "For Little Snake revenge is a dish - literally!\n\nObjective:\n\nDevour 50 eggs & pay attention to the bonus scoring on your performance!!";
-		public static const LEVEL2A:String = "Little Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.\n\nObjective:\nDevour 7 Blue Egg Combos!!";
-		public static const LEVEL2B:String = "Little Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.\n\nObjective:\nDevour 10 Blue Egg Combos!!";
-		public static const LEVEL3A:String = "On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 4 minutes or by getting 7 combos. And eating more than 4 gray eggs will kill you from now on!!";
-		public static const LEVEL3B:String = "On a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nObjective:\nGet Little Snake sobered up - either by surviving for 4 minutes or by getting 10 combos. And eating more than 4 gray eggs will kill you from now on!!";
-		public static const LEVEL4A:String = "Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snake's speed up to 5 and jump!";
-		public static const LEVEL4B:String = "Seems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nObjective:\nGet Little Snake's speed up to 7 and jump!";
-		public static const LEVEL5A:String = "These ghastly spikes won't hold little Snake back!\n\nObjective:\nAvoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try the new combo displayed in the upper right corner.";
-		public static const LEVEL5B:String = "These ghastly spikes won't hold little Snake back!\n\nObjective:\nAvoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try the new combo displayed in the upper right corner.";
-		public static const LEVEL6A:String = "Terror Triceratops has hidden 4 eggs especially well. Maybe they contain his heirs. Little Snake cannot afford to pass on these eggs.\n\nObjective:\nEat the 4 special eggs. If you have a problem getting into the tight spots, perform () to slow down time.";
-		public static const LEVEL6B:String = "Terror Triceratops has hidden 4 eggs especially well. Maybe they contain his heirs. Little Snake cannot afford to pass on these eggs.\n\nObjective:\nEat the 4 special eggs. If you have a problem getting into the tight spots, perform () to slow down time.";
-		public static const LEVEL7A:String = "Addiction\n\nObjective:\nEat two chains of at least ten eggs & don't stop eating for longer than 5 seconds.";
-		public static const LEVEL7B:String = "Addiction\n\nObjective:\nEat three chains of at least ten eggs & don't stop eating for longer than 5 seconds.";
+		public static const LEVEL1A:String = "Devour 30 eggs & pay attention to the bonus scoring on your performance!!\n\nStory:\n\nFor Little Snake revenge is a dish - literally!";
+		public static const LEVEL1B:String = "Devour 50 eggs & pay attention to the bonus scoring on your performance!!\n\nStory:\n\nFor Little Snake revenge is a dish - literally!";
+		public static const LEVEL2A:String = "Devour 7 combos of at least 3 blue eggs!!\n\nStory:\nLittle Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.";
+		public static const LEVEL2B:String = "Devour 10 combos of at least 3 blue eggs!!\n\nStory:\nLittle Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.";
+		public static const LEVEL3A:String = "Get Little Snake sobered up - either by surviving for 4 minutes or by getting 7 combos. From now on eating more than 4 gray eggs will kill you!!\n\nStory:\nOn a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.";
+		public static const LEVEL3B:String = "Get Little Snake sobered up - either by surviving for 4 minutes or by getting 10 combos. From now on eating more than 4 gray eggs will kill you!!\n\nStory:\nOn a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.";
+		public static const LEVEL4A:String = "Get Little Snake's speed up to 5 and jump!\n\nStory:\nSeems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...";
+		public static const LEVEL4B:String = "Get Little Snake's speed up to 7 and jump!\n\nStory:\nSeems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...";
+		public static const LEVEL5A:String = "Avoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try a combo with the new eggs\n\nStory:\nOur hero jumped the canyon just to face these ghastly spikes - but they won't hold him back!";
+		public static const LEVEL5B:String = "Avoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try a combo with the new eggs\n\nStory:\nOur hero jumped the canyon just to face these ghastly spikes - but they won't hold him back!";
+		public static const LEVEL6A:String = "Eat 2 chains of at least 6 eggs & don't stop eating for longer than 14 seconds\n\nStory:\nLittle Snake has developed a serious egg addiction. Don't let withdrawal get to him!";
+		public static const LEVEL6B:String = "Eat 3 chains of at least 10 eggs & don't stop eating for longer than 8 seconds\n\nStory:\nLittle Snake has developed a serious egg addiction. Don't let withdrawal get to him!";
+		public static const LEVEL7A:String = "What's the deal with those special eggs? Make them disappear all at once!\n\nStory:\nAt last Little Snake has found the Terror Triceratops. However, the coward hides himself away in a fort. Find a way to circumvent his defenses!";
+		public static const LEVEL7B:String = "What's the deal with those special eggs? Make them disappear all at once!\n\nStory:\nAt last Little Snake has found the Terror Triceratops. However, the coward hides himself away in a fort. Find a way to circumvent his defenses!";
 		
 		//Score Boards
 		public static const SCORES:String = "SCORES";
@@ -85,17 +85,17 @@ package Languages
     
     //Messages
     public static const JUMPMESSAGE:String = "And now jump over the valley!";
-    public static const FASTERMESSAGE:String = "Faster!";
-    public static const SLOWERMESSAGE:String = "Slower!";
+    public static const FASTERMESSAGE:String = "Speed+";
+    public static const SLOWERMESSAGE:String = "Speed-";
     public static const NOROTTENMESSAGE:String = "No Rotten Eggs!";
-    public static const SHUFFLEMESSAGE:String = "Shuffle!";
+    public static const SHUFFLEMESSAGE:String = "Shuffle Egg!";
     public static const GOLDENMESSAGE:String = "Golden Egg!";
     public static const EXTRATIMEMESSAGE:String = "Bonus Time!";
     public static const EXTRALIFEMESSAGE:String = "Bonus Life!";
     public static const EXTRAEGGSMESSAGE:String = "Extra Eggs!";
-    public static const EXTRATIMEEXTMESSAGE:String = "Bonus Time extended!";
-    public static const CHAINTIMEEXTMESSAGE:String = "Chain Time extended to 3 secs!";
-    public static const CHAINTIMEEXTENDMESSAGE:String = "Chain Time back to 2 secs";
+    public static const EXTRATIMEEXTMESSAGE:String = "Bonus Time+";
+    public static const CHAINTIMEEXTMESSAGE:String = "Chain Time+";
+    public static const CHAINTIMEEXTENDMESSAGE:String = "Chain Time-";
 	}
 
 }
