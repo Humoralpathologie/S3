@@ -148,6 +148,7 @@ package Menu
     
     private function replay():void
     {
+	  
       dispatchEventWith(SWITCHING, true, {stage: AssetRegistry.LEVELS[_scores.level - 1]});
     }
     
@@ -167,6 +168,7 @@ package Menu
       _replayButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo-broken");
       _replayButton.x = 960 / 2 - 145 / 2;
       _replayButton.y = 460;
+	  //trace(_levelNr);
       
       _replayButton.addEventListener(starling.events.Event.TRIGGERED, replay);
       

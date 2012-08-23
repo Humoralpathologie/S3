@@ -158,6 +158,7 @@ package Level
     public function LevelState()
     {
       super();
+      AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE, AssetRegistry.SCORING]);	  
       
       setSpeed();
       

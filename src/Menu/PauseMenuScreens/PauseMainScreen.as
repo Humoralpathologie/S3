@@ -1,5 +1,6 @@
 package Menu.PauseMenuScreens
 {
+	import com.facebook.graph.utils.IResultParser;
   import Level.LevelState;
   import org.josht.starling.foxhole.controls.Button;
   import org.josht.starling.foxhole.controls.Screen;
@@ -21,6 +22,8 @@ package Menu.PauseMenuScreens
   import UI.HUD;
   import starling.events.Touch;
   import starling.events.TouchPhase;
+	import org.josht.starling.display.Image;
+	
   /**
    * ...
    * @author
@@ -38,6 +41,9 @@ package Menu.PauseMenuScreens
     private var _sfxHeading:TextField;
     private var _musicHeading:TextField;
     private var _controlsHeading:TextField;
+		private var _firstSpecialCombo:Image;
+		private var _secondSpecialCombo:Image;
+		private var _thirdSpecialCombo:Image;
       
     
     public function PauseMainScreen(levelstate:LevelState)
@@ -96,9 +102,54 @@ package Menu.PauseMenuScreens
       addToggles();
       addControlSwitches();
       
+			addSpecialComboReminders();
+			
       this.validate();
     }
     
+		private function addSpecialComboReminders():void
+		{
+			var combos:Array = AssetRegistry.COMBO_TRIGGERS;
+			
+			_firstSpecialCombo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[0].effect));
+			_firstSpecialCombo.width = 88;
+			_firstSpecialCombo.height = 88;
+			_firstSpecialCombo.x = (Starling.current.stage.stageWidth - _firstSpecialCombo.width) / 2 - 100;
+			_firstSpecialCombo.y = 3;
+			
+			_secondSpecialCombo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[1].effect));
+			_secondSpecialCombo.width = 88;
+			_secondSpecialCombo.height = 88;
+			_secondSpecialCombo.x = (Starling.current.stage.stageWidth - _firstSpecialCombo.width) / 2;
+			_secondSpecialCombo.y = _firstSpecialCombo.y;
+			
+			_thirdSpecialCombo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[2].effect));
+			_thirdSpecialCombo.width = 88;
+			_thirdSpecialCombo.height = 88;
+			_thirdSpecialCombo.x = (Starling.current.stage.stageWidth - _firstSpecialCombo.width) / 2 + 100;
+			_thirdSpecialCombo.y = _firstSpecialCombo.y;
+			
+			addChild(_firstSpecialCombo);
+			addChild(_secondSpecialCombo);
+			addChild(_thirdSpecialCombo);
+			
+			var _firstSpecialTrigger:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[0]));
+			_firstSpecialTrigger.x = _firstSpecialCombo.x;
+			_firstSpecialTrigger.y = _firstSpecialCombo.y;
+			
+			var _secondSpecialTrigger:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[1]));
+			_secondSpecialTrigger.x = _secondSpecialCombo.x;
+			_secondSpecialTrigger.y = _secondSpecialCombo.y;
+			
+			var _thirdSpecialTrigger:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[2]));
+			_thirdSpecialTrigger.x = _thirdSpecialCombo.x;
+			_thirdSpecialTrigger.y = _thirdSpecialCombo.y;
+			
+			addChild(_firstSpecialTrigger);
+			addChild(_secondSpecialTrigger);
+			addChild(_thirdSpecialTrigger);
+		}
+		
     private function addToggles():void
     {
       _musicHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.MUSIC, "kroeger 06_65", 40, Color.WHITE);
