@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:404de0f2621c29cf86d785695a1fba57$ -->
+<!-- $TexturePacker:SmartUpdate:0b9d8b2b6b3a7b8c335389a2934f5f69$ -->
 <TextureAtlas imagePath="MenuAlpha.png">
-    <SubTexture name="abbca" x="25" y="489" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="abcb" x="55" y="126" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="acba" x="55" y="112" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
+    <SubTexture name="abbca" x="2" y="489" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
+    <SubTexture name="abcb" x="55" y="194" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
+    <SubTexture name="acba" x="55" y="180" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
     <SubTexture name="arrow_reduced" x="2" y="30" width="51" height="457" frameX="0" frameY="0" frameWidth="63" frameHeight="457"/>
     <SubTexture name="bcaac" x="2" y="16" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="bccb" x="55" y="98" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
+    <SubTexture name="bccb" x="55" y="166" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
     <SubTexture name="ccbba" x="2" y="2" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="info-button" x="55" y="30" width="66" height="66" frameX="-3" frameY="-2" frameWidth="70" frameHeight="70"/>
+    <SubTexture name="info-button" x="55" y="98" width="66" height="66" frameX="-3" frameY="-2" frameWidth="70" frameHeight="70"/>
     <SubTexture name="right-arrow" x="82" y="2" width="27" height="22" frameX="0" frameY="-3" frameWidth="27" frameHeight="28"/>
-    <SubTexture name="x" x="2" y="489" width="21" height="18"/>
+    <SubTexture name="x" x="55" y="30" width="66" height="66" frameX="-3" frameY="-2" frameWidth="70" frameHeight="70"/>
 </TextureAtlas>
