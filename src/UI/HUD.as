@@ -251,7 +251,9 @@ package UI
       textMessage = recycleMessage();
       textMessage.text = pointObj.message; 
       textMessage.color = pointObj.color;
-      tween = new Tween(textMessage, 2);     
+      tween = new Tween(textMessage, 2);
+      textMessage.height = 200;
+      textMessage.width = 200;
       textMessage.scaleX = textMessage.scaleY = 0.5; 
       tween.animate("scaleX", 2);
       tween.animate("scaleY", 2);
@@ -260,25 +262,21 @@ package UI
        textMessage.visible = false;
       }
       if (variant == 0) {
-        textMessage.x = -AssetRegistry.STAGE_WIDTH*0.25;
-        textMessage.y = AssetRegistry.STAGE_HEIGHT*0.75;      
-        //tween.animate("x", -AssetRegistry.STAGE_WIDTH*0.5);
-        //tween.animate("y", -AssetRegistry.STAGE_HEIGHT);
-        tween.animate("x", -textMessage.width);
-        tween.animate("y", -textMessage.height*0.75);
+        textMessage.x = 0;
+        textMessage.y = 640;      
+        tween.animate("x", 280);
+        tween.animate("y", -(Math.sqrt(80000)/2));
 
         tween.animate("rotation", -45 * (Math.PI / 180));        
       } else {
  
-        textMessage.x = AssetRegistry.STAGE_WIDTH*0.75;
-        textMessage.y = AssetRegistry.STAGE_HEIGHT*0.75;
-        //tween.animate("x", -AssetRegistry.STAGE_WIDTH*0.5);
-        //tween.animate("y", -AssetRegistry.STAGE_HEIGHT);
+        textMessage.x = 960;
+        textMessage.y = 640;
+        tween.animate("x", 480);
+        tween.animate("y", -(Math.sqrt(80000)*2.5));
         tween.onUpdate = function():void {
           textMessage.pivotX = textMessage.width;
         }
-        tween.animate("x", textMessage.width*0.5);
-        tween.animate("y", -textMessage.height*1.5);
         tween.animate("rotation", 45* (Math.PI / 180));        
       }
       _tweens.push(tween);
