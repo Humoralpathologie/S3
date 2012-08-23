@@ -24,6 +24,7 @@ package Menu.PauseMenuScreens
   import starling.events.TouchPhase;
 	import org.josht.starling.display.Image;
 	
+	
   /**
    * ...
    * @author
@@ -102,7 +103,9 @@ package Menu.PauseMenuScreens
       addToggles();
       addControlSwitches();
       
+			if (SaveGame.isArcade){
 			addSpecialComboReminders();
+			}
 			
       this.validate();
     }

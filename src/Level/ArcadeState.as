@@ -52,12 +52,16 @@ package Level
       var combos:Array = AssetRegistry.COMBO_TRIGGERS;
       
       SaveGame.difficulty = 2;
+	  SaveGame.isArcade = true;
+	  
       super();
       
       _comboSet.addCombo(new Combo.NoRottenCombo);
       //_comboSet.addCombo(new Combo.ExtraTimeCombo);
       //trace("ArcadeMode: " + String(SaveGame.arcadeModi));
+	  
       
+	  
       if (!SaveGame.endless)
       {
         _comboSet.addCombo(new Combo.SlowerCombo);

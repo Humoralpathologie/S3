@@ -92,6 +92,20 @@ package engine
       return _sharedObject.data.secondArcade;
     }
     
+    public static function set isArcade(value:Boolean):void
+    {
+      _sharedObject.data.isArcade = value;
+    }
+    
+    public static function get isArcade():Boolean
+    {
+      if (!_sharedObject.data.isArcade)
+      {
+        _sharedObject.data.isArcade = false;
+      }
+      return _sharedObject.data.isArcade;
+    }
+    
     public static function get startSpeed():int
     {
       return _sharedObject.data.startSpeed;
@@ -230,13 +244,15 @@ package engine
     private static function publishScore(level:int = 1):void
     {
       var url:String = "https://www.scoreoid.com/api/createScore";
-      var requestVars:Object = { };
+      var requestVars:Object = {};
       
       requestVars.username = userID;
       requestVars.score = _sharedObject.data.levels[level].score; //fullScore();
       requestVars.difficulty = level;
       
-      Utils.scoreoidRequest(url, requestVars, function(something:*) { } );
+      Utils.scoreoidRequest(url, requestVars, function(something:*)
+        {
+        });
     }
   }
 }
