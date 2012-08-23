@@ -63,7 +63,7 @@ package Snake
         _body.push(bodyPart);
         //_bodyEggs.addChild(bodyPart);        
       }
-      
+            
       _bodyBatch = new QuadBatch();
       
       _tail = new Tail(_body[3].tileX - 1, _head.tileY, _speed);

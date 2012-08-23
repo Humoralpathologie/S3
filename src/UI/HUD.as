@@ -185,6 +185,8 @@ package UI
         _tailView.addChild(tailViewBox);
         _tailViewBoxes.push(tailViewBox);
       }
+      
+      updateTailView(_levelState.snake.getTailTypes());
     }
     
     private function updateTailView(types:Array):void {
@@ -602,7 +604,7 @@ package UI
       var type:String;
       switch (eggType) {    
         case AssetRegistry.EGGZERO:
-          type = "UIBoxFuerPreview";
+          type = "PreviewIconEiGreen";
         break;
         case AssetRegistry.EGGA:
           type = "PreviewIconEiA";
@@ -614,7 +616,7 @@ package UI
           type = "PreviewIconEiC";
         break;
         case AssetRegistry.EGGROTTEN:
-          type = "UIBoxFuerPreview";
+          type = "PreviewIconEiRotten";
         break;
         default:
           type = "UIBoxFuerPreview";
