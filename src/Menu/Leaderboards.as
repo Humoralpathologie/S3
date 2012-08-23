@@ -5,7 +5,9 @@ package Menu
   import com.gskinner.motion.GTween;
   import org.josht.starling.display.Image;
   import org.josht.starling.foxhole.controls.Screen;
+  import org.josht.starling.foxhole.controls.TabBar;
   import org.josht.starling.foxhole.controls.ToggleSwitch;
+  import org.josht.starling.foxhole.data.ListCollection;
   import org.osflash.signals.Signal;
   import engine.AssetRegistry;
   import org.osflash.signals.ISignal;
@@ -42,6 +44,8 @@ package Menu
     private var _back:Button;
     private var _score:Object
     private var _scoreText:TextField;
+    private var _tabBar:TabBar;
+    private var _leaderboardShowing:String;
     
     public function Leaderboards(score:Object)
     {
@@ -49,8 +53,44 @@ package Menu
       _score = score;
       addBoards();
       addButton();
-      addRadioButtons();
-      Utils.getLeaderboard(_score.level, updateLeaderboard);
+      addTabBar();
+      createLeaderboardText();
+      
+      _leaderboardShowing = "alltime";
+      refreshLeaderboard();
+    }
+    
+    private function refreshLeaderboard():void {
+      _scoreText.text = "Loading...";
+      Utils.getLeaderboard(_score.level, updateLeaderboard, _leaderboardShowing);
+    }
+    
+    private function addTabBar():void {
+      _tabBar = new TabBar();
+      _tabBar.dataProvider = new ListCollection( [
+        { label: AssetRegistry.Strings.ALLTIME },
+        { label: AssetRegistry.Strings.WEEKLY },
+        { label: AssetRegistry.Strings.PERSONAL}
+        ]);
+      _tabBar.onChange.add(function(bar:TabBar) {
+        switch(bar.selectedIndex) {
+          case 0:
+            _leaderboardShowing = "alltime";
+            break;
+          case 1:
+              //TODO: Implement weekly.
+            _leaderboardShowing = "alltime";
+            break;
+          case 2:
+            _leaderboardShowing = "personal";
+            break;    
+        }
+        refreshLeaderboard();
+      });
+      _tabBar.width = _leaderboard.width;
+      _tabBar.x = _leaderboard.x;
+      _tabBar.y = _leaderboard.y;
+      addChild(_tabBar);
     }
     
     override protected function initialize():void
@@ -58,25 +98,25 @@ package Menu
     
     }
     
-    private function updateLeaderboard(data:Array) {
+    private function updateLeaderboard(data:Array, type:String):void {
       var txt:String = "";
       var count:int = 1;
       
       for each(var playerScore:Object in data) {
         txt += String(count) + ". ";
-        txt += playerScore.Player.first_name;
-        txt += ": ";
-        txt += playerScore.Score.score;
+        if(type == "alltime") {
+          txt += playerScore.Player.first_name;
+          txt += ": ";
+        }
+        txt += playerScore.Score.score + " ";
+        txt += playerScore.Score.created;
         txt += "\n";
         count++
+        if (count > 9) {
+          break;
+        }
       }
-      
-      _scoreText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), txt, "kroeger 06_65", 32, Color.WHITE);
-      _scoreText.hAlign = HAlign.LEFT;
-      _scoreText.vAlign = VAlign.TOP;
-      _scoreText.x = _leaderboard.x + 20;
-      _scoreText.y = _leaderboardText.y + _leaderboardText.height + 60;
-      addChild(_scoreText);
+      _scoreText.text = txt;
     }
     
     private function addBoards():void
@@ -112,55 +152,14 @@ package Menu
       addChild(_back);
     }
     
-    private function addRadioButtons():void
+    private function createLeaderboardText():void 
     {
-      var leaderboardGroup:ToggleGroup = new ToggleGroup;
-      var alltime:Radio = new Radio();
-      alltime.label = AssetRegistry.Strings.ALLTIME;
-      alltime.toggleGroup = leaderboardGroup;
-      alltime.onPress.add(function(radio:Radio):void
-        {
-        //SaveGame.controlType = 1;
-        });
-      
-      var weekly:Radio = new Radio;
-      weekly.label = AssetRegistry.Strings.WEEKLY;
-      weekly.toggleGroup = leaderboardGroup;
-      weekly.onPress.add(function(radio:Radio):void
-        {
-        //SaveGame.controlType = 2;
-        });
-      
-      var friends:Radio = new Radio();
-      friends.label = AssetRegistry.Strings.FRIENDS;
-      friends.toggleGroup = leaderboardGroup;
-      friends.onPress.add(function(radio:Radio):void
-        {
-        //SaveGame.controlType = 1;
-        });
-      
-      var personal:Radio = new Radio;
-      personal.label = AssetRegistry.Strings.PERSONAL;
-      personal.toggleGroup = leaderboardGroup;
-      personal.onPress.add(function(radio:Radio):void
-        {
-        //SaveGame.controlType = 2;
-        });
-      
-      alltime.x = _leaderboard.x + 20;
-      weekly.x = _leaderboard.x + 215;
-      friends.x = _leaderboard.x + 410;
-      personal.x = _leaderboard.x + 605;
-      
-      alltime.y = _leaderboardText.y + _leaderboardText.height;
-      weekly.y = alltime.y;
-      friends.y = alltime.y;
-      personal.y = alltime.y;
-      
-      addChild(alltime);
-      addChild(weekly);
-      addChild(friends);
-      addChild(personal);
+        _scoreText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+        _scoreText.hAlign = HAlign.LEFT;
+        _scoreText.vAlign = VAlign.TOP;
+        _scoreText.x = _leaderboard.x + 20;
+        _scoreText.y = _leaderboardText.y + _leaderboardText.height + 60;
+        addChild(_scoreText);
     }
     
     public function get onLeaderboards():ISignal

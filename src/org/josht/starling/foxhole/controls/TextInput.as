@@ -1052,6 +1052,9 @@ package org.josht.starling.foxhole.controls
 			//hack, but so is everything about StageText.
 			//in other news, why won't 0,0 work here?
 			this.stageText.selectRange(1, 1);
+      
+      // Trigger Enter handler
+      this.onEnter.dispatch(this);
 
 			this.refreshSnapshot(false);
 			if(this._textSnapshot)
