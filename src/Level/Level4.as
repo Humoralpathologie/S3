@@ -14,6 +14,7 @@ package Level
   import UI.HUD;
   import Eggs.Egg;
   import engine.SaveGame;
+  import starling.core.Starling;
   
   
   public class Level4 extends LevelState 
@@ -138,9 +139,17 @@ package Level
         showMessage(AssetRegistry.Strings.JUMPMESSAGE);
         _showJumpMessage = true;
       }
-      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= SaveGame.startSpeed + _winCondition) {
-        win();
+      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= SaveGame.startSpeed + _winCondition && !_level4Animation) {
+        _level4Animation = true;
+        removeChild(_hud);
+        bonusTimer = 0;
+        _snake.mps += 5;
+        var animation:GTween = new GTween(_snake, 2, { y: 800 }, { onComplete: function(tween:GTween):void { animation.end(); }} );
+        
       }
+      if (_snake.head.y >= 800 && _level4Animation) {
+          win();
+        }
     }
   }
 
