@@ -71,7 +71,7 @@ package Menu.ComboMenuScreens
       infoDisplay.y = 40 + 30;
       infoDisplay.alpha = 1;
       
-			_text = new TextField(_greybox.width - 40, infoDisplay.height + 300, "", "kroeger 06_65", 40, Color.WHITE);
+			_text = new TextField(_greybox.width - 40, infoDisplay.height + 340, "", "kroeger 06_65", 40, Color.WHITE);
 			_text.x = 20;
 			//_text.hAlign = HAlign.LEFT;
       
@@ -119,7 +119,7 @@ package Menu.ComboMenuScreens
       
       if (!SaveGame.secondArcade)
       {
-				_text.height = infoDisplay.height + 300;
+				_text.height = infoDisplay.height + 340;
         _text.text = AssetRegistry.Strings.ARCADEINFO;
         addChild(infoDisplay);
         //addChild(_scrollable);
@@ -140,7 +140,7 @@ package Menu.ComboMenuScreens
           if (touch)
           {
 
-						_text.height = infoDisplay.height + 300;
+						_text.height = infoDisplay.height + 340;
             _text.text = AssetRegistry.Strings.ARCADEINFO;
             addChild(infoDisplay);
             //addChild(_scrollable);

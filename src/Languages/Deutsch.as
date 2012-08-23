@@ -18,81 +18,99 @@ package Languages
 		public static const USERNAME:String = "SPIELERNAME";
 		public static const CONTROLTYPE:String = "STEUERUNG";
 		public static const LANGUAGE:String = "SPRACHE";
-		public static const DIFFICULTY:String = "LEVELSCHWIERIGKEIT";
+		public static const DIFFICULTY:String = "SCHWIERIGKEIT";
 		
 		public static const SNAKEVIEW:String = "TYP 1";
 		public static const FOURWAY:String = "TYP 2";
-		public static const CASUAL:String = "GEMUETLICH";
-		public static const COMPETETIVE:String = "STRESSIG";
+		public static const CASUAL:String = "ANFÄNGER";
+		public static const COMPETETIVE:String = "";
 		
 		//Arcade Menu
 		public static const ARCADEHEADING:String = "ARCADE MODUS";
 		public static const OFFLABEL:String = "ENDLOSMODUS";
 		public static const ONLABEL:String = "COUNTDOWNMODUS";
 		public static const PLAY:String = "SPIELEN";
-		public static const BACKBUTTON:String = "ZURUECK";
-		public static const LEADERBOARDS:String = "LEADERBOARDS";
+		public static const BACKBUTTON:String = "ZURÜCK";
+		public static const LEADERBOARDS:String = "LEADERBOARD";
 		
 		//Arcade Info
-		public static const ARCADEINFO:String = "In diesem Spielmodus geht alles um den Highschore. Ordne verschiedene Combos den leeren Slots zu und experimentiere mit unterschiedlichen Strategien.\n Im Countdownmodus hast Du vier Minuten Zeit, so viele Eier wie möglich zu fressen, bevor der Vulkan ausbricht. \n Wenn Du eher ängstlicher Natur oder kein Vulkanliebhaber bist, kannst Du auch im Endlosmodus spielen, wo Du so sogar die Spielgeschwindigkeit auch wieder drosseln kannst, wenn es zu haarig werden sollte. Also nimm' die Herausforderung an und verewige dich in den Leaderboards!";
+		public static const ARCADEINFO:String = "In diesem Spielmodus geht alles um den Highschore. Ordne verschiedene Spezial-Combos den 3 leeren Slots zu und experimentiere mit unterschiedlichen Strategien.\n Im Countdownmodus hast Du vier Minuten Zeit, so viele Eier wie möglich zu fressen, bevor der Vulkan ausbricht. \n Wenn Du eher ängstlicher Natur oder kein Vulkanliebhaber bist, kannst Du auch im Endlosmodus spielen, in dem die Spielgeschwindigkeit mit einer Combo auch wieder gedrosselt werden kann, wenn es zu haarig werden sollte. Nimm' also die Herausforderung an und verewige Dich in den Leaderboards!";
 		
 		// Combo Menu
-		public static const SELECTABLECOMBO:String = "AUSWAEHLBARE COMBOS";
+		public static const SELECTABLECOMBO:String = "AUSWÄHLBARE COMBOS";
 		
 		// Combo Descriptions
-		public static const TIMECOMBODESC:String = "Bonus Time +: Mache diese Combo, um 4 anstatt 3 Extrasekunden auf den Countdown gutgeschrieben zu bekommen.";
-		public static const CHAINTIMEDESC:String = "Chain Time +: Diese Combo, erhöt für 1 Minute die Chain Time von 2 auf 3 Sekunden an.";
-		public static const XTRASPAWNDESC:String = "Extra Eggs: Diese Combo lässt bei erfolgreicher Durchführung 5 Extra-Eier erscheinen!";
-		public static const SHUFFLEDESC:String = "Shuffle Egg: Wenn Du diese Combo machst und das Shuffle-Ei frisst, werden die Körperteile von Little Snake neu angeordnet und Du hast die Zufallschance auf neue Combos.";
-		public static const GOLDDESC:String = "Goldenes Egg: Diese Combo lässt für 6 Sekunden ein goldenes Ei erscheinen. Friss es rechtzeitig für reichlich Bonuspunkte.";
-		public static const XTRALIFEDESC:String = "Extra Life: Diese Kombo tut wahrscheinlich genau das, was du denkst.";
+		public static const TIMECOMBODESC:String = "Zeitbonus +: Mache diese Combo, um für 60 Sekunden 4 anstatt 3 Extrasekunden auf den Countdown gutgeschrieben zu bekommen.";
+		public static const CHAINTIMEDESC:String = "Kette +: Diese Combo, hebt für 1 Minute die Zeit für Ketten von 2 auf 3 Sekunden an.";
+		public static const XTRASPAWNDESC:String = "Extra Eier: Diese Combo lässt bei erfolgreicher Durchführung 5 Extra-Eier erscheinen!";
+		public static const SHUFFLEDESC:String = "Shuffle-Ei: Wenn Du diese Combo machst und das Shuffle-Ei frisst, werden die Körperteile von Little Snake neu mischt für eine Zufallschance auf neue Combos.";
+		public static const GOLDDESC:String = "Goldenes Ei: Diese Combo lässt für 6 Sekunden ein goldenes Ei erscheinen. Friss es rechtzeitig für reichlich Bonuspunkte.";
+		public static const XTRALIFEDESC:String = "Extra Leben: Diese Kombo tut wahrscheinlich genau das, was Du denkst.";
 		
-		public static const SPEEDDESC:String = "Speed ...";
-		public static const TIMEDESC:String = "Extra Time ...";
-		public static const SLOWERDESC:String = "Get Slower ...";
-		public static const NOROTTENDESC:String = "No Rotten Eggs ...";
+		public static const SPEEDDESC:String = "Friss drei blaue Eier um schneller zu werden.";
+		public static const TIMEDESC:String = "Hasst Du es auch, wenn man gerade richtig schön punktet und ein plötzlicher Vulkanausbruch gänzlich den Spaß verdirbt? Dann mach’ diese Combo und der Vulkanausbruch wird um 3 Sekunden verschoben.";
+		public static const SLOWERDESC:String = "Diese Combo lässt Dich wieder langsamer werden.";
+		public static const NOROTTENDESC:String = "Diese Combo lässt die faulen Eier verschwinden";
 		//pause menu
 		public static const PAUSE:String = "PAUSE";
-		public static const BACK:String = "HAUPTMENUE";
+		public static const BACK:String = "HAUPTMENÜ";
 		public static const RESTART:String = "NEUSTART";
 		public static const SFX:String = "SFX";
 		public static const MUSIC:String = "MUSIK";
-		//Level objectives
-		public static const LEVEL1A:String = "Devour 30 eggs & pay attention to the bonus scoring on your performance!!\n\nStory:\n\nFor Little Snake revenge is a dish - literally!";
-		public static const LEVEL1B:String = "Devour 50 eggs & pay attention to the bonus scoring on your performance!!\n\nStory:\n\nFor Little Snake revenge is a dish - literally!";
-		public static const LEVEL2A:String = "Devour 7 combos of at least 3 blue eggs!!\n\nStory:\nLittle Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.";
-		public static const LEVEL2B:String = "Devour 10 combos of at least 3 blue eggs!!\n\nStory:\nLittle Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.";
-		public static const LEVEL3A:String = "Get Little Snake sobered up - either by surviving for 4 minutes or by getting 7 combos. From now on eating more than 4 gray eggs will kill you!!\n\nStory:\nOn a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.";
-		public static const LEVEL3B:String = "Get Little Snake sobered up - either by surviving for 4 minutes or by getting 10 combos. From now on eating more than 4 gray eggs will kill you!!\n\nStory:\nOn a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.";
-		public static const LEVEL4A:String = "Get Little Snake's speed up to 5 and jump!\n\nStory:\nSeems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...";
-		public static const LEVEL4B:String = "Get Little Snake's speed up to 7 and jump!\n\nStory:\nSeems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...";
-		public static const LEVEL5A:String = "Avoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try a combo with the new eggs\n\nStory:\nOur hero jumped the canyon just to face these ghastly spikes - but they won't hold him back!";
-		public static const LEVEL5B:String = "Avoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try a combo with the new eggs\n\nStory:\nOur hero jumped the canyon just to face these ghastly spikes - but they won't hold him back!";
-		public static const LEVEL6A:String = "Eat 2 chains of at least 6 eggs & don't stop eating for longer than 14 seconds\n\nStory:\nLittle Snake has developed a serious egg addiction. Don't let withdrawal get to him!";
-		public static const LEVEL6B:String = "Eat 3 chains of at least 10 eggs & don't stop eating for longer than 8 seconds\n\nStory:\nLittle Snake has developed a serious egg addiction. Don't let withdrawal get to him!";
-		public static const LEVEL7A:String = "What's the deal with those special eggs? Make them disappear all at once!\n\nStory:\nAt last Little Snake has found the Terror Triceratops. However, the coward hides himself away in a fort. Find a way to circumvent his defenses!";
-		public static const LEVEL7B:String = "What's the deal with those special eggs? Make them disappear all at once!\n\nStory:\nAt last Little Snake has found the Terror Triceratops. However, the coward hides himself away in a fort. Find a way to circumvent his defenses!";
+		
+//Level objectives
+		public static const LEVEL1A:String = "Friss 30 Eier und achte auf die Art und Weise, wie die Bonuspunkte vergeben werden.\n\nStory:\n\nRache ist süß, schmeckte für Little Snake aber auch irgendwie nach Ei.";
+		public static const LEVEL1B:String = "Friss 50 Eier und achte auf die Art und Weise, wie die Bonuspunkte vergeben werden.\n\nStory:\n\nRache ist süß, schmeckte für Little Snake aber auch irgendwie nach Ei.";
+		public static const LEVEL2A:String = "Friss 7 Combos von mindestens 3 blauen Eiern!!\n\nStory:\nLittle Snake war zwar ein eher dratiger aber auch äußerst dehnbarer Typ, sodass er ganze Berge an Eiern verdrücken konnte. Insbesondere die blauen mundeten ihm und in Dreiergruppen gefressen, ließen sie sich irgendwie besonders gut verdauen.";
+		public static const LEVEL2B:String = "Friss 10 Combos von mindestens 3 blauen Eiern!!\n\nStory:\nLittle Snake war zwar ein eher dratiger aber auch äußerst dehnbarer Typ, sodass er ganze Berge an Eiern verdrücken konnte. Insbesondere die blauen mundeten ihm und in Dreiergruppen gefressen, ließen sie sich irgendwie besonders gut verdauen.";
+		public static const LEVEL3A:String = "Hilf Little Snake auszunüchtern indem Du entweder 4 Minuten überstehst oder 7 Combos machst. Achtung: Von nun an bedeutet der Genuss von mehr als 4 grauen Eiern GAME OVER!\n\nStory:\n Auf einem Rachefeldzug müssen häufig Bauchentscheidungen getroffen werden. Daher musst du unserem Helden vergeben, dass er nicht um die Unverträglichkeit der grauen Eier wusste und in einen grässlichen Fiebertraum fiel.";
+		public static const LEVEL3B:String = "Hilf Little Snake auszunüchtern indem Du entweder 4 Minuten überstehst oder 10 Combos machst. Achtung: Von nun an bedeutet der Genuss von mehr als 4 grauen Eiern GAME OVER!\n\nStory:\n Auf einem Rachefeldzug müssen häufig Bauchentscheidungen getroffen werden. Daher muss unserem Helden vergeben werden, dass er nicht um die Unverträglichkeit der grauen Eier wusste und in einen grässlichen Fiebertraum fiel.";
+		public static const LEVEL4A:String = "Beschleunige Little Snake auf 5 und springe über den Canyon.\n\nStory:\n Es scheint, der Terror Triceratops hat seinen mörderischen Verfolger bemerkt - oder war er einfach etwas zu mollig für die alte Hängebrücke?";
+		public static const LEVEL4B:String = "Beschleunige Little Snake auf 7 und springe über den Canyon.\n\nStory:\n Es scheint, der Terror Triceratops hat seinen mörderischen Verfolger bemerkt - oder war er einfach etwas zu mollig für die alte Hängebrücke?";
+		public static const LEVEL5A:String = "Überlebe die Dornen für 4 Minuten. \nTipp: Probiere ein Kombo mit den neuen Eiern, wenn die faulen Eier ein Problem werden sollten.\n\nStory:\nUnser Held hat den klaffenden Abgrund überwunden, nur um sich in einem garstigen Dornendickicht wiederzufinden - aber das darf ihn nicht aufhalten...";
+		public static const LEVEL5B:String = "Überlebe die Dornen für 4 Minuten. \nTipp: Probiere ein Kombo mit den neuen Eiern, wenn die faulen Eier ein Problem werden sollten.\n\nStory:\nUnser Held hat den klaffenden Abgrund überwunden, nur um sich in einem garstigen Dornendickicht wiederzufinden - aber das darf ihn nicht aufhalten...";
+		public static const LEVEL6A:String = "Iss 3 Ketten von mindestens 6 Eiern und unterbrich den Konsum nicht länger als 14 Sekunden.\n\nStory:\nLittle Shake hatte nun eine schreckliche Sucht nach den Dinoeiern entwickelt. Lass es nicht zu, dass irgendwelche Entzugserscheinungen seinen Rachefeldzug beenden mögen.";
+		public static const LEVEL6B:String = "Iss 3 Ketten von mindestens 10 Eiern und unterbrich den Konsum nicht länger als 8 Sekunden.\n\nStory:\nLittle Shake hatte nun eine schreckliche Sucht nach den Dinoeiern entwickelt. Lass es nicht zu, dass irgendwelche Entzugserscheinungen seinen Rachefeldzug beenden mögen.";
+		public static const LEVEL7A:String = "Was hat es mit den vier besonderen Eiern auf sich? Lass sie alle auf einmal verschwinden!!\n\nStory:\nEndlich hatte Little Snake den Terror Triceratops gefunden. Allerdings verbarg sich der Duckmäuser in seiner Festung der Feigheit. Unser Held musste einen Weg finden, zu ihm zu gelangen.";
+		public static const LEVEL7B:String = "Was hat es mit den vier besonderen Eiern auf sich? Lass sie alle auf einmal verschwinden!!\n\nStory:\nEndlich hatte Little Snake den Terror Triceratops gefunden. Allerdings verbarg sich der Duckmäuser in seiner Festung der Feigheit. Unser Held musste einen Weg finden, zu ihm zu gelangen.";
 		
     //Score Boards
-		public static const SCORES:String = "SCORES";
-    public static const ALLTIME:String = "Alltime";
-    public static const WEEKLY:String = "Weekly";
-    public static const FRIENDS:String = "Friends";
-    public static const PERSONAL:String = "Personal";
+		public static const SCORES:String = "PUNKTE";
+    public static const ALLTIME:String = "All-Time";
+    public static const WEEKLY:String = "Woche";
+    public static const FRIENDS:String = "Freunde";
+    public static const PERSONAL:String = "Persönlich";
     
     //Messages
-    public static const JUMPMESSAGE:String = "And now jump over the valley!";
-    public static const FASTERMESSAGE:String = "Faster!";
-    public static const SLOWERMESSAGE:String = "Slower!";
-    public static const NOROTTENMESSAGE:String = "No Rotten Eggs!";
+    public static const JUMPMESSAGE:String = "SPRING’ ÜBER DIE SCHLUCHT!";
+    public static const FASTERMESSAGE:String = "Schneller!";
+    public static const SLOWERMESSAGE:String = "Langsamer!";
+    public static const NOROTTENMESSAGE:String = "Keine faulen Eier!";
     public static const SHUFFLEMESSAGE:String = "Shuffle!";
-    public static const GOLDENMESSAGE:String = "Golden Egg!";
-    public static const EXTRATIMEMESSAGE:String = "Bonus Time!";
-    public static const EXTRALIFEMESSAGE:String = "Bonus Life!";
-    public static const EXTRAEGGSMESSAGE:String = "Extra Eggs!";
-    public static const EXTRATIMEEXTMESSAGE:String = "Bonus Time Extended!";
-    public static const CHAINTIMEEXTMESSAGE:String = "Chain Time extended to 3 sec!";
-    public static const CHAINTIMEEXTENDMESSAGE:String = "Chain Time back to 2 sec!";
+    public static const GOLDENMESSAGE:String = "Goldenes Ei!";
+    public static const EXTRATIMEMESSAGE:String = "Zeitbonus!";
+    public static const EXTRALIFEMESSAGE:String = "Extra Leben!";
+    public static const EXTRAEGGSMESSAGE:String = "Extra Eier!";
+    public static const EXTRATIMEEXTMESSAGE:String = "Zeitbonus+";
+    public static const CHAINTIMEEXTMESSAGE:String = "Kette+";
+    public static const CHAINTIMEEXTENDMESSAGE:String = "Kette-";
+    
+    //Hints Slider
+    public static const HINTS:Array = ["Achte auf die Punktevergabe - um so länger die Combo, desto höher der Score!",
+      
+      "Du hast den Story Modus durchgespielt! Großartig - dann ab in den Arcade Modus. Dort kann man neue Combos lernen und noch mehr Punkte absahnen!",
+      
+      "Du denkst, dass Du alles gesehen hast? Ganz sicher? Man munkelt, dass Goldmedaillen nicht das Maß aller Dinge sind...",
+      
+      "Lass die Kette nicht abreißen: Nutz' das Radar um den kürzesten Weg zum nächsten Ei zu finden!",
+      
+      "Pass auf - die faulen Eier sind giftig. Iss 5 für eine Zwangseinweisung in Snakehalla!",
+      
+      "Du kommst mit der Steuerung nicht zurecht? Probier 's mal mit der anderen Variante im Optionsmenü?",
+     
+      "Im Arcade Modus kannst Du nach Herzenslust mit den Combos experimentieren. Viele Wege führen zum Highscore."
+      
+      ];
 	}
 
 }

@@ -20,34 +20,11 @@ package engine
   public class NotificationScroller extends Sprite implements IAnimatable
   {
     private var _text:TextField;
-    private var _speed:int = 80;
+    private var _speed:int = 180;
     private var _textWidth:Number = 0;
     private var _bg:Quad;
     
-    private const HINTS:Array = ["Pay attention to the combo scoring. Longer combos score big time!",
-      
-      "You finished the Story Mode? Excellent - go on then and learn new Combos in the Arcade Mode to earn even higher scores!",
-      
-      "You think you have seen it all? Try to get all gold medals & be in for a surprise!",
-      
-      "Use the radar to find the shortest way to the next egg!",
-      
-      "Beware the rotten eggs. Devour 5 of them for a shortcut to Snakehalla!",
-      
-      "The controls suck? Try out one of the other options in the settings menu.",
-      
-      "Feel free to experiment in the arcade mode. Many ways lead to the Highscore.",
-      
-      "Arcade Bonus Speedster: Perform at least 10 speed combos during a single round.",
-      
-      "Arcade Bonus The Hard Way: Play the whole round without decimating the rotten eggs.",
-      
-      "Arcade Bonus Big Chain: Pull off a chain of at least 10 eggs.",
-      
-      "There is a total of 12 hidden Arcade Bonuses..."
-      
-      ];
-    
+
     public function NotificationScroller()
     {
       super();
@@ -100,7 +77,7 @@ package engine
     
     private function setRandomHint():void
     {
-      setText(HINTS[Math.floor(Math.random() * HINTS.length)]);
+      setText(AssetRegistry.Strings.HINTS[Math.floor(Math.random() * AssetRegistry.Strings.HINTS.length)]);
     }
     
     private function setText(text:String):void
