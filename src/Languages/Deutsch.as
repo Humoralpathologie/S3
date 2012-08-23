@@ -34,7 +34,7 @@ package Languages
 		public static const LEADERBOARDS:String = "LEADERBOARDS";
 		
 		//Arcade Info
-		public static const ARCADEINFO:String = "In diesem Spielmodus geht alles um den Highschore. Ordne verschiedene Combos den leeren Slots zu und experimentiere mit unterschiedlichen Strategien.\n Im Countdownmodus hast Du vier Minuten Zeit, so viele Eier wie möglich zu fressen, bevor der Vulkan ausbricht. \n Wenn Du eher ängstliche Natur oder kein Vulkanliebhaber bist, kannst Du auch im Endlosmodus spielen, wo Du so sogar die Spielgeschwindigkeit auch wieder drosseln kannst, wenn es zu haarig werden sollte. Also nimm' die Herausforderung an und verewige dich in den Leaderboards!";
+		public static const ARCADEINFO:String = "In diesem Spielmodus geht alles um den Highschore. Ordne verschiedene Combos den leeren Slots zu und experimentiere mit unterschiedlichen Strategien.\n Im Countdownmodus hast Du vier Minuten Zeit, so viele Eier wie möglich zu fressen, bevor der Vulkan ausbricht. \n Wenn Du eher ängstlicher Natur oder kein Vulkanliebhaber bist, kannst Du auch im Endlosmodus spielen, wo Du so sogar die Spielgeschwindigkeit auch wieder drosseln kannst, wenn es zu haarig werden sollte. Also nimm' die Herausforderung an und verewige dich in den Leaderboards!";
 		
 		// Combo Menu
 		public static const SELECTABLECOMBO:String = "AUSWAEHLBARE COMBOS";
@@ -43,8 +43,8 @@ package Languages
 		public static const TIMECOMBODESC:String = "Bonus Time +: Mache diese Combo, um 4 anstatt 3 Extrasekunden auf den Countdown gutgeschrieben zu bekommen.";
 		public static const CHAINTIMEDESC:String = "Chain Time +: Diese Combo, erhöt für 1 Minute die Chain Time von 2 auf 3 Sekunden an.";
 		public static const XTRASPAWNDESC:String = "Extra Eggs: Diese Combo lässt bei erfolgreicher Durchführung 5 Extra-Eier erscheinen!";
-		public static const SHUFFLEDESC:String = "Shuffle Egg: Wenn Du diese Combo machst und das Shuffle-Ei frisst, werden die Körperteile von Little Snake neu angeordnet und Du hast die Zufallschance auf neue Combos";
-		public static const GOLDDESC:String = "Goldenes Egg: Diese Combo lässt für 6 Sekunden ein goldenes Ei erscheinen. Friss es rechtzeitig für Bonuspunkte, die Dir glänzende Augen machen.";
+		public static const SHUFFLEDESC:String = "Shuffle Egg: Wenn Du diese Combo machst und das Shuffle-Ei frisst, werden die Körperteile von Little Snake neu angeordnet und Du hast die Zufallschance auf neue Combos.";
+		public static const GOLDDESC:String = "Goldenes Egg: Diese Combo lässt für 6 Sekunden ein goldenes Ei erscheinen. Friss es rechtzeitig für reichlich Bonuspunkte.";
 		public static const XTRALIFEDESC:String = "Extra Life: Diese Kombo tut wahrscheinlich genau das, was du denkst.";
 		
 		public static const SPEEDDESC:String = "Speed ...";

@@ -9,6 +9,8 @@ package Menu.ComboMenuScreens
   import starling.display.Sprite;
   import starling.events.Event;
   import starling.events.TouchEvent;
+  import starling.events.Touch;
+  import starling.events.TouchPhase;
   import starling.text.TextField;
   import starling.utils.Color;
   import org.osflash.signals.ISignal;
@@ -54,15 +56,23 @@ package Menu.ComboMenuScreens
       addChild(_selComboHeading);
 	  
 	  var that:ComboSelect = this;
-	  
-	  var exit:starling.display.Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
-      exit.scaleX = exit.scaleY = 2;
-      exit.x = Starling.current.stage.stageWidth - exit.width - 20;
-      exit.y = 20;
-      
-      exit.addEventListener(Event.TRIGGERED, function(event:Event):void {
-        onMainComboMenu.dispatch(that);
+	  var xButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+      xButton.scaleX = xButton.scaleY = 2;
+      xButton.x = Starling.current.stage.stageWidth - xButton.width - 20;
+      xButton.y = 80;
+      var exit:Quad = new Quad(140, 250, 0xffffff);
+      exit.alpha = 0;
+      exit.x = Starling.current.stage.stageWidth - exit.width;
+      exit.y = 30;
+      exit.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
+         var touch:Touch = event.getTouch(exit, TouchPhase.ENDED);
+          if (touch)
+          {
+            onMainComboMenu.dispatch(that);
+          }
       });
+    
+      addChild(xButton);
       addChild(exit);
       
       _scroller = new Scroller();
