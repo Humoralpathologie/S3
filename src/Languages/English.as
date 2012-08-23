@@ -60,6 +60,7 @@ package Languages
 		public static const MUSIC:String = "MUSIC";
 		
 		//Level objectives
+    public static const OBJECTIVE:String = "Objective";
 		public static const LEVEL1A:String = "Devour 30 eggs & pay attention to the bonus scoring on your performance!!\n\nStory:\n\nFor Little Snake revenge is a dish - literally!";
 		public static const LEVEL1B:String = "Devour 50 eggs & pay attention to the bonus scoring on your performance!!\n\nStory:\n\nFor Little Snake revenge is a dish - literally!";
 		public static const LEVEL2A:String = "Devour 7 combos of at least 3 blue eggs!!\n\nStory:\nLittle Snake could squeeze oodles of eggs in his expansible guts, but he found the blue ones to be especially digestible when eaten in succession & greater quantities.";

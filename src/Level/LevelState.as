@@ -1128,7 +1128,7 @@ package Level
       
       var _scrollable:Sprite = new Sprite();
       
-      var heading:TextField = new TextField(600, 60, "Objective", "kroeger 06_65", 60, Color.WHITE);
+      var heading:TextField = new TextField(600, 60, AssetRegistry.Strings.OBJECTIVE, "kroeger 06_65", 60, Color.WHITE);
      
       var box:Quad = new Quad(800, 535, 0);
       box.alpha = 0x44 / 0xff;
