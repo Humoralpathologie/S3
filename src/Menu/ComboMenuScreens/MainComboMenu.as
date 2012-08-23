@@ -235,8 +235,8 @@ package Menu.ComboMenuScreens
           }
           else
           {
-            _buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed");
-            _buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed");
+            _buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-slower");
+            _buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-slower");
             _buttons[4][1].text = AssetRegistry.Strings.SLOWERDESC;
           }
         });
