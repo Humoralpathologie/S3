@@ -95,6 +95,23 @@ package Languages
     public static const EXTRATIMEEXTMESSAGE:String = "Bonus Time+";
     public static const CHAINTIMEEXTMESSAGE:String = "Chain Time+";
     public static const CHAINTIMEEXTENDMESSAGE:String = "Chain Time-";
+    
+    //Hints Slider
+    public static const HINTS:Array = ["Pay attention to the combo scoring. Longer combos score big time!",
+      
+      "You finished the Story Mode? Excellent - go on then and learn new Combos in the Arcade Mode to earn even higher scores!",
+      
+      "You think you have seen it all? Try to get all gold medals & be in for a surprise!",
+      
+      "Use the radar to find the shortest way to the next egg!",
+      
+      "Beware the rotten eggs. Devour 5 of them for a shortcut to Snakehalla!",
+      
+      "The controls suck? Try out one of the other options in the settings menu.",
+      
+      "Feel free to experiment in the Arcade Mode. Many ways lead to the Highscore.",
+      
+      ];
 	}
 
 }

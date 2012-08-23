@@ -94,6 +94,23 @@ package Languages
     public static const EXTRATIMEEXTMESSAGE:String = "Zeitbonus+";
     public static const CHAINTIMEEXTMESSAGE:String = "Kette+";
     public static const CHAINTIMEEXTENDMESSAGE:String = "Kette-";
+    
+    //Hints Slider
+    public static const HINTS:Array = ["Achte auf die Punktevergabe - um so länger die Combo, desto höher der Score!",
+      
+      "Du hast den Story Modus durchgespielt! Großartig - dann ab in den Arcade Modus. Dort kann man neue Combos lernen und noch mehr Punkte absahnen!",
+      
+      "Du denkst, dass Du alles gesehen hast? Ganz sicher? Man munkelt, dass Goldmedaillen nicht das Maß aller Dinge sind...",
+      
+      "Lass die Kette nicht abreißen: Nutz' das Radar um den kürzesten Weg zum nächsten Ei zu finden!",
+      
+      "Pass auf - die faulen Eier sind giftig. Iss 5 für eine Zwangseinweisung in Snakehalla!",
+      
+      "Du kommst mit der Steuerung nicht zurecht? Probier 's mal mit der anderen Variante im Optionsmenü?",
+     
+      "Im Arcade Modus kannst Du nach Herzenslust mit den Combos experimentieren. Viele Wege führen zum Highscore."
+      
+      ];
 	}
 
 }
