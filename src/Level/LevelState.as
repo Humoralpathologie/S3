@@ -269,46 +269,6 @@ package Level
       dispatchEventWith(HUD.DISPLAY_MESSAGE, true, {message: message});    
     }
     
-    private function recycleText(width:int = -1, height:int = -1, text:String = null, size:int = -1):TextField
-    {
-      var length:int = _textFieldPool.length;
-      var field:TextField;
-      
-      width = (width == -1) ? AssetRegistry.STAGE_WIDTH : width;
-      height = (height == -1) ? AssetRegistry.STAGE_HEIGHT : height;
-      size = (size == -1) ? 90 : size;
-      
-      // First, try to find a TextField that is not visible anymore.
-      for (var i:int = 0; i < length; i++)
-      {
-        field = _textFieldPool[i];
-        if (!field.visible)
-        {
-          field.visible = true;
-          
-          // Some resetting
-          field.x = 0;
-          field.y = 0;
-          field.width = width;
-          field.height = height;
-          field.text = text || "";
-          field.fontSize = size;
-          field.scaleX = field.scaleY = 1;
-          field.rotation = 0;
-          field.alpha = 1;
-          trace("Recycling old Textfield");
-          return field;
-        }
-      }
-      
-      // If we reached this part we need a new TextField.
-      trace("Building new Textfield");
-      field = new TextField(width, height, text || "", "kroeger 06_65", size, Color.WHITE);
-      _textLayer.addChild(field);
-      _textFieldPool.push(field);
-      return field;
-    }
-    
     protected function setBoundaries():void
     {
       _levelBoundaries = new Rectangle(0, 0, _tileWidth, _tileHeight);
