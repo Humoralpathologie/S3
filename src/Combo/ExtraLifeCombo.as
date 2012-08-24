@@ -22,7 +22,7 @@ package Combo
     {
       state.snake.lives += 1;
       state.showMessage(AssetRegistry.Strings.EXTRALIFEMESSAGE);
-      state.showParticles(state.snake.head, 5);
+      state.showSpecialParticles(state.snake.head, "ExtraLife");
     }
   
   }

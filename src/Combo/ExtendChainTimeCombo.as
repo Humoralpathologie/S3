@@ -21,6 +21,7 @@ package Combo
       state.chainTime = 3.5;
 	    state.adjustBonusBack(37);
 	    state.extensionTime = state.overallTimer + 60;
+      state.showSpecialParticles(state.snake.head, "ChainTimePlus");
     }
   
   }
