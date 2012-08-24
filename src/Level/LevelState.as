@@ -130,7 +130,7 @@ package Level
     
     protected var _startPos:Point = new Point(5, 5);
     protected var _levelBoundaries:Rectangle;
-    protected var _timeLeft:Number = 30;
+    protected var _timeLeft:Number = 4 * 60;
     protected var _poisonEggs:int = 0;
     protected var _maxEggs:int = 5;
     protected var _timeExtension:Number = 3;
