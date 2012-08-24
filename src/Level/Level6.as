@@ -89,7 +89,7 @@ package Level
 		
 		override protected function showObjective():void
 		{
-			var _neededChains:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-eggs"));
+			var _neededChains:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-megachain"));
 			if (SaveGame.difficulty == 1)
 			{
 				showObjectiveBox(AssetRegistry.Strings.LEVEL6A, [[_neededChains, "x 2"]]);
@@ -156,7 +156,7 @@ package Level
 		{
 			//_hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed", "poison"], this);
 			_hud = new HUD(this);
-			var iconsCfg:Object = {lives: {type: "lives", pos: 1, watching: "lives"}, time: {type: "time", pos: 2, watching: "overallTime"}, poison: {type: "poison", pos: 4, watching: "poisonCount"}, chain: {type: "speed", pos: 3, watching: "megaChain"}}
+			var iconsCfg:Object = {lives: {type: "lives", pos: 1, watching: "lives"}, time: {type: "time", pos: 2, watching: "overallTime"}, poison: {type: "poison", pos: 4, watching: "poisonCount"}, chain: {type: "megachain", pos: 3, watching: "megaChain"}}
 			
 			_hud.iconsCfg = iconsCfg;
 			addChild(_hud);

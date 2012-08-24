@@ -185,35 +185,11 @@ package Level
     
     override protected function addHud():void
     {
-      /*
-      if (SaveGame.arcadeModi)
-      {
-        _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "combo", "poison"], this);
-      }
-      else
-      {
-        _hud = new HUD(new Radar(_eggs, _snake), ["lifes", "combo", "speed", "poison"], this);
-      }
-      addChild(_hud);
-      if (SaveGame.arcadeModi)
-      {
-        _hud.poison.x = 108;
-        _hud.poison.y = 70;
-      }
-      else
-      {
-        _hud.poison.x = 108;
-        _hud.poison.y = 12;
-      }
-      _hud.poisonTextField.x = _hud.poison.x + _hud.poison.width + 12;
-      _hud.poisonTextField.y = _hud.poison.y - 5;*/
-      
       _hud = new HUD(this);
       
       var iconsCfg:Object = {
         lives: { type: "lives", pos: 1, watching: "lives" },
-        combo: { type: "combo", pos: 3, watching: "comboCount"},
-        poison: { type: "poison", pos: 4, watching: "poisonCount"}
+        poison: { type: "poison", pos: 3, watching: "poisonCount"}
       };
       
       if (SaveGame.endless) {

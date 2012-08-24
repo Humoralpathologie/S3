@@ -213,6 +213,8 @@ package engine
     static public const Taileggsplosion3:Class;
     [Embed(source = "../../assets/Particles/Taileggsplosion5.pex", mimeType = "application/octet-stream")]
     static public const Taileggsplosion4:Class;
+     [Embed(source="../../assets/Particles/ExtraLife.pex",mimeType="application/octet-stream")]
+    static public const ExtraLife:Class;
     
     public static var SnakeAtlas:TextureAtlas;
     public static var ArcadeOverlayAtlas:TextureAtlas;
