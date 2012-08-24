@@ -1127,6 +1127,16 @@ package Level
     protected function win():void
     {
       _won = true;
+      if (_currentCombos) {
+        for (var j:int = 0; j < _currentCombos.length; j++)
+          {
+            var combo:Object = _currentCombos[j];
+            removeAndExplodeCombo(combo.eggs);
+            combo.combo.effect(this);
+            _combos += 1;
+          }
+        _currentCombos = null;
+      }
       pause();
       
       _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
