@@ -493,7 +493,7 @@ package Level
     {
       var particle:PDParticleSystem;
       
-      AssetRegistry.BiteSound.play();
+      AssetRegistry.soundmanager.playSound("bite");
       
       if (!_rottenEnabled && egg.type == AssetRegistry.EGGROTTEN || egg.type != AssetRegistry.EGGROTTEN) // || egg.type < AssetRegistry.EGGROTTEN)
       {

@@ -57,7 +57,7 @@ package org.josht.starling.foxhole.themes
 		protected static const TAB_SCALE_9_GRID:Rectangle = new Rectangle(25, 25, 2, 2);
 		protected static const CHECK_SCALE_9_GRID:Rectangle = new Rectangle(13, 13, 2, 2);
 
-		protected static const BACKGROUND_COLOR:uint = 0xf3f3f3;
+		protected static const BACKGROUND_COLOR:uint = 0x000000;
 		protected static const PRIMARY_TEXT_COLOR:uint = 0xbbbbbb;
 		protected static const SELECTED_TEXT_COLOR:uint = 0xffffff;
 		protected static const INSET_TEXT_COLOR:uint = 0xbbbbbb;

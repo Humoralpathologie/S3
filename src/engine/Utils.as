@@ -106,7 +106,7 @@ package engine
       }
       
       var errorHandler:Function = function(result:*) {
-        callback([]);
+        callback([], type);
       }
       
       var url:String;

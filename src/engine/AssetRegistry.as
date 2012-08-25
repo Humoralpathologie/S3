@@ -320,9 +320,11 @@ package engine
       LevelMusic4Sound = new LevelMusic4;
       
       soundmanager = new SoundManager();
+      soundmanager.musicMuted = SaveGame.musicMuted;
+      soundmanager.SFXMuted = SaveGame.SFXMuted;
       
 	  
-	  Strings = English;
+	    Strings = English;
       
       registerSounds();
       registerMusic();
@@ -393,6 +395,7 @@ package engine
       soundmanager.registerSound("comboSound5", new ComboSound5);
       soundmanager.registerSound("comboSound6", new ComboSound6);
       soundmanager.registerSound("comboSound7", new ComboSound7);
+      soundmanager.registerSound("bite", new Bite());
     }
     
     public static function registerMusic():void {
@@ -524,7 +527,6 @@ package engine
       EggsplosionParticleTexture = Texture.fromBitmap(new EggsplosionPNG);
       
 //        WinMusicSound = new WinMusic as Sound;   
-      BiteSound = new Bite as Sound;
     }
     
     public static function disposeLevelGraphics():void
