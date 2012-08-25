@@ -82,7 +82,7 @@ package
         starling.stage.stageWidth = 960;
         
       }
-      /*
+      
       
       var loadingSprite:Sprite = new Sprite()
       var loadingBMP:Bitmap = new AssetRegistry.LoadingPNG();
@@ -95,11 +95,11 @@ package
       
       // For debugging. 
       Starling.current.showStats = true;
-      */
+      
       starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE, function(e:Event):void
         {
           // Starling is ready! We remove the startup image and start the game.
-          //removeChild(loadingSprite);
+          removeChild(loadingSprite);
           starling.start();          
         });
         
