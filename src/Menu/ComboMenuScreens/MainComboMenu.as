@@ -294,7 +294,7 @@ package Menu.ComboMenuScreens
       }
       else
       {
-        buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")];
+        buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-slower"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")];
       }
       
       var space:int = 80;

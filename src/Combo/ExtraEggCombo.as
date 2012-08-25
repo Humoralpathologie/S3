@@ -21,6 +21,7 @@ package Combo
       for (var i:int = 0; i < 5; i++) {
         state.spawnRandomEgg();
       }
+      state.showSpecialParticles(state.snake.head, "ExtraEggs");
     }
   
   }

@@ -24,7 +24,6 @@ package Menu.PauseMenuScreens
   import starling.events.TouchPhase;
 	import org.josht.starling.display.Image;
 	
-	
   /**
    * ...
    * @author
@@ -42,10 +41,6 @@ package Menu.PauseMenuScreens
     private var _sfxHeading:TextField;
     private var _musicHeading:TextField;
     private var _controlsHeading:TextField;
-		private var _firstSpecialCombo:Image;
-		private var _secondSpecialCombo:Image;
-		private var _thirdSpecialCombo:Image;
-      
     
     public function PauseMainScreen(levelstate:LevelState)
     
@@ -59,7 +54,8 @@ package Menu.PauseMenuScreens
       _greyBox.alpha = 0.3;
       addChild(_greyBox);
       
-      var onTouch:Function = function (e:TouchEvent) :void {
+			var onTouch:Function = function(e:TouchEvent):void
+			{
         var touch:Touch;
         touch = e.getTouch(_pauseHeading, TouchPhase.ENDED);
         if (touch)
@@ -69,7 +65,6 @@ package Menu.PauseMenuScreens
         }
       }
 
-      
       _pauseHeading = new TextField(_greyBox.width, 80, AssetRegistry.Strings.PAUSE, "kroeger 06_65", 60, Color.WHITE);
       _pauseHeading.x = (Starling.current.stage.stageWidth - _pauseHeading.width) / 2;
       _pauseHeading.y = 100;
@@ -103,7 +98,8 @@ package Menu.PauseMenuScreens
       addToggles();
       addControlSwitches();
       
-			if (SaveGame.isArcade){
+			if (SaveGame.isArcade)
+			{
 			addSpecialComboReminders();
 			}
 			
@@ -114,43 +110,31 @@ package Menu.PauseMenuScreens
 		{
 			var combos:Array = AssetRegistry.COMBO_TRIGGERS;
 			
-			_firstSpecialCombo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[0].effect));
-			_firstSpecialCombo.width = 88;
-			_firstSpecialCombo.height = 88;
-			_firstSpecialCombo.x = (Starling.current.stage.stageWidth - _firstSpecialCombo.width) / 2 - 100;
-			_firstSpecialCombo.y = 3;
-			
-			_secondSpecialCombo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[1].effect));
-			_secondSpecialCombo.width = 88;
-			_secondSpecialCombo.height = 88;
-			_secondSpecialCombo.x = (Starling.current.stage.stageWidth - _firstSpecialCombo.width) / 2;
-			_secondSpecialCombo.y = _firstSpecialCombo.y;
-			
-			_thirdSpecialCombo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[2].effect));
-			_thirdSpecialCombo.width = 88;
-			_thirdSpecialCombo.height = 88;
-			_thirdSpecialCombo.x = (Starling.current.stage.stageWidth - _firstSpecialCombo.width) / 2 + 100;
-			_thirdSpecialCombo.y = _firstSpecialCombo.y;
-			
-			addChild(_firstSpecialCombo);
-			addChild(_secondSpecialCombo);
-			addChild(_thirdSpecialCombo);
-			
-			var _firstSpecialTrigger:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[0]));
-			_firstSpecialTrigger.x = _firstSpecialCombo.x;
-			_firstSpecialTrigger.y = _firstSpecialCombo.y;
-			
-			var _secondSpecialTrigger:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[1]));
-			_secondSpecialTrigger.x = _secondSpecialCombo.x;
-			_secondSpecialTrigger.y = _secondSpecialCombo.y;
-			
-			var _thirdSpecialTrigger:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[2]));
-			_thirdSpecialTrigger.x = _thirdSpecialCombo.x;
-			_thirdSpecialTrigger.y = _thirdSpecialCombo.y;
-			
-			addChild(_firstSpecialTrigger);
-			addChild(_secondSpecialTrigger);
-			addChild(_thirdSpecialTrigger);
+			var j:int = (Starling.current.stage.stageWidth - 88) / 2 - 100;
+			for (var i:int = 0; i < 3; i++)
+			{ 
+				var combo:Image;
+				var trigger:Image
+        trace(SaveGame.specials[i]);
+				if (SaveGame.specials[i])
+				{
+					trace(SaveGame.specials)
+					combo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[i].effect));
+				}
+				else
+				{
+					combo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("combo-special"));
+				}
+				combo.width = combo.height = 88;
+				combo.y = 3;
+				combo.x = j
+				trigger = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[i]));
+				trigger.x = combo.x;
+				trigger.y = combo.y;			
+				addChild(combo);
+				addChild(trigger);
+        j += 100;
+			}
 		}
 		
     private function addToggles():void

@@ -243,7 +243,23 @@ package Level
     
     protected function addParticles():void
     {
-      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")], ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo5", XML(new AssetRegistry.ExtraLife), AssetRegistry.SnakeAtlas.getTexture("ExtraLife")]];
+      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], 
+                        [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], 
+                        [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], 
+                        [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], 
+                        [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], 
+                        [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], 
+                        [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], 
+                        ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")], 
+                        ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
+                        ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
+                        ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
+                        ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
+                        ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
+                        ["ExtraLife", XML(new AssetRegistry.ExtraLife), AssetRegistry.SnakeAtlas.getTexture("ExtraLife")], 
+                        ["ExtraEggs", XML(new AssetRegistry.ExtraEggs), AssetRegistry.SnakeAtlas.getTexture("ExtraEggs")],
+                        ["BonusTime", XML(new AssetRegistry.BonusTime), AssetRegistry.SnakeAtlas.getTexture("BonusTime")],
+                        ["ChainTimePlus", XML(new AssetRegistry.ChainTimePlus), AssetRegistry.SnakeAtlas.getTexture("ChainTimePlus")]];
       
       _particles = {};
       for (var i:int = 0; i < list.length; i++)
@@ -445,12 +461,23 @@ package Level
       _snake.head.prevFacing = _snake.head.facing;
     }
     
-    public function showParticles(egg:DisplayObject, particle:int):void
+    private function showParticles(egg:DisplayObject, particle:int):void
     {
       var pd:ParticleSystem;
-      pd = _particles["combo" + String(Math.min(5, particle))];
+      pd = _particles["combo" + String(Math.min(4, particle))];
       pd.x = egg.x + 5 + egg.width / 2;
       pd.y = egg.y + 5 + egg.height / 2;
+      pd.maxCapacity = Math.min(50, pd.maxCapacity);
+      pd.touchable = false;
+      pd.start(0.5);
+    }
+    
+    public function showSpecialParticles(head:DisplayObject, particle:String):void
+    {
+      var pd:ParticleSystem;
+      pd = _particles[particle];
+      pd.x = head.x + 5 + head.width / 2;
+      pd.y = head.y + 5 + head.height / 2;
       pd.maxCapacity = Math.min(50, pd.maxCapacity);
       pd.touchable = false;
       pd.start(0.5);
@@ -1060,6 +1087,16 @@ package Level
     protected function win():void
     {
       _won = true;
+      if (_currentCombos) {
+        for (var j:int = 0; j < _currentCombos.length; j++)
+          {
+            var combo:Object = _currentCombos[j];
+            removeAndExplodeCombo(combo.eggs);
+            combo.combo.effect(this);
+            _combos += 1;
+          }
+        _currentCombos = null;
+      }
       pause();
       
       _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
