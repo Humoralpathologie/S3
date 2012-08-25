@@ -165,9 +165,12 @@ package Menu.PauseMenuScreens
       _musicToggle.x = _restartButton.x + ((_restartButton.width - _musicToggle.width) / 2);
       _musicToggle.y = _musicHeading.y + 50;
       
+      _musicToggle.isSelected = !AssetRegistry.soundmanager.musicMuted;
+            
       _musicToggle.onChange.add(function(tswitch:ToggleSwitch):void
         {
-        //SaveGame.arcadeModi = tswitch.isSelected;
+          AssetRegistry.soundmanager.musicMuted = !tswitch.isSelected;
+          SaveGame.musicMuted = AssetRegistry.soundmanager.musicMuted;
         });
       _sfxHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.SFX, "kroeger 06_65", 40, Color.WHITE);
       _sfxHeading.x = _backButton.x + ((_backButton.width - _sfxHeading.width) / 2);
@@ -180,9 +183,12 @@ package Menu.PauseMenuScreens
       _sfxToggle.x = _backButton.x + ((_backButton.width - _musicToggle.width) / 2);
       _sfxToggle.y = _sfxHeading.y + 50;
       
+      _sfxToggle.isSelected = !AssetRegistry.soundmanager.SFXMuted;
+      
       _sfxToggle.onChange.add(function(tswitch:ToggleSwitch):void
         {
-        //SaveGame.arcadeModi = tswitch.isSelected;
+          AssetRegistry.soundmanager.SFXMuted = !tswitch.isSelected;         
+          SaveGame.SFXMuted = AssetRegistry.soundmanager.SFXMuted;
         });
       addChild(_sfxHeading);
       addChild(_musicHeading);

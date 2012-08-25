@@ -214,6 +214,22 @@ package engine
       _sharedObject.flush();
     }
     
+    public static function set musicMuted(value:Boolean):void {
+      _sharedObject.data.musicMuted = value;
+    }
+    
+    public static function get musicMuted():Boolean {
+      return !!_sharedObject.data.musicMuted;
+    }
+    
+    public static function set SFXMuted(value:Boolean):void {
+      _sharedObject.data.SFXMuted = value;
+    }
+    
+    public static function get SFXMuted():Boolean {
+      return ! !_sharedObject.data.SFXMuted;
+    }
+    
     public static function fullScore():Number
     {
       var n:Number = 0;
