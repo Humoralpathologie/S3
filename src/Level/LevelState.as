@@ -154,6 +154,7 @@ package Level
     
     private var _gameJuggler:Juggler;
     
+    protected var _level4Animation:Boolean = false;
     
     public function LevelState()
     {
@@ -343,7 +344,7 @@ package Level
     
     private function obstacleCollide():void
     {
-      if (_obstacles[_snake.head.tileY * _tileWidth + _snake.head.tileX])
+      if (_obstacles[_snake.head.tileY * _tileWidth + _snake.head.tileX] && !_level4Animation)
       {
         die();
       }
@@ -351,7 +352,7 @@ package Level
     
     protected function screenCollide():void
     {
-      if (_snake.head.tileX < _levelBoundaries.x || _snake.head.tileY < _levelBoundaries.y || _snake.head.tileX >= _levelBoundaries.x + _levelBoundaries.width || _snake.head.tileY >= _levelBoundaries.y + _levelBoundaries.height)
+      if ((_snake.head.tileX < _levelBoundaries.x || _snake.head.tileY < _levelBoundaries.y || _snake.head.tileX >= _levelBoundaries.x + _levelBoundaries.width || _snake.head.tileY >= _levelBoundaries.y + _levelBoundaries.height) && !_level4Animation)
       {
         die();
       }
@@ -1367,6 +1368,10 @@ package Level
       return _overallTimer;
     }
     
+    public function set bonusTimer(value:Number):void
+    {
+      _bonusTimer = value;
+    }
 		public function adjustBonusBack(width:int):void
     {
       _bonusBack.color = 0xffff00;
