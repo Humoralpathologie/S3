@@ -24,6 +24,8 @@ package engine
     private const FADING:int = 2;
     private const STOPPED:int = 3;
     private var STATE:int = STOPPED;
+    private var _musicMuted:Boolean = false;
+    private var _SFXMuted:Boolean = false;
     
     public function SoundManager()
     {
@@ -44,7 +46,7 @@ package engine
       var tween:GTween = new GTween(_musicTransform, delay, {volume: 0}, {onComplete: clearMusic, onChange: updateChannels});
     }
     
-    private function updateChannels(t:GTween):void
+    private function updateChannels(t:GTween = null):void
     {
       for (var i:int = 0; i < _musicPlaying.length; i++)
       {
@@ -54,6 +56,14 @@ package engine
           channel.soundTransform = _musicTransform;
         }
       }
+      for (var i:int = 0; i < _soundsPlaying.length; i++)
+      {
+        var channel:SoundChannel = _soundsPlaying[i];
+        if (channel)
+        {
+          channel.soundTransform = _soundTransform;
+        }
+      }      
     }
     
     private function clearMusic(t:GTween):void
@@ -63,7 +73,9 @@ package engine
       {
         music.stop();
       }
-      _musicTransform.volume = 1;
+      if(!_musicMuted) {
+        _musicTransform.volume = 1;
+      }
     }
     
     public function playMusic(name:String):void
@@ -78,6 +90,54 @@ package engine
           {
             _musicPlaying.splice(_musicPlaying.indexOf(channel), 1);
           });
+      }
+    }
+    
+    private function muteMusic():void {
+      _musicMuted = true;
+      _musicTransform.volume = 0;
+      updateChannels();
+    }
+    
+    private function unmuteMusic():void {
+      _musicMuted = false;
+      _musicTransform.volume = 1;
+      updateChannels();
+    }
+    
+    private function muteSFX():void {
+      _soundTransform.volume = 0;
+      updateChannels();
+    }
+    
+    private function unmuteSFX():void {
+      _soundTransform.volume = 1;
+      updateChannels();
+    }
+    
+    public function get musicMuted():Boolean {
+      return _musicMuted;
+    }
+    
+    public function get SFXMuted():Boolean {
+      return _SFXMuted;
+    }
+    
+    public function set musicMuted(value:Boolean):void {
+      _musicMuted = value;
+      if (_musicMuted) {
+        muteMusic();
+      } else {
+        unmuteMusic();
+      }
+    }
+    
+    public function set SFXMuted(value:Boolean):void {
+      _SFXMuted = value;
+      if (SFXMuted) {
+        muteSFX();
+      } else {
+        unmuteSFX();
       }
     }
     
@@ -111,6 +171,7 @@ package engine
       var sound:Sound = _sounds[name];
       if (sound)
       {
+        trace("Playing ", name);
         var channel:SoundChannel;
         channel = sound.play(0, 1, _soundTransform);
         _soundsPlaying.push(channel);

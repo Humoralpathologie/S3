@@ -25,7 +25,6 @@ package
    * @author
    */
   [SWF(width="960",height="640",frameRate="60",backgroundColor="#000000")]
-  
   public class Main extends Sprite
   {
     
@@ -52,10 +51,9 @@ package
       // entry point  
       SaveGame.load();
       SaveGame.unlockLevels();
-      
+            
       var screenWidth:int = stage.fullScreenWidth;
       var screenHeight:int = stage.fullScreenHeight;      
-      
       
       if (Capabilities.os.indexOf("Windows") != -1 || Capabilities.os.indexOf("Mac") != -1)
       {
@@ -85,6 +83,7 @@ package
         
       }
       
+      
       var loadingSprite:Sprite = new Sprite()
       var loadingBMP:Bitmap = new AssetRegistry.LoadingPNG();
       loadingBMP.x = Starling.current.viewPort.x;
@@ -103,7 +102,7 @@ package
           removeChild(loadingSprite);
           starling.start();          
         });
-    
+        
       // When the game becomes inactive, we pause Starling; otherwise, the enter frame event
       // would report a very long 'passedTime' when the app is reactivated. 
   /*  

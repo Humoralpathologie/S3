@@ -10,7 +10,7 @@ package Menu
   import starling.display.Quad;
   import starling.display.QuadBatch;
   import starling.events.Event;
-  
+  //import Level.ArcadeState;
   import flash.events.Event;
   import starling.display.Button;
   import starling.display.Image;
@@ -129,7 +129,6 @@ package Menu
     
     private function createScoreBoard():void
     {
-      trace(_scores);
       _boards = new ScreenNavigator();
       var trans:ScreenFadeTransitionManager = new ScreenFadeTransitionManager(_boards);
       _scoreScreen = new ScoreBoard();
@@ -143,7 +142,7 @@ package Menu
     
     private function updateLeaderboard(data:Array):void
     {
-      
+    
     }
     
     private function replay():void

@@ -13,22 +13,46 @@ package engine
   {
     
     static public function createOrEditPlayer(id:String, name:String) {
-      editPlayer(id, name, createPlayer);
+      editPlayer(id, name);
     }
     
     static public function createPlayer(id:String, name:String) {
+      var url:String = "https://www.scoreoid.com/api/createPlayer";
+      var request:URLRequest = new URLRequest(url);
+      var requestVars:URLVariables = new URLVariables();
+      request.data = requestVars;      
+      requestVars.api_key = AssetRegistry.API_KEY;
+      requestVars.game_id = AssetRegistry.GAME_ID;    
+      requestVars.username = id;
+      requestVars.first_name = name;      
+ 
+      var tracer:Function = function(e:*):void {
+        trace(e);
+      }
       
+      scoreoidRequest(url, requestVars, tracer);
     }
     
-    static public function editPlayer(id:String, name:String, alternate:Function) {
+    static public function editPlayer(id:String, name:String) {
       var url:String = "https://www.scoreoid.com/api/editPlayer";
       var request:URLRequest = new URLRequest(url);
       var requestVars:URLVariables = new URLVariables();
       request.data = requestVars;      
       requestVars.api_key = AssetRegistry.API_KEY;
-      requestVars.game_id = AssetRegistry.GAME_ID;     
+      requestVars.game_id = AssetRegistry.GAME_ID;    
+      requestVars.username = id;
+      requestVars.first_name = name;
       
+      var tracer:Function = function(e:*):void {
+        trace(e);
+      }
       
+      // Editing failed, so we probably don't have a player.
+      var onError:Function = function(e:*):void {
+        createPlayer(id, name);
+      }
+      
+      scoreoidRequest(url, requestVars, tracer, onError);
     }
     
     public static function scoreoidRequest(url:String, data:Object, onSuccess:Function, onError:Function = null) {
@@ -40,7 +64,7 @@ package engine
       requestVars.response = "JSON"      
       
       for (var attr:String in data) {
-       requestVars[attr] = data[attr];
+        requestVars[attr] = data[attr];
       }
 
       request.method = URLRequestMethod.POST;
@@ -54,7 +78,7 @@ package engine
           if (onError) {
             onError(null);
           } else {
-            onSuccess(null);
+            onSuccess(null);           
           }
           return;
         }
@@ -70,24 +94,36 @@ package engine
       urlLoader.load(request);      
     }
     
-    static public function getLeaderboard(level:int, callback:Function) {
+    static public function getLeaderboard(level:int, callback:Function, type:String):void {
       
       var requestVars:Object = { };
-      requestVars.order_by = "score";
-      requestVars.order = "desc";
-      requestVars.limit = 10;
+
       requestVars.difficulty = level;
       
       var successHandler:Function = function(result:*) {
         var data:Array = result as Array;
-        callback(data);
+        callback(data, type);
       }
       
       var errorHandler:Function = function(result:*) {
-        callback([]);
+        callback([], type);
       }
       
-      scoreoidRequest("https://www.scoreoid.com/api/getBestScores", requestVars, successHandler, errorHandler);
+      var url:String;
+      switch(type) {
+        case "alltime":
+          url = "https://www.scoreoid.com/api/getBestScores";
+          requestVars.order_by = "score";
+          requestVars.order = "desc";
+          requestVars.limit = 10;          
+          break;
+        case "personal":  
+          url = "https://www.scoreoid.com/api/getPlayerScores";
+          requestVars.username = SaveGame.guid;
+          break;
+      }
+      
+      scoreoidRequest(url, requestVars, successHandler, errorHandler);
     }
     
     // Straight port from http://lassieadventurestudio.wordpress.com/2012/03/20/polygon-hit-test/

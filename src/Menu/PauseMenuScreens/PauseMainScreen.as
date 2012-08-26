@@ -1,5 +1,6 @@
 package Menu.PauseMenuScreens
 {
+	import com.facebook.graph.utils.IResultParser;
   import Level.LevelState;
   import org.josht.starling.foxhole.controls.Button;
   import org.josht.starling.foxhole.controls.Screen;
@@ -21,6 +22,8 @@ package Menu.PauseMenuScreens
   import UI.HUD;
   import starling.events.Touch;
   import starling.events.TouchPhase;
+	import org.josht.starling.display.Image;
+	
   /**
    * ...
    * @author
@@ -38,7 +41,6 @@ package Menu.PauseMenuScreens
     private var _sfxHeading:TextField;
     private var _musicHeading:TextField;
     private var _controlsHeading:TextField;
-      
     
     public function PauseMainScreen(levelstate:LevelState)
     
@@ -52,7 +54,8 @@ package Menu.PauseMenuScreens
       _greyBox.alpha = 0.3;
       addChild(_greyBox);
       
-      var onTouch:Function = function (e:TouchEvent) :void {
+			var onTouch:Function = function(e:TouchEvent):void
+			{
         var touch:Touch;
         touch = e.getTouch(_pauseHeading, TouchPhase.ENDED);
         if (touch)
@@ -62,7 +65,6 @@ package Menu.PauseMenuScreens
         }
       }
 
-      
       _pauseHeading = new TextField(_greyBox.width, 80, AssetRegistry.Strings.PAUSE, "kroeger 06_65", 60, Color.WHITE);
       _pauseHeading.x = (Starling.current.stage.stageWidth - _pauseHeading.width) / 2;
       _pauseHeading.y = 100;
@@ -96,9 +98,45 @@ package Menu.PauseMenuScreens
       addToggles();
       addControlSwitches();
       
+			if (SaveGame.isArcade)
+			{
+			addSpecialComboReminders();
+			}
+			
       this.validate();
     }
     
+		private function addSpecialComboReminders():void
+		{
+			var combos:Array = AssetRegistry.COMBO_TRIGGERS;
+			
+			var j:int = (Starling.current.stage.stageWidth - 88) / 2 - 100;
+			for (var i:int = 0; i < 3; i++)
+			{ 
+				var combo:Image;
+				var trigger:Image
+        trace(SaveGame.specials[i]);
+				if (SaveGame.specials[i])
+				{
+					trace(SaveGame.specials)
+					combo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[i].effect));
+				}
+				else
+				{
+					combo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("combo-special"));
+				}
+				combo.width = combo.height = 88;
+				combo.y = 3;
+				combo.x = j
+				trigger = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[i]));
+				trigger.x = combo.x;
+				trigger.y = combo.y;			
+				addChild(combo);
+				addChild(trigger);
+        j += 100;
+			}
+		}
+		
     private function addToggles():void
     {
       _musicHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.MUSIC, "kroeger 06_65", 40, Color.WHITE);
@@ -111,9 +149,12 @@ package Menu.PauseMenuScreens
       _musicToggle.x = _restartButton.x + ((_restartButton.width - _musicToggle.width) / 2);
       _musicToggle.y = _musicHeading.y + 50;
       
+      _musicToggle.isSelected = !AssetRegistry.soundmanager.musicMuted;
+            
       _musicToggle.onChange.add(function(tswitch:ToggleSwitch):void
         {
-        //SaveGame.arcadeModi = tswitch.isSelected;
+          AssetRegistry.soundmanager.musicMuted = !tswitch.isSelected;
+          SaveGame.musicMuted = AssetRegistry.soundmanager.musicMuted;
         });
       _sfxHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.SFX, "kroeger 06_65", 40, Color.WHITE);
       _sfxHeading.x = _backButton.x + ((_backButton.width - _sfxHeading.width) / 2);
@@ -126,9 +167,12 @@ package Menu.PauseMenuScreens
       _sfxToggle.x = _backButton.x + ((_backButton.width - _musicToggle.width) / 2);
       _sfxToggle.y = _sfxHeading.y + 50;
       
+      _sfxToggle.isSelected = !AssetRegistry.soundmanager.SFXMuted;
+      
       _sfxToggle.onChange.add(function(tswitch:ToggleSwitch):void
         {
-        //SaveGame.arcadeModi = tswitch.isSelected;
+          AssetRegistry.soundmanager.SFXMuted = !tswitch.isSelected;         
+          SaveGame.SFXMuted = AssetRegistry.soundmanager.SFXMuted;
         });
       addChild(_sfxHeading);
       addChild(_musicHeading);
