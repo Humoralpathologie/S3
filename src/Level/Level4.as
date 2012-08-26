@@ -15,6 +15,7 @@ package Level
   import engine.SaveGame;
   import starling.core.Starling;
   import com.gskinner.motion.GTween;
+  import com.gskinner.motion.easing.Back;
   
   
   public class Level4 extends LevelState 
@@ -39,7 +40,6 @@ package Level
       _startPos.x = 20;
       _startPos.y = 20;
       startAt(_startPos.x, _startPos.y);
-      
       updateCamera();
     }
     
@@ -138,16 +138,17 @@ package Level
         _showJumpMessage = true;
       }
       if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= SaveGame.startSpeed + _winCondition && !_level4Animation) {
+        _snake.mps = 200;
         _level4Animation = true;
         removeChild(_hud);
         bonusTimer = 0;
-        _snake.mps += 5;
-        var animation:GTween = new GTween(_snake, 2, { y: 800 }, { onComplete: function(tween:GTween):void { animation.end(); }} );
+        var animation:GTween = new GTween(_snake, 1, { y: 600 }, { ease: Back.easeIn, onComplete: function(tween:GTween):void { animation.end(); }} );
         
       }
-      if (_snake.head.y >= 800 && _level4Animation) {
+      if (_snake.tail.y >= 600 && _level4Animation) {
         win();
       }
+      trace(_snake.mps);
     }
   }
 
