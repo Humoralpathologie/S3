@@ -257,7 +257,7 @@ package Snake
     }
     
     public function changeDirection(newDirection:int):void {
-      if(!_changedDirection){
+      if (!_changedDirection && (newDirection + _head.prevFacing) != 5 && (newDirection + _head.prevFacing) != 1 ) {
         _head.facing = newDirection;
         _changedDirection = true;
       }
