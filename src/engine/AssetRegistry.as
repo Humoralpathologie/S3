@@ -97,7 +97,7 @@ package engine
     private static const Level7AtlasXML:Class;
     [Embed(source="../../assets/Levels/Level07/Level7Atlas.png")]
     private static const Level7AtlasPNG:Class;
-    [Embed(source="../../assets/Particles/drugs_particle.png")]
+    [Embed(source = "../../assets/Particles/drugs_particle.png")]
     private static const DrugsParticlePNG:Class;
     [Embed(source="../../assets/Particles/EggsplosionB.pex",mimeType="application/octet-stream")]
     private static const EggsplosionXML:Class;
@@ -317,7 +317,7 @@ package engine
     
     public static function init():void
     {
-      LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6,null, null, ArcadeState];
+      LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6, Level7, ArcadeState];
       TextField.registerBitmapFont(new BitmapFont(Texture.fromBitmap(new FontPNG), XML(new FontXML)));      
       
       LevelMusic1Sound = new LevelMusic1;

@@ -52,7 +52,7 @@ package Level
 		
 		override protected function addBackground():void
 		{
-			_bgTexture = AssetRegistry.Level7Atlas.getTexture("level07");
+			_bgTexture = AssetRegistry.LevelAtlas.getTexture("level08");
 			_bg = new Image(_bgTexture);
 			_bg.blendMode = BlendMode.NONE;
 			_bg.smoothing = TextureSmoothing.NONE;
@@ -63,7 +63,7 @@ package Level
 		{
       if (egg.type == AssetRegistry.EGGGOLDEN) {
         var particle:PDParticleSystem;
-        AssetRegistry.BiteSound.play();
+        AssetRegistry.soundmanager.playSound("bite");
         particle = _particles[egg.type];
         if (particle)
         {
@@ -171,7 +171,7 @@ package Level
 		
     private function spawnGolden():void
     {
-      var goldenEggPos:Array = [[10, 10], [12, 12], [13, 13], [14, 15]];
+      var goldenEggPos:Array = [[12, 5], [27, 11], [10, 26], [35, 23]];
       for (var i:int = 0; i < goldenEggPos.length; i++ ) {
         var goldenEgg:Eggs.Egg = _goldenEggs.recycleEgg(0, 0, AssetRegistry.EGGGOLDEN);
         goldenEgg.tileX = goldenEggPos[i][0];
