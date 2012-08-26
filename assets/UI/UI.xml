@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:46d6bdb230cff46cfaf9e1e1a2eafefd$ -->
+<!-- $TexturePacker:SmartUpdate:01c00b96c37536921aa3b10b24583ee2$ -->
 <TextureAtlas imagePath="UI.png">
     <SubTexture name="KreisRadar" x="2" y="544" width="168" height="168"/>
     <SubTexture name="SadSnakeText" x="2" y="476" width="184" height="66" frameX="-90" frameY="-22" frameWidth="384" frameHeight="92"/>
     <SubTexture name="Snake_EvilLaughText" x="2" y="428" width="288" height="46" frameX="-48" frameY="-40" frameWidth="384" frameHeight="92"/>
     <SubTexture name="game over_gravestone" x="2" y="58" width="376" height="368" frameX="-107" frameY="-16" frameWidth="512" frameHeight="384"/>
-    <SubTexture name="pause" x="470" y="158" width="22" height="26" frameX="-9" frameY="-9" frameWidth="40" frameHeight="40"/>
+    <SubTexture name="pause" x="452" y="210" width="22" height="26" frameX="-9" frameY="-9" frameWidth="40" frameHeight="40"/>
     <SubTexture name="sadsnake" x="2" y="714" width="138" height="187" frameX="-24" frameY="-6" frameWidth="210" frameHeight="193"/>
     <SubTexture name="snake_evillaugh" x="292" y="428" width="190" height="179" frameX="-11" frameY="-14" frameWidth="210" frameHeight="193"/>
-    <SubTexture name="ui-4way-bottom-down" x="380" y="106" width="110" height="50" frameX="-78" frameY="-2" frameWidth="188" frameHeight="52"/>
-    <SubTexture name="ui-4way-bottom-left" x="380" y="208" width="72" height="50" frameX="0" frameY="-126" frameWidth="76" frameHeight="176"/>
-    <SubTexture name="ui-4way-bottom-right" x="380" y="158" width="88" height="48" frameX="-5" frameY="-128" frameWidth="120" frameHeight="176"/>
-    <SubTexture name="ui-4way-bottom-up" x="380" y="260" width="62" height="54" frameX="-126" frameY="-65" frameWidth="188" frameHeight="124"/>
-    <SubTexture name="ui-classic-180-left" x="444" y="260" width="62" height="52" frameX="0" frameY="-60" frameWidth="192" frameHeight="120"/>
-    <SubTexture name="ui-classic-180-right" x="444" y="314" width="58" height="52" frameX="-134" frameY="-60" frameWidth="192" frameHeight="120"/>
+    <SubTexture name="ui-4way-bottom-down" x="380" y="106" width="114" height="48" frameX="-74" frameY="0" frameWidth="188" frameHeight="52"/>
+    <SubTexture name="ui-4way-bottom-left" x="380" y="210" width="70" height="50" frameX="0" frameY="-122" frameWidth="76" frameHeight="176"/>
+    <SubTexture name="ui-4way-bottom-right" x="380" y="156" width="70" height="52" frameX="-6" frameY="-121" frameWidth="120" frameHeight="176"/>
+    <SubTexture name="ui-4way-bottom-up" x="380" y="262" width="68" height="66" frameX="-120" frameY="-58" frameWidth="188" frameHeight="124"/>
+    <SubTexture name="ui-classic-180-left" x="380" y="330" width="62" height="52" frameX="0" frameY="-60" frameWidth="192" frameHeight="120"/>
+    <SubTexture name="ui-classic-180-right" x="452" y="156" width="58" height="52" frameX="-134" frameY="-60" frameWidth="192" frameHeight="120"/>
     <SubTexture name="ui-classic-left" x="388" y="2" width="116" height="50" frameX="0" frameY="-6" frameWidth="192" frameHeight="60"/>
     <SubTexture name="ui-classic-right" x="388" y="54" width="114" height="50" frameX="-78" frameY="-6" frameWidth="192" frameHeight="60"/>
     <SubTexture name="ui-top" x="2" y="2" width="384" height="54" frameX="0" frameY="0" frameWidth="384" frameHeight="76"/>
