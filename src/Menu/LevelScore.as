@@ -32,14 +32,20 @@ package Menu
    */
   public class LevelScore extends ManagedStage
   {
+    /*
     private var _tweens:Vector.<GTween>;
-    private var _bg:Image;
+    
     private var _scoreboard:Quad;
     private var _leaderboard:Quad;
+    */
+    private var _bg:Image;
     private var _replayButton:starling.display.Button;
     private var _nextLevelButton:starling.display.Button;
     private var _backToMenuButton:starling.display.Button;
+    private var _scores:Object = null;
+    private var _timeBonus:int = 0;
     
+    /*
     private var _scorePic:Image;
     private var _scoreText:TextField;
     public var _scoreCounter:int = 0;
@@ -47,7 +53,7 @@ package Menu
     private var _timeBonusPic:Image;
     private var _timeBonusText:TextField;
     public var _timeBonusCounter:int = 0;
-    private var _timeBonus:int = 0;
+ 
     
     private var _lifeBonusPic:Image;
     private var _lifeBonusText:TextField;
@@ -56,7 +62,7 @@ package Menu
     private var _totalText:TextField;
     public var _totalCounter:int = 0;
     
-    private var _scores:Object = null;
+
     private var _medal:Image;
     private var _medalTween:GTween;
     private var _medalSmall:Image;
@@ -67,7 +73,7 @@ package Menu
     private var _timeBonusHeading:TextField;
     private var _lifeBonusHeading:TextField;
     private var _totalHeading:TextField;
-    
+    */
     private var _boards:ScreenNavigator;
     private static const SCORE:String = "Score";
     private static const LEADERBOARDS:String = "Leaderboards";
@@ -89,7 +95,7 @@ package Menu
       
       // No negative scores;
       
-      _timeBonus = Math.max(_timeBonus, 0);
+      _scores.timeBonus = Math.max(_timeBonus, 0);
       
       _scores.total += (_timeBonus * 5);
       if (!_scores.lost)

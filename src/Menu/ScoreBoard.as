@@ -43,7 +43,6 @@ package Menu
     //private var _timeBonusPic:Image;
     private var _timeBonusText:TextField;
     public var _timeBonusCounter:int = 0;
-    private var _timeBonus:int = 0;
 
     //private var _lifeBonusPic:Image;
     private var _lifeBonusText:TextField;
@@ -169,7 +168,7 @@ package Menu
       }
       var triggerTime:Function = function(tween:GTween):void {
         if(!_scores.lost) {
-          _tweens.push(new GTween(self, 2, { _timeBonusCounter: _timeBonus }, { ease: Exponential.easeOut, onComplete:triggerLife } ));
+          _tweens.push(new GTween(self, 2, { _timeBonusCounter: _scores.timeBonus }, { ease: Exponential.easeOut, onComplete:triggerLife } ));
         }
       }
       var triggerTotal:Function = function(tween:GTween):void{

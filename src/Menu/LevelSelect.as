@@ -147,13 +147,6 @@ package Menu
           dispatchEventWith(SWITCHING, true, {stage: Level7})
         }};       
       
-        
-        /*
-      box = [new Point(265, 997), new Point(477, 980), new Point(689, 997), new Point(477, 1104)];
-      _boxes["level6"] = {box: box, callback: function():void
-        {
-          dispatchEventWith(SWITCHING, true, {stage: Level6})
-        }}; */
       
       box = [new Point(718, 286), new Point(893, 212), new Point(887, 306), new Point(729, 306)];
       _boxes["backtomenu"] = {box: box, callback: function():void
