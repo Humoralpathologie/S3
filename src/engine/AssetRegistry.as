@@ -319,7 +319,7 @@ package engine
     
     public static function init():void
     {
-      LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6,null, null, ArcadeState];
+      LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6, Level7, null, ArcadeState];
       TextField.registerBitmapFont(new BitmapFont(Texture.fromBitmap(new FontPNG), XML(new FontXML)));      
       
       LevelMusic1Sound = new LevelMusic1;

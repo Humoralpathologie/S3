@@ -118,7 +118,7 @@ package Level
     private var _cameray:Number = 0;
     
     private static var sfx:Sound;
-    private var _bonusTimer:Number = 0;
+    protected var _bonusTimer:Number = 0;
     protected var _bonusTimerPoints:Number = 0;
     
     private var _bonusBar:Quad;
@@ -312,7 +312,7 @@ package Level
       addChild(_hud);
     }
 
-    private function eggCollide():void
+    protected function eggCollide():void
     {
       var egg:Eggs.Egg;
       
@@ -696,7 +696,7 @@ package Level
       func();
     }
      
-    private function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void
+    protected function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void
     {
       var pos:Point = new Point();
       
