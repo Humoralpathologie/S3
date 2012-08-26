@@ -102,7 +102,11 @@ package Level
       _startPos.x = 20;
       _startPos.y = 20;
       startAt(_startPos.x, _startPos.y);
-      AssetRegistry.soundmanager.playMusic("arcadeMusic");
+      if (!SaveGame.endless) {
+        AssetRegistry.soundmanager.playMusic("arcadeEndlessMusic", true);
+      } else {
+        AssetRegistry.soundmanager.playMusic("arcadeMusic");
+      }
       _levelNr = 9;
       unpause();
     
@@ -127,7 +131,6 @@ package Level
     
     override public function dispose():void
     {
-      AssetRegistry.soundmanager.fadeOutMusic();
       super.dispose();
     }
     

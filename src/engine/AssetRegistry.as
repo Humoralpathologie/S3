@@ -167,6 +167,8 @@ package engine
     static private const LevelMusic4:Class;    
     [Embed(source="../../assets/Music/eile_arcade1.mp3")]
     static public const ArcadeMusic:Class;
+    [Embed(source = "../../assets/Music/snake_remix.mp3")]
+    static public const ArcadeEndlessMusic:Class;
    
     // Sounds
     [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt1.mp3")]
@@ -406,6 +408,7 @@ package engine
     
     public static function registerMusic():void {
       soundmanager.registerSound("arcadeMusic", new ArcadeMusic);
+      soundmanager.registerSound("arcadeEndlessMusic", new ArcadeEndlessMusic);
     }
     
     public static function loadArcadeGraphics():void

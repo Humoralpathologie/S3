@@ -1392,13 +1392,18 @@ package Level
     {
         return _gameJuggler;
     }
+    
      public function get levelStage():Sprite
     {
         return _levelStage;
     }
+    
     override public function dispose():void
     {
       var i:int = 0;
+      
+      // Maybe this Level plays music
+      AssetRegistry.soundmanager.fadeOutMusic();
       
       removeChildren();
       

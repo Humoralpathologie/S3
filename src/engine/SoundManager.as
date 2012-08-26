@@ -19,6 +19,7 @@ package engine
     private var _soundsPlaying:Array;
     private var _musicTransform:SoundTransform;
     private var _soundTransform:SoundTransform;
+    private var _fadingTween:GTween;
     private var _level:int = 0;
     private const PLAYING:int = 1;
     private const FADING:int = 2;
@@ -26,6 +27,7 @@ package engine
     private var STATE:int = STOPPED;
     private var _musicMuted:Boolean = false;
     private var _SFXMuted:Boolean = false;
+    private var _fading:Boolean = false;
     
     public function SoundManager()
     {
@@ -43,7 +45,10 @@ package engine
     
     public function fadeOutMusic(delay:Number = 2):void
     {
-      var tween:GTween = new GTween(_musicTransform, delay, {volume: 0}, {onComplete: clearMusic, onChange: updateChannels});
+      if(STATE == PLAYING) {
+        STATE = FADING;
+        _fadingTween = new GTween(_musicTransform, delay, {volume: 0}, {onComplete: clearMusic, onChange: updateChannels});
+      }
     }
     
     private function updateChannels(t:GTween = null):void
@@ -66,7 +71,7 @@ package engine
       }      
     }
     
-    private function clearMusic(t:GTween):void
+    private function clearMusic(t:GTween = null):void
     {
       var music:SoundChannel;
       while (music = _musicPlaying.pop())
@@ -76,11 +81,17 @@ package engine
       if(!_musicMuted) {
         _musicTransform.volume = 1;
       }
+      STATE = STOPPED;
     }
     
-    public function playMusic(name:String):void
+    public function playMusic(name:String, repeat:Boolean = false):void
     {
       var music:Sound = _sounds[name];
+      if (STATE == FADING) {
+        _fadingTween.end();
+        clearMusic();
+      }
+      
       if (music)
       {
         var channel:SoundChannel;
@@ -89,8 +100,13 @@ package engine
         channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event):void
           {
             _musicPlaying.splice(_musicPlaying.indexOf(channel), 1);
+            STATE = STOPPED;
+            if (repeat) {
+              playMusic(name, repeat);
+            }
           });
       }
+      STATE = PLAYING;
     }
     
     private function muteMusic():void {
@@ -144,6 +160,11 @@ package engine
     public function levelMusic():void
     {
       var musicLevels:Array = [AssetRegistry.LevelMusic1Sound, AssetRegistry.LevelMusic2Sound, AssetRegistry.LevelMusic3Sound, AssetRegistry.LevelMusic4Sound];
+      if (STATE == FADING) {
+        _fadingTween.end();
+        clearMusic();
+      }
+      
       if (STATE == STOPPED)
       {
         var music:Sound; 
@@ -159,7 +180,9 @@ package engine
           channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event):void
             {
               _musicPlaying.splice(_musicPlaying.indexOf(channel), 1);
-              play();
+              if(STATE == PLAYING) {
+                play();
+              }
             });
         }
         play();
