@@ -66,10 +66,10 @@ package Menu.ComboMenuScreens
       xButton.x = 860;
       xButton.y = 30;
       
-      infoDisplay = new Quad(710, 450, 0x545454);
+      infoDisplay = new Quad(710, 450, Color.BLACK);
       infoDisplay.x = 65 + 60;
       infoDisplay.y = 40 + 30;
-      infoDisplay.alpha = 1;
+      infoDisplay.alpha = 0.8;
       
 			_text = new TextField(_greybox.width - 40, infoDisplay.height + 340, "", "kroeger 06_65", 40, Color.WHITE);
 			_text.x = 20;

@@ -4,7 +4,6 @@ package Level
      * ...
      * @author 
      */
-  import com.gskinner.motion.GTween;
   import engine.AssetRegistry
   import flash.geom.Rectangle;
   import flash.system.ImageDecodingPolicy;
@@ -14,25 +13,27 @@ package Level
   import UI.HUD;
   import Eggs.Egg;
   import engine.SaveGame;
+  import starling.core.Starling;
+  import com.gskinner.motion.GTween;
   
   
   public class Level4 extends LevelState 
   {
     private var _winningPositions:Array;
-	private var _winCondition:int;
+	  private var _winCondition:int;
     private var _showJumpMessage:Boolean = false;
     
     public function Level4() 
     {
-      AssetRegistry.loadGraphics([AssetRegistry.LEVEL4, AssetRegistry.SNAKE, AssetRegistry.SCORING]);
+      AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       _levelNr = 4;
       _rottenEnabled = true;
       _winningPositions = [2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428];
       if (SaveGame.difficulty == 1) {
-	    _winCondition = 5;
-	  } else {
-		_winCondition = 7;
-	  }
+	      _winCondition = 5;
+	    } else {
+		    _winCondition = 7;
+	    }
 
       super();
       _startPos.x = 20;
@@ -57,18 +58,16 @@ package Level
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
 
-      var palmtree:Image = new Image(AssetRegistry.Level4Atlas.getTexture("level4_palme_stamm"));
+      var palmtree:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("level4_palme_stamm"));
       palmtree.x = 512;
       palmtree.y = 241;
-      palmtree.smoothing = TextureSmoothing.NONE;
      _levelStage.addChild(palmtree);      
     }
     
     override protected function addAboveSnake():void {
-      var palmleaves:Image = new Image(AssetRegistry.Level4Atlas.getTexture("level4_palme_blätter"));
+      var palmleaves:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("level4_palme_blätter"));
       palmleaves.x = 510;
       palmleaves.y = 251;
-      palmleaves.smoothing = TextureSmoothing.NONE;
       _levelStage.addChild(palmleaves);
     }
     
@@ -138,7 +137,15 @@ package Level
         showMessage(AssetRegistry.Strings.JUMPMESSAGE);
         _showJumpMessage = true;
       }
-      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= SaveGame.startSpeed + _winCondition) {
+      if (_winningPositions.indexOf(_snake.head.tileY * _tileWidth + _snake.head.tileX) != -1 && _snake.mps >= SaveGame.startSpeed + _winCondition && !_level4Animation) {
+        _level4Animation = true;
+        removeChild(_hud);
+        bonusTimer = 0;
+        _snake.mps += 5;
+        var animation:GTween = new GTween(_snake, 2, { y: 800 }, { onComplete: function(tween:GTween):void { animation.end(); }} );
+        
+      }
+      if (_snake.head.y >= 800 && _level4Animation) {
         win();
       }
     }

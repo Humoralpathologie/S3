@@ -136,8 +136,10 @@ package Menu
       _settings.showDefaultScreen();
       addChild(_settings);
       var xButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+
       xButton.scaleX = xButton.scaleY = 1.5;
       xButton.x = Starling.current.stage.stageWidth - xButton.width - 10;
+
       xButton.y = 90;
       var exit:Quad = new Quad(140, 250, 0xffffff);
       exit.alpha = 0;

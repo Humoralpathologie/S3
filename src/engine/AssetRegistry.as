@@ -167,6 +167,8 @@ package engine
     static private const LevelMusic4:Class;    
     [Embed(source="../../assets/Music/eile_arcade1.mp3")]
     static public const ArcadeMusic:Class;
+    [Embed(source = "../../assets/Music/snake_remix.mp3")]
+    static public const ArcadeEndlessMusic:Class;
    
     // Sounds
     [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt1.mp3")]
@@ -213,6 +215,14 @@ package engine
     static public const Taileggsplosion3:Class;
     [Embed(source = "../../assets/Particles/Taileggsplosion5.pex", mimeType = "application/octet-stream")]
     static public const Taileggsplosion4:Class;
+     [Embed(source="../../assets/Particles/ExtraLife.pex",mimeType="application/octet-stream")]
+    static public const ExtraLife:Class;
+    [Embed(source="../../assets/Particles/BonusTime.pex",mimeType="application/octet-stream")]
+    static public const BonusTime:Class;
+    [Embed(source="../../assets/Particles/ChainTimePlus.pex",mimeType="application/octet-stream")]
+    static public const ChainTimePlus:Class;
+    [Embed(source="../../assets/Particles/ExtraEggs.pex",mimeType="application/octet-stream")]
+    static public const ExtraEggs:Class;
     
     public static var SnakeAtlas:TextureAtlas;
     public static var ArcadeOverlayAtlas:TextureAtlas;
@@ -309,7 +319,7 @@ package engine
     
     public static function init():void
     {
-      LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6,null, null, ArcadeState];
+      LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6, Level7, null, ArcadeState];
       TextField.registerBitmapFont(new BitmapFont(Texture.fromBitmap(new FontPNG), XML(new FontXML)));      
       
       LevelMusic1Sound = new LevelMusic1;
@@ -318,9 +328,11 @@ package engine
       LevelMusic4Sound = new LevelMusic4;
       
       soundmanager = new SoundManager();
+      soundmanager.musicMuted = SaveGame.musicMuted;
+      soundmanager.SFXMuted = SaveGame.SFXMuted;
       
 	  
-	  Strings = English;
+	    Strings = English;
       
       registerSounds();
       registerMusic();
@@ -391,10 +403,12 @@ package engine
       soundmanager.registerSound("comboSound5", new ComboSound5);
       soundmanager.registerSound("comboSound6", new ComboSound6);
       soundmanager.registerSound("comboSound7", new ComboSound7);
+      soundmanager.registerSound("bite", new Bite());
     }
     
     public static function registerMusic():void {
       soundmanager.registerSound("arcadeMusic", new ArcadeMusic);
+      soundmanager.registerSound("arcadeEndlessMusic", new ArcadeEndlessMusic);
     }
     
     public static function loadArcadeGraphics():void
@@ -522,7 +536,6 @@ package engine
       EggsplosionParticleTexture = Texture.fromBitmap(new EggsplosionPNG);
       
 //        WinMusicSound = new WinMusic as Sound;   
-      BiteSound = new Bite as Sound;
     }
     
     public static function disposeLevelGraphics():void

@@ -118,7 +118,7 @@ package Level
     private var _cameray:Number = 0;
     
     private static var sfx:Sound;
-    private var _bonusTimer:Number = 0;
+    protected var _bonusTimer:Number = 0;
     protected var _bonusTimerPoints:Number = 0;
     
     private var _bonusBar:Quad;
@@ -130,7 +130,7 @@ package Level
     
     protected var _startPos:Point = new Point(5, 5);
     protected var _levelBoundaries:Rectangle;
-    protected var _timeLeft:Number = 30;
+    protected var _timeLeft:Number = 4 * 60;
     protected var _poisonEggs:int = 0;
     protected var _maxEggs:int = 5;
     protected var _timeExtension:Number = 3;
@@ -154,6 +154,7 @@ package Level
     
     private var _gameJuggler:Juggler;
     
+    protected var _level4Animation:Boolean = false;
     
     public function LevelState()
     {
@@ -243,7 +244,23 @@ package Level
     
     protected function addParticles():void
     {
-      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")], ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.SnakeAtlas.getTexture("particleTexture")]];
+      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], 
+                        [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], 
+                        [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], 
+                        [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], 
+                        [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], 
+                        [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], 
+                        [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], 
+                        ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")], 
+                        ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
+                        ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
+                        ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
+                        ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
+                        ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
+                        ["ExtraLife", XML(new AssetRegistry.ExtraLife), AssetRegistry.SnakeAtlas.getTexture("ExtraLife")], 
+                        ["ExtraEggs", XML(new AssetRegistry.ExtraEggs), AssetRegistry.SnakeAtlas.getTexture("ExtraEggs")],
+                        ["BonusTime", XML(new AssetRegistry.BonusTime), AssetRegistry.SnakeAtlas.getTexture("BonusTime")],
+                        ["ChainTimePlus", XML(new AssetRegistry.ChainTimePlus), AssetRegistry.SnakeAtlas.getTexture("ChainTimePlus")]];
       
       _particles = {};
       for (var i:int = 0; i < list.length; i++)
@@ -267,46 +284,6 @@ package Level
     public function showMessage(message:String):void
     {
       dispatchEventWith(HUD.DISPLAY_MESSAGE, true, {message: message});    
-    }
-    
-    private function recycleText(width:int = -1, height:int = -1, text:String = null, size:int = -1):TextField
-    {
-      var length:int = _textFieldPool.length;
-      var field:TextField;
-      
-      width = (width == -1) ? AssetRegistry.STAGE_WIDTH : width;
-      height = (height == -1) ? AssetRegistry.STAGE_HEIGHT : height;
-      size = (size == -1) ? 90 : size;
-      
-      // First, try to find a TextField that is not visible anymore.
-      for (var i:int = 0; i < length; i++)
-      {
-        field = _textFieldPool[i];
-        if (!field.visible)
-        {
-          field.visible = true;
-          
-          // Some resetting
-          field.x = 0;
-          field.y = 0;
-          field.width = width;
-          field.height = height;
-          field.text = text || "";
-          field.fontSize = size;
-          field.scaleX = field.scaleY = 1;
-          field.rotation = 0;
-          field.alpha = 1;
-          trace("Recycling old Textfield");
-          return field;
-        }
-      }
-      
-      // If we reached this part we need a new TextField.
-      trace("Building new Textfield");
-      field = new TextField(width, height, text || "", "kroeger 06_65", size, Color.WHITE);
-      _textLayer.addChild(field);
-      _textFieldPool.push(field);
-      return field;
     }
     
     protected function setBoundaries():void
@@ -335,7 +312,7 @@ package Level
       addChild(_hud);
     }
 
-    private function eggCollide():void
+    protected function eggCollide():void
     {
       var egg:Eggs.Egg;
       
@@ -367,7 +344,7 @@ package Level
     
     private function obstacleCollide():void
     {
-      if (_obstacles[_snake.head.tileY * _tileWidth + _snake.head.tileX])
+      if (_obstacles[_snake.head.tileY * _tileWidth + _snake.head.tileX] && !_level4Animation)
       {
         die();
       }
@@ -375,7 +352,7 @@ package Level
     
     protected function screenCollide():void
     {
-      if (_snake.head.tileX < _levelBoundaries.x || _snake.head.tileY < _levelBoundaries.y || _snake.head.tileX >= _levelBoundaries.x + _levelBoundaries.width || _snake.head.tileY >= _levelBoundaries.y + _levelBoundaries.height)
+      if ((_snake.head.tileX < _levelBoundaries.x || _snake.head.tileY < _levelBoundaries.y || _snake.head.tileX >= _levelBoundaries.x + _levelBoundaries.width || _snake.head.tileY >= _levelBoundaries.y + _levelBoundaries.height) && !_level4Animation)
       {
         die();
       }
@@ -496,6 +473,17 @@ package Level
       pd.start(0.5);
     }
     
+    public function showSpecialParticles(head:DisplayObject, particle:String):void
+    {
+      var pd:ParticleSystem;
+      pd = _particles[particle];
+      pd.x = head.x + 5 + head.width / 2;
+      pd.y = head.y + 5 + head.height / 2;
+      pd.maxCapacity = Math.min(50, pd.maxCapacity);
+      pd.touchable = false;
+      pd.start(0.5);
+    }
+    
     public function spawnRandomEgg():void
     {
       
@@ -533,7 +521,7 @@ package Level
     {
       var particle:PDParticleSystem;
       
-      AssetRegistry.BiteSound.play();
+      AssetRegistry.soundmanager.playSound("bite");
       
       if (!_rottenEnabled && egg.type == AssetRegistry.EGGROTTEN || egg.type != AssetRegistry.EGGROTTEN) // || egg.type < AssetRegistry.EGGROTTEN)
       {
@@ -708,7 +696,7 @@ package Level
       func();
     }
      
-    private function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void
+    protected function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void
     {
       var pos:Point = new Point();
       
@@ -1100,6 +1088,16 @@ package Level
     protected function win():void
     {
       _won = true;
+      if (_currentCombos) {
+        for (var j:int = 0; j < _currentCombos.length; j++)
+          {
+            var combo:Object = _currentCombos[j];
+            removeAndExplodeCombo(combo.eggs);
+            combo.combo.effect(this);
+            _combos += 1;
+          }
+        _currentCombos = null;
+      }
       pause();
       
       _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
@@ -1129,7 +1127,7 @@ package Level
       
       var _scrollable:Sprite = new Sprite();
       
-      var heading:TextField = new TextField(600, 60, "Objective", "kroeger 06_65", 60, Color.WHITE);
+      var heading:TextField = new TextField(600, 60, AssetRegistry.Strings.OBJECTIVE, "kroeger 06_65", 60, Color.WHITE);
      
       var box:Quad = new Quad(800, 535, 0);
       box.alpha = 0x44 / 0xff;
@@ -1370,6 +1368,10 @@ package Level
       return _overallTimer;
     }
     
+    public function set bonusTimer(value:Number):void
+    {
+      _bonusTimer = value;
+    }
 		public function adjustBonusBack(width:int):void
     {
       _bonusBack.color = 0xffff00;
@@ -1391,9 +1393,17 @@ package Level
         return _gameJuggler;
     }
     
+     public function get levelStage():Sprite
+    {
+        return _levelStage;
+    }
+    
     override public function dispose():void
     {
       var i:int = 0;
+      
+      // Maybe this Level plays music
+      AssetRegistry.soundmanager.fadeOutMusic();
       
       removeChildren();
       

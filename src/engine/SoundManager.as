@@ -19,11 +19,15 @@ package engine
     private var _soundsPlaying:Array;
     private var _musicTransform:SoundTransform;
     private var _soundTransform:SoundTransform;
+    private var _fadingTween:GTween;
     private var _level:int = 0;
     private const PLAYING:int = 1;
     private const FADING:int = 2;
     private const STOPPED:int = 3;
     private var STATE:int = STOPPED;
+    private var _musicMuted:Boolean = false;
+    private var _SFXMuted:Boolean = false;
+    private var _fading:Boolean = false;
     
     public function SoundManager()
     {
@@ -41,10 +45,13 @@ package engine
     
     public function fadeOutMusic(delay:Number = 2):void
     {
-      var tween:GTween = new GTween(_musicTransform, delay, {volume: 0}, {onComplete: clearMusic, onChange: updateChannels});
+      if(STATE == PLAYING) {
+        STATE = FADING;
+        _fadingTween = new GTween(_musicTransform, delay, {volume: 0}, {onComplete: clearMusic, onChange: updateChannels});
+      }
     }
     
-    private function updateChannels(t:GTween):void
+    private function updateChannels(t:GTween = null):void
     {
       for (var i:int = 0; i < _musicPlaying.length; i++)
       {
@@ -54,21 +61,37 @@ package engine
           channel.soundTransform = _musicTransform;
         }
       }
+      for (var i:int = 0; i < _soundsPlaying.length; i++)
+      {
+        var channel:SoundChannel = _soundsPlaying[i];
+        if (channel)
+        {
+          channel.soundTransform = _soundTransform;
+        }
+      }      
     }
     
-    private function clearMusic(t:GTween):void
+    private function clearMusic(t:GTween = null):void
     {
       var music:SoundChannel;
       while (music = _musicPlaying.pop())
       {
         music.stop();
       }
-      _musicTransform.volume = 1;
+      if(!_musicMuted) {
+        _musicTransform.volume = 1;
+      }
+      STATE = STOPPED;
     }
     
-    public function playMusic(name:String):void
+    public function playMusic(name:String, repeat:Boolean = false):void
     {
       var music:Sound = _sounds[name];
+      if (STATE == FADING) {
+        _fadingTween.end();
+        clearMusic();
+      }
+      
       if (music)
       {
         var channel:SoundChannel;
@@ -77,13 +100,71 @@ package engine
         channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event):void
           {
             _musicPlaying.splice(_musicPlaying.indexOf(channel), 1);
+            STATE = STOPPED;
+            if (repeat) {
+              playMusic(name, repeat);
+            }
           });
+      }
+      STATE = PLAYING;
+    }
+    
+    private function muteMusic():void {
+      _musicMuted = true;
+      _musicTransform.volume = 0;
+      updateChannels();
+    }
+    
+    private function unmuteMusic():void {
+      _musicMuted = false;
+      _musicTransform.volume = 1;
+      updateChannels();
+    }
+    
+    private function muteSFX():void {
+      _soundTransform.volume = 0;
+      updateChannels();
+    }
+    
+    private function unmuteSFX():void {
+      _soundTransform.volume = 1;
+      updateChannels();
+    }
+    
+    public function get musicMuted():Boolean {
+      return _musicMuted;
+    }
+    
+    public function get SFXMuted():Boolean {
+      return _SFXMuted;
+    }
+    
+    public function set musicMuted(value:Boolean):void {
+      _musicMuted = value;
+      if (_musicMuted) {
+        muteMusic();
+      } else {
+        unmuteMusic();
+      }
+    }
+    
+    public function set SFXMuted(value:Boolean):void {
+      _SFXMuted = value;
+      if (SFXMuted) {
+        muteSFX();
+      } else {
+        unmuteSFX();
       }
     }
     
     public function levelMusic():void
     {
       var musicLevels:Array = [AssetRegistry.LevelMusic1Sound, AssetRegistry.LevelMusic2Sound, AssetRegistry.LevelMusic3Sound, AssetRegistry.LevelMusic4Sound];
+      if (STATE == FADING) {
+        _fadingTween.end();
+        clearMusic();
+      }
+      
       if (STATE == STOPPED)
       {
         var music:Sound; 
@@ -99,7 +180,9 @@ package engine
           channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event):void
             {
               _musicPlaying.splice(_musicPlaying.indexOf(channel), 1);
-              play();
+              if(STATE == PLAYING) {
+                play();
+              }
             });
         }
         play();
@@ -111,6 +194,7 @@ package engine
       var sound:Sound = _sounds[name];
       if (sound)
       {
+        trace("Playing ", name);
         var channel:SoundChannel;
         channel = sound.play(0, 1, _soundTransform);
         _soundsPlaying.push(channel);

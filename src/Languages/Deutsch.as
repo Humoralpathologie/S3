@@ -59,6 +59,7 @@ package Languages
 		public static const MUSIC:String = "MUSIK";
 		
 //Level objectives
+    public static const OBJECTIVE:String = "Ziel";
 		public static const LEVEL1A:String = "Friss 30 Eier und achte auf die Art und Weise, wie die Bonuspunkte vergeben werden.\n\nStory:\n\nRache ist süß, schmeckte für Little Snake aber auch irgendwie nach Ei.";
 		public static const LEVEL1B:String = "Friss 50 Eier und achte auf die Art und Weise, wie die Bonuspunkte vergeben werden.\n\nStory:\n\nRache ist süß, schmeckte für Little Snake aber auch irgendwie nach Ei.";
 		public static const LEVEL2A:String = "Friss 7 Combos von mindestens 3 blauen Eiern!!\n\nStory:\nLittle Snake war zwar ein eher drahtiger aber auch äußerst dehnbarer Typ, sodass er ganze Berge an Eiern verdrücken konnte. Insbesondere die blauen mundeten ihm und in Dreiergruppen gefressen, ließen sie sich irgendwie besonders gut verdauen.";
@@ -73,6 +74,7 @@ package Languages
 		public static const LEVEL6B:String = "Friss 3 Ketten von mindestens 10 Eiern und unterbrich den Konsum nicht länger als 8 Sekunden!\n\nStory:\nLittle Shake hatte nun eine schreckliche Sucht nach den Dinoeiern entwickelt. Lass es nicht zu, dass irgendwelche Entzugserscheinungen seinen Rachefeldzug beenden mögen!";
 		public static const LEVEL7A:String = "Was hat es mit den vier besonderen Eiern auf sich? Lass sie alle auf einmal verschwinden!!\n\nStory:\nEndlich hatte Little Snake den Terror-Triceratops gefunden. Allerdings verbarg sich der Duckmäuser in seiner Festung der Feigheit. Unser Held musste einen Weg finden, zu ihm zu gelangen.";
 		public static const LEVEL7B:String = "Was hat es mit den vier besonderen Eiern auf sich? Lass sie alle auf einmal verschwinden!!\n\nStory:\nEndlich hatte Little Snake den Terror-Triceratops gefunden. Allerdings verbarg sich der Duckmäuser in seiner Festung der Feigheit. Unser Held musste einen Weg finden, zu ihm zu gelangen.";
+
 		
     //Score Boards
 		public static const SCORES:String = "PUNKTE";

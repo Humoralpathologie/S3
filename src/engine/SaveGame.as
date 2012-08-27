@@ -3,6 +3,7 @@ package engine
   
   import flash.net.*;
   import engine.Utils;
+  import com.laiyonghao.Uuid;
   
   public class SaveGame
   {
@@ -11,6 +12,11 @@ package engine
     public static function load():void
     {
       _sharedObject = SharedObject.getLocal('snakeSaveData');
+      if (!_sharedObject.data.guid) {
+        // Should be unique enough.
+        var uuid:Uuid = new Uuid();
+       _sharedObject.data.guid = uuid.toString();
+      }
       if (!_sharedObject.data.initialized)
       {
         initializeData();
@@ -208,6 +214,22 @@ package engine
       _sharedObject.flush();
     }
     
+    public static function set musicMuted(value:Boolean):void {
+      _sharedObject.data.musicMuted = value;
+    }
+    
+    public static function get musicMuted():Boolean {
+      return !!_sharedObject.data.musicMuted;
+    }
+    
+    public static function set SFXMuted(value:Boolean):void {
+      _sharedObject.data.SFXMuted = value;
+    }
+    
+    public static function get SFXMuted():Boolean {
+      return ! !_sharedObject.data.SFXMuted;
+    }
+    
     public static function fullScore():Number
     {
       var n:Number = 0;
@@ -231,14 +253,9 @@ package engine
       _sharedObject.data.user = value;
     }
     
-    public static function get userID():String
+    public static function get guid():String 
     {
-      return _sharedObject.data.userID;
-    }
-    
-    public static function set userID(value:String)
-    {
-      _sharedObject.data.userID = value;
+      return _sharedObject.data.guid;
     }
     
     private static function publishScore(level:int = 1):void
@@ -246,7 +263,7 @@ package engine
       var url:String = "https://www.scoreoid.com/api/createScore";
       var requestVars:Object = {};
       
-      requestVars.username = userID;
+      requestVars.username = guid;
       requestVars.score = _sharedObject.data.levels[level].score; //fullScore();
       requestVars.difficulty = level;
       
