@@ -126,6 +126,9 @@ package Menu
         case 4:
           _timeBonus = 3 * 60 - int(_scores.time);
           break;
+        case 9:
+          _timeBonus = 0;
+        break;
         default:
           _timeBonus = 3 * 60 - int(_scores.time);
           break;

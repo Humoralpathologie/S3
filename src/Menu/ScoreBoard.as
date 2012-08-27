@@ -213,10 +213,12 @@ package Menu
       _totalText.x = _lifeBonusText.x;
       _totalText.y = _totalHeading.y;
 
-
-      addChild(_lifeBonusText);
+      if ((_scores.level == 9 && SaveGame.endless) || _scores.level != 9){
+        addChild(_lifeBonusText);
+      }
       addChild(_scoreText);
-      addChild(_timeBonusText);
+      if (_scores.level != 9){
+        addChild(_timeBonusText);}
       addChild(_totalText);
      
     }
@@ -249,14 +251,18 @@ package Menu
       _timeBonusHeading.y = _scoreHeading.y + 60;
       _timeBonusHeading.vAlign = VAlign.TOP;
       _timeBonusHeading.hAlign = HAlign.LEFT;
-      addChild(_timeBonusHeading);
+      if (_scores.level != 9){
+        addChild(_timeBonusHeading);
+      }
       
       _lifeBonusHeading = new TextField(200, 40, "Life Bonus", "kroeger 06_65", 35, Color.WHITE);
       _lifeBonusHeading.x = _scoreHeading.x;
-      _lifeBonusHeading.y = _timeBonusHeading.y + 60;
+      _lifeBonusHeading.y = (_scores.level != 9) ? _timeBonusHeading.y + 60 : _scoreHeading.y + 60;
       _lifeBonusHeading.vAlign = VAlign.TOP;
       _lifeBonusHeading.hAlign = HAlign.LEFT;
-      addChild(_lifeBonusHeading);
+      if (_scores.level == 9 && SaveGame.endless){
+        addChild(_lifeBonusHeading);
+      }
       
       _totalHeading = new TextField(200, 40, "Total", "kroeger 06_65", 35, Color.WHITE);
       _totalHeading.x = _scoreHeading.x;
