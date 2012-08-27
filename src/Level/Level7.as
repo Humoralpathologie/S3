@@ -72,7 +72,7 @@ package Level
           particle.start(0.5);
         }
         _goldenEggs.removeEgg(egg);
-        var points:int = 100;
+        var points:int = 2;
         showPoints(egg, String(points));
         if (_bonusTimer > 0)
         {
@@ -186,7 +186,7 @@ package Level
       if (egg) {
         _goldenEggsRest--;
         eatEgg(egg);
-        _goldenEggPos.push([6, egg.tileX, egg.tileY]);
+        _goldenEggPos.push([3, egg.tileX, egg.tileY]);
       }
     }
     
