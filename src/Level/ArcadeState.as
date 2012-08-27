@@ -163,6 +163,39 @@ package Level
         win();
       }
     }
+	
+	override protected function lose():void {
+		_lost = true;
+      pause();
+      var image:Image;
+	  if (SaveGame.endless){
+        image = new Image(AssetRegistry.UIAtlas.getTexture("game over_gravestone"));
+		image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
+        image.y = AssetRegistry.STAGE_HEIGHT;
+        addChild(image);
+	  } else {
+		image = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
+		image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
+        image.y = AssetRegistry.STAGE_HEIGHT;
+        addChild(image);
+		var _evilText:Image = new Image(AssetRegistry.UIAtlas.getTexture("Snake_EvilLaughText"));
+        _evilText.x = (AssetRegistry.STAGE_WIDTH - _evilText.width) / 2;
+        _evilText.y = 0;
+        addChild(_evilText);
+	  }
+	  
+      
+      // Use a GTween, as the Starling tweens are paused.
+      new GTween(image, 2, {y: AssetRegistry.STAGE_HEIGHT - image.height});
+      
+      var registerTouchHandler:Function = function():void
+      {
+        addEventListener(TouchEvent.TOUCH, onLoseHandler);
+      }
+      
+      new GTween(null, 2, null, {onComplete: registerTouchHandler, paused: false});
+    
+	}
     
     override protected function onLoseHandler(event:TouchEvent):void
     {
