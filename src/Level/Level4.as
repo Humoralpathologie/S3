@@ -28,6 +28,7 @@ package Level
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       _levelNr = 4;
+      SaveGame.levelName = AssetRegistry.Strings.LEVEL4NAME;
       _rottenEnabled = true;
       _winningPositions = [2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428];
       if (SaveGame.difficulty == 1) {

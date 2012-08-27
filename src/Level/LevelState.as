@@ -141,6 +141,8 @@ package Level
     
     private var _updateTimer:Number;
     
+   
+    
     // Pause Menu
     protected var _pauseMenu:ScreenNavigator;
     
@@ -1127,6 +1129,8 @@ package Level
       
       var _scrollable:Sprite = new Sprite();
       
+      var levelName:TextField = new TextField(600, 60, SaveGame.levelName, "kroeger 06_65", 60, Color.WHITE);
+      
       var heading:TextField = new TextField(600, 60, AssetRegistry.Strings.OBJECTIVE, "kroeger 06_65", 60, Color.WHITE);
      
       var box:Quad = new Quad(800, 535, 0);
@@ -1134,9 +1138,15 @@ package Level
       box.x = (960 - box.width) / 2;
       box.y = 30;
       addChild(box);
+      
+      levelName.x = (box.width - levelName.width) / 2;
+      levelName.y = box.y + 10;
+      
       heading.x = (box.width - heading.width) / 2;
-      heading.y = box.y + 10;
+      heading.y = levelName.y + levelName.height + 10;
+      _scrollable.addChild(levelName);
       _scrollable.addChild(heading);
+    
       
       //var _goals:Sprite = new Sprite();
       

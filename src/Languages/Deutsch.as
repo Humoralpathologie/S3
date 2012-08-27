@@ -75,7 +75,15 @@ package Languages
 		public static const LEVEL7A:String = "Was hat es mit den vier besonderen Eiern auf sich? Lass sie alle auf einmal verschwinden!!\n\nStory:\nEndlich hatte Little Snake den Terror-Triceratops gefunden. Allerdings verbarg sich der Duckmäuser in seiner Festung der Feigheit. Unser Held musste einen Weg finden, zu ihm zu gelangen.";
 		public static const LEVEL7B:String = "Was hat es mit den vier besonderen Eiern auf sich? Lass sie alle auf einmal verschwinden!!\n\nStory:\nEndlich hatte Little Snake den Terror-Triceratops gefunden. Allerdings verbarg sich der Duckmäuser in seiner Festung der Feigheit. Unser Held musste einen Weg finden, zu ihm zu gelangen.";
 
-		
+		//Level Names
+    public static const LEVEL1NAME:String = "1. Snake on a Plain";
+    public static const LEVEL2NAME:String = "2. Speed Snaking";
+    public static const LEVEL3NAME:String = "3. Snaking on Speed";
+    public static const LEVEL4NAME:String = "4. Grand Cannon";
+    public static const LEVEL5NAME:String = "5. Yikes, Spikes!";
+    public static const LEVEL6NAME:String = "6. Chain Eating";
+    public static const LEVEL7NAME:String = "7. Terminal Terror";
+    
     //Score Boards
 		public static const SCORES:String = "PUNKTE";
     public static const ALLTIME:String = "All-Time";

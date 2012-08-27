@@ -27,12 +27,14 @@ package Level
       AssetRegistry.soundmanager.levelMusic();
       
       _levelNr = 1;
-	  if (SaveGame.difficulty == 1) {
-	    _winCondition = 30;
-	  } else {
-		_winCondition = 50;
-	  }
+      SaveGame.levelName = AssetRegistry.Strings.LEVEL1NAME;
+	    if (SaveGame.difficulty == 1) {
+	      _winCondition = 30;
+	    } else {
+		  _winCondition = 50;
+	    }
       super();
+      trace("levelName" + _levelName);
     }
     
     override protected function addSpawnMap():void {

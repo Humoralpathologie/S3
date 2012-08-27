@@ -76,6 +76,15 @@ package Languages
 		public static const LEVEL7A:String = "What's the deal with those special eggs? Make them disappear all at once!\n\nStory:\nAt last Little Snake has found the Terror Triceratops. However, the wimp had hidden himself away in his castle of cowardice! Our hero had to find a way to circumvent his defences.";
 		public static const LEVEL7B:String = "What's the deal with those special eggs? Make them disappear all at once!\n\nStory:\nAt last Little Snake has found the Terror Triceratops. However, the wimp had hidden himself away in his castle of cowardice! Our hero had to find a way to circumvent his defences.";
 		
+    //Level Names
+    public static const LEVEL1NAME:String = "1. Snake on a Plain";
+    public static const LEVEL2NAME:String = "2. Speed Snaking";
+    public static const LEVEL3NAME:String = "3. Snaking on Speed";
+    public static const LEVEL4NAME:String = "4. Grand Cannon";
+    public static const LEVEL5NAME:String = "5. Yikes, Spikes!";
+    public static const LEVEL6NAME:String = "6. Chain Eating";
+    public static const LEVEL7NAME:String = "7. Terminal Terror";
+    
 		//Score Boards
 		public static const SCORES:String = "SCORES";
     public static const ALLTIME:String = "All-Time";

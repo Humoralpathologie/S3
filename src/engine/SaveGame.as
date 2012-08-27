@@ -146,6 +146,16 @@ package engine
       _sharedObject.data.startSpeed = value;
     }
     
+    public static function get levelName():String
+    {
+      return _sharedObject.data.levelName;
+    }
+    
+    public static function set levelName(value:String):void
+    {
+      _sharedObject.data.levelName = value;
+    }
+    
     public static function initializeData():void
     {
       _sharedObject.data.levels = {};

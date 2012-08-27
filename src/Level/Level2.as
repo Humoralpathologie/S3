@@ -20,6 +20,7 @@ package Level
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       
       _levelNr = 2;
+      SaveGame.levelName = AssetRegistry.Strings.LEVEL2NAME;
 	  if (SaveGame.difficulty == 1) {
 	    _winCondition = 7;
 	  } else {

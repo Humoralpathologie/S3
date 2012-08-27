@@ -21,6 +21,7 @@ package Level
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL3, AssetRegistry.SCORING]);
       _levelNr = 3;
+      SaveGame.levelName = AssetRegistry.Strings.LEVEL3NAME;
       _rottenEnabled = true;
       if (SaveGame.difficulty == 1)
       {
