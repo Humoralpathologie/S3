@@ -53,7 +53,9 @@ package Menu.SettingsScreens
     public function MainSettingsScreen()
     {
       super();
-      
+	  
+      SaveGame.isSettingsScreen = true;
+	  
       _scrollable = new Sprite();
       
       _greyBox = new Quad(710, 480, Color.BLACK);

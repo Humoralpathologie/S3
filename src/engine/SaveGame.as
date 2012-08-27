@@ -111,6 +111,20 @@ package engine
       }
       return _sharedObject.data.isArcade;
     }
+	
+	public static function set isSettingsScreen(value:Boolean):void
+    {
+      _sharedObject.data.isSettingsScreen = value;
+    }
+    
+    public static function get isSettingsScreen():Boolean
+    {
+      if (!_sharedObject.data.isSettingsScreen)
+      {
+        _sharedObject.data.isSettingsScreen = false;
+      }
+      return _sharedObject.data.isSettingsScreen;
+    }
     
     public static function get startSpeed():int
     {

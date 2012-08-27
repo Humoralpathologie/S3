@@ -18,8 +18,7 @@ package Combo
       state.placeEgg(goldEgg);
       Starling.juggler.delayCall(function():void {
         if (state.eggs.eggPool.indexOf(goldEgg) != -1) {
-          state.eggs.eggPool.splice(state.eggs.eggPool.indexOf(goldEgg), 1);
-          state.eggs.removeChild(goldEgg);
+          state.eggs.removeEgg(goldEgg);
         }
       }, 6);
       state.showMessage(AssetRegistry.Strings.GOLDENMESSAGE);
