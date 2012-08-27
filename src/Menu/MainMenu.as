@@ -62,6 +62,8 @@ package Menu
       makeButtons();
 
       createSettingsNavigator();
+	  
+	  SaveGame.isSettingsScreen = false;
     }
     
     private function makeButtons():void {
@@ -73,8 +75,11 @@ package Menu
       _settingsButton.x = Starling.current.stage.stageWidth - _settingsButton.width;
       _settingsButton.y = Starling.current.stage.stageHeight - _settingsButton.height;
       _settingsButton.onRelease.add(function(button:Button):void {
-        showSettingsNavigator();
-      });
+        if (SaveGame.isSettingsScreen != true) {
+		  trace("Save.isSettingsScreen != true")
+		  showSettingsNavigator();
+        } 
+	  });
       
       _arcadeButton = new Button();
       _arcadeButton.label = AssetRegistry.Strings.ARCADE;
@@ -106,7 +111,7 @@ package Menu
       addChild(_settingsButton);
       addChild(_arcadeButton);
       addChild(_levelSelectButton);
-	    addChild(_extrasButton);
+	  addChild(_extrasButton);
     }
     
     private function createSettingsNavigator():void {
@@ -131,6 +136,7 @@ package Menu
     private function showSettingsNavigator():void {
       // Leaky.
       _settings.dispose();
+	  
       createSettingsNavigator(); 
      
       _settings.showDefaultScreen();
@@ -150,11 +156,14 @@ package Menu
          var touch:Touch = event.getTouch(exit, TouchPhase.ENDED);
           if (touch)
           {
+			SaveGame.isSettingsScreen = false;
+			trace("SaveGame.isSettingsScreen = false");
             that.removeChild(_settings);
           }
       });
       _settings.addChild(xButton);
-      _settings.addChild(exit);
+      _settings.addChild(exit); 
+	  
     }
         
     override public function dispose():void {
