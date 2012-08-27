@@ -12,6 +12,12 @@ package Languages
 		public static const SETTINGS:String = "OPTIONEN";
 		public static const STORY:String = "STORY";
 		public static const EXTRAS:String = "EXTRAS";
+    
+    //Extras Screen
+    public static const VIDEO1:String = "Intro";
+    public static const VIDEO2:String = "Intro Level 1";
+    public static const VIDEO3:String = "Outro";
+    public static const VIDEO4:String = "Credits";
 		
 		// Settings Menu
 		public static const MAINSETTINGS:String = "EINSTELLUNGEN";

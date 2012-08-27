@@ -33,6 +33,7 @@ package Menu
     import Menu.SettingsScreens.*;
     import starling.textures.TextureSmoothing;
     import engine.NotificationScroller;
+    import starling.utils.Color;
   
   /**
    * ...
@@ -48,6 +49,7 @@ package Menu
     private var _levelSelectButton:Button;
 	  private var _extrasButton:Button;
     private var _notificationScroller:NotificationScroller;
+    private var isExtrasScreen:Boolean = false;
     
     public function MainMenu()
     {
@@ -64,6 +66,7 @@ package Menu
       createSettingsNavigator();
 	  
 	  SaveGame.isSettingsScreen = false;
+   
     }
     
     private function makeButtons():void {
@@ -107,6 +110,11 @@ package Menu
 	  _extrasButton.height = 80;
 	  _extrasButton.x = Starling.current.stage.stageWidth / 2;
 	  _extrasButton.y = Starling.current.stage.stageHeight - _extrasButton.height;
+    _extrasButton.onRelease.add(function(button:Button):void {
+      if(!isExtrasScreen){ 
+        showExtrasScreen(); 
+        }      
+      });
 	  
       addChild(_settingsButton);
       addChild(_arcadeButton);
@@ -143,7 +151,7 @@ package Menu
       addChild(_settings);
       var xButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
 
-      xButton.scaleX = xButton.scaleY = 1.5;
+      //xButton.scaleX = xButton.scaleY = 1.5;
       xButton.x = Starling.current.stage.stageWidth - xButton.width - 10;
 
       xButton.y = 90;
@@ -164,6 +172,88 @@ package Menu
       _settings.addChild(xButton);
       _settings.addChild(exit); 
 	  
+    }
+    
+    private function showExtrasScreen():void {
+      isExtrasScreen = true;
+      
+      var extras:Sprite = new Sprite;
+      addChild(extras);
+      
+      var _greyBox:Quad = new Quad(710, 480, Color.BLACK);
+      _greyBox.alpha = 0.7;
+      _greyBox.x = 65 + 60;
+      _greyBox.y = 40 + 40;
+      
+      extras.addChild(_greyBox);
+      
+      var _extrasHeading:TextField = new TextField(_greyBox.width, 50, AssetRegistry.Strings.EXTRAS, "kroeger 06_65", 50, Color.WHITE);
+      _extrasHeading.x = (Starling.current.stage.stageWidth - _extrasHeading.width) / 2;
+      _extrasHeading.y = _greyBox.y + 10;
+      extras.addChild(_extrasHeading);
+      
+      var video1:Button = new Button();
+      video1.label = AssetRegistry.Strings.VIDEO1;
+	    video1.width = 240;
+	    video1.height = 80;
+	    video1.x = Starling.current.stage.stageWidth / 2 - video1.width - 50;
+	    video1.y = _extrasHeading.y + _extrasHeading.height + 50;
+      
+      var video2:Button = new Button();
+      video2.label = AssetRegistry.Strings.VIDEO2;
+	    video2.width = 240;
+	    video2.height = 80;
+	    video2.x = Starling.current.stage.stageWidth / 2 + 50;
+	    video2.y = video1.y;
+      
+      var video3:Button = new Button();
+      video3.label = AssetRegistry.Strings.VIDEO3;
+	    video3.width = 240;
+	    video3.height = 80;
+      
+      var video4:Button = new Button();
+      video4.label = AssetRegistry.Strings.VIDEO4;
+	    video4.width = 240;
+	    video4.height = 80;
+      
+      video3.y = video2.y + video2.height + 100; 
+	    video4.y = video3.y;
+      
+      if (SaveGame.hasFinishedGame) {
+        video3.x = video1.x;
+        video4.x = video2.x;
+        extras.addChild(video3);
+      } else {
+        video4.x = (Starling.current.stage.stageWidth - video4.width) / 2;
+      }
+      
+      extras.addChild(video1);
+      extras.addChild(video2);
+      extras.addChild(video4);
+      
+      var xButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+
+      //xButton.scaleX = xButton.scaleY = 1.5;
+      xButton.x = Starling.current.stage.stageWidth - xButton.width - 10;
+
+      xButton.y = 90;
+      var exit:Quad = new Quad(140, 250, 0xffffff);
+      exit.alpha = 0;
+      exit.x = Starling.current.stage.stageWidth - exit.width;
+      exit.y = 80;
+      var that:MainMenu = this;
+      exit.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void {
+         var touch:Touch = event.getTouch(exit, TouchPhase.ENDED);
+          if (touch)
+          {
+            that.removeChild(extras);
+            that.removeChild(xButton);
+            that.removeChild(exit);
+            isExtrasScreen = false;
+          }
+      });
+      addChild(xButton);
+      addChild(exit); 
     }
         
     override public function dispose():void {

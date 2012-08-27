@@ -70,6 +70,20 @@ package engine
       return _sharedObject.data.endless;
     }
     
+    public static function set hasFinishedGame(value:Boolean):void
+    {
+      _sharedObject.data.hasFinishedGame = value;
+    }
+    
+    public static function get hasFinishedGame():Boolean
+    {
+      if (!_sharedObject.data.hasFinishedGame)
+      {
+        _sharedObject.data.hasFinishedGame = false;
+      }
+      return _sharedObject.data.hasFinishedGame;
+    }
+    
     public static function set language(value:int):void
     {
       _sharedObject.data.language = value;

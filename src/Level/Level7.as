@@ -146,6 +146,7 @@ package Level
 		override protected function checkWin():void
 		{
       if (_goldenEggsRest == 0) {
+        SaveGame.hasFinishedGame = true;
         win();
       }
 		}
