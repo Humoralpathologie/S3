@@ -1154,7 +1154,7 @@ package Level
         img.scaleX = img.scaleY = 3;
         if (goals.length == 1)
         {
-					img.x = (box.width - img.width) / 2 - 100;
+					img.x = (box.width - img.width - txt.textBounds.width) / 2;
 					img.y = yPos;
         }
 				//txt.scaleX = txt.scaleY = 1.5;
