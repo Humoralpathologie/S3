@@ -34,7 +34,6 @@ package Level
 		  _winCondition = 50;
 	    }
       super();
-      trace("levelName" + _levelName);
     }
     
     override protected function addSpawnMap():void {

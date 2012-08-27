@@ -109,6 +109,10 @@ package engine
         callback([], type);
       }
       
+      var date:Date = new Date();
+      date.time -= 7 * 24 * 60 * 60 * 1000;
+      var month:String = (date.getMonth() + 1 < 10) ? "0" + String(date.getMonth() +1 ) : String(date.getMonth() + 1);
+      var day:String = (date.getDate() + 1 < 10) ? "0" + String(date.getDate() + 1) : String(date.getDate() + 1);
       var url:String;
       switch(type) {
         case "alltime":
@@ -121,6 +125,15 @@ package engine
           url = "https://www.scoreoid.com/api/getPlayerScores";
           requestVars.username = SaveGame.guid;
           break;
+        case "weekly":
+          url = "https://www.scoreoid.com/api/getBestScores";
+          requestVars.order_by = "score";
+          requestVars.order = "desc";
+          requestVars.limit = 10; 
+          requestVars.start_date = String(date.fullYear) + "-" + month + "-" + day;
+          break;
+
+            
       }
       
       scoreoidRequest(url, requestVars, successHandler, errorHandler);

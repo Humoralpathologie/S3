@@ -79,7 +79,7 @@ package Menu
             break;
           case 1:
               //TODO: Implement weekly.
-            _leaderboardShowing = "alltime";
+            _leaderboardShowing = "weekly";
             break;
           case 2:
             _leaderboardShowing = "personal";
@@ -104,7 +104,7 @@ package Menu
       
       for each(var playerScore:Object in data) {
         txt += String(count) + ". ";
-        if(type == "alltime") {
+        if(type == "alltime" || type == "weekly") {
           txt += playerScore.Player.first_name;
           txt += ": ";
         }
