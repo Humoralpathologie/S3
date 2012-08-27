@@ -36,7 +36,8 @@ package engine
       addEventListener(ManagedStage.CLOSING, onStageClosing);
       addEventListener(ManagedStage.SWITCHING, onStageSwitching);
       
-      showStage(MainMenu);
+      //showStage(MainMenu);
+      showStage(VideoPlayer, { videoURI: "Intro.flv" } );
     }
     
     private function onStageClosing(event:Event):void {
