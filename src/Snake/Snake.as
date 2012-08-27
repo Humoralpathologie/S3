@@ -16,6 +16,7 @@ package Snake
   import Snake.BodyPart;
   import Snake.Tail;
   import starling.core.RenderSupport;
+  import engine.SaveGame;
   
   /**
    * ...
@@ -128,7 +129,7 @@ package Snake
     
 	public function slower():void
 	{
-	  if (this.mps >= 2){
+	  if (this.mps > SaveGame.startSpeed){
         this.mps -= 1;
 	  }
 	}
