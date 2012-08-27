@@ -22,8 +22,8 @@ package Languages
 		
 		public static const SNAKEVIEW:String = "TYP 1";
 		public static const FOURWAY:String = "TYP 2";
-		public static const CASUAL:String = "ANFÄNGER";
-		public static const COMPETETIVE:String = "";
+		public static const CASUAL:String = "GEMÜTLICH";
+		public static const COMPETETIVE:String = "STRESSIG";
 		
 		//Arcade Menu
 		public static const ARCADEHEADING:String = "ARCADE-MODUS";
