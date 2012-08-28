@@ -46,6 +46,7 @@ package Menu
     private var _scoreText:TextField;
     private var _tabBar:TabBar;
     private var _leaderboardShowing:String;
+    protected var _sharedData:Object = {};
     
     public function Leaderboards(score:Object)
     {
@@ -78,7 +79,6 @@ package Menu
             _leaderboardShowing = "alltime";
             break;
           case 1:
-              //TODO: Implement weekly.
             _leaderboardShowing = "weekly";
             break;
           case 2:
@@ -165,6 +165,16 @@ package Menu
     public function get onLeaderboards():ISignal
     {
       return _onLeaderboards;
+    }
+    
+      public function get sharedData():Object
+    {
+      return _sharedData;
+    }
+    
+    public function set sharedData(value:Object):void
+    {
+      _sharedData = value;
     }
   }
 }

@@ -18,6 +18,7 @@ package Menu
     
     private static const BASEMENU:String = "Base";
     private static const SELECTCOMBO:String = "SelectCombo";
+    private static const LEADERBOARDS:String = "Leaderboards";
     private static const SELECTCOMBOTWO:String = "SelectComboTwo";
     
     private var _navigator:ScreenNavigator;
@@ -38,7 +39,15 @@ package Menu
       addChild(_navigator);
       
       _navigator.addScreen(BASEMENU, new ScreenNavigatorItem(MainComboMenu, {
-        onComboSelect:SELECTCOMBO
+        onComboSelect:SELECTCOMBO,
+        onLeaderboards:LEADERBOARDS
+      }, {
+        sharedData: this._sharedData
+      }));
+      
+      var _leaderboardScreen:Leaderboards = new Leaderboards({level: 9});
+      _navigator.addScreen(LEADERBOARDS, new ScreenNavigatorItem(_leaderboardScreen, {
+        onLeaderboards:BASEMENU 
       }, {
         sharedData: this._sharedData
       }));
@@ -50,6 +59,13 @@ package Menu
       }));
             
       _navigator.showScreen(BASEMENU);
+      
+      /*_navigator.addScreen(LEADERBOARDS, new ScreenNavigatorItem(Leaderboards, {
+        onMainComboMenu:BASEMENU
+      }, {
+        sharedData: {navigator: this._navigator, screen: LEADERBOARDS}
+      }));*/
+            
       
     }
     

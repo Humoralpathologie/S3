@@ -24,6 +24,7 @@ package Menu.ComboMenuScreens
   import org.josht.starling.foxhole.controls.ScrollBar;
   import starling.display.Sprite;
 	import starling.utils.HAlign;
+  import Menu.Leaderboards;
   
   /**
    * ...
@@ -33,6 +34,7 @@ package Menu.ComboMenuScreens
   {
     
     protected var _onComboSelect:Signal = new Signal(MainComboMenu);
+    protected var _onLeaderboards:Signal = new Signal(MainComboMenu);
     protected var _sharedData:Object = {};
     protected var _greybox:Quad;
     
@@ -266,9 +268,11 @@ package Menu.ComboMenuScreens
       leaderboards.x = play.x + play.width + 10;
       leaderboards.y = 540;
       addChild(leaderboards);
+      var that:MainComboMenu = this;
       leaderboards.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void
         {
-          dispatchEventWith(ManagedStage.SWITCHING, true, {stage: LevelScore});
+          //dispatchEventWith(ManagedStage.SWITCHING, true, {stage: LevelScore});
+          onLeaderboards.dispatch(that); 
         });
       
       var back:org.josht.starling.foxhole.controls.Button = new org.josht.starling.foxhole.controls.Button();
@@ -389,6 +393,10 @@ package Menu.ComboMenuScreens
     public function get onComboSelect():ISignal
     {
       return _onComboSelect;
+    }
+    public function get onLeaderboards():ISignal
+    {
+      return _onLeaderboards;
     }
     
     public function get sharedData():Object
