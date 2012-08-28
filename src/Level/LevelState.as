@@ -158,6 +158,9 @@ package Level
     
     protected var _level4Animation:Boolean = false;
     
+    //tweens
+    protected var _tweens:Vector.<GTween> =  new Vector.<GTween>;
+    
     public function LevelState()
     {
       super();
@@ -386,15 +389,15 @@ package Level
       addChild(_sadText);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_sadSnake, 2, {y: AssetRegistry.STAGE_HEIGHT - _sadSnake.height});
-      new GTween(_sadText, 2, {y: 0});
+      _tweens.push(new GTween(_sadSnake, 2, {y: AssetRegistry.STAGE_HEIGHT - _sadSnake.height}));
+      _tweens.push(new GTween(_sadText, 2, {y: 0}));
       
       var registerTouchHandler:Function = function():void
       {
         addEventListener(TouchEvent.TOUCH, dieScreenTouch);
       }
       
-      new GTween(null, 1, null, {paused: false, onComplete: registerTouchHandler});
+      _tweens.push(new GTween(null, 1, null, {paused: false, onComplete: registerTouchHandler}));
     
     }
     
@@ -823,14 +826,14 @@ package Level
       addChild(image);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(image, 2, {y: AssetRegistry.STAGE_HEIGHT - image.height});
+      _tweens.push(new GTween(image, 2, {y: AssetRegistry.STAGE_HEIGHT - image.height}));
       
       var registerTouchHandler:Function = function():void
       {
         addEventListener(TouchEvent.TOUCH, onLoseHandler);
       }
       
-      new GTween(null, 2, null, {onComplete: registerTouchHandler, paused: false});
+      _tweens.push(new GTween(null, 2, null, {onComplete: registerTouchHandler, paused: false}));
     
     }
     
@@ -1113,15 +1116,15 @@ package Level
       addChild(_evilText);
       
       // Use a GTween, as the Starling tweens are paused.
-      new GTween(_evilSnake, 2, {y: AssetRegistry.STAGE_HEIGHT - _evilSnake.height});
-      new GTween(_evilText, 2, {y: 0});
+      _tweens.push(new GTween(_evilSnake, 2, {y: AssetRegistry.STAGE_HEIGHT - _evilSnake.height}));
+      _tweens.push(new GTween(_evilText, 2, {y: 0}));
       
       var registerTouchHandler:Function = function():void
       {
         addEventListener(TouchEvent.TOUCH, winScreenTouch);
       }
       
-      new GTween(null, 2, null, {paused: false, onComplete: registerTouchHandler});
+      _tweens.push(new GTween(null, 2, null, {paused: false, onComplete: registerTouchHandler}));
     }
     
     protected function showObjectiveBox(desc:String, goals:Array, fontSize:int = 50):void
@@ -1412,6 +1415,10 @@ package Level
     {
       var i:int = 0;
       
+      for each(var tween:GTween in _tweens) {
+        tween.end();
+      }
+      _tweens = new Vector.<GTween>;
       // Maybe this Level plays music
       AssetRegistry.soundmanager.fadeOutMusic();
       

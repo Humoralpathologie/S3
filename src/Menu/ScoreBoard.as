@@ -277,6 +277,8 @@ package Menu
 	override public function dispose():void
 	{
 	  for each(var tween:GTween in _tweens) {
+        trace("tweens ended");
+        tween.onComplete = null;
         tween.end();
       }
 	  

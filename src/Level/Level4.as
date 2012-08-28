@@ -144,6 +144,7 @@ package Level
         removeChild(_hud);
         bonusTimer = 0;
         var animation:GTween = new GTween(_snake, 1, { y: 600 }, { ease: Back.easeIn, onComplete: function(tween:GTween):void { animation.end(); }} );
+        _tweens.push(animation);
         
       }
       if (_snake.tail.y >= 600 && _level4Animation) {
