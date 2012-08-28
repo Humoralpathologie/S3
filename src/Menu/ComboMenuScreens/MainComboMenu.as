@@ -35,6 +35,8 @@ package Menu.ComboMenuScreens
     
     protected var _onComboSelect:Signal = new Signal(MainComboMenu);
     protected var _onLeaderboards:Signal = new Signal(MainComboMenu);
+    protected var _onInfoText:Signal = new Signal(MainComboMenu);
+    protected var _onNormalCombos:Signal = new Signal(MainComboMenu);
     protected var _sharedData:Object = {};
     protected var _greybox:Quad;
     
@@ -141,7 +143,8 @@ package Menu.ComboMenuScreens
           var touch:Touch = event.getTouch(that, TouchPhase.ENDED);
           if (touch)
           {
-
+            onInfoText.dispatch(that);
+            /*
 						_text.height = infoDisplay.height + 340;
             _text.text = AssetRegistry.Strings.ARCADEINFO;
             addChild(infoDisplay);
@@ -151,7 +154,7 @@ package Menu.ComboMenuScreens
             addChild(xButton);
             addChild(_infoButtonX);
             removeChild(_infoButtonQ);
-            removeChild(question);
+            removeChild(question);*/
           }
         });
       
@@ -176,9 +179,11 @@ package Menu.ComboMenuScreens
     {
 			
 			_buttons.push([button, _text]);
-			
+			var that:MainComboMenu = this;
 			button.addEventListener(Event.TRIGGERED, function(event:Event):void
 				{
+          onNormalCombos.dispatch(that);
+          /*
 					_text.height = _greybox.height;
           switch (i)
           {
@@ -206,7 +211,7 @@ package Menu.ComboMenuScreens
           addChild(_scroller);
           _scrollable.addChild(_text);
           addChild(xButton);
-          addChild(_infoButtonX);
+          addChild(_infoButtonX);*/
         
         });
     
@@ -394,6 +399,17 @@ package Menu.ComboMenuScreens
     {
       return _onComboSelect;
     }
+    
+    public function get onInfoText():ISignal
+    {
+      return _onInfoText;
+    }
+    
+    public function get onNormalCombos():ISignal
+    {
+      return _onNormalCombos;
+    }
+    
     public function get onLeaderboards():ISignal
     {
       return _onLeaderboards;

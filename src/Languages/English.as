@@ -40,6 +40,7 @@ package Languages
 		public static const LEADERBOARDS:String = "LEADERBOARDS";
 		
 		//Arcade Info
+    public static const ARCADEINFOHEADING:String = "ARCADE INFO";
 		public static const ARCADEINFO:String = "This mode is all about earning the highest score by experimenting with different combos.\nThe Time Attack Mode gives you 3 minutes to help Little Snake devour as many eggs as possible before the volcano erupts. Additional to the basic combos, there are 3 slots to which you can assign special combos by tapping them.\nIf you are too chicken and afraid of volcanoes, you may as well play the Endless Mode. There you can slow down if you become too fast and go after the ultimate high score. Face the challange and strife for immortality in the Leaderboards.";
 		
 		// Combo Menu
@@ -57,6 +58,7 @@ package Languages
 		public static const TIMEDESC:String = "Bonus Time Combo: Do you hate it when you want to score high but a volcanic eruption spoils all the fun? Performing this combo will delay the volcanic eruption by 3 seconds.";
 		public static const SLOWERDESC:String = "Snail Combo: Performing this combo will slow you down.";
 		public static const NOROTTENDESC:String = "No Rotten Egg Combo: Performing this combo rids you of the bothersome and poisonous eggs.";
+    public static const NORMALCOMBO:String = "STATIC COMBOS";
 		
 		//pause menu
 		public static const PAUSE:String = "PAUSE";

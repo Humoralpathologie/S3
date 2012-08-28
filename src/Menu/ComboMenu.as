@@ -20,6 +20,8 @@ package Menu
     private static const SELECTCOMBO:String = "SelectCombo";
     private static const LEADERBOARDS:String = "Leaderboards";
     private static const SELECTCOMBOTWO:String = "SelectComboTwo";
+    private static const INFOTEXT:String = "InfoText";
+    private static const NORMALCOMBOS:String = "NormalCombos";
     
     private var _navigator:ScreenNavigator;
     private var _transitionManager:ScreenSlidingStackTransitionManager;
@@ -40,7 +42,9 @@ package Menu
       
       _navigator.addScreen(BASEMENU, new ScreenNavigatorItem(MainComboMenu, {
         onComboSelect:SELECTCOMBO,
-        onLeaderboards:LEADERBOARDS
+        onLeaderboards:LEADERBOARDS,
+        onInfoText:INFOTEXT,
+        onNormalCombos:NORMALCOMBOS
       }, {
         sharedData: this._sharedData
       }));
@@ -54,6 +58,18 @@ package Menu
       
       _navigator.addScreen(SELECTCOMBO, new ScreenNavigatorItem(ComboSelect, {
         onMainComboMenu:BASEMENU
+      }, {
+        sharedData: this._sharedData
+      }));
+      
+      _navigator.addScreen(INFOTEXT, new ScreenNavigatorItem(InfoText, {
+        onInfoText:BASEMENU
+      }, {
+        sharedData: this._sharedData
+      }));
+      
+      _navigator.addScreen(NORMALCOMBOS, new ScreenNavigatorItem(NormalCombos, {
+        onNormalCombos:BASEMENU
       }, {
         sharedData: this._sharedData
       }));

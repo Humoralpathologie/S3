@@ -58,9 +58,9 @@ package Menu.ComboMenuScreens
 	  var that:ComboSelect = this;
 	  var xButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
 
-      xButton.scaleX = xButton.scaleY = 1.5;
-      xButton.x = Starling.current.stage.stageWidth - xButton.width - 20;
-      xButton.y = greybox.y;
+      //xButton.scaleX = xButton.scaleY = 1.5;
+      xButton.x = 860;
+      xButton.y = 30;
 
       var exit:Quad = new Quad(140, 250, 0xffffff);
       exit.alpha = 0;

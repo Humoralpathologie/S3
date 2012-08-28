@@ -28,6 +28,7 @@ package Level
 			SaveGame.startSpeed += 2;
 			_snake.mps = SaveGame.startSpeed;
 			_speed = 1 / SaveGame.startSpeed;
+      _snake.lives = 1;
 	  _comboSet.addCombo(new Combo.NoRottenCombo);
     }
 	

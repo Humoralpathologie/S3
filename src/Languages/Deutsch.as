@@ -40,6 +40,7 @@ package Languages
 		public static const LEADERBOARDS:String = "LEADERBOARD";
 		
 		//Arcade Info
+    public static const ARCADEINFOHEADING:String = "ARCADE INFO";
 		public static const ARCADEINFO:String = "In diesem Spielmodus geht alles um den Highschore. Ordne verschiedene Spezial-Combos den 3 leeren Slots zu und experimentiere mit unterschiedlichen Strategien.\n Im Countdownmodus hast du drei Minuten Zeit, so viele Eier wie möglich zu fressen, bevor der Vulkan ausbricht. \n Wenn du eher ängstlicher Natur oder kein Vulkanliebhaber bist, kannst du auch im Endlosmodus spielen, in dem die Spielgeschwindigkeit mit einer Combo auch wieder gedrosselt werden kann, wenn es zu haarig werden sollte. Nimm also die Herausforderung an und verewige dich in den Leaderboards!";
 		
 		// Combo Menu
@@ -57,6 +58,8 @@ package Languages
 		public static const TIMEDESC:String = "Hasst du es auch, wenn man gerade richtig schön punktet und ein plötzlicher Vulkanausbruch gänzlich den Spaß verdirbt? Dann mach diese Combo und der Vulkanausbruch wird um 3 Sekunden verschoben.";
 		public static const SLOWERDESC:String = "Diese Combo lässt dich wieder langsamer werden.";
 		public static const NOROTTENDESC:String = "Diese Combo lässt die faulen Eier verschwinden";
+    public static const NORMALCOMBO:String = "FESTE COMBOS";
+    
 		//pause menu
 		public static const PAUSE:String = "PAUSE";
 		public static const BACK:String = "HAUPTMENÜ";
