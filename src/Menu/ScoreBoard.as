@@ -260,7 +260,7 @@ package Menu
       _lifeBonusHeading.y = (_scores.level != 9) ? _timeBonusHeading.y + 60 : _scoreHeading.y + 60;
       _lifeBonusHeading.vAlign = VAlign.TOP;
       _lifeBonusHeading.hAlign = HAlign.LEFT;
-      if (_scores.level == 9 && SaveGame.endless){
+      if ((_scores.level == 9 && SaveGame.endless) || _scores.level != 9){
         addChild(_lifeBonusHeading);
       }
       
