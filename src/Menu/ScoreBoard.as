@@ -62,6 +62,7 @@ package Menu
     private var _timeBonusHeading:TextField;
     private var _lifeBonusHeading:TextField;
     private var _totalHeading:TextField;
+    private var _rankHeading:TextField;
 	
 	protected var _onScoring:Signal = new Signal(ScoreBoard);
 	private var _next:Button;
@@ -99,6 +100,7 @@ package Menu
     {
       addBoards();
       addTexts();
+      addRank();
 	  _next = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("arrow_reduced"));
       _next.scaleX = -1;
       _next.x = _scoreboard.x + _scoreboard.width + _next.width;
@@ -273,11 +275,19 @@ package Menu
       
       
     }
+    
+    private function addRank():void {
+      _rankHeading = new TextField(200, 40, AssetRegistry.Strings.RANK, "kroeger 06_65", 35, Color.WHITE);
+      _rankHeading.x = 600;
+      _rankHeading.y = _scoreboardText.y;
+      addChild(_rankHeading);
+      
+      //TODO: getRank
+    }
 	
 	override public function dispose():void
 	{
 	  for each(var tween:GTween in _tweens) {
-        trace("tweens ended");
         tween.onComplete = null;
         tween.end();
       }

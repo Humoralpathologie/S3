@@ -25,6 +25,7 @@ package Menu
   import org.josht.starling.foxhole.transitions.ScreenFadeTransitionManager;
   import org.josht.starling.foxhole.controls.ScreenNavigator;
   import org.josht.starling.foxhole.controls.ScreenNavigatorItem;
+  import engine.Utils;
   
   /**
    * ...
@@ -107,6 +108,7 @@ package Menu
       createScoreBoard();
       addButtons();
       _boards.showScreen(SCORE);
+      //Utils.getLeaderboard(_score.level, updateLeaderboard, "alltime");
     }
     
     private function calculateTime():void

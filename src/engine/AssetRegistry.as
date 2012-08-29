@@ -137,8 +137,12 @@ package engine
     [Embed(source="../../assets/Loading/loading-screen.png")]
     static public const LoadingScreenPNG:Class;
     
+    [Embed(source="../../assets/Sounds/Biss1.mp3")]
+    static public const Bite1:Class;
+    [Embed(source="../../assets/Sounds/Biss2.mp3")]
+    static public const Bite2:Class;
     [Embed(source="../../assets/Sounds/Biss3.mp3")]
-    static public const Bite:Class;
+    static public const Bite3:Class;
     
     [Embed(source="../../assets/Levels/arcadeoverlaytexture.xml",mimeType="application/octet-stream")]
     static private const ArcadeOverlayAtlasXML:Class
@@ -187,6 +191,18 @@ package engine
     static private const ComboSound6:Class;
     [Embed(source = "../../assets/Sounds/Combo/SchwanzEffekt8.mp3")]
     static private const ComboSound7:Class;
+    
+    [Embed(source = "../../assets/Sounds/RottenEgg.mp3")]
+    static private const RottenEggSound:Class;
+    [Embed(source = "../../assets/Sounds/GoldenEgg.mp3")]
+    static private const GoldenEggSound:Class;
+    [Embed(source = "../../assets/Sounds/ShuffleEgg_01.mp3")]
+    static private const ShuffleEggSound:Class;
+    
+    [Embed(source = "../../assets/Sounds/Todesgeraeusch.mp3")]
+    static private const DieSound:Class;
+    [Embed(source = "../../assets/Sounds/GameOver.mp3")]
+    static private const GameOverSound:Class;
     
     // Particles
     [Embed(source="../../assets/Particles/EggsplosionA.pex",mimeType="application/octet-stream")]
@@ -403,7 +419,14 @@ package engine
       soundmanager.registerSound("comboSound5", new ComboSound5);
       soundmanager.registerSound("comboSound6", new ComboSound6);
       soundmanager.registerSound("comboSound7", new ComboSound7);
-      soundmanager.registerSound("bite", new Bite());
+      soundmanager.registerSound("bite1", new Bite1());
+      soundmanager.registerSound("bite2", new Bite2());
+      soundmanager.registerSound("bite3", new Bite3());
+      soundmanager.registerSound("rottenEggSound", new RottenEggSound);
+      soundmanager.registerSound("goldenEggSound", new GoldenEggSound);
+      soundmanager.registerSound("shuffleEggSound", new ShuffleEggSound);
+      soundmanager.registerSound("gameOverSound", new GameOverSound);
+      soundmanager.registerSound("dieSound", new DieSound);
     }
     
     public static function registerMusic():void {

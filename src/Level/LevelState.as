@@ -373,6 +373,9 @@ package Level
       {
         return;
       }
+      if (_snake.lives >= 0) {
+        AssetRegistry.soundmanager.playSound("dieSound");
+      }
       pause();
       
       _sadSnake = new Image(AssetRegistry.UIAtlas.getTexture("sadsnake"));
@@ -526,7 +529,9 @@ package Level
     {
       var particle:PDParticleSystem;
       
-      AssetRegistry.soundmanager.playSound("bite");
+      var biteSounds:Array = ["bite1", "bite2", "bite3"];
+      
+      AssetRegistry.soundmanager.playSound(biteSounds[Math.floor(Math.random()*3)]);
       
       if (!_rottenEnabled && egg.type == AssetRegistry.EGGROTTEN || egg.type != AssetRegistry.EGGROTTEN) // || egg.type < AssetRegistry.EGGROTTEN)
       {
@@ -551,12 +556,14 @@ package Level
         if (egg.type == AssetRegistry.EGGGOLDEN)
         {
           points = 100;
+          AssetRegistry.soundmanager.playSound("goldenEggSound");
         }
         
         if (egg.type == AssetRegistry.EGGSHUFFLE)
         {
           _snake.shuffle();
           points = 0;
+          AssetRegistry.soundmanager.playSound("shuffleEggSound");
         }
         
         if (points > 0)
@@ -584,6 +591,7 @@ package Level
         _score -= 5;
         showPoints(egg, "-5", 20, Color.RED);
         particle = _particles["realRotten"];
+        AssetRegistry.soundmanager.playSound("rottenEggSound");
         if (particle)
         {
           particle.x = egg.x + 10;
@@ -826,7 +834,8 @@ package Level
       addChild(image);
       
       // Use a GTween, as the Starling tweens are paused.
-      _tweens.push(new GTween(image, 2, {y: AssetRegistry.STAGE_HEIGHT - image.height}));
+      _tweens.push(new GTween(image, 2, { y: AssetRegistry.STAGE_HEIGHT - image.height } ));
+      AssetRegistry.soundmanager.playSound("gameOverSound");
       
       var registerTouchHandler:Function = function():void
       {

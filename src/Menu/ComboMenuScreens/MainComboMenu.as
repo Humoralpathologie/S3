@@ -123,16 +123,7 @@ package Menu.ComboMenuScreens
       
       if (!SaveGame.secondArcade)
       {
-				_text.height = infoDisplay.height + 340;
-        _text.text = AssetRegistry.Strings.ARCADEINFO;
-        addChild(infoDisplay);
-        //addChild(_scrollable);
-        addChild(_scroller);
-        _scrollable.addChild(_text);
-        removeChild(question);
-        removeChild(_infoButtonQ);
-        addChild(xButton);
-        addChild(_infoButtonX);
+				onInfoText.dispatch(this);
         SaveGame.secondArcade = true;
       }
       

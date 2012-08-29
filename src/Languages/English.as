@@ -100,6 +100,8 @@ package Languages
     public static const FRIENDS:String = "Friends";
     public static const PERSONAL:String = "Personal";
     
+    public static const RANK:String = "Rank";
+    
     //Messages
     public static const JUMPMESSAGE:String = "And now JUMP THE CANYON!!";
     public static const FASTERMESSAGE:String = "Speed+";
