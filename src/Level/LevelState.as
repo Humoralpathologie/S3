@@ -531,13 +531,14 @@ package Level
       
       var biteSounds:Array = ["bite1", "bite2", "bite3"];
       
-      AssetRegistry.soundmanager.playSound(biteSounds[Math.floor(Math.random()*3)]);
+      
       
       if (!_rottenEnabled && egg.type == AssetRegistry.EGGROTTEN || egg.type != AssetRegistry.EGGROTTEN) // || egg.type < AssetRegistry.EGGROTTEN)
       {
         if (egg.type <= AssetRegistry.EGGROTTEN)
         {
           _snake.eat(egg.type);
+          AssetRegistry.soundmanager.playSound(biteSounds[Math.floor(Math.random()*3)]);
             //_hud.addPreview(egg.type);
         }
         
@@ -1113,6 +1114,8 @@ package Level
         _currentCombos = null;
       }
       pause();
+      
+      AssetRegistry.soundmanager.playSound("winSound");
       
       _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
       _evilSnake.x = (AssetRegistry.STAGE_WIDTH - _evilSnake.width) / 2;

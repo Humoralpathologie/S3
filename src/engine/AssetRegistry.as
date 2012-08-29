@@ -203,6 +203,8 @@ package engine
     static private const DieSound:Class;
     [Embed(source = "../../assets/Sounds/GameOver.mp3")]
     static private const GameOverSound:Class;
+    [Embed(source = "../../assets/Sounds/CarnageComplete.mp3")]
+    static private const WinSound:Class;
     
     // Particles
     [Embed(source="../../assets/Particles/EggsplosionA.pex",mimeType="application/octet-stream")]
@@ -427,6 +429,7 @@ package engine
       soundmanager.registerSound("shuffleEggSound", new ShuffleEggSound);
       soundmanager.registerSound("gameOverSound", new GameOverSound);
       soundmanager.registerSound("dieSound", new DieSound);
+      soundmanager.registerSound("winSound", new WinSound);
     }
     
     public static function registerMusic():void {

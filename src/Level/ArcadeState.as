@@ -169,22 +169,24 @@ package Level
 	
 	override protected function lose():void {
 		_lost = true;
-      pause();
-      var image:Image;
+    pause();
+    var image:Image;
 	  if (SaveGame.endless){
-        image = new Image(AssetRegistry.UIAtlas.getTexture("game over_gravestone"));
-		image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
-        image.y = AssetRegistry.STAGE_HEIGHT;
-        addChild(image);
+      image = new Image(AssetRegistry.UIAtlas.getTexture("game over_gravestone"));
+		  image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
+      image.y = AssetRegistry.STAGE_HEIGHT;
+      addChild(image);
+      AssetRegistry.soundmanager.playSound("gameOverSound");
 	  } else {
-		image = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
-		image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
-        image.y = AssetRegistry.STAGE_HEIGHT;
-        addChild(image);
-		var _evilText:Image = new Image(AssetRegistry.UIAtlas.getTexture("Snake_EvilLaughText"));
-        _evilText.x = (AssetRegistry.STAGE_WIDTH - _evilText.width) / 2;
-        _evilText.y = 0;
-        addChild(_evilText);
+		  image = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
+		  image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
+      image.y = AssetRegistry.STAGE_HEIGHT;
+      addChild(image);
+		  var _evilText:Image = new Image(AssetRegistry.UIAtlas.getTexture("Snake_EvilLaughText"));
+      _evilText.x = (AssetRegistry.STAGE_WIDTH - _evilText.width) / 2;
+      _evilText.y = 0;
+      addChild(_evilText);
+      AssetRegistry.soundmanager.playSound("winSound");
 	  }
 	  
       

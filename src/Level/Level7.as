@@ -64,7 +64,7 @@ package Level
 		{
       if (egg.type == AssetRegistry.EGGGOLDEN) {
         var particle:PDParticleSystem;
-        AssetRegistry.soundmanager.playSound("bite");
+        AssetRegistry.soundmanager.playSound("bite1");
         particle = _particles[egg.type];
         if (particle)
         {
