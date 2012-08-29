@@ -45,6 +45,11 @@ package Level
 				_neededChains = 20;
 			} */
 			super();
+      if (SaveGame.difficulty == 1){
+        _snake.lives = 2;
+      } else {
+        _snake.lives = 1;
+      }
       gameJuggler.add(_goldenEggs);
       _levelStage.addChild(_goldenEggs);
 			_comboSet.addCombo(new Combo.NoRottenCombo);
@@ -155,7 +160,7 @@ package Level
 		{
 			//_hud = new HUD(new Radar(_eggs, _snake), ["lifes", "time", "speed", "poison"], this);
 			_hud = new HUD(this);
-			var iconsCfg:Object = {lives: {type: "lives", pos: 1, watching: "lives"}, time: {type: "time", pos: 2, watching: "overallTime"}, poison: {type: "poison", pos: 4, watching: "poisonCount"}}
+			var iconsCfg:Object = {lives: {type: "lives", pos: 1, watching: "lives"}, time: {type: "time", pos: 2, watching: "overallTime"}, speed: {type: "speed", pos: 3, watching: "speed"}, poison: {type: "poison", pos: 4, watching: "poisonCount"}}
 			
 			_hud.iconsCfg = iconsCfg;
 			addChild(_hud);
