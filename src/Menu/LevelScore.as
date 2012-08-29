@@ -93,6 +93,7 @@ package Menu
       }
       _scores["total"] = _scores.score + (_scores.lives * 100);
       calculateTime();
+      calculateMedal();
       
       // No negative scores;
       
@@ -136,6 +137,35 @@ package Menu
           break;
       }
     
+    }
+    
+    private function calculateMedal():void
+    {
+      var actualMedal:int;
+      if (_scores.total >= 400 && _scores.total < 600) {
+        _scores.bigMedal = "medaille_bronze";
+        _scores.smallMedal = "bronze_small";
+        actualMedal = 0;
+     
+      } else if (_scores.total >= 600 && _scores.total < 800) {
+        _scores.bigMedal = "medaille_silber";
+        _scores.smallMedal = "silver_small";
+        actualMedal = 1;
+      } else if (_scores.total >= 800 && _scores.total < 1000) {
+         _scores.bigMedal = "medaille_gold";
+        _scores.smallMedal = "gold_small";
+        actualMedal = 2;
+      } else if (_scores.total >= 1000) {
+         _scores.bigMedal = "medaille_saphir";
+        _scores.smallMedal = "saphire_small";
+        actualMedal = 3;
+      }
+
+     if (!SaveGame.medals[_scores.level - 1] || actualMedal > SaveGame.medals[_scores.level - 1]) {
+        SaveGame.storeMedals(_scores.level, actualMedal); 
+     }
+     
+     trace(AssetRegistry.MEDALS[SaveGame.medals[_scores.level - 1]]);
     }
     
     private function createScoreBoard():void

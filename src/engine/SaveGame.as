@@ -172,6 +172,8 @@ package engine
     
     public static function initializeData():void
     {
+      _sharedObject.data.casualMedals = [];
+      _sharedObject.data.competetiveMedals = [];
       _sharedObject.data.levels = {};
       for (var i:int = 1; i <= 100; i++)
       {
@@ -203,6 +205,24 @@ package engine
         }
       }
       return unlocked;
+    }
+    
+    public static function get medals():Array
+    {
+      if (difficulty == 1) {
+        return _sharedObject.data.casualMedals;
+      } else {
+        return _sharedObject.data.competetiveMedals;
+      }
+      
+    }
+    
+    public static function storeMedals(levelNumber:int, medal:int):void {
+      if (difficulty == 1) {
+        _sharedObject.data.casualMedals[levelNumber - 1] = medal;
+      } else {
+        _sharedObject.data.competetiveMedals[levelNumber - 1] = medal;
+      }
     }
     
     public static function levelUnlocked(n:Number):Boolean

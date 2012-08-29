@@ -40,7 +40,7 @@ package Menu
     public function LevelSelect()
     {
       
-      AssetRegistry.loadGraphics([AssetRegistry.LEVELSELECT]);
+      AssetRegistry.loadGraphics([AssetRegistry.LEVELSELECT, AssetRegistry.SCORING]);
       _scroller = new Scroller();
       _scrollable = new Sprite();
       
@@ -54,6 +54,7 @@ package Menu
       _scrollable.addChild(_levelSelectBottom);
       
       addLocks();
+      addMedals();
       addHitBoxes();
       
       _scrollable.flatten();
@@ -97,6 +98,19 @@ package Menu
               obj.callback();
             }
           }
+        }
+      }
+    }
+    private function addMedals():void
+    {
+      var medalPos:Array = [[313, 335], [556, 460], [821, 593], [557, 722], [312, 845], [557, 979], [312, 1175]];
+      for (var i:int; i < medalPos.length; i++ ) {
+        trace(AssetRegistry.MEDALS[SaveGame.medals[i]])
+        if (AssetRegistry.MEDALS[SaveGame.medals[i]]){
+          var medal:Image = new Image(AssetRegistry.ScoringAtlas.getTexture(AssetRegistry.MEDALS[SaveGame.medals[i]]));
+          medal.x = medalPos[i][0];
+          medal.y = medalPos[i][1];
+          _scrollable.addChild(medal);
         }
       }
     }

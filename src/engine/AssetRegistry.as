@@ -328,6 +328,9 @@ package engine
     
     public static const COMBO_TRIGGERS:Array = ["acba", "ccbba", "bcaac", "abbca", "abcb", "bccb"];
     
+    public static const MEDALS:Array = ["bronze_small", "silver_small", "gold_small", "saphire_small"];
+    
+    
     public static var Strings:Class;
     
     // Stuff for Scoreoid.
