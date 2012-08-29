@@ -93,13 +93,15 @@ package Menu
       }
       _scores["total"] = _scores.score + (_scores.lives * 100);
       calculateTime();
-      calculateMedal();
+      
       
       // No negative scores;
       
       _scores.timeBonus = Math.max(_timeBonus, 0);
       
-      _scores.total += (_timeBonus * 5);
+      _scores.total += (_scores.timeBonus * 5);
+      calculateMedal();
+      trace("total: " + _scores.total)
       if (!_scores.lost)
       {
         SaveGame.saveScore(_scores.level, _scores.total);
@@ -141,21 +143,72 @@ package Menu
     
     private function calculateMedal():void
     {
+      var medalReq:Array;
+      if (SaveGame.difficulty == 1) {
+        switch(_scores.level) {
+          case 1: 
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 2:
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 3: 
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 4:
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 5: 
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 6:
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 7:
+            medalReq = [400, 600, 800, 1000];
+            break;
+        }
+      } else {
+        switch(_scores.level) {
+          case 1: 
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 2:
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 3: 
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 4:
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 5: 
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 6:
+            medalReq = [400, 600, 800, 1000];
+            break;
+          case 7:
+            medalReq = [400, 600, 800, 1000];
+            break;
+        }
+      }
+      
       var actualMedal:int;
-      if (_scores.total >= 400 && _scores.total < 600) {
+      if (_scores.total >= medalReq[0] && _scores.total < medalReq[1]) {
         _scores.bigMedal = "medaille_bronze";
         _scores.smallMedal = "bronze_small";
         actualMedal = 0;
      
-      } else if (_scores.total >= 600 && _scores.total < 800) {
+      } else if (_scores.total >= medalReq[1] && _scores.total < medalReq[2]) {
         _scores.bigMedal = "medaille_silber";
         _scores.smallMedal = "silver_small";
         actualMedal = 1;
-      } else if (_scores.total >= 800 && _scores.total < 1000) {
+      } else if (_scores.total >= medalReq[2] && _scores.total < medalReq[3]) {
          _scores.bigMedal = "medaille_gold";
         _scores.smallMedal = "gold_small";
         actualMedal = 2;
-      } else if (_scores.total >= 1000) {
+      } else if (_scores.total >= medalReq[3]) {
          _scores.bigMedal = "medaille_saphir";
         _scores.smallMedal = "saphire_small";
         actualMedal = 3;
