@@ -352,8 +352,11 @@ package engine
       soundmanager.musicMuted = SaveGame.musicMuted;
       soundmanager.SFXMuted = SaveGame.SFXMuted;
       
-	  
-	    Strings = English;
+	    if (SaveGame.language == 2){
+	      Strings = Deutsch;
+      } else {
+        Strings = English;
+      }
       
       registerSounds();
       registerMusic();
