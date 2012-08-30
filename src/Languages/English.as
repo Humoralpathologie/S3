@@ -113,6 +113,7 @@ package Languages
     public static const EXTRALIFEMESSAGE:String = "Bonus Life!";
     public static const EXTRAEGGSMESSAGE:String = "Extra Eggs!";
     public static const EXTRATIMEEXTMESSAGE:String = "Bonus Time+";
+    public static const EXTRATIMEEXTENDMESSAGE:String = "Bonus Time-";
     public static const CHAINTIMEEXTMESSAGE:String = "Chain Time+";
     public static const CHAINTIMEEXTENDMESSAGE:String = "Chain Time-";
     

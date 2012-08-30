@@ -19,6 +19,7 @@ package Combo
     override public function effect(state:LevelState):void {
       state.showMessage(AssetRegistry.Strings.EXTRATIMEEXTMESSAGE);
       state.timeExtension = 4;
+      state.timeExtensionTime = state.overallTimer + 60;
       state.showSpecialParticles(state.snake.head, "BonusTime");
     }
   

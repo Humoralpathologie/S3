@@ -136,6 +136,7 @@ package Level
     protected var _timeExtension:Number = 3;
     protected var _chainTime:Number = 2.5;
     protected var _extensionTime:int;
+    protected var _timeExtensionTime:int;
     protected var _spawnMap:Array = [];
     protected var _textLayer:Sprite;
     
@@ -899,6 +900,13 @@ package Level
             _extensionTime = 0;
 						showMessage(AssetRegistry.Strings.CHAINTIMEEXTENDMESSAGE);
           }
+          
+          if ((int(_overallTimer) > 0) && (int(_overallTimer) == _timeExtensionTime))
+          {
+            _timeExtension = 3;
+            _timeExtensionTime = 0;
+						showMessage(AssetRegistry.Strings.EXTRATIMEEXTENDMESSAGE);
+          }
         }
         
         if (_eggs.length < _maxEggs)
@@ -1386,6 +1394,16 @@ package Level
     public function set extensionTime(value:Number):void
     {
       _extensionTime = value;
+    }
+    
+    public function get timeExtensionTime():Number
+    {
+      return _timeExtensionTime;
+    }
+    
+    public function set timeExtensionTime(value:Number):void
+    {
+      _timeExtensionTime = value;
     }
     
     public function get overallTimer():Number
