@@ -1198,9 +1198,9 @@ package Level
       
       addChild(_scroller);
       
-      
-      var text:TextField = new TextField(700, 800, "", "kroeger 06_65", fontSize, Color.WHITE);
+      var text:TextField = new TextField(700, 1050, "", "kroeger 06_65", fontSize, Color.WHITE);
       text.text = desc;
+      text.autoScale = true;
       text.x = (box.width - text.width) / 2;
       text.y = yPos + 80;
       text.vAlign = VAlign.TOP;
