@@ -118,6 +118,7 @@ package Menu
       var func:Function = function(tween:GTween):void {
         _medalTween.setValues( { x: 960 } );
         _medalTween.onComplete = func2;
+       //AssetRegistry.soundmanager.playSound("medalSound1");
       }
       
       var func2:Function = function(tween:GTween):void {
@@ -128,7 +129,8 @@ package Menu
           _medalTween.target = _medalSmall;
           _medalTween.setValues( { x: 755, y: 370 } );
           _medalTween.onComplete = null;
-          //_medalTween.autoPlay = false;   
+          //_medalTween.autoPlay = false; 
+           AssetRegistry.soundmanager.playSound("medalSound2");
       }
       
       if (_scores.bigMedal) {
@@ -142,6 +144,7 @@ package Menu
       if (_medal) {
         _medalTween = new GTween(_medal, 1.5, {x: 105, y: -100}, {ease: Elastic.easeInOut, onComplete: func});
         _tweens.push(_medalTween);
+        AssetRegistry.soundmanager.playSound("medalSound1");
         addChild(_medal);
       }
 

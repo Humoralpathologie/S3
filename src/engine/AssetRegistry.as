@@ -206,6 +206,11 @@ package engine
     [Embed(source = "../../assets/Sounds/CarnageComplete.mp3")]
     static private const WinSound:Class;
     
+    [Embed(source = "../../assets/Sounds/MedailleSwoosh1.mp3")]
+    static private const MedalSound1:Class;
+    [Embed(source = "../../assets/Sounds/MedailleSwoosh2Punch.mp3")]
+    static private const MedalSound2:Class;
+    
     // Particles
     [Embed(source="../../assets/Particles/EggsplosionA.pex",mimeType="application/octet-stream")]
     static public const EggsplosionA:Class;
@@ -436,6 +441,8 @@ package engine
       soundmanager.registerSound("gameOverSound", new GameOverSound);
       soundmanager.registerSound("dieSound", new DieSound);
       soundmanager.registerSound("winSound", new WinSound);
+      soundmanager.registerSound("medalSound1", new MedalSound1);
+      soundmanager.registerSound("medalSound2", new MedalSound2);
     }
     
     public static function registerMusic():void {
