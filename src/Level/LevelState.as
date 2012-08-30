@@ -661,8 +661,8 @@ package Level
     protected function removeAndExplodeCombo(combo:Array):void
     {
       var interval:int;
-      var prefib:int = 2;
-      var fib:int = 3;
+      var prefib:int = 4;
+      var fib:int = 5;
       var temp:int = 0;
       var soundCounter:int = 0;
       var expoCounter:int = 0;
