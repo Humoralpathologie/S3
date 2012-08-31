@@ -1,6 +1,7 @@
 package Level
 {
   import engine.AssetRegistry;
+  import flash.desktop.InteractiveIcon;
   import starling.animation.Juggler;
   //import com.demonsters.debugger.MonsterDebugger;
   import com.gskinner.motion.GTween;
@@ -577,7 +578,7 @@ package Level
         {
           var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
           _bonusTimerPoints += 2;
-          showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
+          showPoints(egg, "+" + String(_bonusTimerPoints), 0, 20, randColor);
           _score += _bonusTimerPoints;
         }
         
@@ -591,7 +592,7 @@ package Level
         Starling.juggler.add(_shake);
         _poisonEggs += 1;
         _score -= 5;
-        showPoints(egg, "-5", 20, Color.RED);
+        showPoints(egg, "-5", 0, 20, Color.RED);
         particle = _particles["realRotten"];
         AssetRegistry.soundmanager.playSound("rottenEggSound");
         if (particle)
@@ -683,7 +684,7 @@ package Level
             expoCounter++;
             _score += fib;
             
-            showPoints(egg, '+' + String(fib));
+            showPoints(egg, '+' + String(fib), 1);
             
             temp = fib;
             fib += prefib;
@@ -711,11 +712,11 @@ package Level
       func();
     }
      
-    protected function showPoints(egg:DisplayObject, points:String, offset:int = 0, color:uint = 0xffffff):void
+    protected function showPoints(egg:DisplayObject, points:String, variant:int = 0, offset:int = 0, color:uint = 0xffffff):void
     {
       var pos:Point = new Point();
       
-      dispatchEventWith(HUD.DISPLAY_POINTS, true, { position: pos, message: points, color: color } );
+      dispatchEventWith(HUD.DISPLAY_POINTS, true, { position: pos, variant: variant, message: points, color: color } );
       /*
       var text:TextField = recycleText(120, 120, points, 60); // new TextField(120, 120, points, "kroeger 06_65", 60);
       text.color = color;

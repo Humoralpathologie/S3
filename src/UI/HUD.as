@@ -249,8 +249,9 @@ package UI
     
     private function showPoint(pointObj:Object):void {
       var tween:Tween;
-      var textMessage:TextField;      
-      var variant:int = Math.floor(Math.random() * 2);
+      var textMessage:TextField;  
+      var variant:int = pointObj.variant;
+      //var variant:int = Math.floor(Math.random() * 2);
       
       textMessage = recycleMessage();
       textMessage.text = pointObj.message; 
