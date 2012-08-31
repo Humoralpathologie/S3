@@ -43,7 +43,10 @@ package Menu
     protected var _onLeaderboards:Signal = new Signal(Leaderboards);
     private var _back:Button;
     private var _score:Object
+    private var _countText:TextField;
+    private var _nameText:TextField;
     private var _scoreText:TextField;
+    private var _timeText:TextField;
     private var _tabBar:TabBar;
     private var _leaderboardShowing:String;
     protected var _sharedData:Object = {};
@@ -63,6 +66,9 @@ package Menu
     
     private function refreshLeaderboard():void {
       _scoreText.text = "Loading...";
+      _countText.text = "";
+      _nameText.text = "";
+      _timeText.text = "";
       Utils.getLeaderboard(_score.level, updateLeaderboard, _leaderboardShowing);
     }
     
@@ -99,24 +105,37 @@ package Menu
     }
     
     private function updateLeaderboard(data:Array, type:String):void {
-      var txt:String = "";
-      var count:int = 1;
       
+      
+      var count:int = 1;
+      _scoreText.text = "";
       for each(var playerScore:Object in data) {
-        txt += String(count) + ". ";
-        if(type == "alltime" || type == "weekly") {
-          txt += playerScore.Player.first_name;
-          txt += ": ";
+        _countText.text += String(count) + ".\n";
+        if (type == "alltime" || type == "weekly") {
+          /*
+          var _nameText:TextField = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+          _nameText.hAlign = HAlign.LEFT;
+          _nameText.vAlign = VAlign.TOP;
+          _nameText.x = _leaderboard.x + 50;
+          _nameText.y = _countText.y;*/
+          _nameText.text += playerScore.Player.first_name + ":\n";
+          _scoreText.x = _leaderboard.x + 350;
+          _timeText.x = _leaderboard.x + 570;
+        } else {
+          _nameText.text = "";
+          _timeText.x =  _leaderboard.x + 250;
+          _scoreText.x = _leaderboard.x + 50;
         }
-        txt += playerScore.Score.score + " ";
-        txt += playerScore.Score.created;
-        txt += "\n";
-        count++
-        if (count > 9) {
+        _scoreText.text += playerScore.Score.score + "\n";  
+        _timeText.text += playerScore.Score.created.split(" ")[0] + "\n";
+       
+        count++;
+        if (count > 8) {
           break;
         }
       }
-      _scoreText.text = txt;
+   
+      
     }
     
     private function addBoards():void
@@ -154,12 +173,33 @@ package Menu
     
     private function createLeaderboardText():void 
     {
+        _countText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+        _countText.hAlign = HAlign.LEFT;
+        _countText.vAlign = VAlign.TOP;
+        _countText.x = _leaderboard.x + 20;
+        _countText.y = _leaderboardText.y + _leaderboardText.height + 60;
+        addChild(_countText);
+        
+        _nameText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+        _nameText.hAlign = HAlign.LEFT;
+        _nameText.vAlign = VAlign.TOP;
+        _nameText.x = _leaderboard.x + 50;
+        _nameText.y = _countText.y;
+        addChild(_nameText);
+        
         _scoreText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
         _scoreText.hAlign = HAlign.LEFT;
         _scoreText.vAlign = VAlign.TOP;
-        _scoreText.x = _leaderboard.x + 20;
-        _scoreText.y = _leaderboardText.y + _leaderboardText.height + 60;
+        _scoreText.x = _leaderboard.x + 250;
+        _scoreText.y = _countText.y;
         addChild(_scoreText);
+        
+        _timeText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+        _timeText.hAlign = HAlign.LEFT;
+        _timeText.vAlign = VAlign.TOP;
+        _timeText.x = _leaderboard.x + 560;
+        _timeText.y = _countText.y;
+        addChild(_timeText);
     }
     
     public function get onLeaderboards():ISignal
