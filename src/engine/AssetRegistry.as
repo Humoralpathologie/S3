@@ -211,6 +211,11 @@ package engine
     [Embed(source = "../../assets/Sounds/MedailleSwoosh2Punch.mp3")]
     static private const MedalSound2:Class;
     
+    [Embed(source = "../../assets/Sounds/Eruption.mp3")]
+    static private const Eruption:Class;
+    [Embed(source = "../../assets/Sounds/Explosion.mp3")]
+    static private const Explosion:Class;
+    
     // Particles
     [Embed(source="../../assets/Particles/EggsplosionA.pex",mimeType="application/octet-stream")]
     static public const EggsplosionA:Class;
@@ -443,6 +448,8 @@ package engine
       soundmanager.registerSound("winSound", new WinSound);
       soundmanager.registerSound("medalSound1", new MedalSound1);
       soundmanager.registerSound("medalSound2", new MedalSound2);
+      soundmanager.registerSound("eruption", new Eruption);
+      soundmanager.registerSound("explosion", new Explosion);
     }
     
     public static function registerMusic():void {

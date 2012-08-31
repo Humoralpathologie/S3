@@ -47,7 +47,7 @@ package Languages
 		public static const SELECTABLECOMBO:String = "SELECTABLE COMBOS";
 		
 		// Combo Descriptions
-		public static const TIMECOMBODESC:String = "Bonus Time Up: Perform this combo and for 1 Minute every Bonus Time Combo will give you 4 instead of 3 extra seconds.";
+		public static const TIMECOMBODESC:String = "Bonus Time Up: Perform this combo and for 1 Minute every Bonus Time Combo will give you 10 instead of 5 extra seconds.";
 		public static const CHAINTIMEDESC:String = "Chain Time Up: Perform this combo and for 1 minute the Chain Time will be extended to 3 seconds.";
 		public static const XTRASPAWNDESC:String = "Extra Eggs: Performing this combo will instantly spawn 5 extra eggs!";
 		public static const SHUFFLEDESC:String = "Shuffle Egg: Performing this combo will spawn a Shuffle Egg. Devouring it will rearrange Little Snake's body tiles and give you the chance to score new combos.";
@@ -55,7 +55,7 @@ package Languages
 		public static const XTRALIFEDESC:String = "Extra Life: This combo does probably exactly what you think.";
 	
 		public static const SPEEDDESC:String = "Speed Combo: Performing this combo will make you faster.";
-		public static const TIMEDESC:String = "Bonus Time Combo: Do you hate it when you want to score high but a volcanic eruption spoils all the fun? Performing this combo will delay the volcanic eruption by 3 seconds.";
+		public static const TIMEDESC:String = "Bonus Time Combo: Do you hate it when you want to score high but a volcanic eruption spoils all the fun? Performing this combo will delay the volcanic eruption by 5 seconds.";
 		public static const SLOWERDESC:String = "Snail Combo: Performing this combo will slow you down.";
 		public static const NOROTTENDESC:String = "No Rotten Egg Combo: Performing this combo rids you of the bothersome and poisonous eggs.";
     public static const NORMALCOMBO:String = "STATIC COMBOS";

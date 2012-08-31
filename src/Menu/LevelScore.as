@@ -195,23 +195,25 @@ package Menu
       }
       
       var actualMedal:int;
-      if (_scores.total >= medalReq[0] && _scores.total < medalReq[1]) {
-        _scores.bigMedal = "medaille_bronze";
-        _scores.smallMedal = "bronze_small";
-        actualMedal = 0;
+      if (medalReq){
+        if (_scores.total >= medalReq[0] && _scores.total < medalReq[1]) {
+          _scores.bigMedal = "medaille_bronze";
+          _scores.smallMedal = "bronze_small";
+          actualMedal = 0;
      
-      } else if (_scores.total >= medalReq[1] && _scores.total < medalReq[2]) {
-        _scores.bigMedal = "medaille_silber";
-        _scores.smallMedal = "silver_small";
-        actualMedal = 1;
-      } else if (_scores.total >= medalReq[2] && _scores.total < medalReq[3]) {
-         _scores.bigMedal = "medaille_gold";
-        _scores.smallMedal = "gold_small";
-        actualMedal = 2;
-      } else if (_scores.total >= medalReq[3]) {
-         _scores.bigMedal = "medaille_saphir";
-        _scores.smallMedal = "saphire_small";
-        actualMedal = 3;
+        } else if (_scores.total >= medalReq[1] && _scores.total < medalReq[2]) {
+          _scores.bigMedal = "medaille_silber";
+          _scores.smallMedal = "silver_small";
+          actualMedal = 1;
+        } else if (_scores.total >= medalReq[2] && _scores.total < medalReq[3]) {
+          _scores.bigMedal = "medaille_gold";
+          _scores.smallMedal = "gold_small";
+          actualMedal = 2;
+        } else if (_scores.total >= medalReq[3]) {
+          _scores.bigMedal = "medaille_saphir";
+          _scores.smallMedal = "saphire_small";
+          actualMedal = 3;
+        }
       }
 
      if (!SaveGame.medals[_scores.level - 1] || actualMedal > SaveGame.medals[_scores.level - 1]) {

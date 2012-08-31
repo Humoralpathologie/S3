@@ -130,10 +130,10 @@ package Level
     
     protected var _startPos:Point = new Point(5, 5);
     protected var _levelBoundaries:Rectangle;
-    protected var _timeLeft:Number = 4 * 60;
+    protected var _timeLeft:Number = 30;
     protected var _poisonEggs:int = 0;
     protected var _maxEggs:int = 5;
-    protected var _timeExtension:Number = 3;
+    protected var _timeExtension:Number = 5;
     protected var _chainTime:Number = 2.5;
     protected var _extensionTime:int;
     protected var _timeExtensionTime:int;
@@ -1123,7 +1123,11 @@ package Level
       }
       pause();
       
-      AssetRegistry.soundmanager.playSound("winSound");
+      if (SaveGame.isArcade) {
+        AssetRegistry.soundmanager.playSound("explosion");
+      } else {
+        AssetRegistry.soundmanager.playSound("winSound");
+      }
       
       _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
       _evilSnake.x = (AssetRegistry.STAGE_WIDTH - _evilSnake.width) / 2;

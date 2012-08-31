@@ -44,6 +44,9 @@ package Level
   {
     //shake intensity
     private var _intensity:Number = 10;
+    private var _volcanoSoundPlayed:Boolean = false;
+    
+   
     public function ArcadeState()
     {
       //AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
@@ -132,6 +135,7 @@ package Level
     override public function dispose():void
     {
       super.dispose();
+      AssetRegistry.soundmanager.fadeOutSound();
     }
     
     override public function addFrame():void
@@ -157,6 +161,10 @@ package Level
     { 
       if (_timeLeft <= 7 && SaveGame.endless)
       {
+        if (!_volcanoSoundPlayed){
+          AssetRegistry.soundmanager.playSound("eruption");
+          _volcanoSoundPlayed = true;
+        }
         _levelStage.x += Math.random() * _intensity - (_intensity / 2);
         _levelStage.y += Math.random() * _intensity - (_intensity / 2)
         _intensity+=0.2;
@@ -166,6 +174,7 @@ package Level
         win();
       }
     }
+    
 	
 	override protected function lose():void {
 		_lost = true;
@@ -281,6 +290,8 @@ package Level
         new GTween(_overlay, 0.3, {"alpha": 0}, {ease: Exponential.easeOut, reflect: true, repeatCount: 0});
       }
     }
+    
+    
   }
 
 }

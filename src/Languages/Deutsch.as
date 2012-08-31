@@ -47,7 +47,7 @@ package Languages
 		public static const SELECTABLECOMBO:String = "AUSWÄHLBARE COMBOS";
 		
 		// Combo Descriptions
-		public static const TIMECOMBODESC:String = "Zeitbonus +: Mache diese Combo, um für 60 Sekunden 4 anstatt 3 Extrasekunden auf den Countdown gutgeschrieben zu bekommen.";
+		public static const TIMECOMBODESC:String = "Zeitbonus +: Mache diese Combo, um für 60 Sekunden 10 anstatt 5 Extrasekunden auf den Countdown gutgeschrieben zu bekommen.";
 		public static const CHAINTIMEDESC:String = "Kette +: Diese Combo, hebt für 1 Minute die Zeit für Ketten von 2 auf 3 Sekunden an.";
 		public static const XTRASPAWNDESC:String = "Extra Eier: Diese Combo lässt bei erfolgreicher Durchführung 5 Extra-Eier erscheinen!";
 		public static const SHUFFLEDESC:String = "Shuffle-Ei: Wenn du diese Combo machst und das Shuffle-Ei frisst, werden die Körperteile von Little Snake neu mischt für eine Zufallschance auf neue Combos.";
@@ -55,7 +55,7 @@ package Languages
 		public static const XTRALIFEDESC:String = "Extra Leben: Diese Combo tut wahrscheinlich genau das, was du denkst.";
 		
 		public static const SPEEDDESC:String = "Friss drei blaue Eier um schneller zu werden.";
-		public static const TIMEDESC:String = "Hasst du es auch, wenn man gerade richtig schön punktet und ein plötzlicher Vulkanausbruch gänzlich den Spaß verdirbt? Dann mach diese Combo und der Vulkanausbruch wird um 3 Sekunden verschoben.";
+		public static const TIMEDESC:String = "Hasst du es auch, wenn man gerade richtig schön punktet und ein plötzlicher Vulkanausbruch gänzlich den Spaß verdirbt? Dann mach diese Combo und der Vulkanausbruch wird um 5 Sekunden verschoben.";
 		public static const SLOWERDESC:String = "Diese Combo lässt dich wieder langsamer werden.";
 		public static const NOROTTENDESC:String = "Diese Combo lässt die faulen Eier verschwinden";
     public static const NORMALCOMBO:String = "FESTE COMBOS";

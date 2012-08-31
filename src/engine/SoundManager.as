@@ -20,11 +20,17 @@ package engine
     private var _musicTransform:SoundTransform;
     private var _soundTransform:SoundTransform;
     private var _fadingTween:GTween;
+    private var _fadingTweenSFX:GTween;
     private var _level:int = 0;
     private const PLAYING:int = 1;
     private const FADING:int = 2;
     private const STOPPED:int = 3;
     private var STATE:int = STOPPED;
+
+    private const PLAYINGSFX:int = 1;
+    private const FADINGSFX:int = 2;
+    private const STOPPEDSFX:int = 3;
+    private var STATESFX:int = STOPPED;
     private var _musicMuted:Boolean = false;
     private var _SFXMuted:Boolean = false;
     private var _fading:Boolean = false;
@@ -48,6 +54,13 @@ package engine
       if(STATE == PLAYING) {
         STATE = FADING;
         _fadingTween = new GTween(_musicTransform, delay, {volume: 0}, {onComplete: clearMusic, onChange: updateChannels});
+      }
+    }
+    public function fadeOutSound(delay:Number = 1):void
+    {
+      if(STATESFX == PLAYINGSFX) {
+        STATESFX = FADINGSFX;
+        _fadingTweenSFX = new GTween(_soundTransform, delay, {volume: 0}, {onComplete: clearSound, onChange: updateChannels});
       }
     }
     
@@ -82,6 +95,19 @@ package engine
         _musicTransform.volume = 1;
       }
       STATE = STOPPED;
+    }
+    
+    private function clearSound(t:GTween = null):void
+    {
+      var sound:SoundChannel;
+      while (sound = _soundsPlaying.pop())
+      {
+        sound.stop();
+      }
+      if(!_SFXMuted) {
+        _soundTransform.volume = 1;
+      }
+      STATESFX = STOPPEDSFX;
     }
     
     public function playMusic(name:String, repeat:Boolean = false):void
@@ -192,6 +218,10 @@ package engine
     public function playSound(name:String):void
     {
       var sound:Sound = _sounds[name];
+      if (STATESFX == FADINGSFX) {
+        _fadingTweenSFX.end();
+        clearSound();
+      }
       if (sound)
       {
         trace("Playing ", name);
@@ -201,9 +231,13 @@ package engine
         channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event):void
           {
             _soundsPlaying.splice(_soundsPlaying.indexOf(channel), 1);
+            if (name == "eruption") {
+              playSound(name);
+            }
           });
         
       }
+      STATESFX = PLAYINGSFX;
     }
     
     public function get level():int 
