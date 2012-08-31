@@ -257,13 +257,13 @@ package UI
       textMessage.text = pointObj.message; 
       textMessage.color = pointObj.color;
 
-      tween = new Tween(textMessage, 2);
+      tween = new Tween(textMessage, 1.5);
       textMessage.height = 200;
       textMessage.width = 200;
       textMessage.scaleX = textMessage.scaleY = 0.5; 
-      tween.animate("scaleX", 2);
-      tween.animate("scaleY", 2);
-      tween.animate("alpha", 0);
+      tween.animate("scaleX", 1.5);
+      tween.animate("scaleY", 1.5);
+      tween.animate("alpha", 0.75);
       tween.onComplete = function():void {
        textMessage.visible = false;
       }
@@ -272,20 +272,25 @@ package UI
       textMessage.height = 200;
       
       if (variant == 0) {
-        textMessage.x = 0;
+        textMessage.x = 100;
         textMessage.y = 640;      
+        //tween.animate("x", 280);
+        //tween.animate("y", -(Math.sqrt(80000)/2));
         tween.animate("x", 280);
-        tween.animate("y", -(Math.sqrt(80000)/2));
-        tween.animate("rotation", - 90 * (Math.PI / 180));        
+        tween.animate("y", -100);
+        //tween.animate("rotation", - 30 * (Math.PI / 180));        
       } else {
-        textMessage.x = 960;
+        textMessage.color = 0xffff00;
+        textMessage.x = 760;
         textMessage.y = 640;
-        tween.animate("x", 480);
-        tween.animate("y", -(Math.sqrt(80000)*2.5));
-        tween.onUpdate = function():void {
+        //tween.animate("x", 480);
+        //tween.animate("y", -(Math.sqrt(80000)*2.5));
+        tween.animate("x", 280);
+        tween.animate("y", -100);
+        /*tween.onUpdate = function():void {
           textMessage.pivotX = textMessage.width;
         }
-        tween.animate("rotation", 45* (Math.PI / 180));        
+        tween.animate("rotation", 30* (Math.PI / 180));*/        
       }
       _tweens.push(tween);
       _levelState.gameJuggler.add(tween);
@@ -361,7 +366,7 @@ package UI
       var pos:Point = new Point();
       var levelEggsLength:int = levelEggs.length;
       
-      // Update score display.
+      // Update display.
       _score.text = _levelState.score;
       
       // Update all icon TextFields.
