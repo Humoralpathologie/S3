@@ -122,12 +122,9 @@ package Menu
       _boards.showScreen(SCORE);
     }
     
-    // Input looks like this:
-    //{"ranks":{"4":1,"1":1,"2":1,"3":1},"highs":{"1":true,"2":true,"3":true}}
     private function showRank(ranks:Object):void {
       _leaderboardScreen.dispatchEventWith(Leaderboards.REFRESH_LEADERBOARD);
-      trace("Overall rank:");
-      trace(ranks.ranks["1"]);
+      _scoreScreen.dispatchEventWith(ScoreBoard.SHOW_RANK, false, ranks);
     }
     
     private function calculateTime():void

@@ -82,7 +82,7 @@ package Menu
         sharedData: {navigator: this._navigator, screen: LEADERBOARDS}
       }));*/
             
-      
+      _leaderboardScreen.dispatchEventWith(Leaderboards.REFRESH_LEADERBOARD);
     }
     
     override public function dispose():void {
