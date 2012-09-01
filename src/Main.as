@@ -9,6 +9,9 @@ package
   import flash.display.StageAlign;
   import flash.display.StageScaleMode;
   import flash.geom.Rectangle;
+  import flash.media.StageVideo;
+  import flash.net.NetConnection;
+  import flash.net.NetStream;
   import flash.ui.Multitouch;
   import flash.ui.MultitouchInputMode;
   import Level.LevelState;
@@ -55,6 +58,7 @@ package
       var screenWidth:int = stage.fullScreenWidth;
       var screenHeight:int = stage.fullScreenHeight;      
       
+      
       if (Capabilities.os.indexOf("Windows") != -1 || Capabilities.os.indexOf("Mac") != -1)
       {
         starling = new Starling(StageManager, stage, new Rectangle(0, 0, 960, 640)); // , viewPort);
@@ -77,7 +81,7 @@ package
 
         var yy:int = (screenHeight - hheight) / 2;
         var xx:int = (screenWidth - wwidth) / 2;
-        starling = new  starling.core.Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight));
+        starling = new Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight),null,"auto","baseline");
         starling.stage.stageHeight = 640;
         starling.stage.stageWidth = 960;
         
@@ -102,6 +106,7 @@ package
           removeChild(loadingSprite);
           starling.start();          
         });
+        
         
       // When the game becomes inactive, we pause Starling; otherwise, the enter frame event
       // would report a very long 'passedTime' when the app is reactivated. 
