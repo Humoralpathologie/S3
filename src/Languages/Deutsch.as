@@ -36,7 +36,7 @@ package Languages
 		public static const OFFLABEL:String = "ENDLOSMODUS";
 		public static const ONLABEL:String = "COUNTDOWNMODUS";
 		public static const PLAY:String = "SPIELEN";
-		public static const BACKBUTTON:String = "ZURÜCK";
+		public static const BACKBUTTON:String = "HAUPTMENÜ";
 		public static const LEADERBOARDS:String = "LEADERBOARD";
 		
 		//Arcade Info
@@ -66,6 +66,13 @@ package Languages
 		public static const RESTART:String = "NEUSTART";
 		public static const SFX:String = "SFX";
 		public static const MUSIC:String = "MUSIK";
+    
+    //levelscore buttons
+    public static const BACKTOMENUBUTTON:String = "HAUPTMENÜ";
+    public static const REPLAYBUTTON:String = "NEUSTART";
+    public static const NEXTBUTTON:String = "NÄCHSTES\nLEVEL";
+    public static const LEADERBOARDSBUTTON:String = "LEADERBOARD";
+    public static const SCOREBOARDBUTTON:String = "ZURÜCK";
 		
 //Level objectives
     public static const OBJECTIVE:String = "Ziel";

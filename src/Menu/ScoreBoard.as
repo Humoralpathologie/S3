@@ -9,7 +9,8 @@ package Menu
   import org.osflash.signals.Signal;
   import engine.AssetRegistry;
   import org.osflash.signals.ISignal;
-  import starling.display.Button;
+  //import starling.display.Button;
+  import org.josht.starling.foxhole.controls.Button;
   import starling.display.Quad;
   import starling.events.Event;
   import starling.utils.Color;
@@ -18,6 +19,9 @@ package Menu
   import Level.ArcadeState;
   import engine.SaveGame;
   import starling.text.TextField;
+  
+  import starling.textures.Texture;
+  
   import starling.utils.Color;
   import starling.utils.HAlign;
   import starling.utils.VAlign;
@@ -66,7 +70,7 @@ package Menu
 	
 	protected var _onScoring:Signal = new Signal(ScoreBoard);
 	private var _next:Button;
-	
+  	
 	public function ScoreBoard()
     {
       super();
@@ -91,6 +95,7 @@ package Menu
     {
       _scores = value;
     }
+    
 	public function get onScoring():ISignal
     {
       return _onScoring;
@@ -101,15 +106,31 @@ package Menu
       addBoards();
       addTexts();
       addRank();
-	  _next = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("arrow_reduced"));
-      _next.scaleX = -1;
-      _next.x = _scoreboard.x + _scoreboard.width + _next.width;
-      _next.y = _scoreboard.y + 10;
+    
+    _next = new Button();
+    _next.label = AssetRegistry.Strings.LEADERBOARDSBUTTON;
+    
+    if (SaveGame.isArcade){
+      _next.width = 320;
+      _next.x = 640;
+    } else {
+      _next.width = 240;
+      _next.x = 720;
+    }
+    _next.height = 80;
+
+    _next.y = Starling.current.stage.stageHeight - _next.height;
+   
+    
 	  var that:ScoreBoard = this;
-	  _next.addEventListener(Event.TRIGGERED, function(event:Event):void {
-        _onScoring.dispatch(that);
-      });
+
+    _next.onRelease.add(function(button:Button):void {
+       _onScoring.dispatch(that);
+	  });
 	  addChild(_next);
+    
+    
+    
     }  
 	
 	private function medal(tween:GTween):void

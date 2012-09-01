@@ -36,18 +36,18 @@ package Languages
 		public static const OFFLABEL:String = "ENDLESS MODE";
 		public static const ONLABEL:String = "TIME ATTACK";
 		public static const PLAY:String = "PLAY";
-		public static const BACKBUTTON:String = "BACK";
-		public static const LEADERBOARDS:String = "LEADERBOARDS";
+		public static const BACKBUTTON:String = "MAIN MENU";
+		public static const LEADERBOARDS:String = "LEADERBOARD";
 		
 		//Arcade Info
     public static const ARCADEINFOHEADING:String = "ARCADE INFO";
-		public static const ARCADEINFO:String = "This mode is all about earning the highest score by experimenting with different combos.\nThe Time Attack Mode gives you 3 minutes to help Little Snake devour as many eggs as possible before the volcano erupts. Additional to the basic combos, there are 3 slots to which you can assign special combos by tapping them.\nIf you are too chicken and afraid of volcanoes, you may as well play the Endless Mode. There you can slow down if you become too fast and go after the ultimate high score. Face the challange and strife for immortality in the Leaderboards.";
+		public static const ARCADEINFO:String = "This mode is all about earning the highest score by experimenting with different combos.\nThe Time Attack Mode gives you 3 minutes to help Little Snake devour as many eggs as possible before the volcano erupts. Additional to the basic combos, there are 3 slots to which you can assign special combos by tapping them.\nIf you are too chicken and afraid of volcanoes, you may as well play the Endless Mode. There you can slow down if you become too fast and go after the ultimate high score. Face the challenge and strife for immortality in the Leaderboards.";
 		
 		// Combo Menu
 		public static const SELECTABLECOMBO:String = "SELECTABLE COMBOS";
 		
 		// Combo Descriptions
-		public static const TIMECOMBODESC:String = "Bonus Time Up: Perform this combo and for 1 Minute every Bonus Time Combo will give you 10 instead of 5 extra seconds.";
+		public static const TIMECOMBODESC:String = "Bonus Time Up: Perform this combo and for 1 minute every Bonus Time Combo will give you 10 instead of 5 extra seconds.";
 		public static const CHAINTIMEDESC:String = "Chain Time Up: Perform this combo and for 1 minute the Chain Time will be extended to 3 seconds.";
 		public static const XTRASPAWNDESC:String = "Extra Eggs: Performing this combo will instantly spawn 5 extra eggs!";
 		public static const SHUFFLEDESC:String = "Shuffle Egg: Performing this combo will spawn a Shuffle Egg. Devouring it will rearrange Little Snake's body tiles and give you the chance to score new combos.";
@@ -66,6 +66,13 @@ package Languages
 		public static const RESTART:String = "RESTART";
 		public static const SFX:String = "SFX";
 		public static const MUSIC:String = "MUSIC";
+    
+    //levelscore buttons
+    public static const BACKTOMENUBUTTON:String = "MAIN MENU";
+    public static const REPLAYBUTTON:String = "REPLAY";
+    public static const NEXTBUTTON:String = "NEXT LEVEL";
+    public static const LEADERBOARDSBUTTON:String = "LEADERBOARD";
+    public static const SCOREBOARDBUTTON:String = "BACK";
 		
 		//Level objectives
     public static const OBJECTIVE:String = "Objective";
@@ -77,8 +84,8 @@ package Languages
 		public static const LEVEL3B:String = "Get Little Snake sobered up - either by surviving for 4 minutes or by getting 10 combos. From now on eating more than 4 gray eggs will kill you!!\n\nStory:\nOn a quest for revenge you often have to act on a whim. So you have to forgive our hero that he didn't know about the high toxicity of the gray eggs and fell into a ferocious delirium.\n\nMedal Requirements:\nBronze: 400 Points\nSilver: 600 Points\nGold: 800 Points";
 		public static const LEVEL4A:String = "Get Little Snake's speed up to 5 and jump!\n\nStory:\nSeems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nMedal Requirements:\nBronze: 400 Points\nSilver: 600 Points\nGold: 800 Points";
 		public static const LEVEL4B:String = "Get Little Snake's speed up to 7 and jump!\n\nStory:\nSeems like the Terror Triceratops either got wind of his murderous stalker or was just a little too chubby for the old bridge...\n\nMedal Requirements:\nBronze: 400 Points\nSilver: 600 Points\nGold: 800 Points";
-		public static const LEVEL5A:String = "Avoid the spikes for 4 Minutes. If the Rotten Eggs get in your way, try a combo with the new eggs\n\nStory:\nOur hero jumped the canyon just to face these ghastly spikes - but they won't hold him back!\n\nMedal Requirements:\nBronze: 400 Points\nSilver: 600 Points\nGold: 800 Points";
-		public static const LEVEL5B:String = "Avoid the spikes for at least 3 Minutes. If the Rotten Eggs get in your way, try a combo with the new eggs\n\nStory:\nOur hero jumped the canyon just to face these ghastly spikes - but they won't hold him back!\n\nMedal Requirements:\nBronze: 400 Points\nSilver: 600 Points\nGold: 800 Points";
+		public static const LEVEL5A:String = "Avoid the spikes for 4 minutes. If the Rotten Eggs get in your way, try a combo with the new eggs\n\nStory:\nOur hero jumped the canyon just to face these ghastly spikes - but they won't hold him back!\n\nMedal Requirements:\nBronze: 400 Points\nSilver: 600 Points\nGold: 800 Points";
+		public static const LEVEL5B:String = "Avoid the spikes for at least 3 minutes. If the Rotten Eggs get in your way, try a combo with the new eggs\n\nStory:\nOur hero jumped the canyon just to face these ghastly spikes - but they won't hold him back!\n\nMedal Requirements:\nBronze: 400 Points\nSilver: 600 Points\nGold: 800 Points";
 		public static const LEVEL6A:String = "Eat 2 chains of at least 6 eggs & don't stop eating for longer than 14 seconds. \nHINT:\n You keep a chain going by eating the next egg before the little bar above our hero's head disappears.\n\nStory:\nLittle Snake has developed a serious egg addiction. Don't let withdrawal get to him!\n\nMedal Requirements:\nBronze: 400 Points\nSilver: 600 Points\nGold: 800 Points";
 		public static const LEVEL6B:String = "Eat 3 chains of at least 10 eggs & don't stop eating for longer than 8 seconds. \nHINT:\n You keep a chain going by eating the next egg before the little bar above our hero's head disappears.\n\nStory:\nLittle Snake has developed a serious egg addiction. Don't let withdrawal get to him!\n\nMedal Requirements:\nBronze: 400 Points\nSilver: 600 Points\nGold: 800 Points";
 		public static const LEVEL7A:String = "What's the deal with those special eggs? Make them disappear all at once!\n\nStory:\nAt last Little Snake has found the Terror Triceratops. However, the wimp had hidden himself away in his castle of cowardice! Our hero had to find a way to circumvent his defences.\n\nMedal Requirements:\nBronze: 400 Points\nSilver: 600 Points\nGold: 800 Points";

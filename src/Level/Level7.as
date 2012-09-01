@@ -110,14 +110,14 @@ package Level
 		
 		override protected function showObjective():void
 		{
-			var _neededChains:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-megachain"));
+			var _golden:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-golden"));
 			if (SaveGame.difficulty == 1)
 			{
-				showObjectiveBox(AssetRegistry.Strings.LEVEL7A, [[_neededChains, "x 2"]]);
+				showObjectiveBox(AssetRegistry.Strings.LEVEL7A, [[_golden, "= 0"]]);
 			}
 			else
 			{
-				showObjectiveBox(AssetRegistry.Strings.LEVEL7B, [[_neededChains, "x 3"]]);
+				showObjectiveBox(AssetRegistry.Strings.LEVEL7B, [[_golden, "= 0"]]);
 			}
 		}
 		

@@ -67,6 +67,7 @@ package UI
       _textLayer = new Sprite();
       _textLayer.touchable = false;
       
+      
       // This keeps our tweens.
       _tweens = new Vector.<Tween>;
       
@@ -217,8 +218,9 @@ package UI
           txt.visible = true;
           txt.scaleX = txt.scaleY = 1;
           txt.pivotX = txt.pivotY = 0;
-          txt.height = AssetRegistry.STAGE_WIDTH;
-          txt.width = AssetRegistry.STAGE_HEIGHT;
+          txt.height = AssetRegistry.STAGE_HEIGHT;
+          txt.width = AssetRegistry.STAGE_WIDTH;
+          txt.hAlign = HAlign.CENTER;
           trace("Recycling old message");
           return _textMessagesPool[i];
         }
