@@ -110,7 +110,7 @@ package Menu
     _next = new Button();
     _next.label = AssetRegistry.Strings.LEADERBOARDSBUTTON;
     
-    if (SaveGame.isArcade){
+    if (SaveGame.isArcade || _scores.level == 7){
       _next.width = 320;
       _next.x = 640;
     } else {

@@ -162,7 +162,7 @@ package Menu
       _back = new Button();
       _back.label = AssetRegistry.Strings.SCOREBOARDBUTTON;
       
-      if (SaveGame.isArcade){
+      if (SaveGame.isArcade || _score.level == 7){
       _back.width = 320;
       _back.x = 640;
     } else {
