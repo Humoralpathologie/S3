@@ -241,7 +241,6 @@ package engine
     {
       _sharedObject.data.levels[n].score = score;
       _sharedObject.flush();
-      publishScore(n);
     }
     
     public static function saveSpecial(slot:int, special:Object):void
@@ -303,7 +302,10 @@ package engine
     
     public static function get userName():String
     {
-      return _sharedObject.data.user ? _sharedObject.data.user : "anonymous";
+      if (!_sharedObject.data.user || _sharedObject.data.user == "") {
+        _sharedObject.data.user = "anonymous";
+      }
+      return _sharedObject.data.user;
     }
     
     public static function set userName(value:String):void
@@ -316,18 +318,5 @@ package engine
       return _sharedObject.data.guid;
     }
     
-    private static function publishScore(level:int = 1):void
-    {
-      var url:String = "https://www.scoreoid.com/api/createScore";
-      var requestVars:Object = {};
-      
-      requestVars.username = guid;
-      requestVars.score = _sharedObject.data.levels[level].score; //fullScore();
-      requestVars.difficulty = level;
-      
-      Utils.scoreoidRequest(url, requestVars, function(something:*)
-        {
-        });
-    }
   }
 }

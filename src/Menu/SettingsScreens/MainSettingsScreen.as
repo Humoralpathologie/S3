@@ -1,6 +1,5 @@
 package Menu.SettingsScreens
 {
-  import com.facebook.graph.FacebookMobile;
   import flash.geom.Rectangle;
   import flash.media.StageWebView;
   import org.josht.starling.display.Image;

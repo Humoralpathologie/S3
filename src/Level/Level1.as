@@ -30,8 +30,10 @@ package Level
       SaveGame.levelName = AssetRegistry.Strings.LEVEL1NAME;
 	    if (SaveGame.difficulty == 1) {
 	      _winCondition = 30;
+        _lid = "50421a39563d8a53c20021bb";
 	    } else {
-		  _winCondition = 50;
+		    _winCondition = 50;
+        _lid = "50421a3f563d8a632f002091";
 	    }
       super();
     }

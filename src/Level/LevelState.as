@@ -143,6 +143,9 @@ package Level
     
     private var _updateTimer:Number;
     
+    // Mogade leaderboard ID
+    protected var _lid:String;
+    
    
     
     // Pause Menu
@@ -854,7 +857,7 @@ package Level
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
-        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true}
+        var score:Object = { score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true, lid: _lid}
         
         AssetRegistry.soundmanager.fadeOutMusic();
         dispatchEventWith(ManagedStage.SWITCHING, true, {stage: LevelScore, args: score});
@@ -1295,7 +1298,7 @@ package Level
       touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
-        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake}
+        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lid: _lid}
         AssetRegistry.soundmanager.fadeOutMusic();
         dispatchEventWith(ManagedStage.SWITCHING, true, {stage: LevelScore, args: score});
         SaveGame.unlockLevel(_levelNr + 1);

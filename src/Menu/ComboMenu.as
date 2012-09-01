@@ -49,7 +49,7 @@ package Menu
         sharedData: this._sharedData
       }));
       
-      var _leaderboardScreen:Leaderboards = new Leaderboards({level: 9});
+      var _leaderboardScreen:Leaderboards = new Leaderboards({lid:"5041f594563d8a570c0024a4"});
       _navigator.addScreen(LEADERBOARDS, new ScreenNavigatorItem(_leaderboardScreen, {
         onLeaderboards:BASEMENU 
       }, {

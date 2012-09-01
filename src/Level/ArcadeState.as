@@ -55,7 +55,7 @@ package Level
       var combos:Array = AssetRegistry.COMBO_TRIGGERS;
       
       SaveGame.difficulty = 2;
-	  SaveGame.isArcade = true;
+	    SaveGame.isArcade = true;
 	  
       super();
       
@@ -68,10 +68,12 @@ package Level
       if (!SaveGame.endless)
       {
         _comboSet.addCombo(new Combo.SlowerCombo);
+        _lid = "5041f594563d8a570c0024a4";
       }
       else
       {
         _comboSet.addCombo(new Combo.ExtraTimeCombo);
+        _lid = "5041f5ac563d8a632f001f73";
       }
       
       for (var i:int = 0; i < 4; i++)
@@ -219,11 +221,11 @@ package Level
       {
         if (SaveGame.endless)
         {
-          score = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true}
+          score = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true, lid: _lid}
         }
         else
         {
-          score = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: false}
+          score = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: false, lid: _lid}
         }
         AssetRegistry.soundmanager.fadeOutMusic();
         dispatchEventWith(SWITCHING, true, {stage: LevelScore, args: score});

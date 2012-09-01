@@ -348,6 +348,11 @@ package engine
     public static const GAME_ID:String = "atZTbG24V";
     public static const API_KEY:String = "7bb1d7f5ac027ae81b6c42649fddc490b3eef755";
     
+    // Stuff for Mogade
+    public static const MOGADE_GAME_ID:String = "5041f4f8563d8a570c002491";
+    public static const MOGADE_SECRET:String = "JZvZT^d=?_0yR2flZMo?ft9l3^<J5Jg";
+    public static var mogade:Mogade;
+    
     public static function init():void
     {
       LEVELS = [Level1, Level2, Level3, Level4, Level5, Level6, Level7, null, ArcadeState];
@@ -361,6 +366,8 @@ package engine
       soundmanager = new SoundManager();
       soundmanager.musicMuted = SaveGame.musicMuted;
       soundmanager.SFXMuted = SaveGame.SFXMuted;
+      
+      mogade = new Mogade(MOGADE_GAME_ID, MOGADE_SECRET);
       
 	    if (SaveGame.language == 2){
 	      Strings = Deutsch;
