@@ -53,7 +53,9 @@ package UI
     private var _messageQueue:Vector.<String>;
     private var _messageQueueRunning:Boolean = false;
     private var _pointsQueue:Vector.<Object>;
-    private var _pointsQueueRunning:Boolean = false;    
+    private var _pointsQueueRunning:Boolean = false;   
+    
+    private var _scoreDisplay:int = 0;
     
     public function HUD(levelState:LevelState)
     {
@@ -234,11 +236,11 @@ package UI
       var textMessage:TextField;      
       textMessage = recycleMessage();
       textMessage.text = message; 
-        
       tween = new Tween(textMessage, 3);
       tween.animate("y", -textMessage.height);
       tween.onComplete = function():void {
         textMessage.visible = false;
+        
       }
         
       _tweens.push(tween);
@@ -266,6 +268,7 @@ package UI
       tween.animate("alpha", 0.75);
       tween.onComplete = function():void {
        textMessage.visible = false;
+       _scoreDisplay += int(pointObj.message);
       }
  
       textMessage.width = 200;
@@ -366,8 +369,9 @@ package UI
       var pos:Point = new Point();
       var levelEggsLength:int = levelEggs.length;
       
-      // Update display.
-      _score.text = _levelState.score;
+
+      // Update score display.
+      _score.text = String(_scoreDisplay);
       
       // Update all icon TextFields.
       for each (var iconCfg:Object in _iconsCfg) {
