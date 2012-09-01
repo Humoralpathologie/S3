@@ -47,8 +47,10 @@ package Level
 			super();
       if (SaveGame.difficulty == 1){
         _snake.lives = 2;
+        _lid = "50422f41563d8a570c00263c";
       } else {
         _snake.lives = 1;
+        _lid = "50422f4a563d8a45d300215a";
       }
       gameJuggler.add(_goldenEggs);
       _levelStage.addChild(_goldenEggs);

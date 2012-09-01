@@ -27,11 +27,13 @@ package Level
       {
         _winConditionA = 7;
         _winConditionB = 4 * 60;
+        _lid = "50422efd563d8a72bd002107";
       }
       else
       {
         _winConditionA = 10;
         _winConditionB = 4 * 60;
+        _lid = "50422f06563d8a69f6002189";
       }
       super();
     }

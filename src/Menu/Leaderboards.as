@@ -50,7 +50,9 @@ package Menu
     private var _timeText:TextField;
     private var _tabBar:TabBar;
     private var _leaderboardShowing:String;
-    protected var _sharedData:Object = {};
+    protected var _sharedData:Object = { };
+    
+    public static const REFRESH_LEADERBOARD:String = "refreshleaderboard";
     
     public function Leaderboards(score:Object)
     {
@@ -62,15 +64,23 @@ package Menu
       createLeaderboardText();
       
       _leaderboardShowing = "alltime";
-      refreshLeaderboard();
+      
+      addEventListener(REFRESH_LEADERBOARD, refreshLeaderboard);
+      trace("Constructing");
+      
     }
+
     
-    private function refreshLeaderboard():void {
+    private function refreshLeaderboard(evt:Event = null):void {
+      trace("Refreshing leaderboard...");
       _scoreText.text = "Loading...";
       _countText.text = "";
       _nameText.text = "";
       _timeText.text = "";
-      Utils.getLeaderboard(_score.level, updateLeaderboard, _leaderboardShowing);
+      
+      AssetRegistry.mogade.getScores(_score.lid, 1, updateLeaderboard);
+      
+      //Utils.getLeaderboard(_score.level, updateLeaderboard, _leaderboardShowing);
     }
     
     private function addTabBar():void {
@@ -81,6 +91,7 @@ package Menu
         { label: AssetRegistry.Strings.PERSONAL}
         ]);
       _tabBar.onChange.add(function(bar:TabBar) {
+        var prevShowing:String = _leaderboardShowing;
         switch(bar.selectedIndex) {
           case 0:
             _leaderboardShowing = "alltime";
@@ -92,7 +103,9 @@ package Menu
             _leaderboardShowing = "personal";
             break;    
         }
-        refreshLeaderboard();
+        if(_leaderboardShowing != prevShowing) {
+          refreshLeaderboard();
+        }
       });
       _tabBar.width = _leaderboard.width;
       _tabBar.x = _leaderboard.x;
@@ -102,15 +115,14 @@ package Menu
     
     override protected function initialize():void
     {
-    
+      trace("Initializing");
     }
     
-    private function updateLeaderboard(data:Array, type:String):void {
-      
+    private function updateLeaderboard(data:Object, type:String = "alltime"):void {
       
       var count:int = 1;
       _scoreText.text = "";
-      for each(var playerScore:Object in data) {
+      for each(var playerScore:Object in data.scores) {
         _countText.text += String(count) + ".\n";
         if (type == "alltime" || type == "weekly") {
           /*
@@ -119,7 +131,7 @@ package Menu
           _nameText.vAlign = VAlign.TOP;
           _nameText.x = _leaderboard.x + 50;
           _nameText.y = _countText.y;*/
-          _nameText.text += playerScore.Player.first_name + ":\n";
+          _nameText.text += playerScore.username + ":\n";
           _scoreText.x = _leaderboard.x + 350;
           _timeText.x = _leaderboard.x + 570;
         } else {
@@ -127,8 +139,8 @@ package Menu
           _timeText.x =  _leaderboard.x + 250;
           _scoreText.x = _leaderboard.x + 50;
         }
-        _scoreText.text += playerScore.Score.score + "\n";  
-        _timeText.text += playerScore.Score.created.split(" ")[0] + "\n";
+        _scoreText.text += playerScore.points + "\n";  
+        _timeText.text += playerScore.dated.split(" ")[0] + "\n";
        
         count++;
         if (count > 8) {
@@ -224,6 +236,11 @@ package Menu
     public function set sharedData(value:Object):void
     {
       _sharedData = value;
+    }
+    
+    override public function dispose():void {
+      super.dispose();
+      removeEventListener(REFRESH_LEADERBOARD, refreshLeaderboard);
     }
   }
 }

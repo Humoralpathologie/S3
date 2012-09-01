@@ -29,8 +29,6 @@ package Menu
   import Menu.MainMenu;
   import Menu.LevelScore;
   import starling.events.EnterFrameEvent;
-
-
   
   /**
    * ...
@@ -38,23 +36,23 @@ package Menu
    */
   public class ScoreBoard extends Screen
   {
-	private var _tweens:Vector.<GTween>; 
-	private var _scoreboard:Quad;
-	//private var _scorePic:Image;
+    private var _tweens:Vector.<GTween>;
+    private var _scoreboard:Quad;
+    //private var _scorePic:Image;
     private var _scoreText:TextField;
     public var _scoreCounter:int = 0;
-
+    
     //private var _timeBonusPic:Image;
     private var _timeBonusText:TextField;
     public var _timeBonusCounter:int = 0;
-
+    
     //private var _lifeBonusPic:Image;
     private var _lifeBonusText:TextField;
     public var _lifeBonusCounter:int = 0;
- 
+    
     private var _totalText:TextField;
     public var _totalCounter:int = 0;
-
+    
     private var _scores:Object = {};
     private var _medal:Image;
     private var _medalTween:GTween;
@@ -67,26 +65,40 @@ package Menu
     private var _lifeBonusHeading:TextField;
     private var _totalHeading:TextField;
     private var _rankHeading:TextField;
-	
-	protected var _onScoring:Signal = new Signal(ScoreBoard);
-	private var _next:Button;
-  	
-	public function ScoreBoard()
+    private var _rankText:TextField;
+    
+    protected var _onScoring:Signal = new Signal(ScoreBoard);
+    private var _next:Button;
+    
+    public static const SHOW_RANK:String = "showrank";
+    
+    public function ScoreBoard()
     {
       super();
-	 
+      addEventListener(SHOW_RANK, showRank);
+    }
+
+    // Input looks like this:
+    //{"ranks":{"4":1,"1":1,"2":1,"3":1},"highs":{"1":true,"2":true,"3":true}}    
+    private function showRank(evt:Event):void {
+      var txt:String = "";
+      txt += "Overall: " + String(evt.data.ranks[1]) + "\n";
+      txt += "This week: " + String(evt.data.ranks[2]) + "\n";
+      txt += "Today:" + String(evt.data.ranks[3]) + "\n";
+      _rankText.text = txt;
     }
     
     override protected function initialize():void
     {
-	  _tweens = new Vector.<GTween>;
-	  buildMenu(); 
-	  trace(_scores);
-	  startScoring();
-	  //addEventListener(EnterFrameEvent.ENTER_FRAME, startScoring);
+      _tweens = new Vector.<GTween>;
+      buildMenu();
+      trace(_scores);
+      startScoring();
+      //addEventListener(EnterFrameEvent.ENTER_FRAME, startScoring);
       //updateLeaderboard();
-	}
-	public function get scores():Object
+    }
+    
+    public function get scores():Object
     {
       return _scores;
     }
@@ -96,17 +108,43 @@ package Menu
       _scores = value;
     }
     
-	public function get onScoring():ISignal
+    public function get onScoring():ISignal
     {
       return _onScoring;
     }
     
-	private function buildMenu():void
+    private function buildMenu():void
     {
       addBoards();
       addTexts();
       addRank();
+      
+      _next = new Button();
+      _next.label = AssetRegistry.Strings.LEADERBOARDSBUTTON;
+      
+      if (SaveGame.isArcade)
+      {
+        _next.width = 320;
+        _next.x = 640;
+      }
+      else
+      {
+        _next.width = 240;
+        _next.x = 720;
+      }
+      _next.height = 80;
+      
+      _next.y = Starling.current.stage.stageHeight - _next.height;
+      
+      var that:ScoreBoard = this;
+      
+      _next.onRelease.add(function(button:Button):void
+        {
+          _onScoring.dispatch(that);
+        });
+      addChild(_next);
     
+
     _next = new Button();
     _next.label = AssetRegistry.Strings.LEADERBOARDSBUTTON;
     
@@ -116,77 +154,73 @@ package Menu
     } else {
       _next.width = 240;
       _next.x = 720;
+
     }
-    _next.height = 80;
-
-    _next.y = Starling.current.stage.stageHeight - _next.height;
-   
     
-	  var that:ScoreBoard = this;
-
-    _next.onRelease.add(function(button:Button):void {
-       _onScoring.dispatch(that);
-	  });
-	  addChild(_next);
+    }
     
-    
-    
-    }  
-	
-	private function medal(tween:GTween):void
+    private function medal(tween:GTween):void
     {
       var self:ScoreBoard = this;
-      var func:Function = function(tween:GTween):void {
-        _medalTween.setValues( { x: 960 } );
+      var func:Function = function(tween:GTween):void
+      {
+        _medalTween.setValues({x: 960});
         _medalTween.onComplete = func2;
-       //AssetRegistry.soundmanager.playSound("medalSound1");
+        //AssetRegistry.soundmanager.playSound("medalSound1");
       }
       
-      var func2:Function = function(tween:GTween):void {
-          self.removeChild(_medal);
-          _medalSmall.x = 960;
-          _medalSmall.y = 0;
-          self.addChild(_medalSmall);
-          _medalTween.target = _medalSmall;
-          _medalTween.setValues( { x: 755, y: 370 } );
-          _medalTween.onComplete = null;
-          //_medalTween.autoPlay = false; 
-           AssetRegistry.soundmanager.playSound("medalSound2");
+      var func2:Function = function(tween:GTween):void
+      {
+        self.removeChild(_medal);
+        _medalSmall.x = 960;
+        _medalSmall.y = 0;
+        self.addChild(_medalSmall);
+        _medalTween.target = _medalSmall;
+        _medalTween.setValues({x: 755, y: 370});
+        _medalTween.onComplete = null;
+        //_medalTween.autoPlay = false; 
+        AssetRegistry.soundmanager.playSound("medalSound2");
       }
       
-      if (_scores.bigMedal) {
+      if (_scores.bigMedal)
+      {
         _medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture(_scores.bigMedal));
         _medal.x = -800;
         _medal.y = 0;
         _medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture(_scores.smallMedal));
       }
       
-
-      if (_medal) {
+      if (_medal)
+      {
         _medalTween = new GTween(_medal, 1.5, {x: 105, y: -100}, {ease: Elastic.easeInOut, onComplete: func});
         _tweens.push(_medalTween);
         AssetRegistry.soundmanager.playSound("medalSound1");
         addChild(_medal);
       }
-
+    
     }
+    
     private function startScoring():void
     {
       var self:ScoreBoard = this;
-      var triggerLife:Function = function(tween:GTween):void{
-        _tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.lives * 100}, {ease: Exponential.easeOut, onComplete:triggerTotal}));
+      var triggerLife:Function = function(tween:GTween):void
+      {
+        _tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.lives * 100}, {ease: Exponential.easeOut, onComplete: triggerTotal}));
       }
-      var triggerTime:Function = function(tween:GTween):void {
-        if(!_scores.lost) {
-          _tweens.push(new GTween(self, 2, { _timeBonusCounter: _scores.timeBonus }, { ease: Exponential.easeOut, onComplete:triggerLife } ));
+      var triggerTime:Function = function(tween:GTween):void
+      {
+        if (!_scores.lost)
+        {
+          _tweens.push(new GTween(self, 2, {_timeBonusCounter: _scores.timeBonus}, {ease: Exponential.easeOut, onComplete: triggerLife}));
         }
       }
-      var triggerTotal:Function = function(tween:GTween):void{
-        _tweens.push(new GTween(self, 2, {_totalCounter: _scores.total}, {ease: Exponential.easeOut, onComplete:medal}));
+      var triggerTotal:Function = function(tween:GTween):void
+      {
+        _tweens.push(new GTween(self, 2, {_totalCounter: _scores.total}, {ease: Exponential.easeOut, onComplete: medal}));
       }
-	  
-      _tweens.push(new GTween(this, 2, { _scoreCounter: _scores.score }, { ease: Exponential.easeOut, onComplete:triggerTime } ));
-	  addEventListener(EnterFrameEvent.ENTER_FRAME,  updateTexts);
+      
+      _tweens.push(new GTween(this, 2, {_scoreCounter: _scores.score}, {ease: Exponential.easeOut, onComplete: triggerTime}));
+      addEventListener(EnterFrameEvent.ENTER_FRAME, updateTexts);
     }
     
     private function updateTexts(event:EnterFrameEvent):void
@@ -200,8 +234,6 @@ package Menu
     
     private function addTexts():void
     {
-
-      
       
       _lifeBonusText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
       _lifeBonusText.hAlign = HAlign.RIGHT;
@@ -222,18 +254,21 @@ package Menu
       _totalText.hAlign = HAlign.RIGHT;
       _totalText.x = _lifeBonusText.x;
       _totalText.y = _totalHeading.y;
-
-      if ((_scores.level == 9 && SaveGame.endless) || _scores.level != 9){
+      
+      if ((_scores.level == 9 && SaveGame.endless) || _scores.level != 9)
+      {
         addChild(_lifeBonusText);
       }
       addChild(_scoreText);
-      if (_scores.level != 9){
-        addChild(_timeBonusText);}
+      if (_scores.level != 9)
+      {
+        addChild(_timeBonusText);
+      }
       addChild(_totalText);
-     
+    
     }
-	
-	private function addBoards():void
+    
+    private function addBoards():void
     {
       
       _scoreboard = new Quad(820, 475, 0x545454);
@@ -255,13 +290,14 @@ package Menu
       _scoreHeading.vAlign = VAlign.TOP;
       _scoreHeading.hAlign = HAlign.LEFT;
       addChild(_scoreHeading);
-     
+      
       _timeBonusHeading = new TextField(200, 40, "Time Bonus", "kroeger 06_65", 35, Color.WHITE);
       _timeBonusHeading.x = _scoreHeading.x;
       _timeBonusHeading.y = _scoreHeading.y + 60;
       _timeBonusHeading.vAlign = VAlign.TOP;
       _timeBonusHeading.hAlign = HAlign.LEFT;
-      if (_scores.level != 9){
+      if (_scores.level != 9)
+      {
         addChild(_timeBonusHeading);
       }
       
@@ -270,7 +306,8 @@ package Menu
       _lifeBonusHeading.y = (_scores.level != 9) ? _timeBonusHeading.y + 60 : _scoreHeading.y + 60;
       _lifeBonusHeading.vAlign = VAlign.TOP;
       _lifeBonusHeading.hAlign = HAlign.LEFT;
-      if ((_scores.level == 9 && SaveGame.endless) || _scores.level != 9){
+      if ((_scores.level == 9 && SaveGame.endless) || _scores.level != 9)
+      {
         addChild(_lifeBonusHeading);
       }
       
@@ -280,46 +317,56 @@ package Menu
       _totalHeading.vAlign = VAlign.TOP;
       _totalHeading.hAlign = HAlign.LEFT;
       addChild(_totalHeading);
-      
-      
+    
     }
     
-    private function addRank():void {
+    private function addRank():void
+    {
       _rankHeading = new TextField(200, 40, AssetRegistry.Strings.RANK, "kroeger 06_65", 35, Color.WHITE);
       _rankHeading.x = 600;
       _rankHeading.y = _scoreboardText.y;
       addChild(_rankHeading);
       
-      //TODO: getRank
+      _rankText = new TextField(200, 400, "Checking rank...", "kroeger 06_65", 35, Color.WHITE);
+      _rankText.x = _rankHeading.x;
+      _rankText.y = _rankHeading.y + 80;
+      _rankText.vAlign = VAlign.TOP;
+      _rankText.hAlign = HAlign.LEFT;
+      addChild(_rankText);
     }
-	
-	override public function dispose():void
-	{
-	  for each(var tween:GTween in _tweens) {
+    
+    override public function dispose():void
+    {
+      for each (var tween:GTween in _tweens)
+      {
         tween.onComplete = null;
         tween.end();
       }
-	  
-	  _tweens = null;
-	  _scoreboard.dispose();
-	  _scoreText.dispose();
+      
+      _tweens = null;
+      _scoreboard.dispose();
+      _scoreText.dispose();
       _timeBonusText.dispose();
       _lifeBonusText.dispose();
       _totalText.dispose();
-	  _scoreboardText.dispose();
+      _scoreboardText.dispose();
       _scoreHeading.dispose();
       _timeBonusHeading.dispose();
       _lifeBonusHeading.dispose();
       _totalHeading.dispose();
+      _rankHeading.dispose();
+      _rankText.dispose();
       
-      if(_medal != null)
+      if (_medal != null)
         _medal.dispose();
-        
+      
       _medalTween = null;
       
-      if(_medalSmall != null)
+      if (_medalSmall != null)
         _medalSmall.dispose();
-	  
-	}
+        
+      removeEventListener(SHOW_RANK, showRank);  
+    
+    }
   }
 }

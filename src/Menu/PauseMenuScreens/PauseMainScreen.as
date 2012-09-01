@@ -1,6 +1,5 @@
 package Menu.PauseMenuScreens
 {
-	import com.facebook.graph.utils.IResultParser;
   import Level.LevelState;
   import org.josht.starling.foxhole.controls.Button;
   import org.josht.starling.foxhole.controls.Screen;

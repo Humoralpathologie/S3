@@ -113,13 +113,18 @@ package Menu
       if (!_scores.lost)
       {
         SaveGame.saveScore(_scores.level, _scores.total);
+        AssetRegistry.mogade.submitScore(SaveGame.userName, SaveGame.guid, _scores.lid, _scores.total, showRank);
       }
       
       addBackground();
       addButtons();
       createScoreBoard();
       _boards.showScreen(SCORE);
-      //Utils.getLeaderboard(_score.level, updateLeaderboard, "alltime");
+    }
+    
+    private function showRank(ranks:Object):void {
+      _leaderboardScreen.dispatchEventWith(Leaderboards.REFRESH_LEADERBOARD);
+      _scoreScreen.dispatchEventWith(ScoreBoard.SHOW_RANK, false, ranks);
     }
     
     private function calculateTime():void

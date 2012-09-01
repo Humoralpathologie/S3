@@ -22,6 +22,7 @@ package
   import engine.SaveGame;
   //import com.demonsters.debugger.MonsterDebugger;
   import flash.system.Capabilities;
+  import engine.Mogade;
     
   /**
    * ...
