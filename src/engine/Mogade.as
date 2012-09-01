@@ -30,7 +30,7 @@ package engine
     }
     
     // Signs a request and returns the same request object, just signed.
-    public function signRequest(request:Object):Object {
+    private function signRequest(request:Object):Object {
       var sortArray:Array = [];
       var hashedStringArray:Array = [];
       var hashedString:String;
