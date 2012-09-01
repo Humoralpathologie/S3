@@ -11,7 +11,8 @@ package Menu
   import org.osflash.signals.Signal;
   import engine.AssetRegistry;
   import org.osflash.signals.ISignal;
-  import starling.display.Button;
+  //import starling.display.Button;
+  import org.josht.starling.foxhole.controls.Button;
   import starling.display.Quad;
   import starling.events.Event;
   import starling.utils.Color;
@@ -158,16 +159,24 @@ package Menu
     
     private function addButton():void
     {
-      _back = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("arrow_reduced"));
-      _back.scaleX = -1;
-      _back.rotation = -Math.PI;
-      _back.x = _leaderboard.x - _back.width;
-      _back.y = _leaderboard.y + _back.height + 10;
+      _back = new Button();
+      _back.label = AssetRegistry.Strings.SCOREBOARDBUTTON;
+      
+      if (SaveGame.isArcade){
+      _back.width = 320;
+      _back.x = 640;
+    } else {
+      _back.width = 240;
+      _back.x = 720;
+    }
+    _back.height = 80;
+    _back.y = Starling.current.stage.stageHeight - _back.height;
+      
       var that:Leaderboards = this;
-      _back.addEventListener(Event.TRIGGERED, function(event:Event):void
-        {
+      _back.onRelease.add(function(button:Button):void {
+        
           _onLeaderboards.dispatch(that);
-        });
+      });
       addChild(_back);
     }
     

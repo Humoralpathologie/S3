@@ -12,7 +12,8 @@ package Menu
   import starling.events.Event;
   //import Level.ArcadeState;
   import flash.events.Event;
-  import starling.display.Button;
+  //import starling.display.Button;
+  import org.josht.starling.foxhole.controls.Button;
   import starling.display.Image;
   import starling.events.EnterFrameEvent;
   import starling.text.TextField;
@@ -26,6 +27,7 @@ package Menu
   import org.josht.starling.foxhole.controls.ScreenNavigator;
   import org.josht.starling.foxhole.controls.ScreenNavigatorItem;
   import engine.Utils;
+  import starling.core.Starling;
   
   /**
    * ...
@@ -40,9 +42,14 @@ package Menu
     private var _leaderboard:Quad;
     */
     private var _bg:Image;
-    private var _replayButton:starling.display.Button;
+    /*private var _replayButton:starling.display.Button;
     private var _nextLevelButton:starling.display.Button;
-    private var _backToMenuButton:starling.display.Button;
+    private var _backToMenuButton:starling.display.Button;*/
+    
+    private var _replayButton:Button;
+    private var _nextLevelButton:Button;
+    private var _backToMenuButton:Button;
+    
     private var _scores:Object = null;
     private var _timeBonus:int = 0;
     
@@ -80,6 +87,7 @@ package Menu
     private static const LEADERBOARDS:String = "Leaderboards";
     private var _scoreScreen:ScoreBoard;
     private var _leaderboardScreen:Leaderboards;
+    private var _buttonWidth:int;
     
     public function LevelScore(scores:Object = null)
     {
@@ -108,8 +116,8 @@ package Menu
       }
       
       addBackground();
-      createScoreBoard();
       addButtons();
+      createScoreBoard();
       _boards.showScreen(SCORE);
       //Utils.getLeaderboard(_score.level, updateLeaderboard, "alltime");
     }
@@ -258,6 +266,7 @@ package Menu
     
     private function addButtons():void
     {
+      /*
       _replayButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo"));
       _replayButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo-broken");
       _replayButton.x = 960 / 2 - 145 / 2;
@@ -277,13 +286,54 @@ package Menu
       _backToMenuButton.x = 960 / 2 - 145 / 2 - 30 - 135;
       _backToMenuButton.y = _nextLevelButton.y;
       
-      _backToMenuButton.addEventListener(starling.events.Event.TRIGGERED, backToMenu);
+      _backToMenuButton.addEventListener(starling.events.Event.TRIGGERED, backToMenu);*/
       
-      addChild(_replayButton);
+      var buttonWidth:int = 320;
+      
+      
+      
+      _backToMenuButton = new Button();
+      _replayButton = new Button();
+      _nextLevelButton = new Button();
+      
       if (_scores.level != 9)
       {
+        buttonWidth = 240;
         addChild(_nextLevelButton);
       }
+      
+      _backToMenuButton.label = AssetRegistry.Strings.BACKTOMENUBUTTON;
+      _backToMenuButton.width = buttonWidth;
+      _backToMenuButton.height = 80;
+      _backToMenuButton.x = 0;
+      _backToMenuButton.y = Starling.current.stage.stageHeight - _backToMenuButton.height;
+      _backToMenuButton.onRelease.add(function(button:Button):void {
+        backToMenu();       
+      });
+      
+      
+      _replayButton.label = "REPLAY";
+      _replayButton.width = buttonWidth;
+      _replayButton.height = 80;
+      _replayButton.x = _backToMenuButton.x + _backToMenuButton.width;
+      _replayButton.y = _backToMenuButton.y;
+      _replayButton.onRelease.add(function(button:Button):void {
+        replay();       
+      });
+      
+      
+      _nextLevelButton.label = "NEXT";
+      _nextLevelButton.width = buttonWidth;
+      _nextLevelButton.height = 80;
+      _nextLevelButton.x = _replayButton.x + _replayButton.width;
+      _nextLevelButton.y = _backToMenuButton.y;
+      _nextLevelButton.onRelease.add(function(button:Button):void {
+        nextLevel();       
+      });
+   
+      
+      addChild(_replayButton);
+     
       addChild(_backToMenuButton);
     }
     
