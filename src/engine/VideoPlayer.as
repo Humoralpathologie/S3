@@ -46,7 +46,9 @@ package engine
           Starling.current.stage3D.x = 0;
           //Starling.current.stage3D.visible = true;
           ns.dispose();
-          Starling.current.nativeStage.removeChild(video);
+          if(video.stage) {
+            Starling.current.nativeStage.removeChild(video);
+          }
           video = null;
           nc = null;
           ns = null;
