@@ -34,6 +34,7 @@ package Menu
     import starling.textures.TextureSmoothing;
     import engine.NotificationScroller;
     import starling.utils.Color;
+    import engine.VideoPlayer;
   
   /**
    * ...
@@ -198,6 +199,10 @@ package Menu
 	    video1.height = 80;
 	    video1.x = Starling.current.stage.stageWidth / 2 - video1.width - 50;
 	    video1.y = _extrasHeading.y + _extrasHeading.height + 50;
+      
+      video1.onRelease.add(function(btn:Button) {
+        dispatchEventWith(SWITCHING, true, { stage: VideoPlayer, args: { videoURI: "Outro_1.mp4" }} );
+      });
       
       var video2:Button = new Button();
       video2.label = AssetRegistry.Strings.VIDEO2;
