@@ -40,7 +40,11 @@ package engine
       addEventListener(ManagedStage.CLOSING, onStageClosing);
       addEventListener(ManagedStage.SWITCHING, onStageSwitching);
       
-      showStage(MainMenu);
+      if (SaveGame.firstStart) {
+        showStage(VideoPlayer, { videoURI: "Intro.mp4", stage: MainMenu} );
+      } else {
+        showStage(MainMenu);
+      }
       //showStage(VideoPlayer, { videoURI: "Outro_1.mp4" } );
     }
     

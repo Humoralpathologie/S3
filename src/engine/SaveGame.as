@@ -318,5 +318,15 @@ package engine
       return _sharedObject.data.guid;
     }
     
+    // This is saved reversed so it is true on first start.
+    public static function get firstStart():Boolean
+    {
+      return !_sharedObject.data.notFirstStart; 
+    }
+    
+    public static function set firstStart(value:Boolean):void {
+      _sharedObject.data.notFirstStart = !value;
+    }
+    
   }
 }

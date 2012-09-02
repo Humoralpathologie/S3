@@ -20,6 +20,7 @@ package Menu
   import engine.SaveGame;
   import starling.textures.TextureSmoothing;
   import engine.Utils;
+  import engine.VideoPlayer;
   
   /**
    * ...
@@ -122,7 +123,13 @@ package Menu
       
       _boxes["level1"] = {box: box, callback: function():void
         {
-          dispatchEventWith(SWITCHING, true, {stage: Level1})
+          if (SaveGame.firstStart) {
+            dispatchEventWith(SWITCHING, true, { stage: VideoPlayer, args: { stage: Level1, videoURI: "IntroLv1.mp4" }} );
+            SaveGame.firstStart = false;
+          } else 
+          {
+            dispatchEventWith(SWITCHING, true, { stage: Level1 } );
+          }
         }};
       
       box = [new Point(265, 492), new Point(479, 385), new Point(691, 491), new Point(478, 599)];

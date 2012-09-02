@@ -42,7 +42,6 @@ package
       stage.align = StageAlign.TOP_LEFT;
       
       stage.addEventListener(Event.DEACTIVATE, deactivate);
-      
       //Starling.handleLostContext = true;
       
       //MonsterDebugger.initialize(this);

@@ -200,15 +200,15 @@ package Menu
 	    video1.x = Starling.current.stage.stageWidth / 2 - video1.width - 50;
 	    video1.y = _extrasHeading.y + _extrasHeading.height + 50;
       
-      video1.onRelease.add(function(btn:Button) {
-        dispatchEventWith(SWITCHING, true, { stage: VideoPlayer, args: { videoURI: "Outro_1.mp4" }} );
+      video1.onRelease.add(function(btn:Button):void {
+        dispatchEventWith(SWITCHING, true, { stage: VideoPlayer, args: { videoURI: "Intro.mp4", stage:MainMenu }} );
       });
       
       var video2:Button = new Button();
       video2.label = AssetRegistry.Strings.VIDEO2;
 	    video2.width = 240;
 	    video2.height = 80;
-	    video2.x = Starling.current.stage.stageWidth / 2 + 50;
+	    video2.x = AssetRegistry.STAGE_WIDTH / 2 + 50;
 	    video2.y = video1.y;
       
       var video3:Button = new Button();

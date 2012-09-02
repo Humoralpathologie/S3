@@ -16,6 +16,12 @@ package Level
 	import engine.SaveGame;
   import starling.utils.Color;
   import starling.extensions.PDParticleSystem;
+  import engine.VideoPlayer;
+  import Menu.LevelScore;
+  import starling.events.TouchEvent;
+  import starling.events.Touch;
+  import starling.events.TouchPhase;
+  import engine.ManagedStage;
 	
 	import Combo.NoRottenCombo;
 	
@@ -194,6 +200,19 @@ package Level
         _goldenEggsRest--;
         eatEgg(egg);
         _goldenEggPos.push([3, egg.tileX, egg.tileY]);
+      }
+    }
+    
+    override protected function winScreenTouch(event:TouchEvent):void
+    {
+      var touch:Touch;
+      touch = event.getTouch(this, TouchPhase.ENDED);
+      if (touch)
+      {
+        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lid: _lid}
+        AssetRegistry.soundmanager.fadeOutMusic();
+        dispatchEventWith(ManagedStage.SWITCHING, true, { stage: VideoPlayer, args: {stage:LevelScore, videoURI:"Outro.mp4", args:score} } );
+        SaveGame.hasFinishedGame = true;
       }
     }
     

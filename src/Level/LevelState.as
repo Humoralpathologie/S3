@@ -1292,7 +1292,7 @@ package Level
     
     }
     
-    private function winScreenTouch(event:TouchEvent):void
+    protected function winScreenTouch(event:TouchEvent):void
     {
       var touch:Touch;
       touch = event.getTouch(this, TouchPhase.ENDED);
