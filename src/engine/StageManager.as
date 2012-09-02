@@ -32,6 +32,10 @@ package engine
       _watcher = new MinimalTheme(Starling.current.stage, false);
       
       _loadingScreen = new AssetRegistry.LoadingScreenPNG;
+      _loadingScreen.x = Starling.current.viewPort.x;
+      _loadingScreen.y = Starling.current.viewPort.y;
+      _loadingScreen.width = Starling.current.viewPort.width;
+      _loadingScreen.height = Starling.current.viewPort.height;
       
       addEventListener(ManagedStage.CLOSING, onStageClosing);
       addEventListener(ManagedStage.SWITCHING, onStageSwitching);
