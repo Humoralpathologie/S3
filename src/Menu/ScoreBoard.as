@@ -29,6 +29,7 @@ package Menu
   import Menu.MainMenu;
   import Menu.LevelScore;
   import starling.events.EnterFrameEvent;
+  import starling.animation.Tween;
   
   /**
    * ...
@@ -70,6 +71,7 @@ package Menu
     
     protected var _onScoring:Signal = new Signal(ScoreBoard);
     private var _next:Button;
+    private var _highScoreTxt:TextField;
     
     public static const SHOW_RANK:String = "showrank";
     
@@ -77,6 +79,7 @@ package Menu
     {
       super();
       addEventListener(SHOW_RANK, showRank);
+      
     }
 
     // Input looks like this:
@@ -84,14 +87,37 @@ package Menu
     private function showRank(evt:Event):void {
       _rankText.text = AssetRegistry.Strings.RANKOVERALL + ":\n" + AssetRegistry.Strings.RANKWEEK + ":\n" + AssetRegistry.Strings.RANKTODAY;
       _rank.text =  String(evt.data.ranks[3]) + "\n" + String(evt.data.ranks[2]) + "\n" + String(evt.data.ranks[1]);
+      if (evt.data.highs[3]) {
+        showMessage("TEST U WON!!! Yeaaaah");
+      } 
+      if (!evt.data.highs[3] && evt.data.highs[2]) {
+        showMessage("TEST U WON!!! Aber Weekly nur ...trotzdem Yeaaaah");
+      }
+    }
+    
+    private function showMessage(msg:String):void
+    {
+      addChild(_highScoreTxt);
+      _highScoreTxt.text = msg;
+      _highScoreTxt.touchable = false;
+      var tween:GTween = new GTween(_highScoreTxt, 2, {y: -_highScoreTxt.height}, {onComplete: onComplete});
+      var onComplete:Function = function():void {
+        _highScoreTxt.visible = false; 
+        removeChild(_highScoreTxt);
+      }
+      _tweens.push(tween);
     }
     
     override protected function initialize():void
     {
+      _highScoreTxt = new TextField(AssetRegistry.STAGE_WIDTH, AssetRegistry.STAGE_HEIGHT, "", "kroeger 06_65", 90, Color.RED);
+      _highScoreTxt.x = 0;
+      _highScoreTxt.y = 0;
       _tweens = new Vector.<GTween>;
       buildMenu();
       trace(_scores);
       startScoring();
+      
       //addEventListener(EnterFrameEvent.ENTER_FRAME, startScoring);
       //updateLeaderboard();
     }
