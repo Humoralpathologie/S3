@@ -33,8 +33,10 @@ package Level
       _winningPositions = [2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428];
       if (SaveGame.difficulty == 1) {
 	      _winCondition = 5;
+        _lid = "50422f0d563d8a51b7002a38";
 	    } else {
 		    _winCondition = 7;
+        _lid = "50422f17563d8a570c002638";
 	    }
 
       super();

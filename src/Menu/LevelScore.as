@@ -301,7 +301,7 @@ package Menu
       _replayButton = new Button();
       _nextLevelButton = new Button();
       
-      if (_scores.level != 9)
+      if (_scores.level != 9 && _scores.level != 7)
       {
         buttonWidth = 240;
         addChild(_nextLevelButton);

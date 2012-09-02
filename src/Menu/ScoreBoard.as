@@ -144,6 +144,19 @@ package Menu
         });
       addChild(_next);
     
+
+    _next = new Button();
+    _next.label = AssetRegistry.Strings.LEADERBOARDSBUTTON;
+    
+    if (SaveGame.isArcade || _scores.level == 7){
+      _next.width = 320;
+      _next.x = 640;
+    } else {
+      _next.width = 240;
+      _next.x = 720;
+
+    }
+    
     }
     
     private function medal(tween:GTween):void

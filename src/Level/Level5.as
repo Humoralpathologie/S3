@@ -24,6 +24,11 @@ package Level
       _levelNr = 5;
       SaveGame.levelName = AssetRegistry.Strings.LEVEL5NAME;
 	  _rottenEnabled = true;
+      if (SaveGame.difficulty == 1) {
+        _lid = "50422f1f563d8a45d3002153";
+	    } else {
+        _lid = "50422f29563d8a570c00263a";
+	    }
       super();
 			SaveGame.startSpeed += 2;
 			_snake.mps = SaveGame.startSpeed;
