@@ -99,7 +99,11 @@ package Menu
       {
         _scores = {score: 1000, lives: 3, time: 30, level: 1}
       }
-      _scores["total"] = _scores.score + (_scores.lives * 100);
+      if (_scores.lives > 0){
+        _scores["total"] = _scores.score + (_scores.lives * 100);
+      } else {
+        _scores["total"] = _scores.score;
+      }
       calculateTime();
       
       
