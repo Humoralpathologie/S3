@@ -260,7 +260,7 @@ package Menu
         addChild(_lifeBonusText);
       }
       addChild(_scoreText);
-      if (_scores.level != 9)
+      if (_scores.level != 9 && _scores.level != 5)
       {
         addChild(_timeBonusText);
       }
@@ -296,7 +296,7 @@ package Menu
       _timeBonusHeading.y = _scoreHeading.y + 60;
       _timeBonusHeading.vAlign = VAlign.TOP;
       _timeBonusHeading.hAlign = HAlign.LEFT;
-      if (_scores.level != 9)
+      if (_scores.level != 9 && _scores.level != 5)
       {
         addChild(_timeBonusHeading);
       }
