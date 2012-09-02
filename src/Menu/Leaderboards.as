@@ -126,7 +126,7 @@ package Menu
         _countText.text += String(count) + ".\n";
         if (type == "alltime" || type == "weekly") {
           /*
-          var _nameText:TextField = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+          var _nameText:TextField = new TextField(_leaderboard.width, _leaderboard.height - (t_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
           _nameText.hAlign = HAlign.LEFT;
           _nameText.vAlign = VAlign.TOP;
           _nameText.x = _leaderboard.x + 50;
