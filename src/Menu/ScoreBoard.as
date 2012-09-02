@@ -66,6 +66,7 @@ package Menu
     private var _totalHeading:TextField;
     private var _rankHeading:TextField;
     private var _rankText:TextField;
+    private var _rank:TextField;
     
     protected var _onScoring:Signal = new Signal(ScoreBoard);
     private var _next:Button;
@@ -81,11 +82,8 @@ package Menu
     // Input looks like this:
     //{"ranks":{"4":1,"1":1,"2":1,"3":1},"highs":{"1":true,"2":true,"3":true}}    
     private function showRank(evt:Event):void {
-      var txt:String = "";
-      txt += "Overall: " + String(evt.data.ranks[1]) + "\n";
-      txt += "This week: " + String(evt.data.ranks[2]) + "\n";
-      txt += "Today:" + String(evt.data.ranks[3]) + "\n";
-      _rankText.text = txt;
+      _rankText.text = AssetRegistry.Strings.RANKOVERALL + ":\n" + AssetRegistry.Strings.RANKWEEK + ":\n" + AssetRegistry.Strings.RANKTODAY;
+      _rank.text =  String(evt.data.ranks[3]) + "\n" + String(evt.data.ranks[2]) + "\n" + String(evt.data.ranks[1]);
     }
     
     override protected function initialize():void
@@ -122,7 +120,7 @@ package Menu
       _next = new Button();
       _next.label = AssetRegistry.Strings.LEADERBOARDSBUTTON;
       
-      if (SaveGame.isArcade)
+      if (SaveGame.isArcade || _scores.level == 7)
       {
         _next.width = 320;
         _next.x = 640;
@@ -143,19 +141,6 @@ package Menu
           _onScoring.dispatch(that);
         });
       addChild(_next);
-    
-
-    _next = new Button();
-    _next.label = AssetRegistry.Strings.LEADERBOARDSBUTTON;
-    
-    if (SaveGame.isArcade || _scores.level == 7){
-      _next.width = 320;
-      _next.x = 640;
-    } else {
-      _next.width = 240;
-      _next.x = 720;
-
-    }
     
     }
     
@@ -322,17 +307,24 @@ package Menu
     
     private function addRank():void
     {
-      _rankHeading = new TextField(200, 40, AssetRegistry.Strings.RANK, "kroeger 06_65", 35, Color.WHITE);
+      _rankHeading = new TextField(200, 40, AssetRegistry.Strings.RANK, "kroeger 06_65", 40, Color.WHITE);
       _rankHeading.x = 600;
       _rankHeading.y = _scoreboardText.y;
+      _rankHeading.hAlign = HAlign.LEFT;
       addChild(_rankHeading);
       
       _rankText = new TextField(200, 400, "Checking rank...", "kroeger 06_65", 35, Color.WHITE);
       _rankText.x = _rankHeading.x;
-      _rankText.y = _rankHeading.y + 80;
+      _rankText.y = _scoreHeading.y;
       _rankText.vAlign = VAlign.TOP;
       _rankText.hAlign = HAlign.LEFT;
       addChild(_rankText);
+      _rank = new TextField(200, 400, "", "kroeger 06_65", 35, Color.WHITE);
+      _rank.x = _rankText.x + 70;
+      _rank.y = _scoreHeading.y;
+      _rank.vAlign = VAlign.TOP;
+      _rank.hAlign = HAlign.RIGHT;
+      addChild(_rank);
     }
     
     override public function dispose():void
