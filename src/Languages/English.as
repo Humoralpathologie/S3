@@ -73,6 +73,10 @@ package Languages
     public static const NEXTBUTTON:String = "NEXT LEVEL";
     public static const LEADERBOARDSBUTTON:String = "LEADERBOARD";
     public static const SCOREBOARDBUTTON:String = "BACK";
+    
+    public static const RANKOVERALL:String = "All-time";
+    public static const RANKWEEK:String = "This week";
+    public static const RANKTODAY:String = "Today";
 		
 		//Level objectives
     public static const OBJECTIVE:String = "Objective";
@@ -107,7 +111,7 @@ package Languages
     public static const FRIENDS:String = "Friends";
     public static const PERSONAL:String = "Personal";
     
-    public static const RANK:String = "Rank";
+    public static const RANK:String = "RANK";
     
     //Messages
     public static const JUMPMESSAGE:String = "And now JUMP THE CANYON!!";

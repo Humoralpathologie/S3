@@ -1126,7 +1126,6 @@ package Level
         _currentCombos = null;
       }
       pause();
-      
       if (SaveGame.isArcade) {
         AssetRegistry.soundmanager.playSound("explosion");
       } else {

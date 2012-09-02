@@ -17,6 +17,9 @@ package engine
         var uuid:Uuid = new Uuid();
        _sharedObject.data.guid = uuid.toString();
       }
+      if (!_sharedObject.data.personalScores) {
+        _sharedObject.data.personalScores = { };
+      }
       if (!_sharedObject.data.initialized)
       {
         initializeData();
@@ -328,5 +331,20 @@ package engine
       _sharedObject.data.notFirstStart = !value;
     }
     
+    public static function getPersonalScores(lid:String):Array 
+    {
+      if (!_sharedObject.data.personalScores[lid]) {
+        _sharedObject.data.personalScores[lid] = [];
+      }
+      return  _sharedObject.data.personalScores[lid];
+    }
+    
+    public static function storePersonalScores(lid:String, newScore:int):void 
+    {
+      if (!_sharedObject.data.personalScores[lid]) {
+        _sharedObject.data.personalScores[lid] = [];
+      }
+      _sharedObject.data.personalScores[lid] = Utils.sortScoreArray(_sharedObject.data.personalScores[lid], newScore);
+    }
   }
 }

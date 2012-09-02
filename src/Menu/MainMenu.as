@@ -51,6 +51,8 @@ package Menu
 	  private var _extrasButton:Button;
     private var _notificationScroller:NotificationScroller;
     private var isExtrasScreen:Boolean = false;
+    private var extras:Sprite;
+    private var extrasxButton:Image;
     
     public function MainMenu()
     {
@@ -71,7 +73,7 @@ package Menu
     }
     
     private function makeButtons():void {
-     
+      var that:MainMenu = this;
       _settingsButton = new Button();
       _settingsButton.label = AssetRegistry.Strings.SETTINGS;
       _settingsButton.width = 240;
@@ -79,10 +81,16 @@ package Menu
       _settingsButton.x = Starling.current.stage.stageWidth - _settingsButton.width;
       _settingsButton.y = Starling.current.stage.stageHeight - _settingsButton.height;
       _settingsButton.onRelease.add(function(button:Button):void {
-        if (SaveGame.isSettingsScreen != true) {
-		  trace("Save.isSettingsScreen != true")
-		  showSettingsNavigator();
-        } 
+      if (SaveGame.isSettingsScreen != true) {
+		    if (isExtrasScreen) {
+          that.removeChild(extras);
+          that.removeChild(extrasxButton);
+          isExtrasScreen = false;
+		      showSettingsNavigator();
+        } else {
+          showSettingsNavigator();
+        }
+      }
 	  });
       
       _arcadeButton = new Button();
@@ -112,14 +120,20 @@ package Menu
 	  _extrasButton.x = Starling.current.stage.stageWidth / 2;
 	  _extrasButton.y = Starling.current.stage.stageHeight - _extrasButton.height;
     _extrasButton.onRelease.add(function(button:Button):void {
-      if(!isExtrasScreen){ 
-        showExtrasScreen(); 
-        }      
-      });
+      if (!isExtrasScreen) { 
+        if (SaveGame.isSettingsScreen) {
+          that.removeChild(_settings);
+          SaveGame.isSettingsScreen = false;
+          showExtrasScreen();
+        } else {
+          showExtrasScreen();
+        }
+      }      
+    });
 	  
-      addChild(_settingsButton);
-      addChild(_arcadeButton);
-      addChild(_levelSelectButton);
+    addChild(_settingsButton);
+    addChild(_arcadeButton);
+    addChild(_levelSelectButton);
 	  addChild(_extrasButton);
     }
     
@@ -178,7 +192,7 @@ package Menu
     private function showExtrasScreen():void {
       isExtrasScreen = true;
       
-      var extras:Sprite = new Sprite;
+      extras = new Sprite;
       addChild(extras);
       
       var _greyBox:Quad = new Quad(710, 480, Color.BLACK);
@@ -236,12 +250,12 @@ package Menu
       extras.addChild(video2);
       extras.addChild(video4);
       
-      var xButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+      extrasxButton = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
 
       //xButton.scaleX = xButton.scaleY = 1.5;
-      xButton.x = Starling.current.stage.stageWidth - xButton.width - 10;
+      extrasxButton.x = Starling.current.stage.stageWidth - extrasxButton.width - 10;
 
-      xButton.y = 90;
+      extrasxButton.y = 90;
       var exit:Quad = new Quad(140, 250, 0xffffff);
       exit.alpha = 0;
       exit.x = Starling.current.stage.stageWidth - exit.width;
@@ -252,12 +266,12 @@ package Menu
           if (touch)
           {
             that.removeChild(extras);
-            that.removeChild(xButton);
+            that.removeChild(extrasxButton);
             that.removeChild(exit);
             isExtrasScreen = false;
           }
       });
-      addChild(xButton);
+      addChild(extrasxButton);
       addChild(exit); 
     }
         
