@@ -27,9 +27,11 @@ package Snake
   {
     
     public static const BODY_CHANGED:String = "bodychanged";
+    public static const SNAKE_MOVED:String = "snakemoved";
     
     private var _head:Head;
     private var _speed:Number;
+    private var _speedTimer:Number = 0;
     private var _mps:int;
     //private var _body:Vector.<Snake.BodyPart>;
     private var _body:Array;
@@ -248,6 +250,8 @@ package Snake
     
     public function advanceTime(time:Number):void
     { 
+      _speedTimer += time;
+      
       _head.advanceTime(time);
       _head.update(time);
       for (var i:int = 0; i < _body.length; i++)
@@ -255,6 +259,11 @@ package Snake
         _body[i].update(time);
       }
       _tail.update(time);
+      if(_speedTimer >= _speed) {
+        move();
+        _speedTimer -= _speed;
+        dispatchEventWith(SNAKE_MOVED, true);
+      }
     }
     
     public function changeDirection(newDirection:int):void {

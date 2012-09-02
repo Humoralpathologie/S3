@@ -46,7 +46,6 @@ package Level
     private var _intensity:Number = 10;
     private var _volcanoSoundPlayed:Boolean = false;
     
-   
     public function ArcadeState()
     {
       //AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
@@ -55,16 +54,14 @@ package Level
       var combos:Array = AssetRegistry.COMBO_TRIGGERS;
       
       SaveGame.difficulty = 2;
-	    SaveGame.isArcade = true;
-	  
+      SaveGame.isArcade = true;
+      
       super();
       
       _comboSet.addCombo(new Combo.NoRottenCombo);
       //_comboSet.addCombo(new Combo.ExtraTimeCombo);
       //trace("ArcadeMode: " + String(SaveGame.arcadeModi));
-	  
       
-	  
       if (!SaveGame.endless)
       {
         _comboSet.addCombo(new Combo.SlowerCombo);
@@ -107,9 +104,12 @@ package Level
       _startPos.x = 20;
       _startPos.y = 20;
       startAt(_startPos.x, _startPos.y);
-      if (!SaveGame.endless) {
+      if (!SaveGame.endless)
+      {
         AssetRegistry.soundmanager.playMusic("arcadeEndlessMusic", true);
-      } else {
+      }
+      else
+      {
         AssetRegistry.soundmanager.playMusic("arcadeMusic");
       }
       _levelNr = 9;
@@ -160,16 +160,17 @@ package Level
     }
     
     override protected function checkWin():void
-    { 
+    {
       if (_timeLeft <= 7 && SaveGame.endless)
       {
-        if (!_volcanoSoundPlayed){
+        if (!_volcanoSoundPlayed)
+        {
           AssetRegistry.soundmanager.playSound("eruption");
           _volcanoSoundPlayed = true;
         }
         _levelStage.x += Math.random() * _intensity - (_intensity / 2);
         _levelStage.y += Math.random() * _intensity - (_intensity / 2)
-        _intensity+=0.2;
+        _intensity += 0.2;
       }
       if (_timeLeft <= 0 && SaveGame.endless)
       {
@@ -177,58 +178,16 @@ package Level
       }
     }
     
-	
-	override protected function lose():void {
-		_lost = true;
-    pause();
-    var image:Image;
-	  if (SaveGame.endless){
-      image = new Image(AssetRegistry.UIAtlas.getTexture("game over_gravestone"));
-		  image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
-      image.y = AssetRegistry.STAGE_HEIGHT;
-      addChild(image);
-      AssetRegistry.soundmanager.playSound("gameOverSound");
-	  } else {
-		  image = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
-		  image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
-      image.y = AssetRegistry.STAGE_HEIGHT;
-      addChild(image);
-		  var _evilText:Image = new Image(AssetRegistry.UIAtlas.getTexture("Snake_EvilLaughText"));
-      _evilText.x = (AssetRegistry.STAGE_WIDTH - _evilText.width) / 2;
-      _evilText.y = 0;
-      addChild(_evilText);
-      AssetRegistry.soundmanager.playSound("winSound");
-	  }
-	  
-      
-      // Use a GTween, as the Starling tweens are paused.
-      new GTween(image, 2, {y: AssetRegistry.STAGE_HEIGHT - image.height});
-      
-      var registerTouchHandler:Function = function():void
-      {
-        addEventListener(TouchEvent.TOUCH, onLoseHandler);
-      }
-      
-      new GTween(null, 2, null, {onComplete: registerTouchHandler, paused: false});
-    
-	}
-    
-    override protected function onLoseHandler(event:TouchEvent):void
+    override protected function lose():void
     {
-      var score:Object;
-      var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
-      if (touch)
+      if (SaveGame.endless)
       {
-        if (SaveGame.endless)
-        {
-          score = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true, lid: _lid}
-        }
-        else
-        {
-          score = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: false, lid: _lid}
-        }
-        AssetRegistry.soundmanager.fadeOutMusic();
-        dispatchEventWith(SWITCHING, true, {stage: LevelScore, args: score});
+        super.lose();
+      }
+      else
+      {
+        _lost = true;
+        super.win();
       }
     }
     
@@ -236,23 +195,24 @@ package Level
     {
       _hud = new HUD(this);
       
-      var iconsCfg:Object = {
-        lives: { type: "lives", pos: 1, watching: "lives" },
-        poison: { type: "poison", pos: 3, watching: "poisonCount"}
-      };
+      var iconsCfg:Object = {lives: {type: "lives", pos: 1, watching: "lives"}, poison: {type: "poison", pos: 3, watching: "poisonCount"}};
       
-      if (SaveGame.endless) {
-        iconsCfg["time"] = { type: "time", pos: 2, watching: "timeLeftFormatted" };
-      } else {
-        iconsCfg["speed"] = { type: "speed", pos: 2, watching: "speed" };
+      if (SaveGame.endless)
+      {
+        iconsCfg["time"] = {type: "time", pos: 2, watching: "timeLeftFormatted"};
+      }
+      else
+      {
+        iconsCfg["speed"] = {type: "speed", pos: 2, watching: "speed"};
       }
       
       _hud.iconsCfg = iconsCfg;
       addChild(_hud);
-
+    
     }
     
-    public function get timeLeftFormatted():String {
+    public function get timeLeftFormatted():String
+    {
       return String(Math.max(0, _timeLeft).toFixed(2));
     }
     
@@ -292,8 +252,7 @@ package Level
         new GTween(_overlay, 0.3, {"alpha": 0}, {ease: Exponential.easeOut, reflect: true, repeatCount: 0});
       }
     }
-    
-    
+  
   }
 
 }
