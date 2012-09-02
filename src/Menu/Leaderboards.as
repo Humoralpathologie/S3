@@ -57,7 +57,11 @@ package Menu
     public function Leaderboards(score:Object)
     {
       super();
+      trace("personalScores: ");
+      //SaveGame.personalScores;
+
       _score = score;
+
       addBoards();
       addButton();
       addTabBar();
@@ -77,8 +81,24 @@ package Menu
       _countText.text = "";
       _nameText.text = "";
       _timeText.text = "";
+     
       
-      AssetRegistry.mogade.getScores(_score.lid, 1, updateLeaderboard);
+      if (_leaderboardShowing == "personal") {
+        updateLeaderboard({scores: SaveGame.getPersonalScores(_score.lid)}, "personal");
+      } else { 
+        var scope:int;
+        switch (_leaderboardShowing)
+        {
+          case "alltime":
+              scope = 3;
+          break;
+          case "weekly":
+              scope = 2;
+          break;
+            
+        }
+        AssetRegistry.mogade.getScores(_score.lid, scope, updateLeaderboard);
+      }
       
       //Utils.getLeaderboard(_score.level, updateLeaderboard, _leaderboardShowing);
     }
@@ -103,9 +123,10 @@ package Menu
             _leaderboardShowing = "personal";
             break;    
         }
+        
         if(_leaderboardShowing != prevShowing) {
           refreshLeaderboard();
-        }
+        } 
       });
       _tabBar.width = _leaderboard.width;
       _tabBar.x = _leaderboard.x;
@@ -134,16 +155,18 @@ package Menu
           _nameText.text += playerScore.username + ":\n";
           _scoreText.x = _leaderboard.x + 350;
           _timeText.x = _leaderboard.x + 570;
+          _scoreText.text += playerScore.points + "\n";  
+          _timeText.text += playerScore.dated.split("T")[0] + "\n";
         } else {
           _nameText.text = "";
           _timeText.x =  _leaderboard.x + 250;
-          _scoreText.x = _leaderboard.x + 50;
+          _scoreText.x = _leaderboard.x + 70;
+          _scoreText.text += String(playerScore) + "\n";
         }
-        _scoreText.text += playerScore.points + "\n";  
-        _timeText.text += playerScore.dated.split("T")[0] + "\n";
+        
        
         count++;
-        if (count > 8) {
+        if (count > 10) {
           break;
         }
       }
@@ -204,7 +227,7 @@ package Menu
         _nameText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
         _nameText.hAlign = HAlign.LEFT;
         _nameText.vAlign = VAlign.TOP;
-        _nameText.x = _leaderboard.x + 50;
+        _nameText.x = _leaderboard.x + 70;
         _nameText.y = _countText.y;
         addChild(_nameText);
         

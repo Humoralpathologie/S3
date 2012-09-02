@@ -94,6 +94,18 @@ package engine
       urlLoader.load(request);      
     }
     
+    static public function sortScoreArray(scores:Array, newScore:int):Array {
+      if (scores.length < 10) {
+        scores.push(newScore);
+      } else {
+        if (newScore > scores[scores.length - 1]){
+          scores.pop();
+          scores.push(newScore);
+        }
+      }
+      return scores.sort(Array.DESCENDING|Array.NUMERIC);
+    }
+    
     static public function getLeaderboard(level:int, callback:Function, type:String):void {
       
       var requestVars:Object = { };

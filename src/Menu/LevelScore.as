@@ -117,6 +117,7 @@ package Menu
       if (!_scores.lost)
       {
         SaveGame.saveScore(_scores.level, _scores.total);
+        SaveGame.storePersonalScores(_scores.lid, _scores.total);
         AssetRegistry.mogade.submitScore(SaveGame.userName, SaveGame.guid, _scores.lid, _scores.total, showRank);
       }
       
