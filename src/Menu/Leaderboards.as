@@ -140,7 +140,7 @@ package Menu
           _scoreText.x = _leaderboard.x + 50;
         }
         _scoreText.text += playerScore.points + "\n";  
-        _timeText.text += playerScore.dated.split(" ")[0] + "\n";
+        _timeText.text += playerScore.dated.split("T")[0] + "\n";
        
         count++;
         if (count > 8) {
