@@ -31,7 +31,7 @@ package engine
       var videoURI:String = args.videoURI;
       
       nextStage = args.stage;
-      args = args.args;
+      this.args = args.args;
       
       video = new Video(Starling.current.viewPort.width, Starling.current.viewPort.height);
       

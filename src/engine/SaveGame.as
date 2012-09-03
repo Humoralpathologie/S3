@@ -237,6 +237,9 @@ package engine
     
     public static function levelUnlocked(n:Number):Boolean
     {
+      if (!_sharedObject.data.levels[n]) {
+        return false;
+      }
       return _sharedObject.data.levels[n].unlocked;
     }
     
