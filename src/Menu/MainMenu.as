@@ -58,7 +58,7 @@ package Menu
     {
       AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE]);
             
-      _bg = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("loading"));
+      _bg = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("loading"));
       addChild(_bg);
       
       _notificationScroller = new NotificationScroller();

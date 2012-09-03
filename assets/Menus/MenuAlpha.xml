@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:72f95aa6fcbeff9079be82c49345237e$ -->
+<!-- $TexturePacker:SmartUpdate:80fbe42d78bc96eee77851343c940c0e$ -->
 <TextureAtlas imagePath="MenuAlpha.png">
-    <SubTexture name="PfeilmitSchlagschatten" x="2" y="2" width="96" height="472" frameX="0" frameY="-8" frameWidth="100" frameHeight="480"/>
-    <SubTexture name="abbca" x="100" y="461" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="abcb" x="180" y="166" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="acba" x="180" y="152" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="arrow_reduced" x="100" y="2" width="51" height="457" frameX="0" frameY="0" frameWidth="63" frameHeight="457"/>
-    <SubTexture name="bcaac" x="31" y="490" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="bccb" x="180" y="138" width="66" height="12" frameX="-11" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="ccbba" x="31" y="476" width="78" height="12" frameX="-4" frameY="-67" frameWidth="88" frameHeight="88"/>
-    <SubTexture name="info-button" x="180" y="70" width="66" height="66" frameX="-3" frameY="-2" frameWidth="70" frameHeight="70"/>
-    <SubTexture name="right-arrow" x="2" y="476" width="27" height="22" frameX="0" frameY="-3" frameWidth="27" frameHeight="28"/>
-    <SubTexture name="x" x="180" y="2" width="66" height="66" frameX="-3" frameY="-2" frameWidth="70" frameHeight="70"/>
+    <SubTexture name="PfeilmitSchlagschatten" x="916" y="2" width="91" height="448" frameX="0" frameY="-8" frameWidth="95" frameHeight="456"/>
+    <SubTexture name="abbca" x="916" y="484" width="76" height="14" frameX="-3" frameY="-62" frameWidth="84" frameHeight="84"/>
+    <SubTexture name="abcb" x="916" y="532" width="64" height="14" frameX="-10" frameY="-62" frameWidth="84" frameHeight="84"/>
+    <SubTexture name="acba" x="916" y="516" width="64" height="14" frameX="-10" frameY="-62" frameWidth="84" frameHeight="84"/>
+    <SubTexture name="arrow_reduced" x="916" y="548" width="50" height="434" frameX="0" frameY="0" frameWidth="60" frameHeight="434"/>
+    <SubTexture name="bcaac" x="916" y="468" width="76" height="14" frameX="-3" frameY="-62" frameWidth="84" frameHeight="84"/>
+    <SubTexture name="bccb" x="916" y="500" width="64" height="14" frameX="-10" frameY="-62" frameWidth="84" frameHeight="84"/>
+    <SubTexture name="ccbba" x="916" y="452" width="76" height="14" frameX="-3" frameY="-62" frameWidth="84" frameHeight="84"/>
+    <SubTexture name="info-button" x="2" y="677" width="63" height="63" frameX="-3" frameY="-2" frameWidth="67" frameHeight="67"/>
+    <SubTexture name="loading" x="2" y="2" width="912" height="608"/>
+    <SubTexture name="right-arrow" x="994" y="452" width="26" height="23" frameX="0" frameY="-2" frameWidth="26" frameHeight="27"/>
+    <SubTexture name="x" x="2" y="612" width="63" height="63" frameX="-3" frameY="-2" frameWidth="67" frameHeight="67"/>
 </TextureAtlas>
