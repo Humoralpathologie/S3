@@ -237,7 +237,7 @@ package Menu
       var self:ScoreBoard = this;
       var triggerLife:Function = function(tween:GTween):void
       {
-        _tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.lives * 100}, {ease: Exponential.easeOut, onComplete: triggerTotal}));
+        _tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.lives * 50}, {ease: Exponential.easeOut, onComplete: triggerTotal}));
       }
       var triggerTime:Function = function(tween:GTween):void
       {

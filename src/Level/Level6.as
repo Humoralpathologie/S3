@@ -53,8 +53,8 @@ package Level
 				adjustBonusBack(38);
 			}
 			else
-			{
-				_chainTime = 2.5;
+			{0
+				 _chainTime = 2.5;
 			}
 			_comboSet.addCombo(new Combo.NoRottenCombo);
 		}

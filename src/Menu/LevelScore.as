@@ -101,7 +101,7 @@ package Menu
 			}
 			if (_scores.lives > 0)
 			{
-				_scores["total"] = _scores.score + (_scores.lives * 100);
+				_scores["total"] = _scores.score + (_scores.lives * 50);
 			}
 			else
 			{
@@ -202,25 +202,25 @@ package Menu
 				switch (_scores.level)
 				{
 					case 1: 
-						medalReq = [400, 600, 800, 1000];
+						medalReq = [300, 400, 500, 700];
 						break;
 					case 2: 
-						medalReq = [400, 600, 800, 1000];
+						medalReq = [700, 850, 1000, 1300];
 						break;
 					case 3: 
-						medalReq = [400, 600, 800, 1000];
+						medalReq = [600, 750, 900, 1200];
 						break;
 					case 4: 
-						medalReq = [400, 600, 800, 1000];
+						medalReq = [500, 600, 700, 1000];
 						break;
 					case 5: 
-						medalReq = [400, 600, 800, 1000];
+						medalReq = [1000, 1250, 1500, 1800];
 						break;
 					case 6: 
 						medalReq = [400, 600, 800, 1000];
 						break;
 					case 7: 
-						medalReq = [400, 600, 800, 1000];
+						medalReq = [1200, 1500, 1800, 2500];
 						break;
 				}
 			}
