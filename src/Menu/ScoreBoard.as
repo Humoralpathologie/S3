@@ -73,6 +73,9 @@ package Menu
     private var _next:Button;
     private var _highScoreTxt:TextField;
     
+    private var _alltimehigh:Boolean = false;
+    private var _weekhigh:Boolean = false;
+    
     public static const SHOW_RANK:String = "showrank";
     
     public function ScoreBoard()
@@ -88,29 +91,44 @@ package Menu
       _rankText.text = AssetRegistry.Strings.RANKOVERALL + ":\n" + AssetRegistry.Strings.RANKWEEK + ":\n" + AssetRegistry.Strings.RANKTODAY;
       _rank.text =  String(evt.data.ranks[3]) + "\n" + String(evt.data.ranks[2]) + "\n" + String(evt.data.ranks[1]);
       if (evt.data.highs[3]) {
-        showMessage("TEST U WON!!! Yeaaaah");
+        _alltimehigh = true;
       } 
       if (!evt.data.highs[3] && evt.data.highs[2]) {
-        showMessage("TEST U WON!!! Aber Weekly nur ...trotzdem Yeaaaah");
+        _weekhigh = true;
       }
     }
     
     private function showMessage(msg:String):void
     {
+      trace("wird ausgeführt");
       addChild(_highScoreTxt);
       _highScoreTxt.text = msg;
       _highScoreTxt.touchable = false;
-      var tween:GTween = new GTween(_highScoreTxt, 2, {y: -_highScoreTxt.height}, {onComplete: onComplete});
-      var onComplete:Function = function():void {
+      var onComplete:Function = function(tween:GTween):void {
         _highScoreTxt.visible = false; 
         removeChild(_highScoreTxt);
+        medal(tween);
       }
+      var tween:GTween = new GTween(_highScoreTxt, 2, {y: -_highScoreTxt.height}, {ease: Exponential.easeIn, onComplete: onComplete});
+     
       _tweens.push(tween);
+    }
+    
+    private function showHighMessage(tween:GTween):void
+    {
+      if (_alltimehigh) {
+        showMessage(AssetRegistry.Strings.HIGHMESSAGE);
+      } 
+      else if (_weekhigh) {
+        showMessage(AssetRegistry.Strings.WEEKHIGHMESSAGE);
+      } else {
+        medal(tween);
+      }
     }
     
     override protected function initialize():void
     {
-      _highScoreTxt = new TextField(AssetRegistry.STAGE_WIDTH, AssetRegistry.STAGE_HEIGHT, "", "kroeger 06_65", 90, Color.RED);
+      _highScoreTxt = new TextField(AssetRegistry.STAGE_WIDTH, AssetRegistry.STAGE_HEIGHT, "", "kroeger 06_65", 90, 0x00ff06);
       _highScoreTxt.x = 0;
       _highScoreTxt.y = 0;
       _tweens = new Vector.<GTween>;
@@ -172,6 +190,7 @@ package Menu
     
     private function medal(tween:GTween):void
     {
+      trace("medaling");
       var self:ScoreBoard = this;
       var func:Function = function(tween:GTween):void
       {
@@ -207,10 +226,12 @@ package Menu
         _tweens.push(_medalTween);
         AssetRegistry.soundmanager.playSound("medalSound1");
         addChild(_medal);
+        
+        
       }
     
     }
-    
+  
     private function startScoring():void
     {
       var self:ScoreBoard = this;
@@ -227,10 +248,10 @@ package Menu
       }
       var triggerTotal:Function = function(tween:GTween):void
       {
-        _tweens.push(new GTween(self, 2, {_totalCounter: _scores.total}, {ease: Exponential.easeOut, onComplete: medal}));
+          _tweens.push(new GTween(self, 2, { _totalCounter: _scores.total }, { ease: Exponential.easeOut, onComplete: showHighMessage } ));
       }
       
-      _tweens.push(new GTween(this, 2, {_scoreCounter: _scores.score}, {ease: Exponential.easeOut, onComplete: triggerTime}));
+      _tweens.push(new GTween(this, 2, { _scoreCounter: _scores.score }, { ease: Exponential.easeOut, onComplete: triggerTime } ));
       addEventListener(EnterFrameEvent.ENTER_FRAME, updateTexts);
     }
     

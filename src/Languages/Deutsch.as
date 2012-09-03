@@ -128,6 +128,10 @@ package Languages
     public static const CHAINTIMEEXTMESSAGE:String = "Kette+";
     public static const CHAINTIMEEXTENDMESSAGE:String = "Kette-";
     
+    //Highscore Messages
+    public static const HIGHMESSAGE:String = "Congratulations! You earned a new all-time highscore!";
+    public static const WEEKLHIGHMESSAGE:String = "Congratulations! You earned a new highscore for this week!";
+    
     //Hints Slider
     public static const HINTS:Array = ["Achte auf die Punktevergabe - um so länger die Combo, desto höher der Score!",
       
