@@ -470,7 +470,6 @@ package engine
       //ArcadeAtlas = new TextureAtlas(Texture.fromAtfData(new ArcadeAtlasATF), XML(new ArcadeAtlasXML));
       //ArcadeBackground = ArcadeAtlas.getTexture("arcade");
       //ArcadeOverlayAtlas = new TextureAtlas(Texture.fromBitmap(new ArcadeOverlayAtlasPNG), XML(new ArcadeOverlayAtlasXML));
-      
     }
     
     public static function loadMenuGraphics():void
