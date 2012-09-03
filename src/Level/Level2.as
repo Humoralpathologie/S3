@@ -18,6 +18,7 @@ package Level
     public function Level2()
     {
       AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.SCORING]);
+      AssetRegistry.soundmanager.levelMusic();
       
       _levelNr = 2;
       SaveGame.levelName = AssetRegistry.Strings.LEVEL2NAME;

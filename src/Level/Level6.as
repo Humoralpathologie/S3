@@ -28,6 +28,7 @@ package Level
 		public function Level6()
 		{
 			AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL7, AssetRegistry.SCORING]);
+      AssetRegistry.soundmanager.levelMusic();
 			_levelNr = 6;
       SaveGame.levelName = AssetRegistry.Strings.LEVEL6NAME;
 			_rottenEnabled = true;
