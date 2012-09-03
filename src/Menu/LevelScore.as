@@ -99,13 +99,15 @@ package Menu
       {
         _scores = {score: 1000, lives: 3, time: 30, level: 1}
       }
-      if (_scores.lives > 0){
-        _scores["total"] = _scores.score + (_scores.lives * 100);
-      } else {
+			if (_scores.lives > 0)
+			{
+				_scores["total"] = _scores.score + (_scores.lives * 50);
+			}
+			else
+			{
         _scores["total"] = _scores.score;
       }
       calculateTime();
-      
       
       // No negative scores;
       
@@ -140,17 +142,49 @@ package Menu
           AssetRegistry.mogade.submitScore(SaveGame.userName, SaveGame.guid, savedScore.lid, savedScore.total);
         }
       }
+
       _leaderboardScreen.dispatchEventWith(Leaderboards.REFRESH_LEADERBOARD);
       _scoreScreen.dispatchEventWith(ScoreBoard.SHOW_RANK, false, ranks);
     }
     
     private function calculateTime():void
     {
-      
+			if (SaveGame.difficulty == 1)
+			{
       switch (_scores.level)
       {
         case 1:
-          _timeBonus = 3 * 60 - int(_scores.time);
+						_timeBonus = 100 - int(_scores.time);
+						break;
+					case 2: 
+						_timeBonus = 120 - int(_scores.time);
+						break;
+					case 3: 
+						_timeBonus = 120 - int(_scores.time);
+						break;
+					case 4: 
+						_timeBonus = 100 - int(_scores.time);
+						break;
+          case 5: 
+					  _timeBonus = 0;
+					  break;
+          case 6: 
+						_timeBonus = 100 - int(_scores.time);
+						break;
+          case 7: 
+						_timeBonus = 220 - int(_scores.time);
+					  break;
+					case 9: 
+						_timeBonus = 0;
+						break;
+				}
+			}
+			else
+			{
+				switch (_scores.level)
+				{
+					case 1: 
+						_timeBonus = 100 - int(_scores.time);
           break;
         case 2:
           _timeBonus = 4 * 60 - int(_scores.time);
@@ -168,38 +202,44 @@ package Menu
           _timeBonus = 3 * 60 - int(_scores.time);
           break;
       }
+			}
     
     }
     
     private function calculateMedal():void
     {
       var medalReq:Array;
-      if (SaveGame.difficulty == 1) {
-        switch(_scores.level) {
+			if (SaveGame.difficulty == 1)
+			{
+				switch (_scores.level)
+				{
           case 1: 
-            medalReq = [400, 600, 800, 1000];
+						medalReq = [300, 400, 500, 700];
             break;
           case 2:
-            medalReq = [400, 600, 800, 1000];
+						medalReq = [700, 850, 1000, 1300];
             break;
           case 3: 
-            medalReq = [400, 600, 800, 1000];
+						medalReq = [600, 750, 900, 1200];
             break;
           case 4:
-            medalReq = [400, 600, 800, 1000];
+						medalReq = [500, 600, 700, 1000];
             break;
           case 5: 
-            medalReq = [400, 600, 800, 1000];
+						medalReq = [1000, 1250, 1500, 1800];
             break;
           case 6:
             medalReq = [400, 600, 800, 1000];
             break;
           case 7:
-            medalReq = [400, 600, 800, 1000];
+						medalReq = [1200, 1500, 1800, 2500];
             break;
         }
-      } else {
-        switch(_scores.level) {
+			}
+			else
+			{
+				switch (_scores.level)
+				{
           case 1: 
             medalReq = [400, 600, 800, 1000];
             break;
@@ -225,28 +265,36 @@ package Menu
       }
       
       var actualMedal:int;
-      if (medalReq){
-        if (_scores.total >= medalReq[0] && _scores.total < medalReq[1]) {
+			if (medalReq)
+			{
+				if (_scores.total >= medalReq[0] && _scores.total < medalReq[1])
+				{
           _scores.bigMedal = "medaille_bronze";
           _scores.smallMedal = "bronze_small";
           actualMedal = 0;
      
-        } else if (_scores.total >= medalReq[1] && _scores.total < medalReq[2]) {
+				}
+				else if (_scores.total >= medalReq[1] && _scores.total < medalReq[2])
+				{
           _scores.bigMedal = "medaille_silber";
           _scores.smallMedal = "silver_small";
           actualMedal = 1;
-        } else if (_scores.total >= medalReq[2] && _scores.total < medalReq[3]) {
+				}
+				else if (_scores.total >= medalReq[2] && _scores.total < medalReq[3])
+				{
           _scores.bigMedal = "medaille_gold";
           _scores.smallMedal = "gold_small";
           actualMedal = 2;
-        } else if (_scores.total >= medalReq[3]) {
+				}
+				else if (_scores.total >= medalReq[3])
+				{
           _scores.bigMedal = "medaille_saphir";
           _scores.smallMedal = "saphire_small";
           actualMedal = 3;
         }
       }
 
-     if (!_scores.lost && !SaveGame.medals[_scores.level - 1] || actualMedal > SaveGame.medals[_scores.level - 1]) {
+    if (!_scores.lost && !SaveGame.medals[_scores.level - 1] || actualMedal > SaveGame.medals[_scores.level - 1]) {
         SaveGame.storeMedals(_scores.level, actualMedal); 
      }
      
@@ -327,31 +375,31 @@ package Menu
       _backToMenuButton.height = 80;
       _backToMenuButton.x = 0;
       _backToMenuButton.y = Starling.current.stage.stageHeight - _backToMenuButton.height;
-      _backToMenuButton.onRelease.add(function(button:Button):void {
+			_backToMenuButton.onRelease.add(function(button:Button):void
+				{
         backToMenu();       
       });
-      
       
       _replayButton.label = "REPLAY";
       _replayButton.width = buttonWidth;
       _replayButton.height = 80;
       _replayButton.x = _backToMenuButton.x + _backToMenuButton.width;
       _replayButton.y = _backToMenuButton.y;
-      _replayButton.onRelease.add(function(button:Button):void {
+			_replayButton.onRelease.add(function(button:Button):void
+				{
         replay();       
       });
-      
       
       _nextLevelButton.label = "NEXT";
       _nextLevelButton.width = buttonWidth;
       _nextLevelButton.height = 80;
       _nextLevelButton.x = _replayButton.x + _replayButton.width;
       _nextLevelButton.y = _backToMenuButton.y;
-      _nextLevelButton.onRelease.add(function(button:Button):void {
+			_nextLevelButton.onRelease.add(function(button:Button):void
+				{
         nextLevel();       
       });
    
-      
       addChild(_replayButton);
      
       addChild(_backToMenuButton);

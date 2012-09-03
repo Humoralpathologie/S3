@@ -94,7 +94,7 @@ package Menu
         return;
       }
       
-      _rankText.text = AssetRegistry.Strings.RANKOVERALL + ":\n" + AssetRegistry.Strings.RANKWEEK + ":\n" + AssetRegistry.Strings.RANKTODAY;
+      _rankText.text = AssetRegistry.Strings.RANKOVERALL + ":\n" + AssetRegistry.Strings.RANKWEEK + ":\n" + AssetRegistry.Strings.RANKTODAY + ":";
       _rank.text =  String(evt.data.ranks[3]) + "\n" + String(evt.data.ranks[2]) + "\n" + String(evt.data.ranks[1]);
       if (evt.data.highs[3]) {
         _alltimehigh = true;
@@ -243,7 +243,7 @@ package Menu
       var self:ScoreBoard = this;
       var triggerLife:Function = function(tween:GTween):void
       {
-        _tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.lives * 100}, {ease: Exponential.easeOut, onComplete: triggerTotal}));
+        _tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.lives * 50}, {ease: Exponential.easeOut, onComplete: triggerTotal}));
       }
       var triggerTime:Function = function(tween:GTween):void
       {
@@ -361,12 +361,12 @@ package Menu
     private function addRank():void
     {
       _rankHeading = new TextField(200, 40, AssetRegistry.Strings.RANK, "kroeger 06_65", 40, Color.WHITE);
-      _rankHeading.x = 600;
+      _rankHeading.x = 500;
       _rankHeading.y = _scoreboardText.y;
       _rankHeading.hAlign = HAlign.LEFT;
       addChild(_rankHeading);
       
-      _rankText = new TextField(200, 400, "Checking rank...", "kroeger 06_65", 35, Color.WHITE);
+      _rankText = new TextField(300, 400, "Checking rank...", "kroeger 06_65", 35, Color.WHITE);
       _rankText.x = _rankHeading.x;
       _rankText.y = _scoreHeading.y;
       _rankText.vAlign = VAlign.TOP;
