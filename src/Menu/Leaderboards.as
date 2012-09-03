@@ -140,6 +140,10 @@ package Menu
     }
     
     private function updateLeaderboard(data:Object, type:String = "alltime"):void {
+      if (data.error) {
+        _scoreText.text = AssetRegistry.Strings.NO_NET_CONNECTION;
+        return;
+      }
       
       var count:int = 1;
       _scoreText.text = "";
@@ -197,7 +201,7 @@ package Menu
       _back = new Button();
       _back.label = AssetRegistry.Strings.SCOREBOARDBUTTON;
       
-      if (SaveGame.isArcade || _score.level == 7 || _score.lost) {
+      if (SaveGame.isArcade || _score.level == 7 || !SaveGame.levelUnlocked(_score.level + 1)) {
       _back.width = 320;
       _back.x = 640;
     } else {
@@ -209,7 +213,6 @@ package Menu
       
       var that:Leaderboards = this;
       _back.onRelease.add(function(button:Button):void {
-        
           _onLeaderboards.dispatch(that);
       });
       addChild(_back);

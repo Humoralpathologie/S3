@@ -128,6 +128,18 @@ package Menu
     }
     
     private function showRank(ranks:Object):void {
+      if (ranks.error) {
+        // We have no net connection        
+        SaveGame.savedScores.push({lid: _scores.lid, total: _scores.total});
+      } else {
+        // We should have now, so send all the old scores out.
+        var savedScore:Object;
+        while (SaveGame.savedScores.length != 0) 
+        {
+          savedScore = SaveGame.savedScores.pop();
+          AssetRegistry.mogade.submitScore(SaveGame.userName, SaveGame.guid, savedScore.lid, savedScore.total);
+        }
+      }
       _leaderboardScreen.dispatchEventWith(Leaderboards.REFRESH_LEADERBOARD);
       _scoreScreen.dispatchEventWith(ScoreBoard.SHOW_RANK, false, ranks);
     }

@@ -112,7 +112,8 @@ package Languages
     public static const PERSONAL:String = "Persönlich";
     
     public static const RANK:String = "RANG";
-    
+    public static const NO_NET_CONNECTION:String = "Keine Netzverbindung!";
+        
     //Messages
     public static const JUMPMESSAGE:String = "SPRING’ ÜBER DIE SCHLUCHT!";
     public static const FASTERMESSAGE:String = "Schneller!";

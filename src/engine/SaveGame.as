@@ -20,10 +20,17 @@ package engine
       if (!_sharedObject.data.personalScores) {
         _sharedObject.data.personalScores = { };
       }
+      if (!_sharedObject.data.savedScores) {
+        _sharedObject.data.savedScores = [];
+      }
       if (!_sharedObject.data.initialized)
       {
         initializeData();
       }
+    }
+    
+    public static function get savedScores():Array {
+      return _sharedObject.data.savedScores;
     }
     
     public static function get controlType():int

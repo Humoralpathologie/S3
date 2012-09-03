@@ -15,6 +15,7 @@ package engine
   import flash.net.URLRequestMethod;
   import flash.utils.ByteArray;
   import com.hurlant.util.Hex;
+  import flash.events.IOErrorEvent;
   
   public class Mogade
   {
@@ -94,10 +95,15 @@ package engine
       var urlRequestVars:URLVariables;
       var urlLoader:URLLoader;
       var onComplete:Function;
+      var onError:Function;
       
       onComplete = function(evt:Event) {
         trace(evt.target.data);
         callback(JSON.parse(evt.target.data));
+      }
+      
+      onError = function(evt:IOErrorEvent) {
+        callback( { error: "IO Error." } );
       }
       
       urlRequest = new URLRequest(BASE_URI + endpoint);
@@ -108,6 +114,7 @@ package engine
       urlLoader = new URLLoader();
       urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
       urlLoader.addEventListener(Event.COMPLETE, onComplete);
+      urlLoader.addEventListener(IOErrorEvent.IO_ERROR, onError);
       
       signRequest(request);
       
