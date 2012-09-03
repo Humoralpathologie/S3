@@ -234,7 +234,7 @@ package Menu
         }
       }
 
-     if (!SaveGame.medals[_scores.level - 1] || actualMedal > SaveGame.medals[_scores.level - 1]) {
+     if (!_scores.lost && !SaveGame.medals[_scores.level - 1] || actualMedal > SaveGame.medals[_scores.level - 1]) {
         SaveGame.storeMedals(_scores.level, actualMedal); 
      }
      
@@ -300,13 +300,11 @@ package Menu
       
       var buttonWidth:int = 320;
       
-      
-      
       _backToMenuButton = new Button();
       _replayButton = new Button();
       _nextLevelButton = new Button();
       
-      if (_scores.level != 9 && _scores.level != 7)
+      if (_scores.level != 9 && _scores.level != 7 && SaveGame.levelUnlocked(_scores.level + 1))
       {
         buttonWidth = 240;
         addChild(_nextLevelButton);

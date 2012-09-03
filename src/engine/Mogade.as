@@ -115,6 +115,7 @@ package engine
         urlRequestVars[key] = request[key];
       }
        
+      trace("Doing a request to mogade...");
       urlLoader.load(urlRequest);
       
     }
