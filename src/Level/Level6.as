@@ -34,9 +34,9 @@ package Level
 			_rottenEnabled = true;
 			if (SaveGame.difficulty == 1)
 			{
-				_winCondition = 2;
+				_winCondition = 3;
 				_loseCondition = 14;
-				_neededChains = 12;
+				_neededChains = 20;
         _lid = "50422f31563d8a45d3002155";
 			}
 			else
