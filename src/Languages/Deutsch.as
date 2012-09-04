@@ -21,6 +21,7 @@ package Languages
 		
 		// Settings Menu
 		public static const MAINSETTINGS:String = "EINSTELLUNGEN";
+		public static const GENERALSETTINGS:String = "GENERAL SETTINGS";
 		public static const USERNAME:String = "SPIELERNAME";
 		public static const CONTROLTYPE:String = "STEUERUNG";
 		public static const LANGUAGE:String = "SPRACHE";
