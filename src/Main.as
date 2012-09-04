@@ -23,17 +23,18 @@ package
   //import com.demonsters.debugger.MonsterDebugger;
   import flash.system.Capabilities;
   import engine.Mogade;
-    
+  
   /**
    * ...
    * @author
    */
   [SWF(width="960",height="640",frameRate="60",backgroundColor="#000000")]
+  
   public class Main extends Sprite
   {
     
     private var starling:Starling;
-    private var assets:AssetRegistry;    
+    private var assets:AssetRegistry;
     
     public function Main():void
     {
@@ -53,39 +54,31 @@ package
       
       // entry point  
       SaveGame.load();
-            
+      
       var screenWidth:int = stage.fullScreenWidth;
-      var screenHeight:int = stage.fullScreenHeight;      
+      var screenHeight:int = stage.fullScreenHeight;
       
+      var wwidth:int;
+      var hheight:int;
       
-      if (Capabilities.os.indexOf("Windows") != -1 || Capabilities.os.indexOf("Mac") != -1)
+      if (AssetRegistry.ASPECT_RATIO > screenWidth / screenHeight)
       {
-        starling = new Starling(StageManager, stage, new Rectangle(0, 0, 960, 640)); // , viewPort);
-        starling.stage.stageHeight = 640;
-        starling.stage.stageWidth = 960;
-        AssetRegistry.SCALE = 1;
-      } else {
-        var wwidth:int;
-        var hheight:int;
-        
-        if (AssetRegistry.ASPECT_RATIO < screenWidth / screenHeight) { 
-          wwidth = int(screenHeight * (960 / 640));
-          hheight = screenHeight;
-        } else {
-          wwidth = screenWidth;
-          hheight = int(screenWidth / (960 / 640));
-        }
-        
-        AssetRegistry.SCALE = wwidth / 960;
-
-        var yy:int = (screenHeight - hheight) / 2;
-        var xx:int = (screenWidth - wwidth) / 2;
-        starling = new Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight),null,"auto","baseline");
-        starling.stage.stageHeight = 640;
-        starling.stage.stageWidth = 960;
-        
+        wwidth = int(screenHeight * (960 / 640));
+        hheight = screenHeight;
+      }
+      else
+      {
+        wwidth = screenWidth;
+        hheight = int(screenWidth / (960 / 640));
       }
       
+      AssetRegistry.SCALE = wwidth / 960;
+      
+      var yy:int = (screenHeight - hheight) / 2;
+      var xx:int = (screenWidth - wwidth) / 2;
+      starling = new Starling(StageManager, stage, new Rectangle(xx, yy, wwidth, hheight), null, "auto", "baseline");
+      starling.stage.stageHeight = 640;
+      starling.stage.stageWidth = 960;
       
       var loadingSprite:Sprite = new Sprite()
       var loadingBMP:Bitmap = new AssetRegistry.LoadingPNG();
@@ -103,13 +96,12 @@ package
         {
           // Starling is ready! We remove the startup image and start the game.
           removeChild(loadingSprite);
-          starling.start();          
+          starling.start();
         });
-        
-        
+    
       // When the game becomes inactive, we pause Starling; otherwise, the enter frame event
       // would report a very long 'passedTime' when the app is reactivated. 
-  /*  
+    /*
        NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, function(e:Event):void
        {
        starling.start();
@@ -118,14 +110,15 @@ package
        NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, function(e:Event):void
        {
        starling.stop();
-     });
-  */
+       });
+     */
     }
+    
     private function deactivate(e:Event):void
     {
       // auto-close
       if (!(Capabilities.os.indexOf("Windows") != -1 || Capabilities.os.indexOf("Mac") != -1))
-      {      
+      {
         NativeApplication.nativeApplication.exit();
       }
     }
