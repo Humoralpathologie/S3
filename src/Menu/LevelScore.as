@@ -102,15 +102,16 @@ package Menu
 			if (_scores.lives > 0)
 			{
         if (SaveGame.difficulty == 1){
-				  _scores["total"] = _scores.score + (_scores.lives * 50);
+				  _scores["liveBonus"] = _scores.lives * 50;
         } else {
-          _scores["total"] = _scores.score + (_scores.lives * 100);
+          _scores["liveBonus"] = _scores.lives * 100;
         }
 			}
 			else
 			{
-        _scores["total"] = _scores.score;
+        _scores["liveBonus"] = 0;
       }
+      _scores["total"] = _scores.score + _scores.liveBonus;
       calculateTime();
       
       // No negative scores;
