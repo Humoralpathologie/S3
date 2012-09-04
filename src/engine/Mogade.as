@@ -28,6 +28,15 @@ package engine
     {
       _key = key;
       _secret = secret;
+      startLogging();
+    }
+    
+    public function getBroadcasts(callback:Function):void {
+      doRequest("assets", { key: _key }, callback);
+    }
+    
+    private function startLogging():void {
+      doRequest("stats", { key: _key, userkey: SaveGame.guid }, tracer, "POST");
     }
     
     // Signs a request and returns the same request object, just signed.
@@ -75,7 +84,6 @@ package engine
       
       callback ||= tracer;
 
-      
       doRequest("scores", request, callback, "POST");
     }
     
@@ -99,7 +107,9 @@ package engine
       
       onComplete = function(evt:Event) {
         trace(evt.target.data);
-        callback(JSON.parse(evt.target.data));
+        if(evt.target.data != " ") {
+          callback(JSON.parse(evt.target.data));
+        }
       }
       
       onError = function(evt:IOErrorEvent) {

@@ -36,41 +36,24 @@ package engine
       _text = new TextField(4000, 80, "", "kroeger 06_65", 64, Color.WHITE);
       _text.hAlign = HAlign.LEFT;
       addChild(_text);
-      getNotifications();
+      AssetRegistry.mogade.getBroadcasts(notificationReceivedHandler);
     }
     
-    private function getNotifications():void
+    private function notificationReceivedHandler(maybeArr:Object):void
     {
-      var url:String = "https://www.scoreoid.com/api/getNotification";
-      var request:URLRequest = new URLRequest(url);
-      var requestVars:URLVariables = new URLVariables();
-      request.data = requestVars;
-      requestVars.api_key = "7bb1d7f5ac027ae81b6c42649fddc490b3eef755";
-      requestVars.game_id = "atZTbG24V";
-      requestVars.response = "JSON"
+      var arr:Array;
+      if (maybeArr is Array) {
+        arr = maybeArr as Array;
+      } else {
+        arr = [];
+      }
       
-      request.method = URLRequestMethod.POST;
-      
-      var urlLoader:URLLoader = new URLLoader();
-      urlLoader = new URLLoader();
-      urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
-      urlLoader.addEventListener(Event.COMPLETE, notificationReceivedHandler);
-      urlLoader.addEventListener(IOErrorEvent.IO_ERROR, notificationReceivedHandler); // Hackish.
-      
-      urlLoader.load(request);
-    }
-    
-    private function notificationReceivedHandler(event:Event):void
-    {
-      try {
-        var result:Object = JSON.parse(event.target.data);
-        var notificationStr:String = result["notifications"]["game_notification"][0]["GameNotification"]["content"];
-        setText(notificationStr);
-      } catch (err:Error) {
-        // If anything goes wrong, just set one of the hints.
+      if (arr.length > 0) {
+        setText(arr[0].meta);
+      } else {
         setRandomHint();
       }
-            
+ 
       Starling.juggler.add(this);
 
     }
@@ -95,7 +78,8 @@ package engine
       if (_text.x <= -_textWidth)
       {
         Starling.juggler.remove(this);
-        getNotifications();
+        setRandomHint();
+        Starling.juggler.add(this);
       }
     }
     
