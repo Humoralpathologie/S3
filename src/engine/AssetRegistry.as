@@ -216,6 +216,11 @@ package engine
     [Embed(source = "../../assets/Sounds/Explosion.mp3")]
     static private const Explosion:Class;
     
+    [Embed(source = "../../assets/Sounds/PointsPling.mp3")]
+    static private const PointsPling:Class;
+    [Embed(source = "../../assets/Sounds/PointsPling2.mp3")]
+    static private const PointsPling2:Class;
+    
     // Particles
     [Embed(source="../../assets/Particles/EggsplosionA.pex",mimeType="application/octet-stream")]
     static public const EggsplosionA:Class;
@@ -457,6 +462,8 @@ package engine
       soundmanager.registerSound("medalSound2", new MedalSound2);
       soundmanager.registerSound("eruption", new Eruption);
       soundmanager.registerSound("explosion", new Explosion);
+      soundmanager.registerSound("pling", new PointsPling);
+      soundmanager.registerSound("endPling", new PointsPling2);
     }
     
     public static function registerMusic():void {

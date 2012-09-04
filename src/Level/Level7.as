@@ -30,7 +30,8 @@ package Level
     private var _goldenEggsRest:int = 4;
     private var _goldenEggs:Eggs = new Eggs();
     private var _goldenEggPos:Array = [];
-		
+		private var _shadow:Image;
+    
 		public function Level7()
 		{
 			AssetRegistry.loadGraphics([AssetRegistry.SNAKE, AssetRegistry.LEVEL7, AssetRegistry.SCORING]);
@@ -63,8 +64,11 @@ package Level
       _levelStage.addChild(_goldenEggs);
 			_comboSet.addCombo(new Combo.NoRottenCombo);
       spawnGolden();
+      
+     
 		}
 		
+    
 		override protected function addBackground():void
 		{
 			_bgTexture = AssetRegistry.LevelAtlas.getTexture("level08");
@@ -119,6 +123,11 @@ package Level
 		
 		override protected function showObjective():void
 		{
+      _shadow = new Image(AssetRegistry.SnakeAtlas.getTexture("level7-schatten"));
+      _shadow.scaleX = _shadow.scaleY = 1.5;
+      _shadow.x = 0;
+      _shadow.y = 200;
+      _levelStage.addChild(_shadow);
 			var _golden:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-golden"));
 			if (SaveGame.difficulty == 1)
 			{
