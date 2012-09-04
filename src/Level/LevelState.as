@@ -197,7 +197,6 @@ package Level
       addChild(_levelStage);
       
       addBackground();
-      addFrame();
       
       _tileHeight = Math.ceil(_bg.height / AssetRegistry.TILESIZE);
       _tileWidth = Math.ceil(_bg.width / AssetRegistry.TILESIZE);
@@ -214,6 +213,7 @@ package Level
       _following = _snake.head;
       
       _levelStage.addChild(_snake);
+      addFrame();
       
       _eggs = new Eggs();
       _rottenEggs = new Eggs();
