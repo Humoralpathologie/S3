@@ -323,7 +323,7 @@ package UI
       if (!_pointsQueue) { _pointsQueueRunning = false;  return; }
         
       if (_pointsQueue.length > 0) {
-        var pointObj:Object = _pointsQueue.pop();
+        var pointObj:Object = _pointsQueue.shift();
         showPoint(pointObj);
         _levelState.gameJuggler.delayCall(showNextPoint, 0.2);
       } else {

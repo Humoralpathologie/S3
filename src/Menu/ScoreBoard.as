@@ -87,7 +87,13 @@ package Menu
 
     // Input looks like this:
     //{"ranks":{"4":1,"1":1,"2":1,"3":1},"highs":{"1":true,"2":true,"3":true}}    
-    private function showRank(evt:Event):void {
+    private function showRank(evt:Event):void 
+    {
+      if (evt.data.error) {
+        _rankText.text = AssetRegistry.Strings.NO_NET_CONNECTION;
+        return;
+      }
+      
       _rankText.text = AssetRegistry.Strings.RANKOVERALL + ":\n" + AssetRegistry.Strings.RANKWEEK + ":\n" + AssetRegistry.Strings.RANKTODAY + ":";
       _rank.text =  String(evt.data.ranks[3]) + "\n" + String(evt.data.ranks[2]) + "\n" + String(evt.data.ranks[1]);
       if (evt.data.highs[3]) {
@@ -164,7 +170,7 @@ package Menu
       _next = new Button();
       _next.label = AssetRegistry.Strings.LEADERBOARDSBUTTON;
       
-      if (SaveGame.isArcade || _scores.level == 7)
+      if (SaveGame.isArcade || _scores.level == 7 || !SaveGame.levelUnlocked(_scores.level + 1))
       {
         _next.width = 320;
         _next.x = 640;
@@ -274,22 +280,22 @@ package Menu
     private function addTexts():void
     {
       
-      _lifeBonusText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
+      _lifeBonusText = new TextField(100, 40, "1", "kroeger 06_65", 32, Color.WHITE);
       _lifeBonusText.hAlign = HAlign.RIGHT;
       _lifeBonusText.x = _lifeBonusHeading.x + _lifeBonusHeading.width + 10;
       _lifeBonusText.y = _lifeBonusHeading.y;
       
-      _scoreText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
+      _scoreText = new TextField(100, 40, "1", "kroeger 06_65", 32, Color.WHITE);
       _scoreText.hAlign = HAlign.RIGHT;
       _scoreText.x = _lifeBonusText.x;
       _scoreText.y = _scoreHeading.y;
       
-      _timeBonusText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
+      _timeBonusText = new TextField(100, 40, "1", "kroeger 06_65", 32, Color.WHITE);
       _timeBonusText.hAlign = HAlign.RIGHT;
       _timeBonusText.x = _lifeBonusText.x;
       _timeBonusText.y = _timeBonusHeading.y;
       
-      _totalText = new TextField(100, 35, "1", "kroeger 06_65", 35, Color.WHITE);
+      _totalText = new TextField(100, 40, "1", "kroeger 06_65", 32, Color.WHITE);
       _totalText.hAlign = HAlign.RIGHT;
       _totalText.x = _lifeBonusText.x;
       _totalText.y = _totalHeading.y;

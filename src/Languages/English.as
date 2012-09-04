@@ -112,6 +112,8 @@ package Languages
     public static const PERSONAL:String = "Personal";
     
     public static const RANK:String = "RANK";
+    public static const NO_NET_CONNECTION:String = "No net connection!";
+    
     
     //Messages
     public static const JUMPMESSAGE:String = "And now JUMP THE CANYON!!";

@@ -78,7 +78,7 @@ package Level
     protected var _hud:HUD;
     private var _timer:Number = 0;
     protected var _snake:Snake;
-		protected var _speed:Number = 0.3;
+    protected var _speed:Number = 0.3;
     protected var _levelStage:Sprite;
     protected var _eggs:Eggs;
     private var _rottenEggs:Eggs.Eggs;
@@ -146,8 +146,6 @@ package Level
     // Mogade leaderboard ID
     protected var _lid:String;
     
-   
-    
     // Pause Menu
     protected var _pauseMenu:ScreenNavigator;
     
@@ -159,22 +157,22 @@ package Level
     
     private static const PAUSEMAIN:String = "MAIN";
     
-    private var _gameJuggler:Juggler;
+    protected var _gameJuggler:Juggler;
     
     protected var _level4Animation:Boolean = false;
     
     //tweens
-    protected var _tweens:Vector.<GTween> =  new Vector.<GTween>;
+    protected var _tweens:Vector.<GTween> = new Vector.<GTween>;
     
     public function LevelState()
     {
       super();
-      AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE, AssetRegistry.SCORING]);	  
+      AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       
       setSpeed();
       
       _currentCombos = null;
-       
+      
       // Register Keyboard controls
       Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
       
@@ -210,7 +208,9 @@ package Level
       
       _snake = new Snake(SaveGame.startSpeed);
       _gameJuggler.add(_snake);
-
+      
+      _snake.addEventListener(Snake.Snake.SNAKE_MOVED, onSnakeMoved);
+      
       _following = _snake.head;
       
       _levelStage.addChild(_snake);
@@ -254,23 +254,7 @@ package Level
     
     protected function addParticles():void
     {
-      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], 
-                        [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], 
-                        [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], 
-                        [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], 
-                        [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], 
-                        [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], 
-                        [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], 
-                        ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")], 
-                        ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
-                        ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
-                        ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
-                        ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
-                        ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], 
-                        ["ExtraLife", XML(new AssetRegistry.ExtraLife), AssetRegistry.SnakeAtlas.getTexture("ExtraLife")], 
-                        ["ExtraEggs", XML(new AssetRegistry.ExtraEggs), AssetRegistry.SnakeAtlas.getTexture("ExtraEggs")],
-                        ["BonusTime", XML(new AssetRegistry.BonusTime), AssetRegistry.SnakeAtlas.getTexture("BonusTime")],
-                        ["ChainTimePlus", XML(new AssetRegistry.ChainTimePlus), AssetRegistry.SnakeAtlas.getTexture("ChainTimePlus")]];
+      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")], ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["ExtraLife", XML(new AssetRegistry.ExtraLife), AssetRegistry.SnakeAtlas.getTexture("ExtraLife")], ["ExtraEggs", XML(new AssetRegistry.ExtraEggs), AssetRegistry.SnakeAtlas.getTexture("ExtraEggs")], ["BonusTime", XML(new AssetRegistry.BonusTime), AssetRegistry.SnakeAtlas.getTexture("BonusTime")], ["ChainTimePlus", XML(new AssetRegistry.ChainTimePlus), AssetRegistry.SnakeAtlas.getTexture("ChainTimePlus")]];
       
       _particles = {};
       for (var i:int = 0; i < list.length; i++)
@@ -293,7 +277,7 @@ package Level
     
     public function showMessage(message:String):void
     {
-      dispatchEventWith(HUD.DISPLAY_MESSAGE, true, {message: message});    
+      dispatchEventWith(HUD.DISPLAY_MESSAGE, true, {message: message});
     }
     
     protected function setBoundaries():void
@@ -321,7 +305,7 @@ package Level
       _hud = new HUD(this);
       addChild(_hud);
     }
-
+    
     protected function eggCollide():void
     {
       var egg:Eggs.Egg;
@@ -378,7 +362,8 @@ package Level
       {
         return;
       }
-      if (_snake.lives >= 0) {
+      if (_snake.lives >= 0)
+      {
         AssetRegistry.soundmanager.playSound("dieSound");
       }
       pause();
@@ -536,14 +521,12 @@ package Level
       
       var biteSounds:Array = ["bite1", "bite2", "bite3"];
       
-      
-      
       if (!_rottenEnabled && egg.type == AssetRegistry.EGGROTTEN || egg.type != AssetRegistry.EGGROTTEN) // || egg.type < AssetRegistry.EGGROTTEN)
       {
         if (egg.type <= AssetRegistry.EGGROTTEN)
         {
           _snake.eat(egg.type);
-          AssetRegistry.soundmanager.playSound(biteSounds[Math.floor(Math.random()*3)]);
+          AssetRegistry.soundmanager.playSound(biteSounds[Math.floor(Math.random() * 3)]);
             //_hud.addPreview(egg.type);
         }
         
@@ -634,11 +617,13 @@ package Level
       _bonusBack.y = _bonusBar.y - 1;
       if (_bonusTimer > 0.5)
       {
-        if (_chainTime == 2.5) _bonusBack.alpha = 0.3;
-        if (_chainTime == 3.5) _bonusBack.alpha = 0.6;
+        if (_chainTime == 2.5)
+          _bonusBack.alpha = 0.3;
+        if (_chainTime == 3.5)
+          _bonusBack.alpha = 0.6;
         
         _bonusBar.scaleX = ((_bonusTimer - 0.5) / 2) * 25;
-				_bonusBar.color = Color.argb(255, (1 - ((_bonusTimer - 0.5) / int(_chainTime))) * 255, ((_bonusTimer - 0.5) / int(_chainTime)) * 255, 0);
+        _bonusBar.color = Color.argb(255, (1 - ((_bonusTimer - 0.5) / int(_chainTime))) * 255, ((_bonusTimer - 0.5) / int(_chainTime)) * 255, 0);
         
       }
       else
@@ -714,36 +699,36 @@ package Level
       
       func();
     }
-     
+    
     protected function showPoints(egg:DisplayObject, points:String, variant:int = 0, offset:int = 0, color:uint = 0xffffff):void
     {
       var pos:Point = new Point();
       
-      dispatchEventWith(HUD.DISPLAY_POINTS, true, { position: pos, variant: variant, message: points, color: color } );
-      /*
-      var text:TextField = recycleText(120, 120, points, 60); // new TextField(120, 120, points, "kroeger 06_65", 60);
-      text.color = color;
-      text.autoScale = true;
-      text.hAlign = HAlign.CENTER;
-      var p:Point = new Point(egg.x, egg.y);
-      p = _levelStage.localToGlobal(p);
-      text.x = p.x + egg.width / 2 - text.width / 2 + offset;
-      text.y = p.y + egg.height / 2 - text.height / 2 + offset; //egg.y + (egg.height / 2) - text.height / 2);
-      var tween:Tween = new Tween(text, 2, "easeIn");
-      tween.animate("y", offset);
-      tween.animate("scaleX", 3);
-      tween.animate("scaleY", 3);
-      tween.animate("x", offset);
-      tween.animate("rotation", deg2rad(45 - offset));
-      tween.fadeTo(0);
-      
-      tween.onComplete = function():void
-      {
-        text.visible = false;
-      }
-      
-      _gameJuggler.add(tween);
-      */
+      dispatchEventWith(HUD.DISPLAY_POINTS, true, {position: pos, variant: variant, message: points, color: color});
+    /*
+       var text:TextField = recycleText(120, 120, points, 60); // new TextField(120, 120, points, "kroeger 06_65", 60);
+       text.color = color;
+       text.autoScale = true;
+       text.hAlign = HAlign.CENTER;
+       var p:Point = new Point(egg.x, egg.y);
+       p = _levelStage.localToGlobal(p);
+       text.x = p.x + egg.width / 2 - text.width / 2 + offset;
+       text.y = p.y + egg.height / 2 - text.height / 2 + offset; //egg.y + (egg.height / 2) - text.height / 2);
+       var tween:Tween = new Tween(text, 2, "easeIn");
+       tween.animate("y", offset);
+       tween.animate("scaleX", 3);
+       tween.animate("scaleY", 3);
+       tween.animate("x", offset);
+       tween.animate("rotation", deg2rad(45 - offset));
+       tween.fadeTo(0);
+    
+       tween.onComplete = function():void
+       {
+       text.visible = false;
+       }
+    
+       _gameJuggler.add(tween);
+     */
     }
     
     protected function doCombos():void
@@ -832,7 +817,8 @@ package Level
     protected function lose():void
     {
       _lost = true;
-      pause();
+      //pause();
+      _gameJuggler.remove(_snake);
       var image:Image;
       image = new Image(AssetRegistry.UIAtlas.getTexture("game over_gravestone"));
       image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
@@ -840,7 +826,7 @@ package Level
       addChild(image);
       
       // Use a GTween, as the Starling tweens are paused.
-      _tweens.push(new GTween(image, 2, { y: AssetRegistry.STAGE_HEIGHT - image.height } ));
+      _tweens.push(new GTween(image, 2, {y: AssetRegistry.STAGE_HEIGHT - image.height}));
       AssetRegistry.soundmanager.playSound("gameOverSound");
       
       var registerTouchHandler:Function = function():void
@@ -857,7 +843,7 @@ package Level
       var touch:Touch = event.getTouch(this, TouchPhase.ENDED);
       if (touch)
       {
-        var score:Object = { score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true, lid: _lid}
+        var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lost: true, lid: _lid}
         
         AssetRegistry.soundmanager.fadeOutMusic();
         dispatchEventWith(ManagedStage.SWITCHING, true, {stage: LevelScore, args: score});
@@ -866,7 +852,7 @@ package Level
     }
     
     private function onEnterFrame(event:EnterFrameEvent):void
-    {       
+    {
       _updateTimer = getTimer();
       if (!_won)
       {
@@ -891,25 +877,24 @@ package Level
         {
           _gameJuggler.advanceTime(event.passedTime);
           
-          updateTimers(event);
-          /*
-             trace("overallTimer: " + String(int(_overallTimer)));
-             trace("extensionTime: " + String(int(_extensionTime)));
-           */
+          if(!(_won || _lost)) {
+            updateTimers(event);
+          }
+
           if ((int(_overallTimer) > 0) && (int(_overallTimer) == _extensionTime))
           {
             _chainTime = 2.5;
             _bonusBack.width = 27;
-            _bonusBack.color =  0x000000;
+            _bonusBack.color = 0x000000;
             _extensionTime = 0;
-						showMessage(AssetRegistry.Strings.CHAINTIMEEXTENDMESSAGE);
+            showMessage(AssetRegistry.Strings.CHAINTIMEEXTENDMESSAGE);
           }
           
           if ((int(_overallTimer) > 0) && (int(_overallTimer) == _timeExtensionTime))
           {
             _timeExtension = 3;
             _timeExtensionTime = 0;
-						showMessage(AssetRegistry.Strings.EXTRATIMEEXTENDMESSAGE);
+            showMessage(AssetRegistry.Strings.EXTRATIMEEXTENDMESSAGE);
           }
         }
         
@@ -918,24 +903,8 @@ package Level
           spawnRandomEgg();
         }
         
-        //updateHud();
         _hud.update();
-                
-        _speed = _snake.speed;
-        if (_timer >= _speed)
-        {
-          _snake.move();
-          
-          doCombos();
-          
-          eggCollide();
-          screenCollide();
-          obstacleCollide();
-          selfCollide();
-          checkDie(); // For subclasses.
-          _timer -= _speed;
-        }
-        
+               
         updateBonusBar();
         updateCamera();
         if (_rottenEnabled)
@@ -947,6 +916,17 @@ package Level
     
       //Starling.current.statsDisplay.additionalStats["TU"] = getTimer() - _updateTimer;
     
+    }
+    
+    private function onSnakeMoved(evt:starling.events.Event):void
+    {
+      doCombos();
+      
+      eggCollide();
+      screenCollide();
+      obstacleCollide();
+      selfCollide();
+      checkDie(); // For subclasses.
     }
     
     protected function updateRotten():void
@@ -1011,9 +991,9 @@ package Level
       _levelStage.x = Math.min(_levelStage.x, frame);
       _levelStage.y = Math.min(_levelStage.y, frame);
       // TODO: Should be computed only once.
-      _levelStage.x = Math.max( -((_bg.width + frame) * _zoom) + AssetRegistry.STAGE_HEIGHT, _levelStage.x);
-      _levelStage.y = Math.max( -((_bg.height + frame) * _zoom) + AssetRegistry.STAGE_HEIGHT, _levelStage.y);
-      
+      _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + AssetRegistry.STAGE_HEIGHT, _levelStage.x);
+      _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + AssetRegistry.STAGE_HEIGHT, _levelStage.y);
+    
     }
     
     public function get score():String
@@ -1115,20 +1095,25 @@ package Level
     protected function win():void
     {
       _won = true;
-      if (_currentCombos) {
+      if (_currentCombos)
+      {
         for (var j:int = 0; j < _currentCombos.length; j++)
-          {
-            var combo:Object = _currentCombos[j];
-            removeAndExplodeCombo(combo.eggs);
-            combo.combo.effect(this);
-            _combos += 1;
-          }
+        {
+          var combo:Object = _currentCombos[j];
+          removeAndExplodeCombo(combo.eggs);
+          combo.combo.effect(this);
+          _combos += 1;
+        }
         _currentCombos = null;
       }
-      pause();
-      if (SaveGame.isArcade) {
+      //pause();
+      _gameJuggler.remove(_snake);
+      if (SaveGame.isArcade)
+      {
         AssetRegistry.soundmanager.playSound("explosion");
-      } else {
+      }
+      else
+      {
         AssetRegistry.soundmanager.playSound("winSound");
       }
       
@@ -1162,7 +1147,7 @@ package Level
       var levelName:TextField = new TextField(600, 60, SaveGame.levelName, "kroeger 06_65", 60, Color.WHITE);
       
       var heading:TextField = new TextField(600, 60, AssetRegistry.Strings.OBJECTIVE, "kroeger 06_65", 60, Color.WHITE);
-     
+      
       var box:Quad = new Quad(800, 535, 0);
       box.alpha = 0x44 / 0xff;
       box.x = (960 - box.width) / 2;
@@ -1176,28 +1161,27 @@ package Level
       heading.y = levelName.y + levelName.height + 10;
       _scrollable.addChild(levelName);
       _scrollable.addChild(heading);
-    
       
       //var _goals:Sprite = new Sprite();
       
       var xPos:int = 10;
       var yPos:int = heading.y + heading.height + 20;
-
+      
       for (var i:int = 0; i < goals.length; i++)
       {
-       //var objectiveText:TextField = new TextField(140, 60, goals[i][0], "kroeger 06_65", 60, Color.WHITE);
+        //var objectiveText:TextField = new TextField(140, 60, goals[i][0], "kroeger 06_65", 60, Color.WHITE);
         var img:Image = goals[i][0];
-				var txt:TextField = new TextField(200, 60, goals[i][1], "kroeger 06_65", 60, Color.WHITE);
-				txt.hAlign = HAlign.LEFT;
-				img.x = xPos + 70;
-				img.y = yPos;
+        var txt:TextField = new TextField(200, 60, goals[i][1], "kroeger 06_65", 60, Color.WHITE);
+        txt.hAlign = HAlign.LEFT;
+        img.x = xPos + 70;
+        img.y = yPos;
         img.scaleX = img.scaleY = 3;
         if (goals.length == 1)
         {
-					img.x = (box.width - img.width - txt.textBounds.width) / 2;
-					img.y = yPos;
+          img.x = (box.width - img.width - txt.textBounds.width) / 2;
+          img.y = yPos;
         }
-				//txt.scaleX = txt.scaleY = 1.5;
+        //txt.scaleX = txt.scaleY = 1.5;
         txt.x = img.x + img.width + 10;
         txt.y = img.y - 5;
         xPos = txt.x + txt.width + 10;
@@ -1241,38 +1225,39 @@ package Level
           that.removeChild(_scroller);
           unpause();
         });
-        
-      var _tempPoint:Point;
-      var onTouch:Function = function (e:TouchEvent):void 
-        {
-
-          var touch:Touch;
-          touch = e.getTouch(_scrollable, TouchPhase.BEGAN);
-          if (touch) {
-            _tempPoint = touch.getLocation(_scrollable);
-          }
       
-          touch = e.getTouch(_scrollable, TouchPhase.ENDED);
-          if (touch) {
-            trace("Clicked");
-            var p:Point = touch.getLocation(_scrollable);
+      var _tempPoint:Point;
+      var onTouch:Function = function(e:TouchEvent):void
+      {
         
-            // Did not scroll to far, probably a click.
-            if (Math.abs(p.y - _tempPoint.y) < 50) 
-           {
-              p.y += _scroller.verticalScrollPosition;
-              that.removeChild(_goButton);
-              that.removeChild(box);
-              that.removeChild(_scroller);
-              unpause();
-              that.removeChild(_scrollable);
-           
-            }
+        var touch:Touch;
+        touch = e.getTouch(_scrollable, TouchPhase.BEGAN);
+        if (touch)
+        {
+          _tempPoint = touch.getLocation(_scrollable);
+        }
+        
+        touch = e.getTouch(_scrollable, TouchPhase.ENDED);
+        if (touch)
+        {
+          trace("Clicked");
+          var p:Point = touch.getLocation(_scrollable);
+          
+          // Did not scroll to far, probably a click.
+          if (Math.abs(p.y - _tempPoint.y) < 50)
+          {
+            p.y += _scroller.verticalScrollPosition;
+            that.removeChild(_goButton);
+            that.removeChild(box);
+            that.removeChild(_scroller);
+            unpause();
+            that.removeChild(_scrollable);
+            
           }
         }
-       _scrollable.addEventListener(TouchEvent.TOUCH, onTouch);
+      }
+      _scrollable.addEventListener(TouchEvent.TOUCH, onTouch);
     }
-    
     
     protected function startAt(x:int, y:int):void
     {
@@ -1304,42 +1289,42 @@ package Level
       }
     }
     
-    private function setSpeed():void 
+    private function setSpeed():void
     {
-        if (SaveGame.difficulty == 1)
-        {
-          SaveGame.startSpeed = 7;
-        }
-        else
-        {
-          SaveGame.startSpeed = 10;
-        }
+      if (SaveGame.difficulty == 1)
+      {
+        SaveGame.startSpeed = 7;
+      }
+      else
+      {
+        SaveGame.startSpeed = 10;
+      }
       _speed = 1 / SaveGame.startSpeed;
-        
+    
     }
     
-    private function initializeTextPool():void 
+    private function initializeTextPool():void
     {
-        _textFieldPool = new Vector.<TextField>;
-        _textLayer = new Sprite;
-        for (var i:int = 0; i < 15; i++)
-        {
-          var temp:TextField = new TextField(100, 100, "", "kroeger 06_65");
-          temp.visible = false;
-          _textLayer.addChild(temp);
-          _textFieldPool.push(temp);
-        }
+      _textFieldPool = new Vector.<TextField>;
+      _textLayer = new Sprite;
+      for (var i:int = 0; i < 15; i++)
+      {
+        var temp:TextField = new TextField(100, 100, "", "kroeger 06_65");
+        temp.visible = false;
+        _textLayer.addChild(temp);
+        _textFieldPool.push(temp);
+      }
     }
     
-    private function createBonusBar():void 
+    private function createBonusBar():void
     {
-        _bonusBar = new Quad(1, 8, 0xffffff);
-        _bonusBack = new Quad(27, 10, 0x000000);
-        
-        _bonusBack.alpha = 0;
-        _bonusBar.scaleX = 0;
-        _levelStage.addChild(_bonusBack);
-        _levelStage.addChild(_bonusBar);
+      _bonusBar = new Quad(1, 8, 0xffffff);
+      _bonusBack = new Quad(27, 10, 0x000000);
+      
+      _bonusBack.alpha = 0;
+      _bonusBar.scaleX = 0;
+      _levelStage.addChild(_bonusBack);
+      _levelStage.addChild(_bonusBar);
     }
     
     public function get zoom():Number
@@ -1422,10 +1407,11 @@ package Level
     {
       _bonusTimer = value;
     }
-		public function adjustBonusBack(width:int):void
+    
+    public function adjustBonusBack(width:int):void
     {
       _bonusBack.color = 0xffff00;
-			_bonusBack.width = width;
+      _bonusBack.width = width;
     }
     
     public function get eggs():Eggs
@@ -1438,21 +1424,22 @@ package Level
       _eggs = value;
     }
     
-    public function get gameJuggler():Juggler 
+    public function get gameJuggler():Juggler
     {
-        return _gameJuggler;
+      return _gameJuggler;
     }
     
-     public function get levelStage():Sprite
+    public function get levelStage():Sprite
     {
-        return _levelStage;
+      return _levelStage;
     }
     
     override public function dispose():void
     {
       var i:int = 0;
       
-      for each(var tween:GTween in _tweens) {
+      for each (var tween:GTween in _tweens)
+      {
         tween.end();
       }
       _tweens = new Vector.<GTween>;
@@ -1485,6 +1472,7 @@ package Level
       _bgTexture = null;
       _obstacles = null;
       _spawnMap = null;
+      _snake.removeEventListener(Snake.Snake.SNAKE_MOVED, onSnakeMoved);
       _snake.dispose();
       _snake = null;
       _eggs.dispose();

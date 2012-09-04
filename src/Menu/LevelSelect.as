@@ -36,7 +36,7 @@ package Menu
     private var _boxes:Object;
     private var _tempPoint:Point;
     
-    private static const _lockedPositions:Array = [[15, 262], [261, 377], [514, 509], [261, 626], [11, 743], [261, 881],];
+    private static const _lockedPositions:Array = [[15, 262], [261, 377], [514, 509], [261, 626], [11, 743], [261, 881]];
     
     public function LevelSelect()
     {
@@ -135,37 +135,50 @@ package Menu
       box = [new Point(265, 492), new Point(479, 385), new Point(691, 491), new Point(478, 599)];
       _boxes["level2"] = {box: box, callback: function():void
         {
-          dispatchEventWith(SWITCHING, true, {stage: Level2})
+          if(SaveGame.levelUnlocked(2)) {
+            dispatchEventWith(SWITCHING, true, { stage: Level2 } );
+          }
         }};
       
       box = [new Point(517, 616), new Point(729, 512), new Point(942, 616), new Point(731, 726)];
       _boxes["level3"] = {box: box, callback: function():void
         {
-          dispatchEventWith(SWITCHING, true, {stage: Level3})
+          if(SaveGame.levelUnlocked(3)) {
+            dispatchEventWith(SWITCHING, true, { stage: Level3 } );
+          }
+            
         }};
       
       box = [new Point(266, 742), new Point(472, 639), new Point(688, 742), new Point(480, 848)];
       _boxes["level4"] = {box: box, callback: function():void
         {
-          dispatchEventWith(SWITCHING, true, {stage: Level4})
+          if(SaveGame.levelUnlocked(4)) {
+            dispatchEventWith(SWITCHING, true, { stage: Level4 } );
+          }
         }};
       
       box = [new Point(15, 871), new Point(226, 764), new Point(439, 871), new Point(226, 976)];
       _boxes["level5"] = {box: box, callback: function():void
         {
-          dispatchEventWith(SWITCHING, true, {stage: Level5})
+          if(SaveGame.levelUnlocked(5)){
+            dispatchEventWith(SWITCHING, true, { stage: Level5 } );
+          }
         }};
       
       box = [new Point(265, 997), new Point(477, 980), new Point(689, 997), new Point(477, 1104)];
       _boxes["level6"] = {box: box, callback: function():void
         {
-          dispatchEventWith(SWITCHING, true, {stage: Level6})
+          if(SaveGame.levelUnlocked(6)) {
+            dispatchEventWith(SWITCHING, true, { stage: Level6 } );
+          }
         }};
         
        box = [new Point(250, 1160), new Point(680, 1160), new Point(680, 2000), new Point(250, 2000)];
       _boxes["level7"] = {box: box, callback: function():void
         {
-          dispatchEventWith(SWITCHING, true, {stage: Level7})
+          if(SaveGame.levelUnlocked(7)) {
+            dispatchEventWith(SWITCHING, true, { stage: Level7 } );
+          }
         }};       
       
       
@@ -188,7 +201,7 @@ package Menu
       
       for (var i:int = 2; i < 7; i++)
       {
-        if (i > 6 || !SaveGame.levelUnlocked(i))
+        if (!SaveGame.levelUnlocked(i))
         {
           x = _lockedPositions[i - 1][0];
           y = _lockedPositions[i - 1][1];

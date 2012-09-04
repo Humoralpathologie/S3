@@ -53,7 +53,6 @@ package
       
       // entry point  
       SaveGame.load();
-      SaveGame.unlockLevels();
             
       var screenWidth:int = stage.fullScreenWidth;
       var screenHeight:int = stage.fullScreenHeight;      

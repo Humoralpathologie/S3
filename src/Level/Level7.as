@@ -93,7 +93,7 @@ package Level
         {
           var randColor:uint = Color.argb(255, Math.floor(Math.random() * 100) + 155, Math.floor(Math.random() * 255), Math.floor(Math.random() * 256));
           _bonusTimerPoints += 2;
-          showPoints(egg, "+" + String(_bonusTimerPoints), 20, randColor);
+          showPoints(egg, "+" + String(_bonusTimerPoints),0,20, randColor);
           _score += _bonusTimerPoints;
         }
         _score += points;
@@ -214,7 +214,7 @@ package Level
       {
         var score:Object = {score: _score, lives: _snake.lives, time: _overallTimer, level: _levelNr, snake: _snake, lid: _lid}
         AssetRegistry.soundmanager.fadeOutMusic();
-        dispatchEventWith(ManagedStage.SWITCHING, true, { stage: VideoPlayer, args: {stage:LevelScore, videoURI:"Outro.mp4", args:score} } );
+        dispatchEventWith(ManagedStage.SWITCHING, true, { stage: VideoPlayer, args: {stage:LevelScore, videoURI:"Outro.mp4", args: score} } );
         SaveGame.hasFinishedGame = true;
       }
     }
