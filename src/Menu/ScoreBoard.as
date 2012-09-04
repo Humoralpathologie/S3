@@ -235,9 +235,16 @@ package Menu
     private function startScoring():void
     {
       var self:ScoreBoard = this;
+      var livesFactor:int;
+      if (SaveGame.difficulty == 1) {
+        livesFactor = 50;
+      } else {
+        livesFactor = 100;
+      }
+       
       var triggerLife:Function = function(tween:GTween):void
       {
-        _tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.lives * 50}, {ease: Exponential.easeOut, onComplete: triggerTotal}));
+        _tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.lives * livesFactor}, {ease: Exponential.easeOut, onComplete: triggerTotal}));
       }
       var triggerTime:Function = function(tween:GTween):void
       {
