@@ -131,7 +131,7 @@ package Menu
 		
 		private function showHighMessage(tween:GTween):void
 		{
-			AssetRegistry.soundmanager.playSound("endPling");
+			AssetRegistry.soundmanager.playSound("pling");
 			
 			if (_alltimehigh)
 			{
@@ -257,20 +257,20 @@ package Menu
 			var self:ScoreBoard = this;
 			var triggerLife:Function = function(tween:GTween):void
 			{
-				AssetRegistry.soundmanager.playSound("endPling");
+				//AssetRegistry.soundmanager.playSound("pling");
 				_tweens.push(new GTween(self, 2, {_lifeBonusCounter: _scores.liveBonus}, {ease: Exponential.easeOut, onComplete: triggerTotal}));
 			}
 			var triggerTime:Function = function(tween:GTween):void
 			{
 				if (!_scores.lost)
 				{
-					AssetRegistry.soundmanager.playSound("endPling");
+					//AssetRegistry.soundmanager.playSound("pling");
 					_tweens.push(new GTween(self, 2, {_timeBonusCounter: _scores.timeBonus}, {ease: Exponential.easeOut, onComplete: triggerLife}));
 				}
 			}
 			var triggerTotal:Function = function(tween:GTween):void
 			{
-				AssetRegistry.soundmanager.playSound("endPling");
+				//AssetRegistry.soundmanager.playSound("pling");
 				
 				_tweens.push(new GTween(self, 2, {_totalCounter: _scores.total}, {ease: Exponential.easeOut, onComplete: showHighMessage}));
 			}
