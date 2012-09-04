@@ -89,7 +89,7 @@ package Level
     
     override protected function checkWin():void
     {
-      if (_combos == _winConditionA || _overallTimer >= _winConditionB)
+      if (_combos >= _winConditionA || _overallTimer >= _winConditionB)
       {
         win();
       }
