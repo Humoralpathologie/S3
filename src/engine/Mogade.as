@@ -92,6 +92,11 @@ package engine
       request.key = _key;
       request.lid = leaderboard;
       request.scope = scope;
+      request.records = 10;
+      
+      for (var key:String in additionalParameters) {
+        request[key] = additionalParameters[key];
+      }
       
       callback ||= tracer;
       
