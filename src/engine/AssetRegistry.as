@@ -110,7 +110,7 @@ package engine
     static private const FontXML:Class;
     [Embed(source="../../assets/Font/8bit_0.png")]
     static private const FontPNG:Class;
-    [Embed(source="../../assets/Loading/loading.png")]
+    [Embed(source="../../assets/Loading/loading-screen.png")]
     static public const LoadingPNG:Class;
     [Embed(source="../../assets/Levels/arcadeOverlay.png")]
     static public const ArcadeOverlayPNG:Class;
