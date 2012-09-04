@@ -1,10 +1,15 @@
 package Menu.SettingsScreens
 {
+	import org.josht.starling.foxhole.controls.TabBar;
+	import org.josht.starling.foxhole.controls.ToggleSwitch;
 	import flash.geom.Rectangle;
 	import flash.media.StageWebView;
 	import org.josht.starling.display.Image;
 	import org.josht.starling.foxhole.controls.Screen;
-	import org.josht.starling.foxhole.controls.Slider;
+	import org.josht.starling.foxhole.controls.ScreenNavigator;
+	import org.josht.starling.foxhole.controls.ScreenNavigatorItem;
+	import org.josht.starling.foxhole.transitions.ScreenSlidingStackTransitionManager;
+	//import org.josht.starling.foxhole.controls.Slider;
 	import org.josht.starling.foxhole.controls.TextInput;
 	import org.josht.starling.foxhole.controls.Scroller;
 	import org.josht.starling.foxhole.controls.ScrollBar;
@@ -31,6 +36,7 @@ package Menu.SettingsScreens
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.events.Touch;
+  import org.josht.starling.foxhole.data.ListCollection;
 	
 	/**
 	 *
@@ -38,27 +44,34 @@ package Menu.SettingsScreens
 	 */
 	public class MainSettingsScreen extends Screen
 	{
+		private var _screenNavi:ScreenNavigator;
+		private var _transitions:ScreenSlidingStackTransitionManager;
 		
 		protected var _onSetting:Signal = new Signal(MainSettingsScreen);
 		protected var _sharedData:Object = {};
 		private var _greyBox:Quad;
 		private var _heading:TextField;
-		private var _controlsHeading:TextField;
-		private var _nameHeading:TextField;
-		private var _langHeading:TextField;
-		private var _nameText:TextField;
-		private var _diffHeading:TextField;
-		private var _scroller:Scroller;
-		private var _scrollable:Sprite;
-		private var _nameTextInput:TextInput;
+		
+		/*
+			 private var _controlsHeading:TextField;
+			 private var _nameHeading:TextField;
+			 private var _langHeading:TextField;
+			 private var _nameText:TextField;
+			 private var _diffHeading:TextField;
+			 private var _scroller:Scroller;
+			 private var _scrollable:Sprite;
+			 private var _nameTextInput:TextInput;
+		 */
+		private var _controls:Sprite;
+		private var _lang:Sprite;
+		private var _diff:Sprite;
+		private var _name:Sprite;
+    private var _previousSprite:Sprite;
+		private var _tabBar:TabBar;
 		
 		public function MainSettingsScreen()
 		{
 			super();
-			
-			SaveGame.isSettingsScreen = true;
-			
-			_scrollable = new Sprite();
 			
 			_greyBox = new Quad(710, 480, Color.BLACK);
 			_greyBox.alpha = 0.7;
@@ -92,13 +105,17 @@ package Menu.SettingsScreens
 			_heading.x = _greyBox.x + (_greyBox.width - _heading.width) / 2;
 			_heading.y = _greyBox.y;
 			
-			_scroller = new Scroller();
-			_scroller.x = _greyBox.x - 10;
-			_scroller.y = _heading.y + _heading.height + 20;
-			_scroller.setSize(_greyBox.width + 10, _greyBox.height - (_heading.height + 20));
-			_scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
+			addTabBar();
 			
-			addChild(_scroller);
+			/*
+				 _scroller = new Scroller();
+				 _scroller.x = _greyBox.x - 10;
+				 _scroller.y = _heading.y + _heading.height + 20;
+				 _scroller.setSize(_greyBox.width + 10, _greyBox.height - (_heading.height + 20));
+				 _scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
+			
+				 addChild(_scroller);
+			 */
 			
 			addChild(_heading);
 			
@@ -106,13 +123,15 @@ package Menu.SettingsScreens
 			addDifficultySwitches();
 			addLanguageSwitches();
 			addUserName();
-			_scroller.viewPort = _scrollable;
-			
-			// Padding
-			var padding:Quad = new Quad(1, 100, 0xffffff);
-			padding.alpha = 0;
-			padding.y = _nameTextInput.y + _nameTextInput.height;
-			_scrollable.addChild(padding);
+      _previousSprite = new Sprite;
+      addChild(_previousSprite);
+			//_scroller.viewPort = _scrollable;
+		/*
+			 // Padding
+			 var padding:Quad = new Quad(1, 100, 0xffffff);
+			 padding.alpha = 0;
+			 padding.y = _nameTextInput.y + _nameTextInput.height;
+		 _scrollable.addChild(padding);*/
 		
 		}
 		
@@ -125,11 +144,52 @@ package Menu.SettingsScreens
 			//addInfo();
 		}
 		
+		private function addTabBar():void
+		{
+			_tabBar = new TabBar();
+			_tabBar.dataProvider = new ListCollection([{label: AssetRegistry.Strings.DIFFICULTY}, {label: AssetRegistry.Strings.CONTROLTYPE}, {label: AssetRegistry.Strings.LANGUAGE}, {label: AssetRegistry.Strings.USERNAME}]);
+			_tabBar.onChange.add(function(bar:TabBar)
+				{
+					switch (bar.selectedIndex)
+					{
+						case 0: 
+              removeChild(_previousSprite);
+							addChild(_diff);
+              _previousSprite = _diff;
+							break;
+						case 1: 
+						  removeChild(_previousSprite);
+							addChild(_controls);
+              _previousSprite = _controls;
+							break;
+						case 2: 
+							removeChild(_previousSprite);
+							addChild(_lang);
+              _previousSprite = _lang;
+							break;
+              case 3: 
+							removeChild(_previousSprite);
+							addChild(_name);
+              _previousSprite = _name;
+							break;
+					}
+					
+				});
+			_tabBar.width = _greyBox.width;
+			_tabBar.x = _greyBox.x;
+			_tabBar.y = _greyBox.y + 80;
+			addChild(_tabBar);
+		}
+		
 		private function addUserName():void
 		{
+      _name = new Sprite;
+      var _nameHeading:TextField;
+      var _nameTextInput:TextInput;
+      
 			_nameHeading = new TextField(_greyBox.width, 50, "User Name: " + SaveGame.userName, "kroeger 06_65", 40, Color.WHITE);
 			_nameHeading.x = (_greyBox.width - _nameHeading.width) / 2;
-			_nameHeading.y = _langHeading.y + _langHeading.height + 50;
+			_nameHeading.y = _tabBar.y + 200;
 			_nameHeading.hAlign = HAlign.CENTER;
 			
 			_nameTextInput = new TextInput();
@@ -147,18 +207,20 @@ package Menu.SettingsScreens
 				});
 			_nameTextInput;
 			
-			_scrollable.addChild(_nameHeading);
-			_scrollable.addChild(_nameTextInput);
+			_name.addChild(_nameHeading);
+			_name.addChild(_nameTextInput);
 		
 		}
 		
 		private function addControlSwitches():void
 		{
-			
+      _controls = new Sprite;
+			var _controlsHeading:TextField;
+
 			_controlsHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.CONTROLTYPE, "kroeger 06_65", 40, Color.WHITE);
 			_controlsHeading.x = (_greyBox.width - _controlsHeading.width) / 2;
-			_controlsHeading.y = 0;
-			_scrollable.addChild(_controlsHeading);
+			_controlsHeading.y = _tabBar.y + 200;
+			_controls.addChild(_controlsHeading);
 			
 			var controlGroup:ToggleGroup = new ToggleGroup;
 			var boyStyle:Radio = new Radio();
@@ -185,17 +247,19 @@ package Menu.SettingsScreens
 			boyStyle.y = _controlsHeading.y + _controlsHeading.height;
 			fourway.y = boyStyle.y;
 			
-			_scrollable.addChild(boyStyle);
-			_scrollable.addChild(fourway);
+			_controls.addChild(boyStyle);
+			_controls.addChild(fourway);
 		}
 		
 		private function addDifficultySwitches():void
 		{
-			
+      _diff = new Sprite;
+			var _diffHeading:TextField;
+      
 			_diffHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.DIFFICULTY, "kroeger 06_65", 40, Color.WHITE);
 			_diffHeading.x = (_greyBox.width - _diffHeading.width) / 2;
-			_diffHeading.y = _controlsHeading.y + _controlsHeading.height + 80;
-			_scrollable.addChild(_diffHeading);
+			_diffHeading.y = _tabBar.y + 200;
+			_diff.addChild(_diffHeading);
 			
 			var diffGroup:ToggleGroup = new ToggleGroup;
 			var casual:Radio = new Radio();
@@ -222,17 +286,19 @@ package Menu.SettingsScreens
 			casual.y = _diffHeading.y + _diffHeading.height;
 			competetive.y = casual.y;
 			
-			_scrollable.addChild(casual);
-			_scrollable.addChild(competetive);
+			_diff.addChild(casual);
+			_diff.addChild(competetive);
 		}
 		
 		private function addLanguageSwitches():void
 		{
-			
+      _lang = new Sprite;
+			var _langHeading:TextField;
+      
 			_langHeading = new TextField(_greyBox.width / 2, 50, AssetRegistry.Strings.LANGUAGE, "kroeger 06_65", 40, Color.WHITE);
 			_langHeading.x = (_greyBox.width - _langHeading.width) / 2;
-			_langHeading.y = _diffHeading.y + _diffHeading.height + 80;
-			_scrollable.addChild(_langHeading);
+			_langHeading.y = _tabBar.y + 200;
+			_lang.addChild(_langHeading);
 			
 			var langGroup:ToggleGroup = new ToggleGroup;
 			var eng:Radio = new Radio();
@@ -263,8 +329,8 @@ package Menu.SettingsScreens
 			eng.y = _langHeading.y + _langHeading.height;
 			ger.y = eng.y;
 			
-			_scrollable.addChild(eng);
-			_scrollable.addChild(ger);
+			_lang.addChild(eng);
+			_lang.addChild(ger);
 		}
 		
 		public function get onSetting():Signal

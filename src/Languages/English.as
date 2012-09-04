@@ -21,10 +21,10 @@ package Languages
 		
 		// Settings Menu
 		public static const MAINSETTINGS:String = "MAIN SETTINGS";
-		public static const USERNAME:String = "USER NAME";
-		public static const CONTROLTYPE:String = "CONTROL TYPE";
+		public static const USERNAME:String = "USER\nNAME";
+		public static const CONTROLTYPE:String = "CONTROL\nTYPE";
 		public static const LANGUAGE:String = "LANGUAGE";
-		public static const DIFFICULTY:String = "LEVEL DIFFICULTY";
+		public static const DIFFICULTY:String = "LEVEL\nDIFFICULTY";
 		
 		public static const SNAKEVIEW:String = "TYPE 1";
 		public static const FOURWAY:String = "TYPE 2";
