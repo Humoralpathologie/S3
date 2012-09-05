@@ -207,7 +207,7 @@ package Menu
       }
       if (data.scores.length == 0) {
         _page--;
-        AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {username: SaveGame.userName, userkey: SaveGame.guid});        
+        AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {page: _page});        
         
         return;
       }

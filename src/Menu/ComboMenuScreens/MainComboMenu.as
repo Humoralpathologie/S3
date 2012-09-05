@@ -291,7 +291,7 @@ package Menu.ComboMenuScreens
       var buttons:Array;
       if (SaveGame.endless)
       {
-        buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")] //, [AssetRegistry.MenuAtlasOpaque.getTexture("combo-shuffle"), AssetRegistry.MenuAtlasOpaque.getTexture("info-shuffle")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-gold"), AssetRegistry.MenuAtlasOpaque.getTexture("info-gold")], [AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtralife"), AssetRegistry.MenuAtlasOpaque.getTexture("info-xtralife")]];
+        buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")] //, 
       }
       else
       {
@@ -306,40 +306,7 @@ package Menu.ComboMenuScreens
         button.y = 270;
         addChild(button);
         addComboInfo(i, button);
-        /*
-           var desc:Button = new Button(buttons[i][1]);
-           desc.x = (Starling.current.stage.stageWidth - desc.width) / 2;
-           desc.y = (Starling.current.stage.stageHeight - desc.height) / 2;
-           desc.scaleWhenDown = 1;
-         */
-        
-        var that:MainComboMenu = this;
-        /*
-           var f:Function = function(desc:Button):void
-           {
-           button.addEventListener(Event.TRIGGERED, function(event:Event):void
-           {
-           that.addChild(desc);
-           });
-        
-           desc.addEventListener(Event.TRIGGERED, function(event:Event):void
-           {
-           that.removeChild(desc);
-           });
-           };
-           f(desc);
-         */
       }
-    /*
-       var comboSpeed:Button = new Button(AssetRegistry.MenuAtlas.getTexture("combo-speed"));
-       buttons.push(comboSpeed);
-    
-       var comboTime:Button = new Button(AssetRegistry.MenuAtlas.getTexture("combo-time"));
-       buttons.push(comboTime);
-    
-       var comboRotteneggs:Button = new Button(AssetRegistry.MenuAtlas.getTexture("combo-rotteneggs"));
-     buttons.push(comboRotteneggs);*/
-    
     }
     
     private function addButtons():void

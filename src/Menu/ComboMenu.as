@@ -62,14 +62,6 @@ package Menu
 			_navigator.addScreen(NORMALCOMBOS, new ScreenNavigatorItem(NormalCombos, {onNormalCombos: BASEMENU}, {sharedData: this._sharedData}));
 			
 			_navigator.showScreen(BASEMENU);
-			
-			/*_navigator.addScreen(LEADERBOARDS, new ScreenNavigatorItem(Leaderboards, {
-				 onMainComboMenu:BASEMENU
-				 }, {
-				 sharedData: {navigator: this._navigator, screen: LEADERBOARDS}
-			 }));*/
-			
-			_leaderboardScreen.dispatchEventWith(Leaderboards.REFRESH_LEADERBOARD);
 		}
 		
 		override public function dispose():void
