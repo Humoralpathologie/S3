@@ -72,15 +72,15 @@ package Menu
       
       _screenNavi = new ScreenNavigator();
       _transitions = new ScreenSlidingStackTransitionManager(_screenNavi);
-      _screenNavi.addScreen(_SETTINGS, new ScreenNavigatorItem(MainSettingsScreen, {
+      _screenNavi.addScreen(_SETTINGS, new ScreenNavigatorItem(new MainSettingsScreen(), {
         onSetting:_BLANC
       }));
       
-       _screenNavi.addScreen(_EXTRAS, new ScreenNavigatorItem(Extras, {
+       _screenNavi.addScreen(_EXTRAS, new ScreenNavigatorItem(new Extras(), {
         onExtras:_BLANC
       }));
       
-      _screenNavi.addScreen(_BLANC, new ScreenNavigatorItem(BlancScreen, {
+      _screenNavi.addScreen(_BLANC, new ScreenNavigatorItem(new BlancScreen(), {
         onBlancScreen:_EXTRAS
       }));
       _screenNavi.defaultScreenID = _BLANC;

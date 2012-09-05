@@ -23,6 +23,7 @@ package
   //import com.demonsters.debugger.MonsterDebugger;
   import flash.system.Capabilities;
   import engine.Mogade;
+  import flash.desktop.SystemIdleMode;
   
   /**
    * ...
@@ -38,6 +39,8 @@ package
     
     public function Main():void
     {
+      // Deactivate sleep.
+      NativeApplication.nativeApplication.systemIdleMode = SystemIdleMode.KEEP_AWAKE;
       
       stage.scaleMode = StageScaleMode.NO_SCALE;
       stage.align = StageAlign.TOP_LEFT;
@@ -61,7 +64,7 @@ package
       var wwidth:int;
       var hheight:int;
       
-      if (AssetRegistry.ASPECT_RATIO > screenWidth / screenHeight)
+      if (AssetRegistry.ASPECT_RATIO < screenWidth / screenHeight)
       {
         wwidth = int(screenHeight * (960 / 640));
         hheight = screenHeight;
