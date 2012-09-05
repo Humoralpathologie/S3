@@ -83,17 +83,24 @@ package Menu
 		
 		public static const SHOW_RANK:String = "showrank";
 		
-		public function ScoreBoard()
+		public function ScoreBoard(scores:Object)
 		{
 			super();
+      _scores = scores;
+			buildMenu();      
 			addEventListener(SHOW_RANK, showRank);
-		
+      
 		}
 		
 		// Input looks like this:
 		//{"ranks":{"4":1,"1":1,"2":1,"3":1},"highs":{"1":true,"2":true,"3":true}}    
 		private function showRank(evt:Event):void
 		{
+      if (evt.data.lost) {
+        _rankText.text = AssetRegistry.Strings.NO_RANK;
+        return;
+      }
+      
 			if (evt.data.error)
 			{
 				_rankText.text = AssetRegistry.Strings.NO_NET_CONNECTION;
@@ -153,7 +160,6 @@ package Menu
 			_highScoreTxt.x = 0;
 			_highScoreTxt.y = 0;
 			_tweens = new Vector.<GTween>;
-			buildMenu();
 			trace(_scores);
 			startScoring();
 		

@@ -121,30 +121,36 @@ package Menu
       _scores.total += (_scores.timeBonus * 5);
       calculateMedal();
       trace("total: " + _scores.total)
-      if (!_scores.lost)
-      {
-        SaveGame.saveScore(_scores.level, _scores.total);
-        SaveGame.storePersonalScores(_scores.lid, _scores.total);
-        AssetRegistry.mogade.submitScore(SaveGame.userName, SaveGame.guid, _scores.lid, _scores.total, showRank);
-      }
       
       addBackground();
       addButtons();
       createScoreBoard();
       _boards.showScreen(SCORE);
+      
+      if (!_scores.lost)
+      {
+        SaveGame.saveScore(_scores.level, _scores.total);
+        SaveGame.storePersonalScores(_scores.lid, _scores.total);
+        AssetRegistry.mogade.submitScore(SaveGame.userName, SaveGame.guid, _scores.lid, _scores.total, showRank);
+      } else {
+        showRank( { lost:true } );
+      }      
     }
     
     private function showRank(ranks:Object):void {
+
       if (ranks.error) {
         // We have no net connection        
         SaveGame.savedScores.push({lid: _scores.lid, total: _scores.total});
       } else {
+        if(!ranks.lost) {
         // We should have now, so send all the old scores out.
         var savedScore:Object;
         while (SaveGame.savedScores.length != 0) 
         {
           savedScore = SaveGame.savedScores.pop();
           AssetRegistry.mogade.submitScore(SaveGame.userName, SaveGame.guid, savedScore.lid, savedScore.total);
+        }
         }
       }
 
@@ -310,7 +316,7 @@ package Menu
     {
       _boards = new ScreenNavigator();
       var trans:ScreenFadeTransitionManager = new ScreenFadeTransitionManager(_boards);
-      _scoreScreen = new ScoreBoard();
+      _scoreScreen = new ScoreBoard(_scores);
       _leaderboardScreen = new Leaderboards(_scores);
       _boards.addScreen(SCORE, new ScreenNavigatorItem(_scoreScreen, {onScoring: LEADERBOARDS}, {scores: this._scores}));
       _boards.defaultScreenID = SCORE;
@@ -340,29 +346,7 @@ package Menu
     }
     
     private function addButtons():void
-    {
-      /*
-      _replayButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo"));
-      _replayButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-redo-broken");
-      _replayButton.x = 960 / 2 - 145 / 2;
-      _replayButton.y = 460;
-      
-      _replayButton.addEventListener(starling.events.Event.TRIGGERED, replay);
-      
-      _nextLevelButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-next"));
-      _nextLevelButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-next-broken");
-      _nextLevelButton.x = 960 / 2 + 145 / 2 + 30;
-      _nextLevelButton.y = _replayButton.y + 30;
-      
-      _nextLevelButton.addEventListener(starling.events.Event.TRIGGERED, nextLevel);
-      
-      _backToMenuButton = new Button(AssetRegistry.ScoringAtlas.getTexture("menu-egg-back"));
-      _backToMenuButton.downState = AssetRegistry.ScoringAtlas.getTexture("menu-egg-back-broken");
-      _backToMenuButton.x = 960 / 2 - 145 / 2 - 30 - 135;
-      _backToMenuButton.y = _nextLevelButton.y;
-      
-      _backToMenuButton.addEventListener(starling.events.Event.TRIGGERED, backToMenu);*/
-      
+    {      
       var buttonWidth:int = 320;
       
       _backToMenuButton = new Button();
