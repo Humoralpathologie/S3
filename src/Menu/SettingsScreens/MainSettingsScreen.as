@@ -52,22 +52,6 @@ package Menu.SettingsScreens
     private var _greyBox:Quad;
     private var _heading:TextField;
     
-    /*
-       private var _controlsHeading:TextField;
-       private var _nameHeading:TextField;
-       private var _langHeading:TextField;
-       private var _nameText:TextField;
-       private var _diffHeading:TextField;
-       private var _scroller:Scroller;
-       private var _scrollable:Sprite;
-       private var _nameTextInput:TextInput;
-    
-    
-       private var _controls:Sprite;
-       private var _lang:Sprite;
-       private var _diff:Sprite;
-    
-     */
     private var _generalSettings:Sprite;
     private var _name:Sprite;
     private var _previousSprite:Sprite;
@@ -102,51 +86,22 @@ package Menu.SettingsScreens
           }
         });
       addChild(xButton);
-      addChild(exit);
-      
-      _heading = new TextField(_greyBox.width, 50, AssetRegistry.Strings.MAINSETTINGS, "kroeger 06_65", 50, Color.WHITE);
-      
-      _heading.x = _greyBox.x + (_greyBox.width - _heading.width) / 2;
-      _heading.y = _greyBox.y;
+      addChild(exit); 
       
       addTabBar();
-      
-      /*
-         _scroller = new Scroller();
-         _scroller.x = _greyBox.x - 10;
-         _scroller.y = _heading.y + _heading.height + 20;
-         _scroller.setSize(_greyBox.width + 10, _greyBox.height - (_heading.height + 20));
-         _scroller.scrollBarDisplayMode = Scroller.SCROLL_BAR_DISPLAY_MODE_FIXED;
-      
-         addChild(_scroller);
-       */
-      
-      addChild(_heading);
-      
+
       _generalSettings = new Sprite;
       addControlSwitches();
       addDifficultySwitches();
       addLanguageSwitches();
       addUserName();
       
-      addChild(_generalSettings);
-      //_scroller.viewPort = _scrollable;
-    /*
-       // Padding
-       var padding:Quad = new Quad(1, 100, 0xffffff);
-       padding.alpha = 0;
-       padding.y = _nameTextInput.y + _nameTextInput.height;
-     _scrollable.addChild(padding);*/
-    
+      addChild(_generalSettings);  
     }
     
     override protected function initialize():void
     {
-    
-      //addSwitchers();
-      //addButtons();
-      //addNormalCombos();
-      //addInfo();
+
     }
     
     private function addTabBar():void
@@ -177,7 +132,7 @@ package Menu.SettingsScreens
       _tabBar.width = _greyBox.width;
       _tabBar.height = 70;
       _tabBar.x = _greyBox.x;
-      _tabBar.y = _heading.y + _heading.height;
+      _tabBar.y = _greyBox.y;
       addChild(_tabBar);
     }
     
@@ -282,29 +237,7 @@ package Menu.SettingsScreens
       _diffHeading.x = _greyBox.x + (_greyBox.width - _diffHeading.width) / 2;
       _diffHeading.y = _tabBar.y + _tabBar.height + 120;
       _generalSettings.addChild(_diffHeading);
-      /*
-         var diffToggle:ToggleSwitch = new ToggleSwitch;
-         diffToggle.width = 300;
-         diffToggle.x = _greyBox.x + (_greyBox.width - diffToggle.width) / 2;
-         diffToggle.y = _diffHeading.y + _diffHeading.height + 5;
-      
-         diffToggle.onText = AssetRegistry.Strings.CASUAL;
-         diffToggle.offText =  AssetRegistry.Strings.COMPETETIVE;
-         if (SaveGame.difficulty == 1) {
-         diffToggle.isSelected = true;
-         } else {
-         diffToggle.isSelected = false;
-         }
-         diffToggle.onChange.add(function(tswitch:ToggleSwitch):void
-         {
-         if (diffToggle.isSelected) {
-         SaveGame.difficulty = 1;
-         } else {
-         SaveGame.difficulty = 2;
-         }
-         });
-         _generalSettings.addChild(diffToggle);
-       */
+     
       var diffGroup:ToggleGroup = new ToggleGroup;
       var casual:Radio = new Radio();
       casual.label = AssetRegistry.Strings.CASUAL;
@@ -343,33 +276,6 @@ package Menu.SettingsScreens
       _langHeading.x = _greyBox.x + (_greyBox.width - _langHeading.width) / 2;
       _langHeading.y = _tabBar.y + _tabBar.height + 220;
       _generalSettings.addChild(_langHeading);
-      /*
-         var langToggle:ToggleSwitch = new ToggleSwitch;
-         langToggle.width = 250;
-         langToggle.x = _greyBox.x + (_greyBox.width - langToggle.width) / 2;
-         langToggle.y = _langHeading.y + _langHeading.height + 5;
-         langToggle.offText = "English";
-         langToggle.onText = "Deutsch";
-         if (SaveGame.language == 2) {
-         langToggle.isSelected = true;
-         } else {
-         langToggle.isSelected = false;
-         }
-         langToggle.onChange.add(function(tswitch:ToggleSwitch):void
-         {
-         var previousLang:int = SaveGame.language;
-         if (langToggle.isSelected) {
-         SaveGame.language = 2;
-         AssetRegistry.Strings = Deutsch;
-         } else {
-         SaveGame.language = 1;
-         AssetRegistry.Strings = English;
-         }
-         if (previousLang != SaveGame.language) {
-         dispatchEventWith(ManagedStage.SWITCHING, true, { stage: MainMenu } );
-         }
-         });
-       _generalSettings.addChild(langToggle); */
       
       var previousLangSetting:int = SaveGame.language;
       var langGroup:ToggleGroup = new ToggleGroup;
