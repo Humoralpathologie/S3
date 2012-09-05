@@ -29,14 +29,17 @@ package Level
       
       _levelNr = 1;
       SaveGame.levelName = AssetRegistry.Strings.LEVEL1NAME;
-	    if (SaveGame.difficulty == 1) {
+	    
+      super();
+      
+      if (SaveGame.difficulty == 1) {
 	      _winCondition = 30;
         _lid = "50421a39563d8a53c20021bb";
 	    } else {
 		    _winCondition = 50;
         _lid = "50421a3f563d8a632f002091";
+        _snake.lives = 2;
 	    }
-      super();
     }
     
     override protected function addSpawnMap():void {

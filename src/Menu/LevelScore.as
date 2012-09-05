@@ -172,58 +172,62 @@ package Menu
     {
       if (SaveGame.difficulty == 1)
       {
-        switch (_scores.level)
-        {
-          case 1:
-            _timeBonus = 100 - int(_scores.time);
-            break;
-          case 2:
-            _timeBonus = 120 - int(_scores.time);
-            break;
-          case 3:
-            _timeBonus = 120 - int(_scores.time);
-            break;
-          case 4:
-            _timeBonus = 100 - int(_scores.time);
-            break;
-          case 5:
-            _timeBonus = 0;
-            break;
-          case 6:
-            _timeBonus = 100 - int(_scores.time);
-            break;
-          case 7:
-            _timeBonus = 220 - int(_scores.time);
-            break;
-          case 9:
-            _timeBonus = 0;
-            break;
-        }
-      }
-      else
-      {
-        switch (_scores.level)
-        {
-          case 1:
-            _timeBonus = 100 - int(_scores.time);
-            break;
-          case 2:
-            _timeBonus = 4 * 60 - int(_scores.time);
-            break;
-          case 3:
-            _timeBonus = 4 * 60 - int(_scores.time);
-            break;
-          case 4:
-            _timeBonus = 3 * 60 - int(_scores.time);
-            break;
-          case 9:
-            _timeBonus = 0;
-            break;
-          default:
-            _timeBonus = 3 * 60 - int(_scores.time);
-            break;
-        }
-      }
+        switch(_scores.level) {
+        case 1:
+						_timeBonus = 100 - int(_scores.time);
+						break;
+					case 2: 
+						_timeBonus = 120 - int(_scores.time);
+						break;
+					case 3: 
+						_timeBonus = 120 - int(_scores.time);
+						break;
+					case 4: 
+						_timeBonus = 100 - int(_scores.time);
+						break;
+          case 5: 
+					  _timeBonus = 0;
+					  break;
+          case 6: 
+						_timeBonus = 180 - int(_scores.time);
+						break;
+          case 7: 
+						_timeBonus = 220 - int(_scores.time);
+					  break;
+					case 9: 
+						_timeBonus = 0;
+						break;
+				}
+			}
+			else
+			{
+				switch (_scores.level)
+				{
+					case 1: 
+						_timeBonus = 120 - int(_scores.time);
+          break;
+        case 2:
+          _timeBonus = 240 - int(_scores.time);
+          break;
+        case 3:
+          _timeBonus = 240 - int(_scores.time);
+          break;
+        case 4:
+          _timeBonus = 180 - int(_scores.time);
+          break;
+        case 5:
+          _timeBonus = 0;
+        break;
+        case 6:
+          _timeBonus = 180 - int(_scores.time);
+          break;
+        case 7:
+          _timeBonus = 240 - int(_scores.time);
+          break;
+        case 9:
+          _timeBonus = 0;
+				  break;
+      }}
     
     }
     
@@ -250,37 +254,38 @@ package Menu
             medalReq = [1000, 1250, 1500, 1800];
             break;
           case 6:
-            medalReq = [400, 600, 800, 1000];
+            medalReq = [750, 1000, 1500, 2500];
             break;
           case 7:
             medalReq = [1200, 1500, 1800, 2500];
             break;
         }
-      }
-      else
-      {
-        switch (_scores.level)
-        {
-          case 1:
-            medalReq = [400, 600, 800, 1000];
+
+			}
+			else
+			{
+				switch (_scores.level)
+				{
+          case 1: 
+            medalReq = [800, 900, 1000, 1400];
             break;
           case 2:
-            medalReq = [400, 600, 800, 1000];
+            medalReq = [1250, 2000, 2500, 3500];
             break;
-          case 3:
-            medalReq = [400, 600, 800, 1000];
+          case 3: 
+            medalReq = [1500, 1750, 2000, 2500];
             break;
           case 4:
-            medalReq = [400, 600, 800, 1000];
+            medalReq = [1000, 1250, 1500, 2000];
             break;
-          case 5:
-            medalReq = [400, 600, 800, 1000];
+          case 5: 
+            medalReq = [1000, 1250, 1500, 2000];
             break;
           case 6:
-            medalReq = [400, 600, 800, 1000];
+            medalReq = [1250, 1500, 2000, 2500];
             break;
           case 7:
-            medalReq = [400, 600, 800, 1000];
+            medalReq = [1000, 2000, 3000, 4000];
             break;
         }
       }
