@@ -49,7 +49,14 @@ package Menu
       _levelSelectTop.smoothing = TextureSmoothing.NONE;
       _scrollable.addChild(_levelSelectTop);
       
-      _levelSelectBottom = new Image(AssetRegistry.LevelSelectAtlasOpaque.getTexture("levelauswahl_unten_1126_locked"));
+      if (SaveGame.levelUnlocked(7))
+      {
+        _levelSelectBottom = new Image(AssetRegistry.LevelSelectAtlasOpaque.getTexture("levelauswahl_unten_1126"));
+      }
+      else
+      {
+        _levelSelectBottom = new Image(AssetRegistry.LevelSelectAtlasOpaque.getTexture("levelauswahl_unten_1126_locked"));
+      }
       _levelSelectBottom.y = _levelSelectTop.height - 1;
       _levelSelectBottom.smoothing = TextureSmoothing.NONE;
       _scrollable.addChild(_levelSelectBottom);
@@ -67,8 +74,8 @@ package Menu
       _scrollable.addEventListener(TouchEvent.TOUCH, onTouch);
       
       addChild(_scroller);
-	  
-	  SaveGame.isArcade = false;
+      
+      SaveGame.isArcade = false;
     }
     
     private function onTouch(e:TouchEvent):void
@@ -102,12 +109,15 @@ package Menu
         }
       }
     }
+    
     private function addMedals():void
     {
       var medalPos:Array = [[313, 335], [556, 460], [821, 593], [557, 722], [312, 845], [557, 979], [312, 1175]];
-      for (var i:int; i < medalPos.length; i++ ) {
+      for (var i:int; i < medalPos.length; i++)
+      {
         trace(AssetRegistry.MEDALS[SaveGame.medals[i]])
-        if (AssetRegistry.MEDALS[SaveGame.medals[i]]){
+        if (AssetRegistry.MEDALS[SaveGame.medals[i]])
+        {
           var medal:Image = new Image(AssetRegistry.ScoringAtlas.getTexture(AssetRegistry.MEDALS[SaveGame.medals[i]]));
           medal.x = medalPos[i][0];
           medal.y = medalPos[i][1];
@@ -123,64 +133,71 @@ package Menu
       
       _boxes["level1"] = {box: box, callback: function():void
         {
-          if (SaveGame.firstStart) {
-            dispatchEventWith(SWITCHING, true, { stage: VideoPlayer, args: { stage: Level1, videoURI: "IntroLv1.mp4" }} );
-            SaveGame.firstStart = false;
-          } else 
+          if (SaveGame.firstStart)
           {
-            dispatchEventWith(SWITCHING, true, { stage: Level1 } );
+            dispatchEventWith(SWITCHING, true, {stage: VideoPlayer, args: {stage: Level1, videoURI: "IntroLv1.mp4"}});
+            SaveGame.firstStart = false;
+          }
+          else
+          {
+            dispatchEventWith(SWITCHING, true, {stage: Level1});
           }
         }};
       
       box = [new Point(265, 492), new Point(479, 385), new Point(691, 491), new Point(478, 599)];
       _boxes["level2"] = {box: box, callback: function():void
         {
-          if(SaveGame.levelUnlocked(2)) {
-            dispatchEventWith(SWITCHING, true, { stage: Level2 } );
+          if (SaveGame.levelUnlocked(2))
+          {
+            dispatchEventWith(SWITCHING, true, {stage: Level2});
           }
         }};
       
       box = [new Point(517, 616), new Point(729, 512), new Point(942, 616), new Point(731, 726)];
       _boxes["level3"] = {box: box, callback: function():void
         {
-          if(SaveGame.levelUnlocked(3)) {
-            dispatchEventWith(SWITCHING, true, { stage: Level3 } );
+          if (SaveGame.levelUnlocked(3))
+          {
+            dispatchEventWith(SWITCHING, true, {stage: Level3});
           }
-            
+        
         }};
       
       box = [new Point(266, 742), new Point(472, 639), new Point(688, 742), new Point(480, 848)];
       _boxes["level4"] = {box: box, callback: function():void
         {
-          if(SaveGame.levelUnlocked(4)) {
-            dispatchEventWith(SWITCHING, true, { stage: Level4 } );
+          if (SaveGame.levelUnlocked(4))
+          {
+            dispatchEventWith(SWITCHING, true, {stage: Level4});
           }
         }};
       
       box = [new Point(15, 871), new Point(226, 764), new Point(439, 871), new Point(226, 976)];
       _boxes["level5"] = {box: box, callback: function():void
         {
-          if(SaveGame.levelUnlocked(5)){
-            dispatchEventWith(SWITCHING, true, { stage: Level5 } );
+          if (SaveGame.levelUnlocked(5))
+          {
+            dispatchEventWith(SWITCHING, true, {stage: Level5});
           }
         }};
       
       box = [new Point(265, 997), new Point(477, 980), new Point(689, 997), new Point(477, 1104)];
       _boxes["level6"] = {box: box, callback: function():void
         {
-          if(SaveGame.levelUnlocked(6)) {
-            dispatchEventWith(SWITCHING, true, { stage: Level6 } );
+          if (SaveGame.levelUnlocked(6))
+          {
+            dispatchEventWith(SWITCHING, true, {stage: Level6});
           }
         }};
-        
-       box = [new Point(250, 1160), new Point(680, 1160), new Point(680, 2000), new Point(250, 2000)];
+      
+      box = [new Point(250, 1160), new Point(680, 1160), new Point(680, 2000), new Point(250, 2000)];
       _boxes["level7"] = {box: box, callback: function():void
         {
-          if(SaveGame.levelUnlocked(7)) {
-            dispatchEventWith(SWITCHING, true, { stage: Level7 } );
+          if (SaveGame.levelUnlocked(7))
+          {
+            dispatchEventWith(SWITCHING, true, {stage: Level7});
           }
-        }};       
-      
+        }};
       
       box = [new Point(718, 286), new Point(893, 212), new Point(887, 306), new Point(729, 306)];
       _boxes["backtomenu"] = {box: box, callback: function():void
