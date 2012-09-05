@@ -224,6 +224,7 @@ package Menu.ComboMenuScreens
       _arcadeModiToggleSwitch.onChange.add(function(tswitch:ToggleSwitch):void
         {
           SaveGame.endless = tswitch.isSelected;
+          trace(SaveGame.endless);
           unflatten();
           if (SaveGame.endless)
           {
@@ -266,8 +267,8 @@ package Menu.ComboMenuScreens
       addChild(leaderboards);
       var that:MainComboMenu = this;
       leaderboards.onRelease.add(function(button:org.josht.starling.foxhole.controls.Button):void
-        {
-          //dispatchEventWith(ManagedStage.SWITCHING, true, {stage: LevelScore});
+        { 
+          _sharedData.leaderBoardScreen.dispatchEventWith(Leaderboards.REFRESH_LEADERBOARD);
           onLeaderboards.dispatch(that); 
         });
       

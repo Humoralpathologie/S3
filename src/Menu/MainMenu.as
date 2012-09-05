@@ -38,6 +38,7 @@ package Menu
     //import starling.textures.TextureSmoothing;
     import engine.NotificationScroller;
     //import starling.utils.Color;
+    import engine.SaveGame;
 
   
   /**
@@ -62,6 +63,7 @@ package Menu
     
     public function MainMenu()
     {
+      SaveGame.isArcade = false;
       AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE]);
             
       _bg = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("loading"));

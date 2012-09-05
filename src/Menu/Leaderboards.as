@@ -56,6 +56,7 @@ package Menu
     protected var _sharedData:Object = {};
     
     public static const REFRESH_LEADERBOARD:String = "refreshleaderboard";
+    private var lid:String;
     
     public function Leaderboards(score:Object)
     {
@@ -64,7 +65,8 @@ package Menu
       //SaveGame.personalScores;
       
       _score = score;
-      
+    
+      lid = _score.lid;
       addBoards();
       addButton();
       addTabBar();
@@ -99,7 +101,7 @@ package Menu
           {
             _page--;
             clearText();
-            AssetRegistry.mogade.getScores(_score.lid, currentScope, updateLeaderboard, {page: _page});
+            AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {page: _page});
           }
         });
       
@@ -107,7 +109,7 @@ package Menu
       {
         _page++;
         clearText();
-        AssetRegistry.mogade.getScores(_score.lid, currentScope, updateLeaderboard, {page: _page});
+        AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {page: _page});
       });
       
       addChild(_prev);
@@ -116,16 +118,25 @@ package Menu
         
     private function refreshLeaderboard(evt:Event = null):void
     {
+      if (SaveGame.isArcade){
+        if (SaveGame.endless)
+			  {
+				  lid = "5041f5ac563d8a632f001f73";
+			  }
+			  else
+			  {
+				  lid = "5041f594563d8a570c0024a4";
+			  }
+      } 
       trace("Refreshing leaderboard...");
       clearText();
-      
       if (_leaderboardShowing == "personal")
       {
-        updateLeaderboard({scores: SaveGame.getPersonalScores(_score.lid)}, "personal");
+        updateLeaderboard({scores: SaveGame.getPersonalScores(lid)}, "personal");
       }
       else
       {
-        AssetRegistry.mogade.getScores(_score.lid, currentScope, updateLeaderboard, {username: SaveGame.userName, userkey: SaveGame.guid});
+        AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {username: SaveGame.userName, userkey: SaveGame.guid});
       }
     }
     
@@ -196,7 +207,8 @@ package Menu
       }
       if (data.scores.length == 0) {
         _page--;
-        AssetRegistry.mogade.getScores(_score.lid, currentScope, updateLeaderboard, {username: SaveGame.userName, userkey: SaveGame.guid});        
+        AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {username: SaveGame.userName, userkey: SaveGame.guid});        
+        
         return;
       }
       _page = data.page;
@@ -326,7 +338,7 @@ package Menu
     {
       _sharedData = value;
     }
-    
+   
     override public function dispose():void
     {
       super.dispose();
