@@ -49,8 +49,11 @@ package Menu
     private var _scoreText:TextField;
     private var _timeText:TextField;
     private var _tabBar:TabBar;
+    private var _prev:Button;
+    private var _next:Button;
     private var _leaderboardShowing:String;
-    protected var _sharedData:Object = { };
+    private var _page:int = 0;
+    protected var _sharedData:Object = {};
     
     public static const REFRESH_LEADERBOARD:String = "refreshleaderboard";
     
@@ -59,75 +62,120 @@ package Menu
       super();
       trace("personalScores: ");
       //SaveGame.personalScores;
-
+      
       _score = score;
-
+      
       addBoards();
       addButton();
       addTabBar();
       createLeaderboardText();
+      addPrevNextButtons();
       
       _leaderboardShowing = "alltime";
       
       addEventListener(REFRESH_LEADERBOARD, refreshLeaderboard);
       trace("Constructing");
-      
-    }
-
     
-    private function refreshLeaderboard(evt:Event = null):void {
-      trace("Refreshing leaderboard...");
-      _scoreText.text = "Loading...";
-      _countText.text = "";
-      _nameText.text = "";
-      _timeText.text = "";
-     
+    }
+    
+    private function addPrevNextButtons():void
+    {
+      _prev = new Button();
+      _prev.label = AssetRegistry.Strings.PREV_PAGE;
+      _prev.height = 50;
+      _prev.width = _leaderboard.width / 2, _prev.x = _leaderboard.x;
+      _prev.y = _leaderboard.y + _leaderboard.height - _prev.height;
       
-      if (_leaderboardShowing == "personal") {
-        updateLeaderboard({scores: SaveGame.getPersonalScores(_score.lid)}, "personal");
-      } else { 
-        var scope:int;
-        switch (_leaderboardShowing)
+      _next = new Button();
+      _next.label = AssetRegistry.Strings.NEXT_PAGE;
+      _next.height = _prev.height;
+      _next.width = _prev.width;
+      _next.x = _prev.x + _prev.width;
+      _next.y = _prev.y;
+      
+      _prev.onRelease.add(function(btn:Button):void
         {
-          case "alltime":
-              scope = 3;
-          break;
-          case "weekly":
-              scope = 2;
-          break;
-            
-        }
-        AssetRegistry.mogade.getScores(_score.lid, scope, updateLeaderboard);
-      }
+          if (_page > 1)
+          {
+            _page--;
+            clearText();
+            AssetRegistry.mogade.getScores(_score.lid, currentScope, updateLeaderboard, {page: _page});
+          }
+        });
       
-      //Utils.getLeaderboard(_score.level, updateLeaderboard, _leaderboardShowing);
+      _next.onRelease.add(function(btn:Button):void
+      {
+        _page++;
+        clearText();
+        AssetRegistry.mogade.getScores(_score.lid, currentScope, updateLeaderboard, {page: _page});
+      });
+      
+      addChild(_prev);
+      addChild(_next);
+    }
+        
+    private function refreshLeaderboard(evt:Event = null):void
+    {
+      trace("Refreshing leaderboard...");
+      clearText();
+      
+      if (_leaderboardShowing == "personal")
+      {
+        updateLeaderboard({scores: SaveGame.getPersonalScores(_score.lid)}, "personal");
+      }
+      else
+      {
+        AssetRegistry.mogade.getScores(_score.lid, currentScope, updateLeaderboard, {username: SaveGame.userName, userkey: SaveGame.guid});
+      }
     }
     
-    private function addTabBar():void {
+    private function get currentScope():int
+    {
+      var scope:int;
+      switch (_leaderboardShowing)
+      {
+        case "alltime":
+          scope = 3;
+          break;
+        case "weekly":
+          scope = 2;
+          break;
+      
+      }
+      return scope;
+    }
+    
+    private function addTabBar():void
+    {
       _tabBar = new TabBar();
-      _tabBar.dataProvider = new ListCollection( [
-        { label: AssetRegistry.Strings.ALLTIME },
-        { label: AssetRegistry.Strings.WEEKLY },
-        { label: AssetRegistry.Strings.PERSONAL}
-        ]);
-      _tabBar.onChange.add(function(bar:TabBar) {
-        var prevShowing:String = _leaderboardShowing;
-        switch(bar.selectedIndex) {
-          case 0:
-            _leaderboardShowing = "alltime";
-            break;
-          case 1:
-            _leaderboardShowing = "weekly";
-            break;
-          case 2:
-            _leaderboardShowing = "personal";
-            break;    
-        }
-        
-        if(_leaderboardShowing != prevShowing) {
-          refreshLeaderboard();
-        } 
-      });
+      _tabBar.dataProvider = new ListCollection([{label: AssetRegistry.Strings.ALLTIME}, {label: AssetRegistry.Strings.WEEKLY}, {label: AssetRegistry.Strings.PERSONAL}]);
+      _tabBar.onChange.add(function(bar:TabBar)
+        {
+          var prevShowing:String = _leaderboardShowing;
+          switch (bar.selectedIndex)
+          {
+            case 0:
+              _leaderboardShowing = "alltime";
+              _prev.visible = true;
+              _next.visible = true;
+              break;
+            case 1:
+              _leaderboardShowing = "weekly";
+              _prev.visible = true;
+              _next.visible = true;
+              break;
+            case 2:
+              _leaderboardShowing = "personal";
+              _prev.visible = false;
+              _next.visible = false;
+              break;
+          }
+          
+          if (_leaderboardShowing != prevShowing)
+          {
+            refreshLeaderboard();
+          }
+        });
       _tabBar.width = _leaderboard.width;
       _tabBar.x = _leaderboard.x;
       _tabBar.y = _leaderboard.y;
@@ -139,43 +187,46 @@ package Menu
       trace("Initializing");
     }
     
-    private function updateLeaderboard(data:Object, type:String = "alltime"):void {
-      if (data.error) {
+    private function updateLeaderboard(data:Object, type:String = "alltime"):void
+    {
+      if (data.error)
+      {
         _scoreText.text = AssetRegistry.Strings.NO_NET_CONNECTION;
         return;
       }
+      if (data.scores.length == 0) {
+        _page--;
+        AssetRegistry.mogade.getScores(_score.lid, currentScope, updateLeaderboard, {username: SaveGame.userName, userkey: SaveGame.guid});        
+        return;
+      }
+      _page = data.page;
       
-      var count:int = 1;
+      var count:int = 1 + (10 * (data.page - 1));
+      if (type == "personal") {
+        count = 1;
+      }
       _scoreText.text = "";
-      for each(var playerScore:Object in data.scores) {
+      for each (var playerScore:Object in data.scores)
+      {
         _countText.text += String(count) + ".\n";
-        if (type == "alltime" || type == "weekly") {
-          /*
-          var _nameText:TextField = new TextField(_leaderboard.width, _leaderboard.height - (t_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
-          _nameText.hAlign = HAlign.LEFT;
-          _nameText.vAlign = VAlign.TOP;
-          _nameText.x = _leaderboard.x + 50;
-          _nameText.y = _countText.y;*/
+        if (type == "alltime" || type == "weekly")
+        {
           _nameText.text += playerScore.username + ":\n";
           _scoreText.x = _leaderboard.x + 350;
           _timeText.x = _leaderboard.x + 570;
-          _scoreText.text += playerScore.points + "\n";  
+          _scoreText.text += playerScore.points + "\n";
           _timeText.text += playerScore.dated.split("T")[0] + "\n";
-        } else {
-          _nameText.text = "";
-          _timeText.x =  _leaderboard.x + 250;
+        }
+        else
+        {
+          _timeText.x = _leaderboard.x + 250;
           _scoreText.x = _leaderboard.x + 70;
           _scoreText.text += String(playerScore) + "\n";
         }
         
-       
         count++;
-        if (count > 10) {
-          break;
-        }
       }
-   
-      
+    
     }
     
     private function addBoards():void
@@ -201,52 +252,64 @@ package Menu
       _back = new Button();
       _back.label = AssetRegistry.Strings.SCOREBOARDBUTTON;
       
-      if (SaveGame.isArcade || _score.level == 7 || !SaveGame.levelUnlocked(_score.level + 1)) {
-      _back.width = 320;
-      _back.x = 640;
-    } else {
-      _back.width = 240;
-      _back.x = 720;
-    }
-    _back.height = 80;
-    _back.y = Starling.current.stage.stageHeight - _back.height;
+      if (SaveGame.isArcade || _score.level == 7 || !SaveGame.levelUnlocked(_score.level + 1))
+      {
+        _back.width = 320;
+        _back.x = 640;
+      }
+      else
+      {
+        _back.width = 240;
+        _back.x = 720;
+      }
+      _back.height = 80;
+      _back.y = Starling.current.stage.stageHeight - _back.height;
       
       var that:Leaderboards = this;
-      _back.onRelease.add(function(button:Button):void {
+      _back.onRelease.add(function(button:Button):void
+        {
           _onLeaderboards.dispatch(that);
-      });
+        });
       addChild(_back);
     }
     
-    private function createLeaderboardText():void 
+    private function createLeaderboardText():void
     {
-        _countText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
-        _countText.hAlign = HAlign.LEFT;
-        _countText.vAlign = VAlign.TOP;
-        _countText.x = _leaderboard.x + 20;
-        _countText.y = _leaderboardText.y + _leaderboardText.height + 60;
-        addChild(_countText);
-        
-        _nameText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
-        _nameText.hAlign = HAlign.LEFT;
-        _nameText.vAlign = VAlign.TOP;
-        _nameText.x = _leaderboard.x + 70;
-        _nameText.y = _countText.y;
-        addChild(_nameText);
-        
-        _scoreText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
-        _scoreText.hAlign = HAlign.LEFT;
-        _scoreText.vAlign = VAlign.TOP;
-        _scoreText.x = _leaderboard.x + 250;
-        _scoreText.y = _countText.y;
-        addChild(_scoreText);
-        
-        _timeText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
-        _timeText.hAlign = HAlign.LEFT;
-        _timeText.vAlign = VAlign.TOP;
-        _timeText.x = _leaderboard.x + 560;
-        _timeText.y = _countText.y;
-        addChild(_timeText);
+      _countText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+      _countText.hAlign = HAlign.LEFT;
+      _countText.vAlign = VAlign.TOP;
+      _countText.x = _leaderboard.x + 20;
+      _countText.y = _leaderboardText.y + _leaderboardText.height + 30;
+      addChild(_countText);
+      
+      _nameText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+      _nameText.hAlign = HAlign.LEFT;
+      _nameText.vAlign = VAlign.TOP;
+      _nameText.x = _leaderboard.x + 70;
+      _nameText.y = _countText.y;
+      addChild(_nameText);
+      
+      _scoreText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+      _scoreText.hAlign = HAlign.LEFT;
+      _scoreText.vAlign = VAlign.TOP;
+      _scoreText.x = _leaderboard.x + 250;
+      _scoreText.y = _countText.y;
+      addChild(_scoreText);
+      
+      _timeText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+      _timeText.hAlign = HAlign.LEFT;
+      _timeText.vAlign = VAlign.TOP;
+      _timeText.x = _leaderboard.x + 560;
+      _timeText.y = _countText.y;
+      addChild(_timeText);
+    }
+    
+    private function clearText():void 
+    {
+        _scoreText.text = "Loading...";
+        _countText.text = "";
+        _nameText.text = "";
+        _timeText.text = "";
     }
     
     public function get onLeaderboards():ISignal
@@ -254,7 +317,7 @@ package Menu
       return _onLeaderboards;
     }
     
-      public function get sharedData():Object
+    public function get sharedData():Object
     {
       return _sharedData;
     }
@@ -264,7 +327,8 @@ package Menu
       _sharedData = value;
     }
     
-    override public function dispose():void {
+    override public function dispose():void
+    {
       super.dispose();
       removeEventListener(REFRESH_LEADERBOARD, refreshLeaderboard);
     }

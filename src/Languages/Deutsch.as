@@ -111,6 +111,8 @@ package Languages
     public static const WEEKLY:String = "Woche";
     public static const FRIENDS:String = "Freunde";
     public static const PERSONAL:String = "Persönlich";
+    public static const NEXT_PAGE:String = "Nächste Seite";
+    public static const PREV_PAGE:String = "Vorherige Seite";
     
     public static const RANK:String = "RANG";
     public static const NO_NET_CONNECTION:String = "Keine Netzverbindung!";
