@@ -210,6 +210,7 @@ package Menu
           dispatchEventWith(REFRESH_LEADERBOARD);
         });
       _list.width = _leaderboard.width;
+      _list.listProperties.width = _list.width;
       _list.height = 70;
       _list.x = _leaderboard.x;
       _list.y = _leaderboard.y;

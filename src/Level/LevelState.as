@@ -989,8 +989,8 @@ package Level
       
       var frame:int = 4 * AssetRegistry.TILESIZE;
       
-      _levelStage.x = Math.min(_levelStage.x, frame);
-      _levelStage.y = Math.min(_levelStage.y, frame);
+      //_levelStage.x = Math.min(_levelStage.x, frame * zoom);
+      //_levelStage.y = Math.min(_levelStage.y, frame * zoom);
       // TODO: Should be computed only once.
       _levelStage.x = Math.max(-((_bg.width + frame) * _zoom) + AssetRegistry.STAGE_HEIGHT, _levelStage.x);
       _levelStage.y = Math.max(-((_bg.height + frame) * _zoom) + AssetRegistry.STAGE_HEIGHT, _levelStage.y);
