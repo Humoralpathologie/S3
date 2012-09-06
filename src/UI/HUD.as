@@ -229,6 +229,7 @@ package UI
       trace("Making a new message");
       txt = new TextField(AssetRegistry.STAGE_WIDTH, AssetRegistry.STAGE_HEIGHT, "", "kroeger 06_65", 90, Color.WHITE);
       txt.touchable = false;
+      txt.autoScale = true;
       _textMessagesPool.push(txt);
       return txt;
     }

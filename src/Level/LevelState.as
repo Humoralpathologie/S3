@@ -1157,6 +1157,7 @@ package Level
       
       levelName.x = (box.width - levelName.width) / 2;
       levelName.y = box.y + 10;
+      levelName.autoScale = true;
       
       heading.x = (box.width - heading.width) / 2;
       heading.y = levelName.y + levelName.height + 10;
