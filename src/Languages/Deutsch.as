@@ -21,7 +21,7 @@ package Languages
 		
 		// Settings Menu
 		public static const MAINSETTINGS:String = "EINSTELLUNGEN";
-		public static const GENERALSETTINGS:String = "GENERAL SETTINGS";
+		public static const GENERALSETTINGS:String = "EINSTELLUNGEN";
 		public static const USERNAME:String = "SPIELERNAME";
 		public static const CONTROLTYPE:String = "STEUERUNG";
 		public static const LANGUAGE:String = "SPRACHE";
@@ -29,8 +29,8 @@ package Languages
 		
 		public static const SNAKEVIEW:String = "TYP 1";
 		public static const FOURWAY:String = "TYP 2";
-		public static const CASUAL:String = "GEMÜTLICH";
-		public static const COMPETETIVE:String = "STRESSIG";
+		public static const CASUAL:String = "ANFÄNGER";
+		public static const COMPETETIVE:String = "NORMAL";
 		
 		//Arcade Menu
 		public static const ARCADEHEADING:String = "ARCADE-MODUS";
@@ -114,7 +114,7 @@ package Languages
     public static const NEXT_PAGE:String = "Nächste Seite";
     public static const PREV_PAGE:String = "Vorherige Seite";
     
-    public static const RANK:String = "RANG";
+    public static const RANK:String = "RANG AKTUELLER \nRUNDE";
     public static const NO_NET_CONNECTION:String = "Keine Netzverbindung!";
     public static const NO_RANK:String = "Verloren!";    
         

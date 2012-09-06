@@ -405,21 +405,22 @@ package Menu
 		
 		private function addRank():void
 		{
-			_rankHeading = new TextField(200, 40, AssetRegistry.Strings.RANK, "kroeger 06_65", 40, Color.WHITE);
+			_rankHeading = new TextField(380, 100, AssetRegistry.Strings.RANK, "kroeger 06_65", 40, Color.WHITE);
 			_rankHeading.x = 500;
 			_rankHeading.y = _scoreboardText.y;
 			_rankHeading.hAlign = HAlign.LEFT;
+      _rankHeading.autoScale = true;
 			addChild(_rankHeading);
 			
 			_rankText = new TextField(300, 400, "Checking rank...", "kroeger 06_65", 35, Color.WHITE);
 			_rankText.x = _rankHeading.x;
-			_rankText.y = _scoreHeading.y;
+			_rankText.y = _timeBonusHeading.y;
 			_rankText.vAlign = VAlign.TOP;
 			_rankText.hAlign = HAlign.LEFT;
 			addChild(_rankText);
 			_rank = new TextField(200, 400, "", "kroeger 06_65", 35, Color.WHITE);
 			_rank.x = _rankText.x + 70;
-			_rank.y = _scoreHeading.y;
+			_rank.y = _rankText.y;
 			_rank.vAlign = VAlign.TOP;
 			_rank.hAlign = HAlign.RIGHT;
 			addChild(_rank);

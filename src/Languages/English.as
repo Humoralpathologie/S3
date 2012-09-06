@@ -70,7 +70,7 @@ package Languages
     
     //levelscore buttons
     public static const BACKTOMENUBUTTON:String = "MAIN MENU";
-    public static const REPLAYBUTTON:String = "REPLAY";
+    public static const REPLAYBUTTON:String = "RESTART";
     public static const NEXTBUTTON:String = "NEXT LEVEL";
     public static const LEADERBOARDSBUTTON:String = "LEADERBOARD";
     public static const SCOREBOARDBUTTON:String = "BACK";
@@ -114,7 +114,7 @@ package Languages
     public static const NEXT_PAGE:String = "Next Page";
     public static const PREV_PAGE:String = "Previous Page";    
     
-    public static const RANK:String = "RANK";
+    public static const RANK:String = "THIS ROUND'S \nRANK";
     public static const NO_NET_CONNECTION:String = "No net connection!";
     public static const NO_RANK:String = "You lost!";    
         
@@ -134,8 +134,8 @@ package Languages
     public static const CHAINTIMEEXTENDMESSAGE:String = "Chain Time-";
     
     //Highscore Messages
-    public static const HIGHMESSAGE:String = "CONGRATS! New all-time highscore!";
-    public static const WEEKLHIGHMESSAGE:String = "CONGRATS! New highscore this week!";
+    public static const HIGHMESSAGE:String = "CONGRATS! New local highscore!";
+    public static const WEEKLHIGHMESSAGE:String = "CONGRATS! New local weekly highscore!";
     
     //Hints Slider
     public static const HINTS:Array = ["Pay attention to the combo scoring. Longer combos score big time!",
