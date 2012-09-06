@@ -230,6 +230,8 @@ package engine
     static public const EggsplosionC:Class;
     [Embed(source="../../assets/Particles/EggsplosionGoldV2.pex",mimeType="application/octet-stream")]
     static public const EggsplosionGold:Class;
+     [Embed(source="../../assets/Particles/EggsplosionGoldLv7.pex",mimeType="application/octet-stream")]
+    static public const EggsplosionGoldLv7:Class;
     [Embed(source="../../assets/Particles/EggsplosionRotten.pex",mimeType="application/octet-stream")]
     static public const EggsplosionRotten:Class;
     [Embed(source="../../assets/Particles/EggsplosionShuffle.pex",mimeType="application/octet-stream")]
