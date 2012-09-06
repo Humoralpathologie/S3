@@ -242,22 +242,22 @@ package Menu
             medalReq = [300, 400, 500, 700];
             break;
           case 2:
-            medalReq = [700, 850, 1000, 1300];
+            medalReq = [500, 750, 1000, 1500];
             break;
           case 3:
-            medalReq = [600, 750, 900, 1200];
+            medalReq = [500, 750, 900, 1500];
             break;
           case 4:
-            medalReq = [500, 600, 700, 1000];
+            medalReq = [450, 600, 700, 1200];
             break;
           case 5:
-            medalReq = [1000, 1250, 1500, 1800];
+            medalReq = [750, 1000, 1250, 1500];
             break;
           case 6:
-            medalReq = [750, 1000, 1500, 2500];
+            medalReq = [450, 750, 1050, 1750];
             break;
           case 7:
-            medalReq = [1200, 1500, 1800, 2500];
+            medalReq = [1200, 1500, 1800, 3000];
             break;
         }
 
