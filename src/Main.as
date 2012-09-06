@@ -104,7 +104,7 @@ package
     
       // When the game becomes inactive, we pause Starling; otherwise, the enter frame event
       // would report a very long 'passedTime' when the app is reactivated. 
-    /*
+    
        NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, function(e:Event):void
        {
        starling.start();
@@ -114,7 +114,7 @@ package
        {
        starling.stop();
        });
-     */
+     
     }
     
     private function deactivate(e:Event):void
