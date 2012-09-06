@@ -52,7 +52,7 @@ package Languages
 		public static const CHAINTIMEDESC:String = "Chain Time Up: Perform this combo and for 1 minute the Chain Time will be extended to 3 seconds.";
 		public static const XTRASPAWNDESC:String = "Extra Eggs: Performing this combo will instantly spawn 5 extra eggs!";
 		public static const SHUFFLEDESC:String = "Shuffle Egg: Performing this combo will spawn a Shuffle Egg. Devouring it will rearrange Little Snake's body tiles and give you the chance to score new combos.";
-		public static const GOLDDESC:String = "Golden Egg: This combo will spawn a shiny, golden egg. Get to it within 6 seconds if you aren't afraid of scoring high";		
+		public static const GOLDDESC:String = "Golden Egg: This combo will spawn a shiny, golden egg. Get to it within 3 seconds if you aren't afraid of scoring high";		
 		public static const XTRALIFEDESC:String = "Extra Life: This combo does probably exactly what you think.";
 	
 		public static const SPEEDDESC:String = "Speed Combo: Performing this combo will make you faster.";

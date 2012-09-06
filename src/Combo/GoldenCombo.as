@@ -20,7 +20,7 @@ package Combo
         if (state.eggs.eggPool.indexOf(goldEgg) != -1) {
           state.eggs.removeEgg(goldEgg);
         }
-      }, 6);
+      }, 3);
       state.showMessage(AssetRegistry.Strings.GOLDENMESSAGE);
     }
   }

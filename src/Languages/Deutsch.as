@@ -52,7 +52,7 @@ package Languages
 		public static const CHAINTIMEDESC:String = "Kette +: Diese Combo, hebt für 1 Minute die Zeit für Ketten von 2 auf 3 Sekunden an.";
 		public static const XTRASPAWNDESC:String = "Extra Eier: Diese Combo lässt bei erfolgreicher Durchführung 5 Extra-Eier erscheinen!";
 		public static const SHUFFLEDESC:String = "Shuffle-Ei: Wenn du diese Combo machst und das Shuffle-Ei frisst, werden die Körperteile von Little Snake neu mischt für eine Zufallschance auf neue Combos.";
-		public static const GOLDDESC:String = "Goldenes Ei: Diese Combo lässt für 6 Sekunden ein goldenes Ei erscheinen. Friss es rechtzeitig für reichlich Bonuspunkte.";
+		public static const GOLDDESC:String = "Goldenes Ei: Diese Combo lässt für 3 Sekunden ein goldenes Ei erscheinen. Friss es rechtzeitig für reichlich Bonuspunkte.";
 		public static const XTRALIFEDESC:String = "Extra Leben: Diese Combo tut wahrscheinlich genau das, was du denkst.";
 		
 		public static const SPEEDDESC:String = "Friss drei blaue Eier um schneller zu werden.";

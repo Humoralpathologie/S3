@@ -556,7 +556,7 @@ package Level
         
         if (egg.type == AssetRegistry.EGGGOLDEN)
         {
-          points = 100;
+          points = 500;
           AssetRegistry.soundmanager.playSound("goldenEggSound");
         }
         
