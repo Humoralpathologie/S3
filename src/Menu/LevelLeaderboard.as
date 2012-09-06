@@ -6,6 +6,7 @@ package Menu
   import org.josht.starling.display.Image;
   import org.josht.starling.foxhole.controls.Screen;
   import org.josht.starling.foxhole.controls.TabBar;
+  import org.josht.starling.foxhole.controls.PickerList;
   import org.josht.starling.foxhole.controls.ToggleSwitch;
   import org.josht.starling.foxhole.data.ListCollection;
   import org.osflash.signals.Signal;
@@ -31,17 +32,20 @@ package Menu
   import org.josht.starling.foxhole.controls.Radio;
   import org.josht.starling.foxhole.core.ToggleGroup;
   import engine.Utils;
+  import starling.events.TouchEvent
+  import starling.events.Touch;
+  import starling.events.TouchPhase;
   
   /**
    * ...
    * @author
    */
-  public class Leaderboards extends Screen
+  public class LevelLeaderboard extends Screen
   {
     private var _leaderboard:Quad;
     private var _leaderboardText:TextField;
     
-    protected var _onLeaderboards:Signal = new Signal(Leaderboards);
+    protected var _toExtras:Signal = new Signal(LevelLeaderboard);
     private var _back:Button;
     private var _score:Object
     private var _countText:TextField;
@@ -56,20 +60,20 @@ package Menu
     protected var _sharedData:Object = {};
     
     public static const REFRESH_LEADERBOARD:String = "refreshleaderboard";
-    private var lid:String;
+    private var _lid:String;
+    private var _list:PickerList;
     
-    public function Leaderboards(score:Object)
+    public function LevelLeaderboard(lid:String)
     {
       super();
       trace("personalScores: ");
       //SaveGame.personalScores;
       
-      _score = score;
-    
-      lid = _score.lid;
+      _lid = lid;
       addBoards();
       addButton();
       addTabBar();
+      addDropDown();
       createLeaderboardText();
       addPrevNextButtons();
       
@@ -101,7 +105,7 @@ package Menu
           {
             _page--;
             clearText();
-            AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {page: _page});
+            AssetRegistry.mogade.getScores(_lid, currentScope, updateLeaderboard, {page: _page});
           }
         });
       
@@ -109,7 +113,7 @@ package Menu
       {
         _page++;
         clearText();
-        AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {page: _page});
+        AssetRegistry.mogade.getScores(_lid, currentScope, updateLeaderboard, {page: _page});
       });
       
       addChild(_prev);
@@ -118,25 +122,15 @@ package Menu
         
     private function refreshLeaderboard(evt:Event = null):void
     {
-      if (SaveGame.isArcade){
-        if (SaveGame.endless)
-			  {
-				  lid = "5041f5ac563d8a632f001f73";
-			  }
-			  else
-			  {
-				  lid = "5041f594563d8a570c0024a4";
-			  }
-      } 
       trace("Refreshing leaderboard...");
       clearText();
       if (_leaderboardShowing == "personal")
       {
-        updateLeaderboard({scores: SaveGame.getPersonalScores(lid)}, "personal");
+        updateLeaderboard({scores: SaveGame.getPersonalScores(_lid)}, "personal");
       }
       else
       {
-        AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {username: SaveGame.userName, userkey: SaveGame.guid});
+        AssetRegistry.mogade.getScores(_lid, currentScope, updateLeaderboard, {username: SaveGame.userName, userkey: SaveGame.guid});
       }
     }
     
@@ -156,10 +150,76 @@ package Menu
       return scope;
     }
     
+    private function addDropDown():void
+    {
+      _list = new PickerList();
+      _list.dataProvider = new ListCollection([{label: AssetRegistry.Strings.LEVEL1NAME}, {label: AssetRegistry.Strings.LEVEL2NAME}, {label: AssetRegistry.Strings.LEVEL3NAME}, {label: AssetRegistry.Strings.LEVEL4NAME}, {label: AssetRegistry.Strings.LEVEL5NAME}, {label: AssetRegistry.Strings.LEVEL6NAME}, {label: AssetRegistry.Strings.LEVEL7NAME}]);
+      _list.onChange.add(function(list:PickerList)
+        {
+          if (SaveGame.difficulty == 1) {
+            switch (list.selectedIndex)
+            {
+              case 0:
+                  _lid = "50421a39563d8a53c20021bb";
+                break;
+              case 1:
+                  _lid = "50422eec563d8a72bd002104";
+                break;
+              case 2:
+                  _lid = "50422efd563d8a72bd002107";
+                break;
+              case 3:
+                  _lid = "50422f0d563d8a51b7002a38";
+                break;
+              case 4:
+                  _lid = "50422f1f563d8a45d3002153";
+                break;
+              case 5:
+                  _lid = "50422f31563d8a45d3002155";
+                break;
+              case 6:
+                  _lid = "50422f41563d8a570c00263c";
+                break;
+            }
+          } else {
+            switch (list.selectedIndex)
+            {
+              case 0:
+                 _lid = "50421a3f563d8a632f002091";
+                break;
+              case 1:
+                 _lid = "50422ef5563d8a69f6002187";
+                break;
+              case 2:
+                 _lid = "50422f06563d8a69f6002189";
+                break;
+              case 3:
+                  _lid = "50422f17563d8a570c002638";
+                break;
+              case 4:
+                  _lid = "50422f29563d8a570c00263a";
+                break;
+              case 5:
+                  _lid = "50422f39563d8a72bd00210c";
+                break;
+              case 6:
+                  _lid = "50422f4a563d8a45d300215a";
+                break;
+            }
+          }
+          dispatchEventWith(REFRESH_LEADERBOARD);
+        });
+      _list.width = _leaderboard.width;
+      _list.height = 70;
+      _list.x = _leaderboard.x;
+      _list.y = _leaderboard.y;
+      addChild(_list);
+      
+    }
     private function addTabBar():void
     {
       _tabBar = new TabBar();
-      _tabBar.dataProvider = new ListCollection([{label: AssetRegistry.Strings.ALLTIME}, {label: AssetRegistry.Strings.WEEKLY}, {label: AssetRegistry.Strings.PERSONAL}]);
+      _tabBar.dataProvider = new ListCollection([{label: AssetRegistry.Strings.ALLTIME}, {label: AssetRegistry.Strings.WEEKLY}]);
       _tabBar.onChange.add(function(bar:TabBar)
         {
           var prevShowing:String = _leaderboardShowing;
@@ -175,11 +235,6 @@ package Menu
               _prev.visible = true;
               _next.visible = true;
               break;
-            case 2:
-              _leaderboardShowing = "personal";
-              _prev.visible = false;
-              _next.visible = false;
-              break;
           }
           
           if (_leaderboardShowing != prevShowing)
@@ -188,10 +243,12 @@ package Menu
           }
         });
       _tabBar.width = _leaderboard.width;
+      _tabBar.height = 70;
       _tabBar.x = _leaderboard.x;
-      _tabBar.y = _leaderboard.y;
+      _tabBar.y = _leaderboard.y - 70;
       addChild(_tabBar);
     }
+    
     
     override protected function initialize():void
     {
@@ -207,7 +264,7 @@ package Menu
       }
       if (data.scores.length == 0) {
         _page--;
-        AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {page: _page});        
+        AssetRegistry.mogade.getScores(_lid, currentScope, updateLeaderboard, {page: _page});        
         
         return;
       }
@@ -244,71 +301,69 @@ package Menu
     private function addBoards():void
     {
       
-      _leaderboard = new Quad(820, 475, 0x545454);
+      _leaderboard = new Quad(800, 475, 0x545454);
       _leaderboard.alpha = 179 / 255;
-      _leaderboard.x = 70;
-      _leaderboard.y = 30;
+      _leaderboard.x = 80;
+      _leaderboard.y = 80;
       addChild(_leaderboard);
       
+      /*
       _leaderboardText = new TextField(300, 40, AssetRegistry.Strings.LEADERBOARDS, "kroeger 06_65", 40, Color.WHITE);
       _leaderboardText.vAlign = VAlign.TOP;
       //_leaderboardText.hAlign = HAlign.LEFT;
       _leaderboardText.x = _leaderboard.x + (_leaderboard.width - _leaderboardText.width) / 2;
       _leaderboardText.y = _leaderboard.y + 20;
-      addChild(_leaderboardText);
+      addChild(_leaderboardText); */
     
     }
     
     private function addButton():void
     {
-      _back = new Button();
-      _back.label = AssetRegistry.Strings.SCOREBOARDBUTTON;
-      
-      if (SaveGame.isArcade || _score.level == 7 || !SaveGame.levelUnlocked(_score.level + 1))
-      {
-        _back.width = 320;
-        _back.x = 640;
-      }
-      else
-      {
-        _back.width = 240;
-        _back.x = 720;
-      }
-      _back.height = 80;
-      _back.y = Starling.current.stage.stageHeight - _back.height;
-      
-      var that:Leaderboards = this;
-      _back.onRelease.add(function(button:Button):void
+      //add x-button
+      var xButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+      xButton.x = Starling.current.stage.stageWidth - xButton.width - 10;
+      xButton.y = 90;
+      var exit:Quad = new Quad(140, 250, 0xffffff);
+      exit.alpha = 0;
+      exit.x = Starling.current.stage.stageWidth - exit.width;
+      exit.y = 80;
+      var that:LevelLeaderboard = this;
+      exit.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
         {
-          _onLeaderboards.dispatch(that);
+          var touch:Touch = event.getTouch(exit, TouchPhase.ENDED);
+          if (touch)
+          {
+            _toExtras.dispatch(that);
+          }
         });
-      addChild(_back);
+      addChild(xButton);
+      addChild(exit); 
     }
     
     private function createLeaderboardText():void
     {
-      _countText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+      _countText = new TextField(_leaderboard.width, _leaderboard.height - (_list.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
       _countText.hAlign = HAlign.LEFT;
       _countText.vAlign = VAlign.TOP;
       _countText.x = _leaderboard.x + 20;
-      _countText.y = _leaderboardText.y + _leaderboardText.height + 30;
+      _countText.y = _list.y + _list.height + 30;
       addChild(_countText);
       
-      _nameText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+      _nameText = new TextField(_leaderboard.width, _leaderboard.height - (_list.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
       _nameText.hAlign = HAlign.LEFT;
       _nameText.vAlign = VAlign.TOP;
       _nameText.x = _leaderboard.x + 70;
       _nameText.y = _countText.y;
       addChild(_nameText);
       
-      _scoreText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+      _scoreText = new TextField(_leaderboard.width, _leaderboard.height - (_list.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
       _scoreText.hAlign = HAlign.LEFT;
       _scoreText.vAlign = VAlign.TOP;
       _scoreText.x = _leaderboard.x + 250;
       _scoreText.y = _countText.y;
       addChild(_scoreText);
       
-      _timeText = new TextField(_leaderboard.width, _leaderboard.height - (_leaderboardText.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
+      _timeText = new TextField(_leaderboard.width, _leaderboard.height - (_list.height + 40), "", "kroeger 06_65", 32, Color.WHITE);
       _timeText.hAlign = HAlign.LEFT;
       _timeText.vAlign = VAlign.TOP;
       _timeText.x = _leaderboard.x + 560;
@@ -324,11 +379,10 @@ package Menu
         _timeText.text = "";
     }
     
-    public function get onLeaderboards():ISignal
+    public function get toExtras():ISignal
     {
-      return _onLeaderboards;
+      return _toExtras;
     }
-   
     public function get sharedData():Object
     {
       return _sharedData;

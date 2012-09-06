@@ -59,6 +59,7 @@ package Menu
     
     private const _SETTINGS:String = "SETTINGS";
     private const _EXTRAS:String = "EXTRAS";
+    private const _LEARDERBOARDS:String = "LEADERBOARDS";
     private const _BLANC:String = "BLANC";
     
     public function MainMenu()
@@ -77,12 +78,27 @@ package Menu
       _screenNavi.addScreen(_SETTINGS, new ScreenNavigatorItem(new MainSettingsScreen(), {
         onSetting:_BLANC
       }));
-      
+      var lid:String;
+			if (SaveGame.difficulty == 1)
+			{
+				lid = "50421a39563d8a53c20021bb";
+			}
+			else
+			{
+				lid = "50421a3f563d8a632f002091";
+			}
+      var _levelLeaderboardScreen:LevelLeaderboard = new LevelLeaderboard(lid);
+      _levelLeaderboardScreen.dispatchEventWith(LevelLeaderboard.REFRESH_LEADERBOARD);
+      _screenNavi.addScreen(_LEARDERBOARDS, new ScreenNavigatorItem(_levelLeaderboardScreen, {
+        toExtras:_EXTRAS
+      }));
        _screenNavi.addScreen(_EXTRAS, new ScreenNavigatorItem(new Extras(), {
-        onExtras:_BLANC
+        onExtras:_BLANC,
+        toLB:_LEARDERBOARDS
       }));
       
-      _screenNavi.addScreen(_BLANC, new ScreenNavigatorItem(new BlancScreen(), {
+    
+       _screenNavi.addScreen(_BLANC, new ScreenNavigatorItem(new BlancScreen(), {
         onBlancScreen:_EXTRAS
       }));
       _screenNavi.defaultScreenID = _BLANC;
