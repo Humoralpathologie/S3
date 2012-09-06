@@ -160,6 +160,7 @@ package Level
     protected var _gameJuggler:Juggler;
     
     protected var _level4Animation:Boolean = false;
+    private var _shadow:Image;
     
     //tweens
     protected var _tweens:Vector.<GTween> = new Vector.<GTween>;
@@ -213,6 +214,15 @@ package Level
       _following = _snake.head;
       
       _levelStage.addChild(_snake);
+      
+      _shadow = new Image(AssetRegistry.SnakeAtlas.getTexture("level7-schatten"));
+      _shadow.scaleX = _shadow.scaleY = 1.5;
+      _shadow.x = 0;
+      _shadow.y = 200;
+      if (_levelNr == 7){
+        _levelStage.addChild(_shadow);
+      }
+      
       addFrame();
       
       _eggs = new Eggs();
@@ -245,6 +255,7 @@ package Level
       
       pause();
       showObjective();
+      
     }
     
     public function extendTime():void
@@ -545,7 +556,7 @@ package Level
         
         if (egg.type == AssetRegistry.EGGGOLDEN)
         {
-          points = 100;
+          points = 500;
           AssetRegistry.soundmanager.playSound("goldenEggSound");
         }
         
