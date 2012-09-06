@@ -266,8 +266,8 @@ package UI
       textMessage.height = 200;
       textMessage.width = 200;
       textMessage.scaleX = textMessage.scaleY = 0.5; 
-      tween.animate("scaleX", 1.5);
-      tween.animate("scaleY", 1.5);
+      tween.animate("scaleX", 1);
+      tween.animate("scaleY", 1);
       tween.animate("alpha", 0.75);
       tween.onComplete = function():void {
        textMessage.visible = false;
@@ -282,8 +282,8 @@ package UI
         textMessage.y = 640;      
         //tween.animate("x", 280);
         //tween.animate("y", -(Math.sqrt(80000)/2));
-        tween.animate("x", 280);
-        tween.animate("y", -100);
+        tween.animate("x", 350);
+        tween.animate("y", -40);
         //tween.animate("rotation", - 30 * (Math.PI / 180));        
       } else {
         textMessage.color = 0xffff00;
@@ -291,8 +291,8 @@ package UI
         textMessage.y = 640;
         //tween.animate("x", 480);
         //tween.animate("y", -(Math.sqrt(80000)*2.5));
-        tween.animate("x", 280);
-        tween.animate("y", -100);
+        tween.animate("x", 350);
+        tween.animate("y", -40);
         /*tween.onUpdate = function():void {
           textMessage.pivotX = textMessage.width;
         }
