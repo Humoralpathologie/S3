@@ -83,13 +83,14 @@ package Level
       if (egg.type == AssetRegistry.EGGGOLDEN) {
         var particle:PDParticleSystem;
         AssetRegistry.soundmanager.playSound("bite1");
-        particle = _particles[egg.type];
+        showSpecialParticles(egg, "goldLv7");
+        /*
         if (particle)
         {
           particle.x = egg.x + 10;
           particle.y = egg.y + 13;
           particle.start(0.5);
-        }
+        } */
         _goldenEggs.removeEgg(egg);
         var points:int = 2;
         showPoints(egg, String(points));
