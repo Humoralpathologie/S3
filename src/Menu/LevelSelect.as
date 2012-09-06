@@ -4,7 +4,8 @@ package Menu
   import flash.geom.Point;
   import org.josht.starling.foxhole.controls.ScrollContainer;
   import org.josht.starling.foxhole.controls.Scroller;
-  import starling.display.Button;
+  //import org.josht.starling.foxhole.controls.Button;
+  //import starling.display.Button;
   import starling.display.DisplayObject;
   import starling.display.Image;
   import starling.display.Quad;
@@ -36,6 +37,8 @@ package Menu
     private var _boxes:Object;
     private var _tempPoint:Point;
     
+   
+    
     private static const _lockedPositions:Array = [[15, 262], [261, 377], [514, 509], [261, 626], [11, 743], [261, 881]];
     
     public function LevelSelect()
@@ -60,6 +63,7 @@ package Menu
       _levelSelectBottom.y = _levelSelectTop.height - 1;
       _levelSelectBottom.smoothing = TextureSmoothing.NONE;
       _scrollable.addChild(_levelSelectBottom);
+      
       
       addLocks();
       addMedals();

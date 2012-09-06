@@ -28,6 +28,7 @@ package Menu
 	{
 		
 		protected var _onExtras:Signal = new Signal(Extras);
+    protected var _toLB:Signal = new Signal(Extras);
 		protected var _sharedData:Object = {};
 		private var _greyBox:Quad;
 		
@@ -45,13 +46,28 @@ package Menu
 			_extrasHeading.x = (Starling.current.stage.stageWidth - _extrasHeading.width) / 2;
 			_extrasHeading.y = _greyBox.y + 10;
 			addChild(_extrasHeading);
-			
+      
+			var that:Extras = this;
+      
+      var leaderboard:Button = new Button();
+      leaderboard.label = "Level Leaderboards";
+      leaderboard.width = 400;
+      leaderboard.height = 80;
+      leaderboard.x =  Starling.current.stage.stageWidth / 2 - 290;
+      leaderboard.y = _extrasHeading.y + _extrasHeading.height + 10;
+      addChild(leaderboard);
+      leaderboard.onRelease.add(function(btn:Button):void
+        {
+          _toLB.dispatch(that);
+        }
+      )
+      
 			var video1:Button = new Button();
 			video1.label = AssetRegistry.Strings.VIDEO1;
 			video1.width = 240;
 			video1.height = 80;
 			video1.x = Starling.current.stage.stageWidth / 2 - video1.width - 50;
-			video1.y = _extrasHeading.y + _extrasHeading.height + 50;
+			video1.y = _extrasHeading.y + _extrasHeading.height + 150;
 			
 			video1.onRelease.add(function(btn:Button):void
 				{
@@ -75,7 +91,7 @@ package Menu
 			video4.width = 240;
 			video4.height = 80;
 			
-			video3.y = video2.y + video2.height + 100;
+			video3.y = video2.y + video2.height + 60;
 			video4.y = video3.y;
 			
 			if (SaveGame.hasFinishedGame)
@@ -102,7 +118,7 @@ package Menu
 			exit.alpha = 0;
 			exit.x = Starling.current.stage.stageWidth - exit.width;
 			exit.y = 80;
-			var that:Extras = this;
+			
 			exit.addEventListener(TouchEvent.TOUCH, function(event:TouchEvent):void
 				{
 					var touch:Touch = event.getTouch(exit, TouchPhase.ENDED);
@@ -128,6 +144,10 @@ package Menu
 		public function get onExtras():Signal
 		{
 			return _onExtras;
+		}
+    public function get toLB():Signal
+		{
+			return _toLB;
 		}
 	
 	}
