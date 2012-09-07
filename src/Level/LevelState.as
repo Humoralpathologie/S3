@@ -717,30 +717,6 @@ package Level
       var pos:Point = new Point();
       
       dispatchEventWith(HUD.DISPLAY_POINTS, true, {position: pos, variant: variant, message: points, color: color});
-    /*
-       var text:TextField = recycleText(120, 120, points, 60); // new TextField(120, 120, points, "kroeger 06_65", 60);
-       text.color = color;
-       text.autoScale = true;
-       text.hAlign = HAlign.CENTER;
-       var p:Point = new Point(egg.x, egg.y);
-       p = _levelStage.localToGlobal(p);
-       text.x = p.x + egg.width / 2 - text.width / 2 + offset;
-       text.y = p.y + egg.height / 2 - text.height / 2 + offset; //egg.y + (egg.height / 2) - text.height / 2);
-       var tween:Tween = new Tween(text, 2, "easeIn");
-       tween.animate("y", offset);
-       tween.animate("scaleX", 3);
-       tween.animate("scaleY", 3);
-       tween.animate("x", offset);
-       tween.animate("rotation", deg2rad(45 - offset));
-       tween.fadeTo(0);
-    
-       tween.onComplete = function():void
-       {
-       text.visible = false;
-       }
-    
-       _gameJuggler.add(tween);
-     */
     }
     
     protected function doCombos():void
