@@ -98,10 +98,10 @@ package Menu
 			video4.label = AssetRegistry.Strings.VIDEO4;
 			video4.width = 240;
 			video4.height = 80;
-      /*video4.onRelease.add(function(btn:Button):void
+      video4.onRelease.add(function(btn:Button):void
 				{
 					dispatchEventWith(ManagedStage.SWITCHING, true, {stage: VideoPlayer, args: {videoURI: "Credits.mp4", stage: MainMenu}});
-				});*/
+				});
 			
 			video3.y = video2.y + video2.height + 60;
 			video4.y = video3.y;
