@@ -265,7 +265,7 @@ package UI
 
       tween = new Tween(textMessage, 1.5);
       textMessage.height = 200;
-      textMessage.width = 200;
+      textMessage.width = 300;
       textMessage.scaleX = textMessage.scaleY = 0.5; 
       tween.animate("scaleX", 1);
       tween.animate("scaleY", 1);
@@ -275,11 +275,11 @@ package UI
        _scoreDisplay += int(pointObj.message);
       }
  
-      textMessage.width = 200;
-      textMessage.height = 200;
+      //textMessage.width = 200;
+      //textMessage.height = 200;
       
       if (variant == 0) {
-        textMessage.x = 100;
+        textMessage.x = - ((textMessage.width / textMessage.scaleX) / 2);
         textMessage.y = 640;      
         //tween.animate("x", 280);
         //tween.animate("y", -(Math.sqrt(80000)/2));
@@ -288,7 +288,7 @@ package UI
         //tween.animate("rotation", - 30 * (Math.PI / 180));        
       } else {
         textMessage.color = 0xffff00;
-        textMessage.x = 760;
+        textMessage.x = AssetRegistry.STAGE_WIDTH;// - (textMessage.width / textMessage.scaleX) / 2;
         textMessage.y = 640;
         //tween.animate("x", 480);
         //tween.animate("y", -(Math.sqrt(80000)*2.5));
