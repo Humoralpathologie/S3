@@ -138,19 +138,27 @@ package Languages
     public static const WEEKLHIGHMESSAGE:String = "CONGRATS! New local weekly highscore!";
     
     //Hints Slider
-    public static const HINTS:Array = ["Pay attention to the combo scoring. Longer combos score big time!",
+    public static const HINTS:Array = ["Pay attention to the bonus scoring. Longer combos and chains score big time!",
       
-      "You finished the Story Mode? Excellent - go on then and learn new Combos in the Arcade Mode to earn even higher scores!",
+      "You finished the Story Mode? Excellent - go on then and learn new combos in the Arcade Mode to earn even higher scores!",
       
       "You think you have seen it all? Try to get all gold medals & be in for a surprise!",
       
       "Use the radar to find the shortest way to the next egg!",
       
-      "Beware the rotten eggs. Devour 5 of them for a shortcut to Snakehalla!",
+      "Beware of the blinking gray eggs. Devour 5 of them for a shortcut to Snakehalla!",
       
       "The controls suck? Try out one of the other options in the settings menu.",
       
-      "Feel free to experiment in the Arcade Mode. Many ways lead to the Highscore.",
+      "Feel free to experiment in the Arcade Mode. Many ways lead to the highscore.",
+      
+      "You can pause the game by pressing the button in the upper right corner.",
+      
+      "Control Type 1 might take some getting used to but the 180-buttons sure come in handy.",
+      
+      "Nothing's going according to plan? Restart the round from the pause menu.",
+      
+      "You can directly access the Story Mode leaderboards from the extras menu.",
       
       ];
 	}
