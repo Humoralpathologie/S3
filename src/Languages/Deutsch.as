@@ -138,8 +138,7 @@ package Languages
     public static const WEEKLHIGHMESSAGE:String = "Glückwunsch! Neuer persönlicher Rekord diese Woche";
     
     //Hints Slider
-    public static const HINTS:Array = ["Achte auf die Punktevergabe - je länger die Combos und Ketten, desto höher der Score!",
-      
+    public static const HINTS:Array = ["Achte auf die Punktevergabe - je länger die Combo, desto höher der Score!",      
       "Du hast den Story-Modus durchgespielt! Großartig - dann ab in den Arcade-Modus. Dort kann man neue Combos lernen und noch mehr Punkte absahnen!",
       
       "Du denkst, dass du alles gesehen hast? Ganz sicher? Man munkelt, dass Goldmedaillen nicht das Maß aller Dinge sind...",
