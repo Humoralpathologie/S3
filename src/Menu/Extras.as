@@ -53,7 +53,7 @@ package Menu
       leaderboard.label = "Level Leaderboards";
       leaderboard.width = 400;
       leaderboard.height = 80;
-      leaderboard.x =  Starling.current.stage.stageWidth / 2 - 290;
+      leaderboard.x =  (Starling.current.stage.stageWidth - leaderboard.width) / 2;
       leaderboard.y = _extrasHeading.y + _extrasHeading.height + 10;
       addChild(leaderboard);
       leaderboard.onRelease.add(function(btn:Button):void
@@ -80,16 +80,28 @@ package Menu
 			video2.height = 80;
 			video2.x = AssetRegistry.STAGE_WIDTH / 2 + 50;
 			video2.y = video1.y;
+      video2.onRelease.add(function(btn:Button):void
+				{
+					dispatchEventWith(ManagedStage.SWITCHING, true, {stage: VideoPlayer, args: {videoURI: "IntroLv1.mp4", stage: MainMenu}});
+				});
 			
 			var video3:Button = new Button();
 			video3.label = AssetRegistry.Strings.VIDEO3;
 			video3.width = 240;
 			video3.height = 80;
+      video3.onRelease.add(function(btn:Button):void
+				{
+					dispatchEventWith(ManagedStage.SWITCHING, true, {stage: VideoPlayer, args: {videoURI: "Outro.mp4", stage: MainMenu}});
+				});
 			
 			var video4:Button = new Button();
 			video4.label = AssetRegistry.Strings.VIDEO4;
 			video4.width = 240;
 			video4.height = 80;
+      /*video4.onRelease.add(function(btn:Button):void
+				{
+					dispatchEventWith(ManagedStage.SWITCHING, true, {stage: VideoPlayer, args: {videoURI: "Credits.mp4", stage: MainMenu}});
+				});*/
 			
 			video3.y = video2.y + video2.height + 60;
 			video4.y = video3.y;

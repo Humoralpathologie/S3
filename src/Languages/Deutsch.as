@@ -138,19 +138,27 @@ package Languages
     public static const WEEKLHIGHMESSAGE:String = "Glückwunsch! Neuer persönlicher Rekord diese Woche";
     
     //Hints Slider
-    public static const HINTS:Array = ["Achte auf die Punktevergabe - je länger die Combo, desto höher der Score!",
-      
+    public static const HINTS:Array = ["Achte auf die Punktevergabe - je länger die Combo, desto höher der Score!",      
       "Du hast den Story-Modus durchgespielt! Großartig - dann ab in den Arcade-Modus. Dort kann man neue Combos lernen und noch mehr Punkte absahnen!",
       
       "Du denkst, dass du alles gesehen hast? Ganz sicher? Man munkelt, dass Goldmedaillen nicht das Maß aller Dinge sind...",
       
       "Lass die Kette nicht abreißen: Nutz' das Radar um den kürzesten Weg zum nächsten Ei zu finden!",
       
-      "Pass auf - die faulen Eier sind giftig. Friss 5 für eine Zwangseinweisung in Snakehalla!",
+      "Pass auf - die blinkenden grauen Eier sind giftig. Friss 5 für eine Zwangseinweisung in Snakehalla!",
       
       "Du kommst mit der Steuerung nicht zurecht? Probier's mal mit der anderen Variante im Optionsmenü!",
      
-      "Im Arcade Modus kannst du nach Herzenslust mit den Combos experimentieren. Viele Wege führen zum Highscore."
+      "Im Arcade Modus kannst du nach Herzenslust mit den Combos experimentieren. Viele Wege führen zum Highscore.",
+      
+      "Das Spiel lässt sich mit dem Knopf oben rechts pausieren.",
+      
+      "Steuerung Typ 1 ist sicherlich gewöhnungsbedürftig - die Extrabuttons für 180-Grad-Drehungen sind aber auch sehr praktisch.",
+      
+      "Alles geht mal wieder so richtig schief? Starte einfach die Runde aus dem Pausemenü neu!",
+      
+      "Die Leaderboards für die einzelnen Level können direkt im Extrasmenü angesehen werden.",
+      
       
       ];
 	}
