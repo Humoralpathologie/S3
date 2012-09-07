@@ -53,7 +53,7 @@ package Menu
       leaderboard.label = "Level Leaderboards";
       leaderboard.width = 400;
       leaderboard.height = 80;
-      leaderboard.x =  Starling.current.stage.stageWidth / 2 - 290;
+      leaderboard.x =  (Starling.current.stage.stageWidth - leaderboard.width) / 2;
       leaderboard.y = _extrasHeading.y + _extrasHeading.height + 10;
       addChild(leaderboard);
       leaderboard.onRelease.add(function(btn:Button):void
