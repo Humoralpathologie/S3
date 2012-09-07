@@ -164,6 +164,7 @@ package UI
       _radarCircle = new Image(AssetRegistry.UIAtlas.getTexture("KreisRadar"));
       _radarCircle.x = (AssetRegistry.STAGE_WIDTH - _radarCircle.width) / 2;
       _radarCircle.y = (AssetRegistry.STAGE_HEIGHT - _radarCircle.height) / 2;
+      _radarCircle.touchable = false;
     }
     
     private function onSnakeBodyChanged(evt:Event):void {
