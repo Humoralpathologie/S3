@@ -17,9 +17,7 @@ package Combo
       var goldEgg:Egg = state.eggs.recycleEgg(0, 0, AssetRegistry.EGGGOLDEN);
       state.placeEgg(goldEgg);
       Starling.juggler.delayCall(function():void {
-        if (state.eggs.eggPool.indexOf(goldEgg) != -1) {
-          state.eggs.removeEgg(goldEgg);
-        }
+        state.eggs.removeEgg(goldEgg);
       }, 3);
       state.showMessage(AssetRegistry.Strings.GOLDENMESSAGE);
     }
