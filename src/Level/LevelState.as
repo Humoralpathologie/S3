@@ -606,7 +606,7 @@ package Level
         
       }
       
-      AssetRegistry.soundmanager.level = Math.floor(_snake.eatenEggs / 10);
+      AssetRegistry.soundmanager.level = Math.floor(snake.mps - SaveGame.startSpeed);
     
     }
     
