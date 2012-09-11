@@ -11,6 +11,7 @@ package engine
   import flash.net.NetStream;
   import starling.core.Starling;
   import Menu.MainMenu;
+  import flash.system.Capabilities;
   
   /**
    * This plays Videos.
@@ -46,7 +47,7 @@ package engine
       if (Starling.current.nativeStage.stageVideos.length >= 1)
       {
         sv = Starling.current.nativeStage.stageVideos[0];
-        sv.viewPort = new Rectangle(0, 0, Starling.current.viewPort.width, Starling.current.viewPort.height);
+        sv.viewPort = new Rectangle(Starling.current.viewPort.x, Starling.current.viewPort.y, Starling.current.viewPort.width, Starling.current.viewPort.height);
         sv.attachNetStream(ns);
         Starling.current.stage3D.x = Starling.current.viewPort.width;
       }
@@ -92,7 +93,7 @@ package engine
     
     override public function dispose():void {
       super.dispose();
-      Starling.current.stage3D.x = 0;
+      Starling.current.stage3D.x = Starling.current.viewPort.x;
       //Starling.current.stage3D.visible = true;
       ns.dispose();
       if (video.stage)
