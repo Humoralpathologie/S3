@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:4c8ef7b9f89de44c967a362b2acc9eac$ -->
+<TextureAtlas imagePath="Alpha_0.25.png">
+    <SubTexture name="medaille_bronze" x="2" y="111" width="145" height="131" frameX="-22" frameY="-23" frameWidth="187" frameHeight="183"/>
+    <SubTexture name="medaille_gold" x="161" y="2" width="153" height="133" frameX="-25" frameY="-23" frameWidth="187" frameHeight="183"/>
+    <SubTexture name="medaille_saphir" x="2" y="2" width="157" height="107" frameX="-20" frameY="-37" frameWidth="187" frameHeight="183"/>
+    <SubTexture name="medaille_silber" x="316" y="2" width="143" height="135" frameX="-23" frameY="-21" frameWidth="187" frameHeight="183"/>
+    <SubTexture name="tile-level2_261-377" x="372" y="139" width="108" height="62"/>
+    <SubTexture name="tile-level3_514-509" x="372" y="203" width="108" height="61"/>
+    <SubTexture name="tile-level4_261-626" x="262" y="139" width="108" height="95"/>
+    <SubTexture name="tile-level5_11-743" x="149" y="201" width="108" height="65"/>
+    <SubTexture name="tile-level6_261-881" x="149" y="137" width="111" height="62"/>
+</TextureAtlas>

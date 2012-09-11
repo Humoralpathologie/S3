@@ -412,7 +412,7 @@ package Menu
     
     private function addBackground():void
     {
-      _bg = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("menu_iphone_background"));
+      _bg = new Image(AssetRegistry.Opaque_1_Part2_Atlas.getTexture("menu_iphone_background"));
       addChild(_bg);
     }
     

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:50aae577e8aabc72777acf063e9d13ed$ -->
-<TextureAtlas imagePath="MenuOpaque.png">
-    <SubTexture name="arcade-background_iphone4" x="2" y="644" width="960" height="640"/>
-    <SubTexture name="menu_iphone_background" x="2" y="2" width="960" height="640"/>
-</TextureAtlas>

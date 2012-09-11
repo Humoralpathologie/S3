@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:a04c80251ceaedcba57cf66edbeb5481$ -->
+<TextureAtlas imagePath="Opaque_1_Part1.png">
+    <SubTexture name="Level4mitRahmen" x="964" y="878" width="940" height="960"/>
+    <SubTexture name="levelauswahl_oben" x="2" y="2" width="960" height="1126"/>
+    <SubTexture name="levelauswahl_unten_1126" x="964" y="2" width="960" height="874"/>
+    <SubTexture name="levelauswahl_unten_1126_locked" x="2" y="1130" width="960" height="874"/>
+</TextureAtlas>

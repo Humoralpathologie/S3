@@ -34,7 +34,7 @@ package Menu
 			SaveGame.isArcade = true;
 			AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE]);
 			
-			var bg:Image = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("arcade-background_iphone4"));
+			var bg:Image = new Image(AssetRegistry.Opaque_1_Part2_Atlas.getTexture("arcade-background_iphone4"));
 			addChild(bg);
 			
 			_navigator = new ScreenNavigator();

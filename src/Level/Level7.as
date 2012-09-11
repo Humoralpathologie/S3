@@ -71,7 +71,7 @@ package Level
     
     override protected function addBackground():void
     {
-      _bgTexture = AssetRegistry.LevelAtlas.getTexture("level08");
+      _bgTexture = AssetRegistry.Opaque_1_Part2_Atlas.getTexture("level08");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _bg.smoothing = TextureSmoothing.NONE;
@@ -128,7 +128,7 @@ package Level
     override protected function showObjective():void
     {
       
-      var _golden:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-golden"));
+      var _golden:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("icon-golden"));
       if (SaveGame.difficulty == 1)
       {
         showObjectiveBox(AssetRegistry.Strings.LEVEL7A, [[_golden, "= 0"]]);

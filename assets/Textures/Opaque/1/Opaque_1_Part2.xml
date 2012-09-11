@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:14d005348bdae739875eaf50895cd834$ -->
+<TextureAtlas imagePath="Opaque_1_Part2.png">
+    <SubTexture name="arcade-background_iphone4" x="964" y="2" width="960" height="640"/>
+    <SubTexture name="level01bg" x="1266" y="1126" width="630" height="480"/>
+    <SubTexture name="level02bg" x="1276" y="644" width="630" height="480"/>
+    <SubTexture name="level03" x="644" y="644" width="630" height="480"/>
+    <SubTexture name="level05" x="634" y="1126" width="630" height="480"/>
+    <SubTexture name="level07" x="2" y="644" width="640" height="480"/>
+    <SubTexture name="level08" x="2" y="1126" width="630" height="480"/>
+    <SubTexture name="menu_iphone_background" x="2" y="2" width="960" height="640"/>
+</TextureAtlas>

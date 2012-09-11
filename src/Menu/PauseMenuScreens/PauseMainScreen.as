@@ -118,16 +118,16 @@ package Menu.PauseMenuScreens
 				if (SaveGame.specials[i])
 				{
 					trace(SaveGame.specials)
-					combo = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(SaveGame.specials[i].effect));
+					combo = new Image(AssetRegistry.Alpha_1_Atlas.getTexture(SaveGame.specials[i].effect));
 				}
 				else
 				{
-					combo = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("combo-special"));
+					combo = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("combo-special"));
 				}
 				combo.width = combo.height = 88;
 				combo.y = 3;
 				combo.x = j
-				trigger = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[i]));
+				trigger = new Image(AssetRegistry.Alpha_1_Atlas.getTexture(combos[i]));
 				trigger.x = combo.x;
 				trigger.y = combo.y;			
 				addChild(combo);

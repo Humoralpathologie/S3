@@ -216,7 +216,7 @@ package Level
       
       _levelStage.addChild(_snake);
       
-      _shadow = new Image(AssetRegistry.SnakeAtlas.getTexture("level7-schatten"));
+      _shadow = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("level7-schatten"));
       _shadow.scaleX = _shadow.scaleY = 1.5;
       _shadow.x = 0;
       _shadow.y = 200;
@@ -285,7 +285,7 @@ package Level
     
     protected function addParticles():void
     {
-      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")], ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["ExtraLife", XML(new AssetRegistry.ExtraLife), AssetRegistry.SnakeAtlas.getTexture("ExtraLife")], ["ExtraEggs", XML(new AssetRegistry.ExtraEggs), AssetRegistry.SnakeAtlas.getTexture("ExtraEggs")], ["BonusTime", XML(new AssetRegistry.BonusTime), AssetRegistry.SnakeAtlas.getTexture("BonusTime")], ["ChainTimePlus", XML(new AssetRegistry.ChainTimePlus), AssetRegistry.SnakeAtlas.getTexture("ChainTimePlus")], ["goldLv7", XML(new AssetRegistry.EggsplosionGoldLv7), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")]];
+      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionRotten")], ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.Alpha_1_Atlas.getTexture("particleTexture")], ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.Alpha_1_Atlas.getTexture("particleTexture")], ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.Alpha_1_Atlas.getTexture("particleTexture")], ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.Alpha_1_Atlas.getTexture("particleTexture")], ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.Alpha_1_Atlas.getTexture("particleTexture")], ["ExtraLife", XML(new AssetRegistry.ExtraLife), AssetRegistry.Alpha_1_Atlas.getTexture("ExtraLife")], ["ExtraEggs", XML(new AssetRegistry.ExtraEggs), AssetRegistry.Alpha_1_Atlas.getTexture("ExtraEggs")], ["BonusTime", XML(new AssetRegistry.BonusTime), AssetRegistry.Alpha_1_Atlas.getTexture("BonusTime")], ["ChainTimePlus", XML(new AssetRegistry.ChainTimePlus), AssetRegistry.Alpha_1_Atlas.getTexture("ChainTimePlus")], ["goldLv7", XML(new AssetRegistry.EggsplosionGoldLv7), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionGold")]];
       
       _particles = {};
       for (var i:int = 0; i < list.length; i++)
@@ -318,8 +318,8 @@ package Level
     
     public function addFrame():void
     {
-      var frame:Image = new Image(AssetRegistry.HalfFrameTexture);
-      var rightFrame:Image = new Image(AssetRegistry.HalfFrameTexture);
+      var frame:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("HalfFrame@1"));
+      var rightFrame:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("HalfFrame@1"));
       frame.x = -186;
       frame.y = -161;
       rightFrame.scaleX = -1;

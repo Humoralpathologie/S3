@@ -41,17 +41,12 @@ package org.josht.starling.foxhole.themes
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	import starling.textures.TextureSmoothing;
-
+  import engine.AssetRegistry;
+  
 	public class MinimalTheme extends AddedWatcher implements IFoxholeTheme
 	{
-		[Embed(source="/../assets/images/minimal.png")]
-		protected static const ATLAS_IMAGE:Class;
 
-		[Embed(source="/../assets/images/minimal.xml",mimeType="application/octet-stream")]
-		protected static const ATLAS_XML:Class;
-
-		protected static const ATLAS:TextureAtlas = new TextureAtlas(Texture.fromBitmap(new ATLAS_IMAGE(), false), XML(new ATLAS_XML()));
-
+		protected static const ATLAS:TextureAtlas = AssetRegistry.Alpha_1_Atlas;
 		protected static const SCALE_9_GRID:Rectangle = new Rectangle(9, 9, 2, 2);
 		protected static const SCROLLBAR_THUMB_SCALE_9_GRID:Rectangle = new Rectangle(1, 1, 2, 2);
 		protected static const TAB_SCALE_9_GRID:Rectangle = new Rectangle(25, 25, 2, 2);
@@ -104,8 +99,8 @@ package org.josht.starling.foxhole.themes
 		protected static const RADIO_ICON_TEXTURE:Texture = ATLAS.getTexture("radio-icon");
 		protected static const RADIO_SELECTED_ICON_TEXTURE:Texture = ATLAS.getTexture("radio-selected-icon");
 
-		[Embed(source="/../assets/fonts/pf_ronda_seven.fnt",mimeType="application/octet-stream")]
-		protected static const ATLAS_FONT_XML:Class;
+		//[Embed(source="/../assets/fonts/pf_ronda_seven.fnt",mimeType="application/octet-stream")]
+		//protected static const ATLAS_FONT_XML:Class;
 
 		//protected static const BITMAP_FONT:BitmapFont = new BitmapFont(ATLAS.getTexture("pf_ronda_seven_0"), XML(new ATLAS_FONT_XML()));
     protected static const BITMAP_FONT:BitmapFont = TextField.getBitmapFont("kroeger 06_65");

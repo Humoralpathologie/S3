@@ -38,7 +38,7 @@ package Level
     
     override protected function addBackground():void
     {
-      _bgTexture = AssetRegistry.LevelAtlas.getTexture("level02bg");
+      _bgTexture = AssetRegistry.Opaque_1_Part2_Atlas.getTexture("level02bg");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
@@ -62,7 +62,7 @@ package Level
     
     override protected function showObjective():void
     {     
-	  var _neededCombos:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-combo"));
+	  var _neededCombos:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("icon-combo"));
 	   if (SaveGame.difficulty == 1) {	
 		showObjectiveBox(AssetRegistry.Strings.LEVEL2A, [[_neededCombos, "x 7"] ] );
 	  } else {

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:d2fb9e5f02d448c1ffbe70c5121a686b$ -->
-<TextureAtlas imagePath="Level2Atlas.png">
-    <SubTexture name="level02bg" x="2" y="2" width="640" height="480"/>
-</TextureAtlas>

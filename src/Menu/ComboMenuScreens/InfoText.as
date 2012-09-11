@@ -61,7 +61,7 @@ package Menu.ComboMenuScreens
       
 	  
 	    var that:InfoText = this;
-	    var xButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+	    var xButton:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("x"));
 
       //xButton.scaleX = xButton.scaleY = 1.5;
       xButton.x = 860;

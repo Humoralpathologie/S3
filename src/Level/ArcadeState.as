@@ -227,30 +227,10 @@ package Level
     
     override protected function addBackground():void
     {
-      _bgTexture = AssetRegistry.LevelAtlas.getTexture("arcade");
+      _bgTexture = AssetRegistry.Opaque_1_Part3_Atlas.getTexture("arcade");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
-      
-      if (AssetRegistry.HQ)
-      {
-        // Add blinking overlay
-        
-        _overlay = new Image(AssetRegistry.ArcadeOverlayAtlas.getTexture("arcadeOverlay0x0"));
-        _overlay.smoothing = TextureSmoothing.NONE;
-        _overlay.blendMode = BlendMode.ADD;
-        _levelStage.addChild(_overlay);
-        new GTween(_overlay, 0.3, {"alpha": 0}, {ease: Exponential.easeOut, reflect: true, repeatCount: 0});
-        
-        _overlay = new Image(AssetRegistry.ArcadeOverlayAtlas.getTexture("arcadeOverlay240x0"));
-        _overlay.x = 240;
-        _overlay.smoothing = TextureSmoothing.NONE;
-        _overlay.blendMode = BlendMode.ADD;
-        
-        _levelStage.addChild(_overlay);
-        
-        new GTween(_overlay, 0.3, {"alpha": 0}, {ease: Exponential.easeOut, reflect: true, repeatCount: 0});
-      }
     }
   
   }

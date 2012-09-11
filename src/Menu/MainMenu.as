@@ -67,7 +67,7 @@ package Menu
       SaveGame.isArcade = false;
       AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE]);
             
-      _bg = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("loading"));
+      _bg = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("loading"));
       addChild(_bg);
       
       _notificationScroller = new NotificationScroller();

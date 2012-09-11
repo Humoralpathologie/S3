@@ -120,7 +120,7 @@ package Menu
 			addChild(video2);
 			addChild(video4);
 			
-			var extrasxButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+			var extrasxButton:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("x"));
 			
 			//xButton.scaleX = xButton.scaleY = 1.5;
 			extrasxButton.x = Starling.current.stage.stageWidth - extrasxButton.width - 10;

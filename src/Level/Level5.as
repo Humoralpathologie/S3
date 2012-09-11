@@ -45,7 +45,7 @@ package Level
     
 		override protected function addBackground():void
 		{
-      _bgTexture = AssetRegistry.LevelAtlas.getTexture("level05");
+      _bgTexture = AssetRegistry.Opaque_1_Part2_Atlas.getTexture("level05");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _bg.smoothing = TextureSmoothing.NONE;
@@ -88,7 +88,7 @@ package Level
     
     override protected function showObjective():void
     {    
-	  var _neededTime:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-time"));
+	  var _neededTime:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("icon-time"));
 			if (SaveGame.difficulty == 1)
 			{
 		showObjectiveBox(AssetRegistry.Strings.LEVEL5A, [[_neededTime, "= 3:00"] ] );

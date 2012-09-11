@@ -95,7 +95,7 @@ package UI
       addChild(_top);
       addChild(_controls);
       addChild(_radarCircle);
-      // SnakeAtlas.
+      // Alpha_1_Atlas.
       addChild(_iconLayer);
       addChild(_tailView);
       addChild(_radarEggsLayer);
@@ -135,25 +135,25 @@ package UI
       
       switch(type) {
         case AssetRegistry.EGGA:
-            texture = AssetRegistry.SnakeAtlas.getTexture("radar_a");
+            texture = AssetRegistry.Alpha_1_Atlas.getTexture("radar_a");
             break;
         case AssetRegistry.EGGB:
-            texture = AssetRegistry.SnakeAtlas.getTexture("radar_b");
+            texture = AssetRegistry.Alpha_1_Atlas.getTexture("radar_b");
             break;
         case AssetRegistry.EGGC:
-            texture = AssetRegistry.SnakeAtlas.getTexture("radar_c");
+            texture = AssetRegistry.Alpha_1_Atlas.getTexture("radar_c");
             break;
         case AssetRegistry.EGGGOLDEN:
-            texture = AssetRegistry.SnakeAtlas.getTexture("radar_gold");
+            texture = AssetRegistry.Alpha_1_Atlas.getTexture("radar_gold");
             break;
         case AssetRegistry.EGGSHUFFLE:
-            texture = AssetRegistry.SnakeAtlas.getTexture("radar_shuffle");
+            texture = AssetRegistry.Alpha_1_Atlas.getTexture("radar_shuffle");
             break;           
         case AssetRegistry.EGGZERO:
-            texture = AssetRegistry.SnakeAtlas.getTexture("radar_green");
+            texture = AssetRegistry.Alpha_1_Atlas.getTexture("radar_green");
             break;        
         case AssetRegistry.EGGROTTEN:
-            texture = AssetRegistry.SnakeAtlas.getTexture("radar_rotten");
+            texture = AssetRegistry.Alpha_1_Atlas.getTexture("radar_rotten");
             break;                   
       }
     
@@ -480,10 +480,10 @@ package UI
       var txtr:Texture;
       switch(type) {
         case "lives":
-          txtr =  AssetRegistry.SnakeAtlas.getTexture("icon-lives");
+          txtr =  AssetRegistry.Alpha_1_Atlas.getTexture("icon-lives");
           break;  
         default:
-          txtr = AssetRegistry.SnakeAtlas.getTexture("icon-" + type);
+          txtr = AssetRegistry.Alpha_1_Atlas.getTexture("icon-" + type);
           break;
       }
       return txtr;
@@ -639,7 +639,7 @@ package UI
           type = "UIBoxFuerPreview";
         break;
       } 
-      return AssetRegistry.SnakeAtlas.getTexture(type);
+      return AssetRegistry.Alpha_1_Atlas.getTexture(type);
     }
     
     private function destroyRadarCircle():void {

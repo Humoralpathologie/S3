@@ -241,10 +241,10 @@ package Menu
 			
 			if (_scores.bigMedal)
 			{
-				_medal = new Image(AssetRegistry.ScoringScalableAtlas.getTexture(_scores.bigMedal));
+				_medal = new Image(AssetRegistry.Alpha_025_Atlas.getTexture(_scores.bigMedal));
 				_medal.x = -800;
 				_medal.y = 0;
-				_medalSmall = new Image(AssetRegistry.ScoringAtlas.getTexture(_scores.smallMedal));
+				_medalSmall = new Image(AssetRegistry.Alpha_1_Atlas.getTexture(_scores.smallMedal));
 			}
 			
 			if (_medal)
