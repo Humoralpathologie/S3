@@ -24,16 +24,6 @@ package engine
     [Embed(source = "../../assets/UI/UI.xml", mimeType = "application/octet-stream")]
     static private const UIAtlasXML:Class;
     public static var UIAtlas:TextureAtlas;
-  
-    /*
-    [Embed(source="../../assets/Particles/drugs.pex",mimeType="application/octet-stream")]
-    private static const DrugsParticleXML:Class;
-    [Embed(source="../../assets/Particles/combo.pex",mimeType="application/octet-stream")]
-    private static const ComboParticleXML:Class;
-   
-    [Embed(source="../../assets/Particles/EggsplosionB.pex",mimeType="application/octet-stream")]
-    private static const EggsplosionXML:Class;
-    */
     
     [Embed(source="../../assets/Font/8bit.fnt",mimeType="application/octet-stream")]
     static private const FontXML:Class;

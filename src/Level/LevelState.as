@@ -821,6 +821,7 @@ package Level
       _lost = true;
       //pause();
       _gameJuggler.remove(_snake);
+      _mchammer.touchable = true;
       var image:Image;
       image = new Image(AssetRegistry.UIAtlas.getTexture("game over_gravestone"));
       image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
@@ -1118,7 +1119,7 @@ package Level
       {
         AssetRegistry.soundmanager.playSound("winSound");
       }
-      
+      _mchammer.touchable = true;
       _evilSnake.y = AssetRegistry.STAGE_HEIGHT;
       addChild(_evilSnake);
 
