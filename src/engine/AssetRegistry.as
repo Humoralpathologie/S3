@@ -321,7 +321,7 @@ package engine
     public static const STAGE_WIDTH:int = 960;
     public static const STAGE_HEIGHT:int = 640;
     
-    public static const ASPECT_RATIO:Number = STAGE_HEIGHT / STAGE_WIDTH;
+    public static const ASPECT_RATIO:Number = STAGE_WIDTH / STAGE_HEIGHT;
     public static var SCALE:Number = 0;
     
     public static var soundmanager:SoundManager;
