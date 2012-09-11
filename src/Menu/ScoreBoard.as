@@ -318,22 +318,22 @@ package Menu
 		private function addTexts():void
 		{
 			
-			_lifeBonusText = new TextField(100, 40, "1", "kroeger 06_65", 32, Color.WHITE);
+			_lifeBonusText = new TextField(200, 40, "1", "kroeger 06_65", 32, Color.WHITE);
 			_lifeBonusText.hAlign = HAlign.RIGHT;
-			_lifeBonusText.x = _lifeBonusHeading.x + _lifeBonusHeading.width + 10;
+			_lifeBonusText.x = _lifeBonusHeading.x + _lifeBonusHeading.width + 10 - 100;
 			_lifeBonusText.y = _lifeBonusHeading.y;
 			
-			_scoreText = new TextField(100, 40, "1", "kroeger 06_65", 32, Color.WHITE);
+			_scoreText = new TextField(200, 40, "1", "kroeger 06_65", 32, Color.WHITE);
 			_scoreText.hAlign = HAlign.RIGHT;
 			_scoreText.x = _lifeBonusText.x;
 			_scoreText.y = _scoreHeading.y;
 			
-			_timeBonusText = new TextField(100, 40, "1", "kroeger 06_65", 32, Color.WHITE);
+			_timeBonusText = new TextField(200, 40, "1", "kroeger 06_65", 32, Color.WHITE);
 			_timeBonusText.hAlign = HAlign.RIGHT;
 			_timeBonusText.x = _lifeBonusText.x;
 			_timeBonusText.y = _timeBonusHeading.y;
 			
-			_totalText = new TextField(100, 40, "1", "kroeger 06_65", 32, Color.WHITE);
+			_totalText = new TextField(200, 40, "1", "kroeger 06_65", 32, Color.WHITE);
 			_totalText.hAlign = HAlign.RIGHT;
 			_totalText.x = _lifeBonusText.x;
 			_totalText.y = _totalHeading.y;
