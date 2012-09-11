@@ -187,9 +187,10 @@ package Level
       _gameJuggler = new Juggler();
       
       // Combos:
-      
       _comboSet = new Combo.ComboSet();
       _comboSet.addCombo(new Combo.FasterCombo());
+      
+      createSadAndEvilSnake();
       
       // Level Stage.
       // TODO: Should probably be managed with a real camera.
@@ -256,6 +257,25 @@ package Level
       pause();
       showObjective();
       
+    }
+    
+    private function createSadAndEvilSnake():void 
+    {
+      _sadSnake = new Image(AssetRegistry.UIAtlas.getTexture("sadsnake"));
+      _sadSnake.x = (AssetRegistry.STAGE_WIDTH - _sadSnake.width) / 2;       
+      _sadSnake.touchable = false;
+      
+      _sadText = new Image(AssetRegistry.UIAtlas.getTexture("SadSnakeText"));
+      _sadText.x = (AssetRegistry.STAGE_WIDTH - _sadText.width) / 2;      
+      _sadText.touchable = false;
+      
+      _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
+      _evilSnake.x = (AssetRegistry.STAGE_WIDTH - _evilSnake.width) / 2;      
+      _evilSnake.touchable = false;
+          
+      _evilText = new Image(AssetRegistry.UIAtlas.getTexture("Snake_EvilLaughText"));
+      _evilText.x = (AssetRegistry.STAGE_WIDTH - _evilText.width) / 2;      
+      _evilText.touchable = false;
     }
     
     public function extendTime():void
@@ -380,15 +400,9 @@ package Level
       }
       pause();
       
-      _sadSnake = new Image(AssetRegistry.UIAtlas.getTexture("sadsnake"));
-      _sadSnake.x = (AssetRegistry.STAGE_WIDTH - _sadSnake.width) / 2;
       _sadSnake.y = AssetRegistry.STAGE_HEIGHT;
-      _sadSnake.touchable = false;
       
-      _sadText = new Image(AssetRegistry.UIAtlas.getTexture("SadSnakeText"));
-      _sadText.x = (AssetRegistry.STAGE_WIDTH - _sadText.width) / 2;
       _sadText.y = -_sadText.height;
-      _sadText.touchable = false;
       
       addChild(_sadSnake);
       addChild(_sadText);
@@ -1105,13 +1119,9 @@ package Level
         AssetRegistry.soundmanager.playSound("winSound");
       }
       
-      _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
-      _evilSnake.x = (AssetRegistry.STAGE_WIDTH - _evilSnake.width) / 2;
       _evilSnake.y = AssetRegistry.STAGE_HEIGHT;
       addChild(_evilSnake);
-      
-      _evilText = new Image(AssetRegistry.UIAtlas.getTexture("Snake_EvilLaughText"));
-      _evilText.x = (AssetRegistry.STAGE_WIDTH - _evilText.width) / 2;
+
       _evilText.y = 0;
       addChild(_evilText);
       
@@ -1478,6 +1488,14 @@ package Level
       _mchammer = null;
       _pauseMenu.dispose();
       _pauseMenu = null;
+      _evilSnake.dispose();
+      _evilSnake = null;
+      _evilText.dispose();
+      _evilText = null;
+      _sadSnake.dispose();
+      _sadSnake = null;
+      _sadText.dispose();
+      _sadText = null;
       
       for each (var particle:PDParticleSystem in _particles)
       {

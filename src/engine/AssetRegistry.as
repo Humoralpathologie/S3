@@ -483,7 +483,7 @@ package engine
     
     public static function loadMenuGraphics():void
     {
-      MenuAtlasAlpha = new TextureAtlas(Texture.fromBitmap(new MenuAlphaPNG,true,false,0.95), XML(new MenuAlphaXML));
+      MenuAtlasAlpha = new TextureAtlas(Texture.fromBitmap(new MenuAlphaPNG), XML(new MenuAlphaXML));
       MenuAtlasOpaque = new TextureAtlas(Texture.fromAtfData(new MenuOpaqueATF), XML(new MenuOpaqueXML));
     }
     

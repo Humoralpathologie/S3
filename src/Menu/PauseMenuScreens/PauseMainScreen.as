@@ -118,11 +118,11 @@ package Menu.PauseMenuScreens
 				if (SaveGame.specials[i])
 				{
 					trace(SaveGame.specials)
-					combo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[i].effect));
+					combo = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(SaveGame.specials[i].effect));
 				}
 				else
 				{
-					combo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("combo-special"));
+					combo = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("combo-special"));
 				}
 				combo.width = combo.height = 88;
 				combo.y = 3;

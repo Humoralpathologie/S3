@@ -89,7 +89,7 @@ package Menu.ComboMenuScreens
       
      
             
-      var time:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-leveluptime"));
+      var time:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("combo-leveluptime"));
       time.x = 40;
       time.y = 40;
       time.addEventListener(Event.TRIGGERED, function(event:Event):void {
@@ -106,7 +106,7 @@ package Menu.ComboMenuScreens
       timeText.y = time.y;
       _scrollable.addChild(timeText);
       
-      var chaintime:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-chaintime"));
+      var chaintime:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("combo-chaintime"));
       chaintime.x = time.x;
       chaintime.y = timeText.y + timeText.height + 20;
       chaintime.addEventListener(Event.TRIGGERED, function(event:Event):void {
@@ -122,7 +122,7 @@ package Menu.ComboMenuScreens
       chaintimeText.y = chaintime.y;
       _scrollable.addChild(chaintimeText);
       
-      var xtraspawn:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtraspawn"));
+      var xtraspawn:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("combo-xtraspawn"));
       xtraspawn.x = time.x;
       xtraspawn.y = chaintimeText.y + chaintimeText.height + 20;
       xtraspawn.addEventListener(Event.TRIGGERED, function(event:Event):void {
@@ -138,7 +138,7 @@ package Menu.ComboMenuScreens
       xtraspawnText.y = xtraspawn.y;
       _scrollable.addChild(xtraspawnText);
       
-      var shuffle:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-shuffle"));
+      var shuffle:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("combo-shuffle"));
       shuffle.x = time.x;
       shuffle.y = xtraspawnText.y + xtraspawnText.height + 20;
       shuffle.addEventListener(Event.TRIGGERED, function(e:Event):void {
@@ -154,7 +154,7 @@ package Menu.ComboMenuScreens
       shuffleText.y = shuffle.y;
       _scrollable.addChild(shuffleText);
   
-      var gold:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-gold"));
+      var gold:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("combo-gold"));
       gold.x = time.x;
       gold.y = shuffleText.y + shuffleText.height + 20;
       gold.addEventListener(Event.TRIGGERED, function(e:Event):void {
@@ -170,7 +170,7 @@ package Menu.ComboMenuScreens
       goldText.y = gold.y;
       _scrollable.addChild(goldText);     
  
-      var xtralife:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtralife"));
+      var xtralife:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("combo-xtralife"));
       xtralife.x = time.x;
       xtralife.y = goldText.y + goldText.height + 20;
       xtralife.addEventListener(Event.TRIGGERED, function(e:Event):void {

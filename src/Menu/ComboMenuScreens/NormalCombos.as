@@ -86,7 +86,7 @@ package Menu.ComboMenuScreens
       addChild(_scroller);
 	  
 	     
-      var speed:Image = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"));
+      var speed:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("combo-speed"));
       speed.x = 40;
       speed.y = 40;
       _scrollable.addChild(speed);
@@ -102,10 +102,10 @@ package Menu.ComboMenuScreens
       var secondCombo:Image;
       var secondComboText:TextField;
       if (SaveGame.endless){
-        secondCombo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"));
+        secondCombo = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("combo-time"));
         secondComboText = new TextField(speedText.width, speedText.height, AssetRegistry.Strings.TIMEDESC, "kroeger 06_65", 30, Color.WHITE);
       } else {
-        secondCombo = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("combo-slower"));
+        secondCombo = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("combo-slower"));
         secondComboText = new TextField(speedText.width, speedText.height, AssetRegistry.Strings.SLOWERDESC, "kroeger 06_65", 30, Color.WHITE);
       }
       secondCombo.x = speed.x;
@@ -121,7 +121,7 @@ package Menu.ComboMenuScreens
       
       _scrollable.addChild(secondComboText);
       
-      var norotten:Image = new Image(AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs"));
+      var norotten:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("combo-rotteneggs"));
       norotten.x = speed.x;
       norotten.y = secondComboText.y + secondComboText.height + 20;
      

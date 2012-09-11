@@ -228,14 +228,14 @@ package Menu.ComboMenuScreens
           unflatten();
           if (SaveGame.endless)
           {
-            _buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
-            _buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
+            _buttons[4][0].upState = AssetRegistry.MenuAtlasAlpha.getTexture("combo-time");
+            _buttons[4][0].downState = AssetRegistry.MenuAtlasAlpha.getTexture("combo-time");
             _buttons[4][1].text = AssetRegistry.Strings.TIMEDESC;
           }
           else
           {
-            _buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-slower");
-            _buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-slower");
+            _buttons[4][0].upState = AssetRegistry.MenuAtlasAlpha.getTexture("combo-slower");
+            _buttons[4][0].downState = AssetRegistry.MenuAtlasAlpha.getTexture("combo-slower");
             _buttons[4][1].text = AssetRegistry.Strings.SLOWERDESC;
           }
         });
@@ -291,11 +291,11 @@ package Menu.ComboMenuScreens
       var buttons:Array;
       if (SaveGame.endless)
       {
-        buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")] //, 
+        buttons = [AssetRegistry.MenuAtlasAlpha.getTexture("combo-speed"), AssetRegistry.MenuAtlasAlpha.getTexture("combo-time"), AssetRegistry.MenuAtlasAlpha.getTexture("combo-rotteneggs")] //, 
       }
       else
       {
-        buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-slower"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")];
+        buttons = [AssetRegistry.MenuAtlasAlpha.getTexture("combo-speed"), AssetRegistry.MenuAtlasAlpha.getTexture("combo-slower"), AssetRegistry.MenuAtlasAlpha.getTexture("combo-rotteneggs")];
       }
       
       var space:int = 80;
@@ -322,12 +322,12 @@ package Menu.ComboMenuScreens
         //SaveGame.specials = { };
         if (SaveGame.specials[i])
         {
-          slot = new Button(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[i].effect));
+          slot = new Button(AssetRegistry.MenuAtlasAlpha.getTexture(SaveGame.specials[i].effect));
 		  //trace(SaveGame.specials[i].effect);
         }
         else
         {
-          slot = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-special"));
+          slot = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("combo-special"));
         }
         addChild(slot);
         
