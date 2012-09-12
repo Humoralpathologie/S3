@@ -193,6 +193,7 @@ package engine
       
       if (STATE == STOPPED)
       {
+        _level = 0;
         var music:Sound; 
         var channel:SoundChannel;
         STATE = PLAYING;
@@ -206,8 +207,9 @@ package engine
           channel.addEventListener(Event.SOUND_COMPLETE, function(event:Event):void
             {
               _musicPlaying.splice(_musicPlaying.indexOf(channel), 1);
-              if(STATE == PLAYING) {
-                play();
+              if (STATE == PLAYING) {
+                Starling.juggler.delayCall(play, 0.1);
+                //play();
               }
             });
         }
