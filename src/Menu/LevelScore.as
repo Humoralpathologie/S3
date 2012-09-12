@@ -118,9 +118,11 @@ package Menu
       calculateTime();
       
       // No negative scores;
-      
-      _scores.timeBonus = Math.max(_timeBonus, 0);
-      
+       if (!_scores.lost){
+        _scores.timeBonus = Math.max(_timeBonus, 0);
+      } else {
+        _scores.timeBonus = 0;
+      }
       _scores.total += (_scores.timeBonus * 5);
       calculateMedal();
       trace("total: " + _scores.total)
