@@ -53,8 +53,8 @@ package Eggs
         var pics:Array;
         pics = eggTypeGraphics[eggType]
         frames = new Vector.<Texture>;
-        frames.push(AssetRegistry.SnakeAtlas.getTexture(pics[0]));
-        frames.push(AssetRegistry.SnakeAtlas.getTexture(pics[1]));
+        frames.push(AssetRegistry.Alpha_1_Atlas.getTexture(pics[0]));
+        frames.push(AssetRegistry.Alpha_1_Atlas.getTexture(pics[1]));
         _clips[int(eggType)] = frames;
       }
        
@@ -79,7 +79,7 @@ package Eggs
         //Starling.juggler.remove(_image as MovieClip);        
         //_image.dispose();
         (_image as MovieClip).removeFrameAt(1);
-        (_image as MovieClip).addFrame(AssetRegistry.SnakeAtlas.getTexture("rottenEggPink"));
+        (_image as MovieClip).addFrame(AssetRegistry.Alpha_1_Atlas.getTexture("rottenEggPink"));
       }
     }
     

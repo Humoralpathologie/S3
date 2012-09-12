@@ -39,22 +39,22 @@ package Snake
     private function makeHeadClips():void
     {
       var framesLeft:Vector.<Texture> = new Vector.<Texture>;
-      framesLeft.push(AssetRegistry.SnakeAtlas.getTexture("snake_head_2"), AssetRegistry.SnakeAtlas.getTexture("snake_head_3"));
+      framesLeft.push(AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_2"), AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_3"));
       _headLeft = new MovieClip(framesLeft, 2);
       _headLeft.smoothing = TextureSmoothing.NONE;
       
       var framesRight:Vector.<Texture> = new Vector.<Texture>;
-      framesRight.push(AssetRegistry.SnakeAtlas.getTexture("snake_head_0"), AssetRegistry.SnakeAtlas.getTexture("snake_head_1"));
+      framesRight.push(AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_0"), AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_1"));
       _headRight = new MovieClip(framesRight, 2);
       _headRight.smoothing = TextureSmoothing.NONE;
       
       var framesDown:Vector.<Texture> = new Vector.<Texture>;
-      framesDown.push(AssetRegistry.SnakeAtlas.getTexture("snake_head_6"), AssetRegistry.SnakeAtlas.getTexture("snake_head_7"));
+      framesDown.push(AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_6"), AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_7"));
       _headDown = new MovieClip(framesDown, 2);
       _headDown.smoothing = TextureSmoothing.NONE;
       
       var framesUp:Vector.<Texture> = new Vector.<Texture>;
-      framesUp.push(AssetRegistry.SnakeAtlas.getTexture("snake_head_4"), AssetRegistry.SnakeAtlas.getTexture("snake_head_5"));
+      framesUp.push(AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_4"), AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_5"));
       _headUp = new MovieClip(framesUp, 2);
       _headUp.smoothing = TextureSmoothing.NONE;
       
@@ -76,41 +76,41 @@ package Snake
     {
       if (!_changed) {
         if (_mps < 12) {
-          _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_0");
-          _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_1");
-          _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_2"); 
-          _newFramesLeft[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_3");
-          _newFramesUp[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_4");
-          _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_5");
-          _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_6");
-          _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_7");
+          _newFramesRight[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_0");
+          _newFramesRight[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_1");
+          _newFramesLeft[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_2"); 
+          _newFramesLeft[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_3");
+          _newFramesUp[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_4");
+          _newFramesUp[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_5");
+          _newFramesDown[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_6");
+          _newFramesDown[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_7");
         } else if (_mps >= 12 && _mps < 14) {
-          _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_8");
-          _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_9");
-          _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_10"); 
-          _newFramesLeft[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_11");
-          _newFramesUp[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_12");
-          _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_13");
-          _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_14");
-          _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_15");
+          _newFramesRight[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_8");
+          _newFramesRight[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_9");
+          _newFramesLeft[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_10"); 
+          _newFramesLeft[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_11");
+          _newFramesUp[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_12");
+          _newFramesUp[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_13");
+          _newFramesDown[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_14");
+          _newFramesDown[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_15");
         } else if (_mps >= 14 && _mps < 19) {
-          _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_16");
-          _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_17");
-          _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_18"); 
-          _newFramesLeft[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_19");
-          _newFramesUp[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_20");
-          _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_21");
-          _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_22");
-          _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_23");
+          _newFramesRight[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_16");
+          _newFramesRight[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_17");
+          _newFramesLeft[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_18"); 
+          _newFramesLeft[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_19");
+          _newFramesUp[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_20");
+          _newFramesUp[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_21");
+          _newFramesDown[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_22");
+          _newFramesDown[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_23");
         } else if (_mps >= 19 && _mps < 31){
-          _newFramesRight[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_24");
-          _newFramesRight[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_25");
-          _newFramesLeft[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_26"); 
-          _newFramesLeft[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_27");
-          _newFramesUp[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_28");
-          _newFramesUp[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_29");
-          _newFramesDown[0] = AssetRegistry.SnakeAtlas.getTexture("snake_head_30");
-          _newFramesDown[1] = AssetRegistry.SnakeAtlas.getTexture("snake_head_31");
+          _newFramesRight[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_24");
+          _newFramesRight[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_25");
+          _newFramesLeft[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_26"); 
+          _newFramesLeft[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_27");
+          _newFramesUp[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_28");
+          _newFramesUp[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_29");
+          _newFramesDown[0] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_30");
+          _newFramesDown[1] = AssetRegistry.Alpha_1_Atlas.getTexture("snake_head_31");
         }
         _headRight.setFrameTexture(0, _newFramesRight[0]);
         _headRight.setFrameTexture(1, _newFramesRight[1]);

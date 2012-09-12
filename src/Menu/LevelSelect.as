@@ -48,17 +48,17 @@ package Menu
       _scroller = new Scroller();
       _scrollable = new Sprite();
       
-      _levelSelectTop = new Image(AssetRegistry.LevelSelectAtlasOpaque.getTexture("levelauswahl_oben"));
+      _levelSelectTop = new Image(AssetRegistry.Opaque_1_Part1_Atlas.getTexture("levelauswahl_oben"));
       _levelSelectTop.smoothing = TextureSmoothing.NONE;
       _scrollable.addChild(_levelSelectTop);
       
       if (SaveGame.levelUnlocked(7))
       {
-        _levelSelectBottom = new Image(AssetRegistry.LevelSelectAtlasOpaque.getTexture("levelauswahl_unten_1126"));
+        _levelSelectBottom = new Image(AssetRegistry.Opaque_1_Part1_Atlas.getTexture("levelauswahl_unten_1126"));
       }
       else
       {
-        _levelSelectBottom = new Image(AssetRegistry.LevelSelectAtlasOpaque.getTexture("levelauswahl_unten_1126_locked"));
+        _levelSelectBottom = new Image(AssetRegistry.Opaque_1_Part1_Atlas.getTexture("levelauswahl_unten_1126_locked"));
       }
       _levelSelectBottom.y = _levelSelectTop.height - 1;
       _levelSelectBottom.smoothing = TextureSmoothing.NONE;
@@ -122,7 +122,7 @@ package Menu
         trace(AssetRegistry.MEDALS[SaveGame.medals[i]])
         if (AssetRegistry.MEDALS[SaveGame.medals[i]])
         {
-          var medal:Image = new Image(AssetRegistry.ScoringAtlas.getTexture(AssetRegistry.MEDALS[SaveGame.medals[i]]));
+          var medal:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture(AssetRegistry.MEDALS[SaveGame.medals[i]]));
           medal.x = medalPos[i][0];
           medal.y = medalPos[i][1];
           _scrollable.addChild(medal);
@@ -227,7 +227,7 @@ package Menu
           x = _lockedPositions[i - 1][0];
           y = _lockedPositions[i - 1][1];
           textureName = "tile-level" + String(i) + "_" + String(x) + "-" + String(y);
-          lock = new Image(AssetRegistry.LevelSelectAtlasAlpha.getTexture(textureName));
+          lock = new Image(AssetRegistry.Alpha_025_Atlas.getTexture(textureName));
           lock.x = x;
           lock.y = y;
           _scrollable.addChild(lock);

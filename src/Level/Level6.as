@@ -61,7 +61,7 @@ package Level
 		
 		override protected function addBackground():void
 		{
-			_bgTexture = AssetRegistry.LevelAtlas.getTexture("level07");
+			_bgTexture = AssetRegistry.Opaque_1_Part2_Atlas.getTexture("level07");
 			_bg = new Image(_bgTexture);
 			_bg.blendMode = BlendMode.NONE;
 			_bg.smoothing = TextureSmoothing.NONE;
@@ -93,7 +93,7 @@ package Level
 		
 		override protected function showObjective():void
 		{
-			var _neededChains:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-megachain"));
+			var _neededChains:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("icon-megachain"));
 			if (SaveGame.difficulty == 1)
 			{
 				showObjectiveBox(AssetRegistry.Strings.LEVEL6A, [[_neededChains, "x 2"]]);

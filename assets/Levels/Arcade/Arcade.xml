@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:0aa4687de246516b7cc2d8054afa67d5$ -->
-<TextureAtlas imagePath="Arcade.png">
-    <SubTexture name="arcade" x="2" y="2" width="990" height="900"/>
-</TextureAtlas>

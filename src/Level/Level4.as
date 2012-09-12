@@ -57,19 +57,19 @@ package Level
     }
     
     override protected function addBackground():void {
-      _bgTexture = AssetRegistry.LevelAtlas.getTexture("Level4mitRahmen");
+      _bgTexture = AssetRegistry.Opaque_1_Part1_Atlas.getTexture("Level4mitRahmen");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
 
-      var palmtree:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("level4_palme_stamm"));
+      var palmtree:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("level4_palme_stamm"));
       palmtree.x = 512;
       palmtree.y = 241;
      _levelStage.addChild(palmtree);      
     }
     
     override protected function addAboveSnake():void {
-      var palmleaves:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("level4_palme_blätter"));
+      var palmleaves:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("level4_palme_blätter"));
       palmleaves.x = 510;
       palmleaves.y = 251;
       _levelStage.addChild(palmleaves);
@@ -85,7 +85,7 @@ package Level
     
     override protected function showObjective():void
     {     
-	  var _neededSpeed:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-speed"));
+	  var _neededSpeed:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("icon-speed"));
 	  if (SaveGame.difficulty == 1) {	
 		showObjectiveBox(AssetRegistry.Strings.LEVEL4A, [[_neededSpeed,"= 5"] ] );
 	  } else {

@@ -95,24 +95,24 @@ package Snake
       switch (_type)
       {
         case AssetRegistry.EGGZERO: 
-          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_1");
-          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_0");
+          _imageLeft = AssetRegistry.Alpha_1_Atlas.getTexture("snake_body_1");
+          _imageDown = AssetRegistry.Alpha_1_Atlas.getTexture("snake_body_0");
           break;
         case AssetRegistry.EGGA: 
-          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_3");
-          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_2");
+          _imageLeft = AssetRegistry.Alpha_1_Atlas.getTexture("snake_body_3");
+          _imageDown = AssetRegistry.Alpha_1_Atlas.getTexture("snake_body_2");
           break;
         case AssetRegistry.EGGB: 
-          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_7");
-          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_6");
+          _imageLeft = AssetRegistry.Alpha_1_Atlas.getTexture("snake_body_7");
+          _imageDown = AssetRegistry.Alpha_1_Atlas.getTexture("snake_body_6");
           break;
         case AssetRegistry.EGGC: 
-          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_9");
-          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_8");
+          _imageLeft = AssetRegistry.Alpha_1_Atlas.getTexture("snake_body_9");
+          _imageDown = AssetRegistry.Alpha_1_Atlas.getTexture("snake_body_8");
           break;
         case AssetRegistry.EGGROTTEN: 
-          _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_body_5");
-          _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_body_4");
+          _imageLeft = AssetRegistry.Alpha_1_Atlas.getTexture("snake_body_5");
+          _imageDown = AssetRegistry.Alpha_1_Atlas.getTexture("snake_body_4");
           break;
       }
       setImage();

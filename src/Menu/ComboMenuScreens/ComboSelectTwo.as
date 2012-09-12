@@ -41,7 +41,7 @@ package Menu.ComboMenuScreens
       
       var that:ComboSelectTwo = this;
       
-      var chaintime:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-chaintime"));
+      var chaintime:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("combo-chaintime"));
       chaintime.x = 156;
       chaintime.y = 152;
       addChild(chaintime);
@@ -51,7 +51,7 @@ package Menu.ComboMenuScreens
       chaintimeText.y = 165;
       addChild(chaintimeText);*/
       
-      var xtraspawn:Button = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-xtraspawn"));
+      var xtraspawn:Button = new Button(AssetRegistry.MenuAtlasAlpha.getTexture("combo-xtraspawn"));
       xtraspawn.x = 156;
       xtraspawn.y = 280;
       addChild(xtraspawn);

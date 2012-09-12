@@ -187,9 +187,10 @@ package Level
       _gameJuggler = new Juggler();
       
       // Combos:
-      
       _comboSet = new Combo.ComboSet();
       _comboSet.addCombo(new Combo.FasterCombo());
+      
+      createSadAndEvilSnake();
       
       // Level Stage.
       // TODO: Should probably be managed with a real camera.
@@ -215,7 +216,7 @@ package Level
       
       _levelStage.addChild(_snake);
       
-      _shadow = new Image(AssetRegistry.SnakeAtlas.getTexture("level7-schatten"));
+      _shadow = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("level7-schatten"));
       _shadow.scaleX = _shadow.scaleY = 1.5;
       _shadow.x = 0;
       _shadow.y = 200;
@@ -258,6 +259,25 @@ package Level
       
     }
     
+    private function createSadAndEvilSnake():void 
+    {
+      _sadSnake = new Image(AssetRegistry.UIAtlas.getTexture("sadsnake"));
+      _sadSnake.x = (AssetRegistry.STAGE_WIDTH - _sadSnake.width) / 2;       
+      _sadSnake.touchable = false;
+      
+      _sadText = new Image(AssetRegistry.UIAtlas.getTexture("SadSnakeText"));
+      _sadText.x = (AssetRegistry.STAGE_WIDTH - _sadText.width) / 2;      
+      _sadText.touchable = false;
+      
+      _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
+      _evilSnake.x = (AssetRegistry.STAGE_WIDTH - _evilSnake.width) / 2;      
+      _evilSnake.touchable = false;
+          
+      _evilText = new Image(AssetRegistry.UIAtlas.getTexture("Snake_EvilLaughText"));
+      _evilText.x = (AssetRegistry.STAGE_WIDTH - _evilText.width) / 2;      
+      _evilText.touchable = false;
+    }
+    
     public function extendTime():void
     {
       _timeLeft += _timeExtension;
@@ -265,7 +285,7 @@ package Level
     
     protected function addParticles():void
     {
-      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.SnakeAtlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.SnakeAtlas.getTexture("EggsplosionRotten")], ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.SnakeAtlas.getTexture("particleTexture")], ["ExtraLife", XML(new AssetRegistry.ExtraLife), AssetRegistry.SnakeAtlas.getTexture("ExtraLife")], ["ExtraEggs", XML(new AssetRegistry.ExtraEggs), AssetRegistry.SnakeAtlas.getTexture("ExtraEggs")], ["BonusTime", XML(new AssetRegistry.BonusTime), AssetRegistry.SnakeAtlas.getTexture("BonusTime")], ["ChainTimePlus", XML(new AssetRegistry.ChainTimePlus), AssetRegistry.SnakeAtlas.getTexture("ChainTimePlus")], ["goldLv7", XML(new AssetRegistry.EggsplosionGoldLv7), AssetRegistry.SnakeAtlas.getTexture("EggsplosionGold")]];
+      var list:Array = [[AssetRegistry.EGGA, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionA")], [AssetRegistry.EGGB, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionB")], [AssetRegistry.EGGC, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionC")], [AssetRegistry.EGGROTTEN, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionRottenLV1and2")], [AssetRegistry.EGGGOLDEN, XML(new AssetRegistry.EggsplosionGold), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionGold")], [AssetRegistry.EGGSHUFFLE, XML(new AssetRegistry.EggsplosionShuffle), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionShuffle")], [AssetRegistry.EGGZERO, XML(new AssetRegistry.EggsplosionGreen), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionGreen")], ["realRotten", XML(new AssetRegistry.EggsplosionRotten), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionRotten")], ["combo0", XML(new AssetRegistry.Taileggsplosion0), AssetRegistry.Alpha_1_Atlas.getTexture("particleTexture")], ["combo1", XML(new AssetRegistry.Taileggsplosion1), AssetRegistry.Alpha_1_Atlas.getTexture("particleTexture")], ["combo2", XML(new AssetRegistry.Taileggsplosion2), AssetRegistry.Alpha_1_Atlas.getTexture("particleTexture")], ["combo3", XML(new AssetRegistry.Taileggsplosion3), AssetRegistry.Alpha_1_Atlas.getTexture("particleTexture")], ["combo4", XML(new AssetRegistry.Taileggsplosion4), AssetRegistry.Alpha_1_Atlas.getTexture("particleTexture")], ["ExtraLife", XML(new AssetRegistry.ExtraLife), AssetRegistry.Alpha_1_Atlas.getTexture("ExtraLife")], ["ExtraEggs", XML(new AssetRegistry.ExtraEggs), AssetRegistry.Alpha_1_Atlas.getTexture("ExtraEggs")], ["BonusTime", XML(new AssetRegistry.BonusTime), AssetRegistry.Alpha_1_Atlas.getTexture("BonusTime")], ["ChainTimePlus", XML(new AssetRegistry.ChainTimePlus), AssetRegistry.Alpha_1_Atlas.getTexture("ChainTimePlus")], ["goldLv7", XML(new AssetRegistry.EggsplosionGoldLv7), AssetRegistry.Alpha_1_Atlas.getTexture("EggsplosionGold")]];
       
       _particles = {};
       for (var i:int = 0; i < list.length; i++)
@@ -298,8 +318,8 @@ package Level
     
     public function addFrame():void
     {
-      var frame:Image = new Image(AssetRegistry.HalfFrameTexture);
-      var rightFrame:Image = new Image(AssetRegistry.HalfFrameTexture);
+      var frame:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("HalfFrame@1"));
+      var rightFrame:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("HalfFrame@1"));
       frame.x = -186;
       frame.y = -161;
       rightFrame.scaleX = -1;
@@ -380,15 +400,9 @@ package Level
       }
       pause();
       
-      _sadSnake = new Image(AssetRegistry.UIAtlas.getTexture("sadsnake"));
-      _sadSnake.x = (AssetRegistry.STAGE_WIDTH - _sadSnake.width) / 2;
       _sadSnake.y = AssetRegistry.STAGE_HEIGHT;
-      _sadSnake.touchable = false;
       
-      _sadText = new Image(AssetRegistry.UIAtlas.getTexture("SadSnakeText"));
-      _sadText.x = (AssetRegistry.STAGE_WIDTH - _sadText.width) / 2;
       _sadText.y = -_sadText.height;
-      _sadText.touchable = false;
       
       addChild(_sadSnake);
       addChild(_sadText);
@@ -606,7 +620,7 @@ package Level
         
       }
       
-      AssetRegistry.soundmanager.level = Math.floor(_snake.eatenEggs / 10);
+      AssetRegistry.soundmanager.level = Math.floor(snake.mps - SaveGame.startSpeed);
     
     }
     
@@ -717,30 +731,6 @@ package Level
       var pos:Point = new Point();
       
       dispatchEventWith(HUD.DISPLAY_POINTS, true, {position: pos, variant: variant, message: points, color: color});
-    /*
-       var text:TextField = recycleText(120, 120, points, 60); // new TextField(120, 120, points, "kroeger 06_65", 60);
-       text.color = color;
-       text.autoScale = true;
-       text.hAlign = HAlign.CENTER;
-       var p:Point = new Point(egg.x, egg.y);
-       p = _levelStage.localToGlobal(p);
-       text.x = p.x + egg.width / 2 - text.width / 2 + offset;
-       text.y = p.y + egg.height / 2 - text.height / 2 + offset; //egg.y + (egg.height / 2) - text.height / 2);
-       var tween:Tween = new Tween(text, 2, "easeIn");
-       tween.animate("y", offset);
-       tween.animate("scaleX", 3);
-       tween.animate("scaleY", 3);
-       tween.animate("x", offset);
-       tween.animate("rotation", deg2rad(45 - offset));
-       tween.fadeTo(0);
-    
-       tween.onComplete = function():void
-       {
-       text.visible = false;
-       }
-    
-       _gameJuggler.add(tween);
-     */
     }
     
     protected function doCombos():void
@@ -831,6 +821,7 @@ package Level
       _lost = true;
       //pause();
       _gameJuggler.remove(_snake);
+      _mchammer.touchable = true;
       var image:Image;
       image = new Image(AssetRegistry.UIAtlas.getTexture("game over_gravestone"));
       image.x = (AssetRegistry.STAGE_WIDTH - image.width) / 2;
@@ -1128,14 +1119,10 @@ package Level
       {
         AssetRegistry.soundmanager.playSound("winSound");
       }
-      
-      _evilSnake = new Image(AssetRegistry.UIAtlas.getTexture("snake_evillaugh"));
-      _evilSnake.x = (AssetRegistry.STAGE_WIDTH - _evilSnake.width) / 2;
+      _mchammer.touchable = true;
       _evilSnake.y = AssetRegistry.STAGE_HEIGHT;
       addChild(_evilSnake);
-      
-      _evilText = new Image(AssetRegistry.UIAtlas.getTexture("Snake_EvilLaughText"));
-      _evilText.x = (AssetRegistry.STAGE_WIDTH - _evilText.width) / 2;
+
       _evilText.y = 0;
       addChild(_evilText);
       
@@ -1502,6 +1489,14 @@ package Level
       _mchammer = null;
       _pauseMenu.dispose();
       _pauseMenu = null;
+      _evilSnake.dispose();
+      _evilSnake = null;
+      _evilText.dispose();
+      _evilText = null;
+      _sadSnake.dispose();
+      _sadSnake = null;
+      _sadText.dispose();
+      _sadText = null;
       
       for each (var particle:PDParticleSystem in _particles)
       {

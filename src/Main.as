@@ -58,8 +58,9 @@ package
       // entry point  
       SaveGame.load();
       
-      var screenWidth:int = stage.fullScreenWidth;
-      var screenHeight:int = stage.fullScreenHeight;
+      // It seems anything can be returned here. Just use the larger value as width.
+      var screenWidth:int = Math.max(stage.fullScreenWidth, stage.fullScreenHeight);
+      var screenHeight:int = Math.min(stage.fullScreenHeight, stage.fullScreenWidth);
       
       var wwidth:int;
       var hheight:int;

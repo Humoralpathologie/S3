@@ -321,7 +321,7 @@ package Menu
     private function addButton():void
     {
       //add x-button
-      var xButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+      var xButton:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("x"));
       xButton.x = Starling.current.stage.stageWidth - xButton.width - 10;
       xButton.y = 90;
       var exit:Quad = new Quad(140, 250, 0xffffff);

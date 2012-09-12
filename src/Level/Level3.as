@@ -46,12 +46,12 @@ package Level
     
     override protected function addBackground():void
     {
-      _bgTexture = AssetRegistry.LevelAtlas.getTexture("level03");
+      _bgTexture = AssetRegistry.Opaque_1_Part2_Atlas.getTexture("level03");
       _bg = new Image(_bgTexture);
       _bg.blendMode = BlendMode.NONE;
       _levelStage.addChild(_bg);
       
-      var glowing:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("SteinAugenGlühen"));
+      var glowing:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("SteinAugenGlühen"));
       glowing.x = 188;
       glowing.y = 219;
       glowing.blendMode = BlendMode.ADD;
@@ -97,8 +97,8 @@ package Level
     
     override protected function showObjective():void
     {
-      var _neededCombos:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-combo"));
-      var _neededTime:Image = new Image(AssetRegistry.SnakeAtlas.getTexture("icon-time"));
+      var _neededCombos:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("icon-combo"));
+      var _neededTime:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("icon-time"));
       if (SaveGame.difficulty == 1)
       {
         showObjectiveBox(AssetRegistry.Strings.LEVEL3A, [[_neededCombos, "x 7"], [_neededTime, "= 4:00"]]);

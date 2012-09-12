@@ -79,9 +79,11 @@ package Eggs
     }
     
     public function removeEgg(egg:Eggs.Egg):void {
-      removeChild(egg);
-      egg.visible = false;
-      _length--;
+      if(getChildIndex(egg) != -1) {
+        removeChild(egg);
+        egg.visible = false;
+        _length--;
+      }
     }
     
     public function overlapEgg(head:Snake.Head):Eggs.Egg {

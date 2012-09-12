@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:29f1f8f8e831093eec0acfee16155d0e$ -->
+<TextureAtlas imagePath="Opaque_1_Part3.png">
+    <SubTexture name="arcade" x="2" y="2" width="990" height="900"/>
+</TextureAtlas>

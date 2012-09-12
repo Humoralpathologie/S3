@@ -98,10 +98,10 @@ package Menu
 			video4.label = AssetRegistry.Strings.VIDEO4;
 			video4.width = 240;
 			video4.height = 80;
-      /*video4.onRelease.add(function(btn:Button):void
+      video4.onRelease.add(function(btn:Button):void
 				{
 					dispatchEventWith(ManagedStage.SWITCHING, true, {stage: VideoPlayer, args: {videoURI: "Credits.mp4", stage: MainMenu}});
-				});*/
+				});
 			
 			video3.y = video2.y + video2.height + 60;
 			video4.y = video3.y;
@@ -120,7 +120,7 @@ package Menu
 			addChild(video2);
 			addChild(video4);
 			
-			var extrasxButton:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+			var extrasxButton:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("x"));
 			
 			//xButton.scaleX = xButton.scaleY = 1.5;
 			extrasxButton.x = Starling.current.stage.stageWidth - extrasxButton.width - 10;

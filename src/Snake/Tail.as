@@ -31,10 +31,10 @@ package Snake
     }
     private function makeImages():void
     {
-      _imageLeft = AssetRegistry.SnakeAtlas.getTexture("snake_tail_0");
-      _imageRight = AssetRegistry.SnakeAtlas.getTexture("snake_tail_1");
-      _imageUp = AssetRegistry.SnakeAtlas.getTexture("snake_tail_2");
-      _imageDown = AssetRegistry.SnakeAtlas.getTexture("snake_tail_3");
+      _imageLeft = AssetRegistry.Alpha_1_Atlas.getTexture("snake_tail_0");
+      _imageRight = AssetRegistry.Alpha_1_Atlas.getTexture("snake_tail_1");
+      _imageUp = AssetRegistry.Alpha_1_Atlas.getTexture("snake_tail_2");
+      _imageDown = AssetRegistry.Alpha_1_Atlas.getTexture("snake_tail_3");
 
     }
     override public function update(time:Number):void

@@ -66,7 +66,7 @@ package Menu.ComboMenuScreens
       _greybox.x = 65 + 60;
       _greybox.y = 40 + 30;
       
-      xButton = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("x"));
+      xButton = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("x"));
       xButton.x = 860;
       xButton.y = 30;
       
@@ -110,7 +110,7 @@ package Menu.ComboMenuScreens
       _infoButtonQ.y = 0;
       _infoButtonQ.alpha = 0;
       
-      question = new Image(AssetRegistry.MenuAtlasAlpha.getTexture("info-button"));
+      question = new Image(AssetRegistry.Alpha_1_Atlas.getTexture("info-button"));
       question.x = 860;
       question.y = 30;
       addChild(question);
@@ -228,14 +228,14 @@ package Menu.ComboMenuScreens
           unflatten();
           if (SaveGame.endless)
           {
-            _buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
-            _buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-time");
+            _buttons[4][0].upState = AssetRegistry.Alpha_1_Atlas.getTexture("combo-time");
+            _buttons[4][0].downState = AssetRegistry.Alpha_1_Atlas.getTexture("combo-time");
             _buttons[4][1].text = AssetRegistry.Strings.TIMEDESC;
           }
           else
           {
-            _buttons[4][0].upState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-slower");
-            _buttons[4][0].downState = AssetRegistry.MenuAtlasOpaque.getTexture("combo-slower");
+            _buttons[4][0].upState = AssetRegistry.Alpha_1_Atlas.getTexture("combo-slower");
+            _buttons[4][0].downState = AssetRegistry.Alpha_1_Atlas.getTexture("combo-slower");
             _buttons[4][1].text = AssetRegistry.Strings.SLOWERDESC;
           }
         });
@@ -291,11 +291,11 @@ package Menu.ComboMenuScreens
       var buttons:Array;
       if (SaveGame.endless)
       {
-        buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-time"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")] //, 
+        buttons = [AssetRegistry.Alpha_1_Atlas.getTexture("combo-speed"), AssetRegistry.Alpha_1_Atlas.getTexture("combo-time"), AssetRegistry.Alpha_1_Atlas.getTexture("combo-rotteneggs")] //, 
       }
       else
       {
-        buttons = [AssetRegistry.MenuAtlasOpaque.getTexture("combo-speed"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-slower"), AssetRegistry.MenuAtlasOpaque.getTexture("combo-rotteneggs")];
+        buttons = [AssetRegistry.Alpha_1_Atlas.getTexture("combo-speed"), AssetRegistry.Alpha_1_Atlas.getTexture("combo-slower"), AssetRegistry.Alpha_1_Atlas.getTexture("combo-rotteneggs")];
       }
       
       var space:int = 80;
@@ -322,16 +322,16 @@ package Menu.ComboMenuScreens
         //SaveGame.specials = { };
         if (SaveGame.specials[i])
         {
-          slot = new Button(AssetRegistry.MenuAtlasOpaque.getTexture(SaveGame.specials[i].effect));
+          slot = new Button(AssetRegistry.Alpha_1_Atlas.getTexture(SaveGame.specials[i].effect));
 		  //trace(SaveGame.specials[i].effect);
         }
         else
         {
-          slot = new Button(AssetRegistry.MenuAtlasOpaque.getTexture("combo-special"));
+          slot = new Button(AssetRegistry.Alpha_1_Atlas.getTexture("combo-special"));
         }
         addChild(slot);
         
-        var combo:Image = new Image(AssetRegistry.MenuAtlasAlpha.getTexture(combos[i]));
+        var combo:Image = new Image(AssetRegistry.Alpha_1_Atlas.getTexture(combos[i]));
         combo.x = 0;
         combo.y = 0;
         slot.addChild(combo);
