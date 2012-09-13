@@ -264,9 +264,12 @@ package Menu
         return;
       }
       if (data.scores.length == 0) {
+        if (data.page == 1) {
+          _scoreText.text = AssetRegistry.Strings.NO_SCORES;
+          return;
+        }
         _page--;
-        AssetRegistry.mogade.getScores(_lid, currentScope, updateLeaderboard, {page: _page});        
-        
+        AssetRegistry.mogade.getScores(_lid, currentScope, updateLeaderboard, { page: _page } );               
         return;
       }
       _page = data.page;

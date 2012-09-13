@@ -206,6 +206,10 @@ package Menu
         return;
       }
       if (data.scores.length == 0) {
+        if (data.page == 1 || type == "personal") {
+          _scoreText.text = AssetRegistry.Strings.NO_SCORES;
+          return;
+        }
         _page--;
         AssetRegistry.mogade.getScores(lid, currentScope, updateLeaderboard, {page: _page});        
         

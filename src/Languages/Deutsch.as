@@ -116,6 +116,7 @@ package Languages
     
     public static const RANK:String = "RANG AKTUELLER \nRUNDE";
     public static const NO_NET_CONNECTION:String = "Keine Netzverbindung!";
+    public static const NO_SCORES:String = "Keine Scores bisher!";    
     public static const NO_RANK:String = "Verloren!";    
         
     //Messages
