@@ -71,7 +71,7 @@ package Languages
     //levelscore buttons
     public static const BACKTOMENUBUTTON:String = "HAUPTMENÜ";
     public static const REPLAYBUTTON:String = "NEUSTART";
-    public static const NEXTBUTTON:String = "NÄCHSTES\nLEVEL";
+    public static const NEXTBUTTON:String = "WEITER";
     public static const LEADERBOARDSBUTTON:String = "LEADERBOARD";
     public static const SCOREBOARDBUTTON:String = "ZURÜCK";
     

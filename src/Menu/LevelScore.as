@@ -387,7 +387,7 @@ package Menu
           backToMenu();
         });
       
-      _replayButton.label = "REPLAY";
+      _replayButton.label = AssetRegistry.Strings.REPLAYBUTTON;
       _replayButton.width = buttonWidth;
       _replayButton.height = 80;
       _replayButton.x = _backToMenuButton.x + _backToMenuButton.width;
@@ -397,7 +397,7 @@ package Menu
           replay();
         });
       
-      _nextLevelButton.label = "NEXT";
+      _nextLevelButton.label = AssetRegistry.Strings.NEXTBUTTON;
       _nextLevelButton.width = buttonWidth;
       _nextLevelButton.height = 80;
       _nextLevelButton.x = _replayButton.x + _replayButton.width;
