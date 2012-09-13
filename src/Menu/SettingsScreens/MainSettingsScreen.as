@@ -158,9 +158,8 @@ package Menu.SettingsScreens
         });
       _nameTextInput.onEnter.add(function(input:TextInput)
         {
-          _nameHeading.text = AssetRegistry.Strings.USERNAME + ": " + SaveGame.userName;
           SaveGame.userName = _nameTextInput.text;
-          Utils.createOrEditPlayer(SaveGame.guid, SaveGame.userName);
+          _nameHeading.text = AssetRegistry.Strings.USERNAME + ": " + SaveGame.userName;          
         });
       _nameTextInput;
       
