@@ -152,6 +152,7 @@ package Menu.SettingsScreens
       _nameTextInput.x = _greyBox.x + 50;
       _nameTextInput.y = _nameHeading.y + _nameHeading.height + 20;
       _nameTextInput.text = SaveGame.userName;
+      _nameTextInput.stageTextProperties.maxChars = 12;
       _nameTextInput.onChange.add(function(input:TextInput)
         {
           _nameHeading.text = AssetRegistry.Strings.USERNAME + ": " + _nameTextInput.text;
