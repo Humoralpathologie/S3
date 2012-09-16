@@ -77,7 +77,7 @@ package Level
     
     override protected function checkWin():void
     {
-      if (_combos == _winCondition)
+      if (_combos >= _winCondition)
       {
         win();
       }
