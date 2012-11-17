@@ -44,7 +44,7 @@ package engine
       Starling.current.nativeStage.addEventListener(TouchEvent.TOUCH_TAP, stopVideo);
       Starling.current.nativeStage.addEventListener(MouseEvent.CLICK, stopVideo);
       
-      if (Starling.current.nativeStage.stageVideos.length >= 1)
+      if (false && !Capabilities.os.indexOf("Linux") && Starling.current.nativeStage.stageVideos.length >= 1)
       {
         sv = Starling.current.nativeStage.stageVideos[0];
         sv.viewPort = new Rectangle(Starling.current.viewPort.x, Starling.current.viewPort.y, Starling.current.viewPort.width, Starling.current.viewPort.height);

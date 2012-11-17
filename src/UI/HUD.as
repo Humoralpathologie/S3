@@ -83,7 +83,7 @@ package UI
       _pointsQueueRunning = false;
       
       // A center point so we don't need to recalculate
-      _center = new Point(AssetRegistry.STAGE_WIDTH / 2, AssetRegistry.STAGE_HEIGHT / 2);
+      _center = new Point(Starling.current.nativeStage.fullScreenWidth / 2, Starling.current.nativeStage.fullScreenHeight / 2);
       
       createTop();
       createControls();
@@ -162,8 +162,8 @@ package UI
         
     private function createRadarCircle():void {
       _radarCircle = new Image(AssetRegistry.UIAtlas.getTexture("KreisRadar"));
-      _radarCircle.x = (AssetRegistry.STAGE_WIDTH - _radarCircle.width) / 2;
-      _radarCircle.y = (AssetRegistry.STAGE_HEIGHT - _radarCircle.height) / 2;
+      _radarCircle.x = (Starling.current.nativeStage.fullScreenWidth - _radarCircle.width) / 2;
+      _radarCircle.y = (Starling.current.nativeStage.fullScreenHeight - _radarCircle.height) / 2;
       _radarCircle.touchable = false;
     }
     
@@ -175,7 +175,7 @@ package UI
       var i:int;
       var tailViewBox:Image;
       
-      var baseX:int = 750;
+      var baseX:int = Starling.current.nativeStage.fullScreenWidth - 210;
       var baseY:int = 10;
       
       _tailView = new Sprite();
@@ -419,7 +419,7 @@ package UI
       var iconCfg:Object;
             
       // Create the score display.
-      _score = new TextField(AssetRegistry.STAGE_WIDTH, 100, "0", "kroeger 06_65", 80, Color.WHITE);
+      _score = new TextField(Starling.current.nativeStage.fullScreenWidth, 100, "0", "kroeger 06_65", 80, Color.WHITE);
       _score.touchable = false;
       _textLayer.addChild(_score);
       
@@ -550,20 +550,20 @@ package UI
     
     private function createType1Buttons():void {
       var buttonConfig:Object = {
-        left180: { x: 0, y: 190, texture: "ui-classic-180-left", fn: function():void { _levelState.snake.oneeightyLeft() }},
-        right180: { x: 480, y: 190, texture: "ui-classic-180-right", fn: function():void { _levelState.snake.oneeightyRight() }},
-        left: { x: 0, y: 490, texture: "ui-classic-left", fn: function():void { _levelState.snake.moveLeft() }},
-        right: { x: 480, y: 490, texture: "ui-classic-right", fn: function():void { _levelState.snake.moveRight() }}  
+        left180: { x: 0, y: Starling.current.nativeStage.fullScreenHeight - (640 - 190), texture: "ui-classic-180-left", fn: function():void { _levelState.snake.oneeightyLeft() }},
+        right180: { x: Starling.current.nativeStage.fullScreenWidth - (960 - 480), y: Starling.current.nativeStage.fullScreenHeight - (640 - 190), texture: "ui-classic-180-right", fn: function():void { _levelState.snake.oneeightyRight() }},
+        left: { x: 0, y: Starling.current.nativeStage.fullScreenHeight - (640 - 490), texture: "ui-classic-left", fn: function():void { _levelState.snake.moveLeft() }},
+        right: { x: Starling.current.nativeStage.fullScreenWidth - (960 - 480), y: Starling.current.nativeStage.fullScreenHeight - (640 - 490), texture: "ui-classic-right", fn: function():void { _levelState.snake.moveRight() }}  
         };
       createButtonsHelper(buttonConfig);
     }
     
     private function createType2Buttons():void {
       var buttonConfig:Object = {
-        up: { x: 490, y: 190, texture: "ui-4way-bottom-up", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.UP); }},
-        down: { x: 490, y: 500, texture: "ui-4way-bottom-down", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.DOWN); }},
-        left: { x: 0, y: 190, texture: "ui-4way-bottom-left", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.LEFT);}},
-        right: { x: 190, y: 190, texture: "ui-4way-bottom-right", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.RIGHT); }}  
+        up: { x: Starling.current.nativeStage.fullScreenWidth - (960 - 490), y: Starling.current.nativeStage.fullScreenHeight - (640 - 190), texture: "ui-4way-bottom-up", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.UP); }},
+        down: { x: Starling.current.nativeStage.fullScreenWidth - (960 - 490), y: Starling.current.nativeStage.fullScreenHeight - (640 - 500), texture: "ui-4way-bottom-down", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.DOWN); }},
+        left: { x: 0, y: Starling.current.nativeStage.fullScreenHeight - (640 - 190), texture: "ui-4way-bottom-left", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.LEFT);}},
+        right: { x: 190, y: Starling.current.nativeStage.fullScreenHeight - (640 - 190), texture: "ui-4way-bottom-right", fn: function():void { _levelState.snake.changeDirection(AssetRegistry.RIGHT); }}  
         };
       createButtonsHelper(buttonConfig);
     }    

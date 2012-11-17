@@ -142,7 +142,7 @@ package Level
     protected var _textLayer:Sprite;
     
     private var _updateTimer:Number;
-    
+        
     // Mogade leaderboard ID
     protected var _lid:String;
     
@@ -168,6 +168,7 @@ package Level
     public function LevelState()
     {
       super();
+      this.unscaled = true;
       AssetRegistry.loadGraphics([AssetRegistry.MENU, AssetRegistry.SNAKE, AssetRegistry.SCORING]);
       
       setSpeed();

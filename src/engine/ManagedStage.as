@@ -15,6 +15,8 @@ package engine
     public static const SHOWING:String = "showing";
     public static const SWITCHING:String = "switching";
     
+    public var unscaled = false;
+    
     public function ManagedStage()
     {
       super();

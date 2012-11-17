@@ -92,7 +92,7 @@ package Menu.ComboMenuScreens
       addChild(_greybox);
       
       _arcadeModiHeading = new TextField(_greybox.width, 60, AssetRegistry.Strings.ARCADEHEADING, "kroeger 06_65", 60, Color.WHITE);
-      _arcadeModiHeading.x = (Starling.current.stage.stageWidth - _arcadeModiHeading.width) / 2;
+      _arcadeModiHeading.x = (AssetRegistry.STAGE_WIDTH - _arcadeModiHeading.width) / 2;
       _arcadeModiHeading.y = 10;
       addChild(_arcadeModiHeading);
       
@@ -218,7 +218,7 @@ package Menu.ComboMenuScreens
       _arcadeModiToggleSwitch.onText = AssetRegistry.Strings.ONLABEL;
       //_arcadeModiToggleSwitch.offLabelProperties = 
       _arcadeModiToggleSwitch.isSelected = SaveGame.endless;
-      _arcadeModiToggleSwitch.x = (Starling.current.stage.stageWidth - _arcadeModiToggleSwitch.width) / 2;
+      _arcadeModiToggleSwitch.x = (AssetRegistry.STAGE_WIDTH - _arcadeModiToggleSwitch.width) / 2;
       _arcadeModiToggleSwitch.y = _greybox.y + 350;
       
       _arcadeModiToggleSwitch.onChange.add(function(tswitch:ToggleSwitch):void

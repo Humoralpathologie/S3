@@ -114,8 +114,8 @@ package Menu
       _settingsButton.label = AssetRegistry.Strings.SETTINGS;
       _settingsButton.width = 240;
       _settingsButton.height = 80;
-      _settingsButton.x = Starling.current.stage.stageWidth - _settingsButton.width;
-      _settingsButton.y = Starling.current.stage.stageHeight - _settingsButton.height;
+      _settingsButton.x = AssetRegistry.STAGE_WIDTH - _settingsButton.width;
+      _settingsButton.y = AssetRegistry.STAGE_HEIGHT - _settingsButton.height;
       _settingsButton.onRelease.add(function(button:Button):void {
         _screenNavi.showScreen(_SETTINGS);
 	    });
@@ -124,8 +124,8 @@ package Menu
       _arcadeButton.label = AssetRegistry.Strings.ARCADE;
       _arcadeButton.width = 240;
       _arcadeButton.height = 80;      
-      _arcadeButton.x = (Starling.current.stage.stageWidth - _settingsButton.width) / 3;
-      _arcadeButton.y = Starling.current.stage.stageHeight - _arcadeButton.height;
+      _arcadeButton.x = (AssetRegistry.STAGE_WIDTH - _settingsButton.width) / 3;
+      _arcadeButton.y = AssetRegistry.STAGE_HEIGHT - _arcadeButton.height;
       _arcadeButton.onRelease.add(function(button:Button):void {
         dispatchEventWith(SWITCHING, true, { stage: ComboMenu } );
       });
@@ -135,7 +135,7 @@ package Menu
       _levelSelectButton.width = 240;
       _levelSelectButton.height = 80;
       _levelSelectButton.x = 0;
-      _levelSelectButton.y = Starling.current.stage.stageHeight - _levelSelectButton.height;
+      _levelSelectButton.y = AssetRegistry.STAGE_HEIGHT - _levelSelectButton.height;
       _levelSelectButton.onRelease.add(function(button:Button):void {
         dispatchEventWith(SWITCHING, true, { stage: LevelSelect } );       
       });
@@ -144,8 +144,8 @@ package Menu
 	  _extrasButton.label = AssetRegistry.Strings.EXTRAS;
 	  _extrasButton.width = 240;
 	  _extrasButton.height = 80;
-	  _extrasButton.x = Starling.current.stage.stageWidth / 2;
-	  _extrasButton.y = Starling.current.stage.stageHeight - _extrasButton.height;
+	  _extrasButton.x = AssetRegistry.STAGE_WIDTH / 2;
+	  _extrasButton.y = AssetRegistry.STAGE_HEIGHT - _extrasButton.height;
     _extrasButton.onRelease.add(function(button:Button):void {
         _screenNavi.showScreen(_EXTRAS);     
     });

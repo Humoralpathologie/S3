@@ -34,8 +34,10 @@ package engine
       _loadingScreen = new AssetRegistry.LoadingScreenPNG;
       _loadingScreen.x = Starling.current.viewPort.x;
       _loadingScreen.y = Starling.current.viewPort.y;
-      _loadingScreen.width = Starling.current.viewPort.width;
-      _loadingScreen.height = Starling.current.viewPort.height;
+      //_loadingScreen.width = Starling.current.viewPort.width;
+      //_loadingScreen.height = Starling.current.viewPort.height;
+      _loadingScreen.scaleX = Starling.current.nativeStage.fullScreenWidth / AssetRegistry.STAGE_WIDTH;
+      _loadingScreen.scaleY = Starling.current.nativeStage.fullScreenHeight / AssetRegistry.STAGE_HEIGHT;
       
       addEventListener(ManagedStage.CLOSING, onStageClosing);
       addEventListener(ManagedStage.SWITCHING, onStageSwitching);
@@ -66,6 +68,10 @@ package engine
           _currentStage = new _nextStage(_args);
         } else {
           _currentStage = new _nextStage();
+        }
+        if(!_currentStage.unscaled) {
+          _currentStage.scaleX = _loadingScreen.scaleX;
+          _currentStage.scaleY = _loadingScreen.scaleY;
         }
         addChild(_currentStage);
       }
